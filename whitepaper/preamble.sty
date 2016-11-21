@@ -1,0 +1,77 @@
+\ProvidesPackage{preamble}
+
+% \usepackage[pdftex]{graphicx}
+\usepackage[linesnumbered,ruled,noend]{algorithm2e}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\let\proof\relax
+\let\endproof\relax
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{listings}
+\usepackage{graphviz}
+\usepackage{dot2texi}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usetikzlibrary{shapes,arrows}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{import}
+
+%code options with \lstlisting
+\lstset{frame=tb,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle=\ttfamily,
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  escapeinside={(*@}{@*)},
+  frame=n
+}
+\lstdefinestyle{numbers}{numbers=left, stepnumber=1, numberstyle=\tiny, numbersep=10pt}
+\let\origthelstnumber\thelstnumber
+\makeatletter
+\newcommand*\Suppressnumber{%
+  \lst@AddToHook{OnNewLine}{%
+    \let\thelstnumber\relax%
+     \advance\c@lstnumber-\@ne\relax%
+    }%
+}
+
+\newcommand*\Reactivatenumber{%
+  \lst@AddToHook{OnNewLine}{%
+   \let\thelstnumber\origthelstnumber%
+   \advance\c@lstnumber\@ne\relax}%
+}
+
+%bitcoin character
+\def\bitcoin{%
+  \leavevmode
+  \vtop{\offinterlineskip %\bfseries
+    \setbox0=\hbox{B}%
+    \setbox2=\hbox to\wd0{\hfil\hskip-.03em
+    \vrule height .3ex width .15ex\hskip .08em
+    \vrule height .3ex width .15ex\hfil}
+    \vbox{\copy2\box0}\box2}}
+
+%environment for separate proof
+\newenvironment{sepproof}[1]{\noindent \textbf{#1}}{\qed \smallskip \ \\}
+
+%environment for proof sketch
+\newenvironment{proofsketch}{\textit{Proof Sketch.}}{\qed \smallskip \ \\}
+
+%eliminate section numbering from \subsection
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+%page style set to plain
+\pagestyle{plain}
+
+%bibliography style set to splncs
+\bibliographystyle{splncs}
