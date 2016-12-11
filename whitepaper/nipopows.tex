@@ -21,14 +21,14 @@ various parties, including the adversary.
 
 Puzzle graphs are directed graphs consisting of nodes, called puzzle solutions.
 
-A puzzle solution is “public” or “private”. Honest parties are able to see
-the graph consisting of all the “public” puzzle solutions, and the (directed)
+A puzzle solution is ``public'' or ``private''. Honest parties are able to see
+the graph consisting of all the ``public'' puzzle solutions, and the (directed)
 edges among them.
 
 Puzzle solutions come with protocol-defined labels. The protocol may define
-application semantics. For example, in our model the idea of “included
-transactions” is a label. Our protocol will also include “height” as an
-annotation. The protocol may define a “validity” condition.
+application semantics. For example, in our model the idea of ``included
+transactions'' is a label. Our protocol will also include ``height'' as an
+annotation. The protocol may define a ``validity'' condition.
 
 The oracle interface is defined as follows:
 
@@ -60,9 +60,7 @@ Bounded rate oracle access:
 
 \section{The Nakamoto protocol}
 
-
-“Honest parties always work to extend the longest valid blockchain.”
-
+``Honest parties always work to extend the longest valid blockchain.''
 
 Validity is defined inductively as follows:
 - A puzzle solution with no outgoing edges is valid.
@@ -76,7 +74,7 @@ Properties (all of which hold when $f/N < 50\%$):
 \section{Stateless Verification}
 
 First, an arbitrary node from the graph (public or private) chain is chosen.
-The verifier’s goal is to determine whether the node is “stable,” i.e. it is included in the longest chain.
+The verifier’s goal is to determine whether the node is ``stable,'' i.e. it is included in the longest chain.
 
 Honest nodes and the adversary take turns presenting proofs to the verifier. The verifier does not use the Read() interface of the oracle, but simply accepts proofs sent to it by the oracle.
 
@@ -95,8 +93,8 @@ Bitcoin SPV Proofs:
 The Nakamoto protocol is modified as such:
 - Every node still works to extend the longest valid chain.
 
-A “score” is associated to, based on the number of leading 0-bits in the
-“score” label. Thus $X = score(n)$ is distributed according to a geometric distribution (with parameter 0.5).
+A ``score'' is associated to, based on the number of leading 0-bits in the
+``score'' label. Thus $X = score(n)$ is distributed according to a geometric distribution (with parameter 0.5).
 
 Validity is modified as such:
 - Each node contains several links. One is to the most recent puzzle solution, similar to the original protocol.
@@ -120,7 +118,7 @@ Definitions:
 $(\alpha, k)$ - Segment proof for $[start, end]$
 
 Properties:
-with high probability, at least puzzle solutions that contain “start” as a descendant
+with high probability, at least puzzle solutions that contain ``start'' as a descendant
 
 Efficiency:
 	honest parties are able to produce a proof that contains fewer than $x$ blocks
