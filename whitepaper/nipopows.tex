@@ -145,5 +145,31 @@ $\Pi_{A}$ satisfies the following property:
     \texttt{ or } \mu
 \end{equation*}
 
+\section{Constructing non-interactive proofs}
+
+\begin{figure}[h]
+    \caption{The hierarchical blockchain. Existing blocks are shown in level 1.
+    Higher levels have achieved a lower target (higher difficulty) during mining.}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{figures/hierarchical-ledger.png}
+    \label{fig:hierarchy}
+\end{figure}
+
+\begin{figure}[h]
+    \caption{The first of a series of interactive proofs-of-proofs-of-work.
+    This proof is the only one that needs to be sent in case it goes
+    unchallenged.}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{figures/interactive-popow.png}
+\end{figure}
+
+\begin{figure}[h]
+    \caption{A non-interactive proof-of-work. Any challenges can be answered by
+    the verifier directly by constructing a proof from the data in this proof,
+    without interaction with the prover.}
+    \centering
+    \includegraphics[width=\textwidth,keepaspectratio]{figures/non-interactive-popow.png}
+\end{figure}
+
 \import{./}{references.tex}
 \end{document}
