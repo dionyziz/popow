@@ -74,22 +74,6 @@
    \advance\c@lstnumber\@ne\relax}%
 }
 
-%bitcoin character
-\def\bitcoin{%
-  \leavevmode
-  \vtop{\offinterlineskip %\bfseries
-    \setbox0=\hbox{B}%
-    \setbox2=\hbox to\wd0{\hfil\hskip-.03em
-    \vrule height .3ex width .15ex\hskip .08em
-    \vrule height .3ex width .15ex\hfil}
-    \vbox{\copy2\box0}\box2}}
-
-%environment for separate proof
-\newenvironment{sepproof}[1]{\noindent \textbf{#1}}{\qed \smallskip \ \\}
-
-%environment for proof sketch
-\newenvironment{proofsketch}{\textit{Proof Sketch.}}{\qed \smallskip \ \\}
-
 %eliminate section numbering from \subsection
 \renewcommand{\thesubsection}{\arabic{subsection}}
 
