@@ -96,6 +96,20 @@ $\Pi_{A}$ satisfies the following property:
 
 \section{Constructing non-interactive proofs}
 
+\import{./}{algorithms/nipopows-construct-innerchain.tex}
+
+We introduce a helper algorithm, ConstructInnerChain, shown in
+Algorithm~\ref{alg.nipopow_construct_innerchain}. This algorithm returns the innerchain
+of level $i$ extracted from the blockchain $\chain$. If boundary is provided,
+it only returns the blocks more recent than the boundary block supplied.
+
+\import{./}{algorithms/nipopows-construct-proof.tex}
+
+The NiPoPoW proof construction is shown in Algorithm~\ref{alg.nipopow_construct_proof}.
+This produces a non-interactive PoPoW in parameter $m$ which consists of a
+number of blocks for every level $i$. The number of blocks per level is
+approximately $2m$.
+
 \begin{figure}[h]
     \caption{The hierarchical blockchain. Existing blocks are shown in level 1.
     Higher levels have achieved a lower target (higher difficulty) during mining.}

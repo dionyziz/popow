@@ -1,0 +1,19 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.nipopow_construct_proof}constructNIProof}
+    \begin{algorithmic}[1]
+        \Function{\sf constructNIProof}{$\chain, m, k$}
+            \Let{size}{\chain.length - (k - 1)}
+            \Let{i}{\chain[size].\mathsf{interlink}.length}
+            \Let{genesis}{\chain[1]}
+            \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain^{\rest k - 1}, i, genesis)}
+            \While{$i > 0$}
+                \Let{boundary}{\min(m, \pi[i].length)}
+                \Let{i}{i - 1}
+                \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain^{\rest k - 1}, i, boundary)}
+            \EndWhile
+            \State\Return{$\pi$}
+        \EndFunction
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
+
