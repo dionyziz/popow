@@ -6,7 +6,7 @@ def ConstructInnerChain(C, i, boundary):
         InnerChain.append(B.interlink[i])
     return InnerChain
 
-def ConstructProof(C, n, interlink):
+def ConstructProof(C, m, interlink):
     size = C.length - (k - 1)
     i = C[size].interlink.length
     Proof[i] = ConstuctInnerChain(DropSuffix(C, k - 1), i, genesis)
