@@ -1,0 +1,14 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.nipopow_verifier}The \textsf{Verify} algorithm
+    for the NiPoPoW protocol}
+    \begin{algorithmic}[1]
+        \Function{\sf Verify$_{m,k}$}{$\bar\Pi$}
+            \Let{best}{\bar\Pi[1]}
+            \For{$i=1$ to $\bar\Pi.length$}
+                \Let{best}{\mathsf{bestChain}(best, \bar\Pi[i])}
+            \EndFor
+            \State\Return{best}
+        \EndFunction
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
