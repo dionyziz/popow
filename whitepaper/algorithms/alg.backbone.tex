@@ -1,0 +1,31 @@
+\begin{figure}[t]
+\begin{algorithm}[H]
+    \caption{\label{alg.backbone-proof} The backbone protocol augemnted with a{ \em
+        proof generating parameter function} $\textsf{Prove}(\cdot)$}
+    \begin{algorithmic}[1]
+     \Statex
+     \Let\chain\varepsilon
+        \Let{st}\varepsilon
+        \Let{round}1
+        \While{\textsc{True}}
+            \If{$\textsc{Input}()\mbox{ contains }\textsc{Read}$}
+		\State{ {\bf write} $R(\chain)$ to \textsc{Output}()}
+            \EndIf
+            \Let{broadcast}{\epsilon}
+            \If{$\textsc{Input}()\mbox{ contains }\textsc{ReadProof}$}
+                \Let{broadcast}{broadcast \| \textsf{Prove}_k(\chain)}
+            \EndIf
+            \Let{\tilde\chain}{\mathsf{maxvalid}( \chain, \mbox{any chain $\chain'$ found in  \textsc{Receive}()}) }
+            \Let{\langle st, x\rangle}{I(st,\tilde\chain, round,  \textsc{Input}(), \textsc{Receive}())}
+            \Let{\chain_\mathsf{new}}{\Call{\sf pow}{x, \tilde\chain}}
+            \If{$\chain\ne\chain_\mathsf{new}$}
+                \Let{\chain}{ \chain_\mathsf{new}}
+                    \Let{broadcast}{broadcast \| \chain}
+            \EndIf
+            \State\textsc{Diffuse}{$(broadcast)$}
+            \Let{round}{round+1}
+        \EndWhile
+        \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
+\end{figure}
