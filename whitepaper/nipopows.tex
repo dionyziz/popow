@@ -103,20 +103,6 @@ At the beginning of the game, two Provers generate proofs $\pi_A$, $\pi_B$
 claiming that the longest chain is $\chain_A$, $\chain_B$ respectively. The
 Verifier receives these proofs and accepts one of the two proofs.
 
-The proof can have the following properties:
-
-\begin{itemize}
-    \item \textbf{Completeness}. An honest Prover is always able to convince
-        the honest Verifier. More specifically, let $\pi_A$ be a proof claiming
-        chain $\chain_A$ by an honest verifier. Then let $\pi_B$ be the proof
-        claiming chain $\chain_B$ that the Verifier accepts. We require that
-        $\chain_A^{\rest k} = \chain_B^{\rest k}$ except with negligible
-        probability in $k$.
-
-    \item \textbf{Soundness}. A dishonest Prover is not able to convince the
-        honest Verifier.
-\end{itemize}
-
 \import{./}{algorithms/nipopows-construct-innerchain.tex}
 
 We introduce a helper algorithm, ConstructInnerChain, shown in
