@@ -105,14 +105,14 @@ At the beginning of the game, two Provers generate proofs $\pi_A$, $\pi_B$
 claiming that the longest chain is $\chain_A$, $\chain_B$ respectively. The
 Verifier receives these proofs and accepts one of the two proofs.
 
-\import{./}{algorithms/nipopows-construct-innerchain.tex}
+\import{./}{algorithms/alg.nipopow-innerchain.tex}
 
 We introduce a helper algorithm, ConstructInnerChain, shown in
 Algorithm~\ref{alg.nipopow_construct_innerchain}. This algorithm returns the innerchain
 of level $i$ extracted from the blockchain $\chain$. If boundary is provided,
 it only returns the blocks more recent than the boundary block supplied.
 
-\import{./}{algorithms/nipopows-construct-proof.tex}
+\import{./}{algorithms/alg.nipopow-prover.tex}
 
 The NiPoPoW proof construction is shown in Algorithm~\ref{alg.nipopow_construct_proof}.
 This produces a non-interactive PoPoW in parameter $m$ which consists of a
