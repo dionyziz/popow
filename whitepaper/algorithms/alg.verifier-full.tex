@@ -1,12 +1,12 @@
 \begin{algorithm}[H]
     \caption{\label{alg.verifier_full}The full verifier}
     \begin{algorithmic}[1]
-        \Function{\sf Prove}{$\chain$}
+        \Function{\sf Prove$_q$}{$\chain$}
             \State\Return{$\chain$}
         \EndFunction
-        \Function{\sf Verify}{$\bar\chain$}
+        \Function{\sf Verify$_q$}{$\bar\chain$}
             \Let{\chain}{\mathsf{maxvalid}(\bar\chain)}
-            \State\Return{$\chain^{k \suffix}$}
+            \State\Return{$q(\chain)$}
         \EndFunction
     \vskip8pt
     \end{algorithmic}
