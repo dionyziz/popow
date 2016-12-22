@@ -13,7 +13,7 @@
 		\State{ {\bf write} $R(\chain)$ to \textsc{Output}()}
             \EndIf
             \Let{broadcast}{\epsilon}
-            \If{$\textsc{Input}()\mbox{ contains }\textsc{ReadProof}$}
+            \If{$\textsc{Receive}()\mbox{ contains }\textsc{ReadProof}$}
                 \Let{broadcast}{broadcast \| \textsf{Prove}_q(\chain)}
             \EndIf
             \Let{\tilde\chain}{\mathsf{maxvalid}( \chain, \mbox{any chain $\chain'$ found in  \textsc{Receive}()}) }
