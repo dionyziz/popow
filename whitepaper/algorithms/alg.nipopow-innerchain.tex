@@ -4,7 +4,9 @@
         \Function{\sf constructInnerChain}{$\chain, i, boundary$}
             \Let{\textsf{innerChain}}{[\nobreakspace]}
             \Let{B}{\chain[\chain.length]}
-            \While{$B \neq boundary$}
+            \Let{count}{0}
+            \While{$count \neq boundary$}
+                \Let{count}{count + 1}
                 \Let{blockid}{B.\textsf{interlink}[i]}
                 \Let{B}{\textsf{blockById}(blockid)}
                 \State{\textsf{innerChain.append}($B$.interlink[$i$])}
