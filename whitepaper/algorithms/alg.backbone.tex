@@ -1,7 +1,8 @@
 \begin{figure}[t]
 \begin{algorithm}[H]
     \caption{\label{alg.backbone-proof} The backbone protocol augmented with a{ \em
-        proof generating parameter function} $\textsf{Prove}(\cdot)$}
+        proof generating function} $\textsf{Prove}_q(\cdot)$ parameterized by a
+        predicate $q$}
     \begin{algorithmic}[1]
      \Statex
      \Let\chain\varepsilon
@@ -13,7 +14,7 @@
             \EndIf
             \Let{broadcast}{\epsilon}
             \If{$\textsc{Input}()\mbox{ contains }\textsc{ReadProof}$}
-                \Let{broadcast}{broadcast \| \textsf{Prove}_k(\chain)}
+                \Let{broadcast}{broadcast \| \textsf{Prove}_q(\chain)}
             \EndIf
             \Let{\tilde\chain}{\mathsf{maxvalid}( \chain, \mbox{any chain $\chain'$ found in  \textsc{Receive}()}) }
             \Let{\langle st, x\rangle}{I(st,\tilde\chain, round,  \textsc{Input}(), \textsc{Receive}())}
