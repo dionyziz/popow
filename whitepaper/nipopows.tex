@@ -97,7 +97,9 @@ $\Pi_{A}$ satisfies the following property:
 \section{Constructing non-interactive proofs}
 
 A non-interactive proof-of-proof of work is a game between a Prover and a
-Verifier parameterized by security parameter $k$.
+Verifier parameterized by predicate $q$ which the prover tries to convience the
+verifier for. The predicate $q$ is a function of a chain $\chain$, which the
+prover claims to be the longest chain.
 
 \import{./}{algorithms/alg.backbone.tex}
 \import{./}{algorithms/alg.verifier-framework.tex}
@@ -105,8 +107,27 @@ Verifier parameterized by security parameter $k$.
 \import{./}{algorithms/alg.verifier-lite.tex}
 
 At the beginning of the game, two Provers generate proofs $\pi_A$, $\pi_B$
-claiming that the longest chain is $\chain_A$, $\chain_B$ respectively. The
-Verifier receives these proofs and accepts one of the two proofs.
+claiming potentially different truth values for the predicate $q$ based on
+their claimed local longest chains. The Verifier receives these proofs and
+accepts one of the two proofs, determining the truth value of the predicate.
+
+We say that a predicate $q$ is $\textit{reliable}$ if it has the following
+desirable properties:
+
+\begin{itemize}
+    \item The predicate is $\textit{monotonous}$ for honest provers: For a
+        sequence of chains $\chain _1, \chain _2, \ldots$ of an honest prover, we
+        have the there is some $i$ such that the predicate $q(\chain _j)$ is
+        false for all j before that i; and subsequently, the predicate
+        $q(\chain _j)$ becomes true for $j \geq i$ and remains true for ever.
+        It is legal for $i$ to be at infinity, making the predicate false
+        throughout.
+    \item The predicate has $\textit{liveness}$: Once the environment puts
+        adequate data in the blockchain payload for the predicate to become
+        true, it will become true for all honest players.
+    \item The predicate has $\textit{common prefix}$: Once it becomes true for
+        one honest player, the rest will eventually follow.
+\end{itemize}
 
 \import{./}{algorithms/alg.nipopow-innerchain.tex}
 
