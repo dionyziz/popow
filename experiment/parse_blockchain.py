@@ -11,7 +11,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 Config = namedtuple('Config', ['path'])
-config = Config(path='.')
+config = Config(path='./electrum/electrum_data')
 network = None
 
 def bits_to_target(bits):
@@ -76,6 +76,10 @@ interlink = {}
 interlinks = {}
 max_level = 0
 count = 0
+
+height_by_hash = {}
+level_by_hash = {}
+
 while block is not None:
     if (block_height + 1) % 10000 == 0:
         print '%i%%' % (100 * round(float(block_height) / max_height, 2))
@@ -87,6 +91,8 @@ while block is not None:
     hash = blockchain.hash_header(block)
     blockid = int(hash, 16)
     level = -int(math.ceil(math.log(float(blockid) / target, 2)))
+    level_by_hash[blockid] = level
+    height_by_hash[blockid] = block_height
     if not level in levels:
         levels[level] = 0
     levels[level] += 1
@@ -129,3 +135,16 @@ plt.xlabel('Superblock level')
 plt.xlim([-0.5, max_level + 0.5])
 plt.ylim([0.5, 2 * levels[0]])
 plt.savefig('plot.png')
+
+plt.clf();
+xs = []
+ys = []
+for h in proof:
+    xs.append(max_height + 1 - height_by_hash[h])
+    ys.append(level_by_hash[h])
+plt.scatter(xs, ys, marker='+')
+plt.xscale('log')
+plt.xlabel('Depth of blocks (# of blocks behind current head)')
+plt.ylabel('Bits of 0')
+plt.title('Compact PoPoW for Block Height %d' % max_height)
+plt.savefig('scatterplot.png')
