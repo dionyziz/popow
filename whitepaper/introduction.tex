@@ -1,0 +1,68 @@
+\section{Introduction}
+
+Bitcoin \cite{bitcoin} is the first decentralized currency. Several
+cryptocurrencies have surfaced since, many of which use different consensus
+rules. These rules have significant differences with each other. For example,
+new coins are often based on proof-of-stake instead of the classical
+proof-of-work scheme for mining. This dramatically changes the consensus
+mechanism and provides benefits such as efficiency. More minor consensus rules
+are also often proposed through altcoins. Many of them provide stronger
+anonymity than the first coins through features such as ring signatures or
+zero-knowledge proofs. Other changes could involve the block size limits,
+smooth emission, or different algorithms for proof-of-stake or proof-of-work.
+
+Such different proposals for consensus rules must necessarily be implemented
+either as an altcoin or a hard-fork. This issue was discussed in the sidechains
+paper, where the idea of pegged sidechains is proposed: While consensus rules
+can be different across blockchains, it is useful to have one unit of value
+which can be moved between various blockchains. This allows for experimentation
+and potentially powerful ways of deciding consensus rule changes, such as
+decentralized voting.
+
+However, in the simplest version of sidechains, the nodes participating in the
+consensus protocol must all maintain the different blockchains. This is not
+efficient and adoption is not expected. The solution for this is to provide
+succinct proofs that the winning chain of a block tree is a particular one.
+These proofs are called proofs-of-mining, because they provide a short proof
+that mining has happened. In the specific examples of proofs-of-stake and
+proofs-of-work, proofs-of-mining are proofs-of-proofs-of-stake and
+proofs-of-proofs-of-work. Succinctness requires that these proofs are
+significantly shorter than presenting the whole chain. Technically, if the
+claimed winning blockchain has a length of $n$ blocks, we want the succinct
+proofs to be bounded by $O(lgn)$ in terms of their size in bytes. These short
+proofs can then be subsequently included in sidechain blocks were funds are
+locked in one blockchain so that they can become available in another.
+
+Proofs-of-proofs-of-work were explored in KLS. These proofs were specific to
+proofs-of-work and had the disadvantage of requiring interaction between a
+prover and a verifier, making them unsuitable for sidechain adoption.
+
+We extend these proofs-of-mining to any kind of mining flavor in a generalized
+model which can support proofs-of-proofs-of-work, proofs-of-proofs-of-stake,
+hybrids, permissioned and permissionless blockchains and any other consensus
+rule choice. We also make the proofs non-interactive, meaning they are now
+suitable for sidechain use. We generalize the idea of proof-of-mining into not
+just being able to talk about what the current winning chain suffix is, but
+allowing provers and verifiers to prove generic predicates. Such predicates can
+express simple ideas, such as the inclusion of a transaction in the longest
+chain, to complex ideas such as the modification of an account's balance over
+time.
+
+We work on the backbone model. We introduce two entities, the Prover and the
+Verifier which work in the existing environment. The Prover is part of the
+existing miner node which exists in the backbone protocol. The Verifier is a
+completely new entity. When the game begins, the Prover and the Verifier are
+instantiated with a fixed predicate $q$, which generalized the notion of
+proof-of-mining and allows any blockchain property to be proven between the
+Prover and the Verifier. Some of these predicates are more suitable for
+succinct proofs than others. We focus our attention in what we call $\textit{
+reliable }$ predicates; that is, predicates which are monotonous, live, and
+common-prefix. These predicates have the exceptional property that all honest
+miners share their view of them in a way that is updated in a predictable
+manner, with a decision that persists as the blockchain grows. Furthermore, we
+are interested in predicates which can be proven using a succinct protocol, a
+protocol which requires proofs that are short in terms of the total blockchain
+size. Finally, we formalize the notion of non-interactivity.
+
+We use this model to explore which predicates are reliable and can be proven
+succinctly.
