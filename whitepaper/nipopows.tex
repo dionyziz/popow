@@ -25,23 +25,82 @@ claiming potentially different truth values for the predicate $q$ based on
 their claimed local longest chains. The Verifier receives these proofs and
 accepts one of the two proofs, determining the truth value of the predicate.
 
-We say that a predicate $q$ is $\textit{reliable}$ if it has the following
-desirable properties:
+\section{Provable chain predicates}
 
-\begin{itemize}
-    \item The predicate is $\textit{monotonous}$ for honest provers: For a
-        sequence of chains $\chain _1, \chain _2, \ldots$ of an honest prover, we
-        have the there is some $i$ such that the predicate $q(\chain _j)$ is
-        false for all j before that i; and subsequently, the predicate
-        $q(\chain _j)$ becomes true for $j \geq i$ and remains true for ever.
-        It is legal for $i$ to be at infinity, making the predicate false
-        throughout.
-    \item The predicate has $\textit{liveness}$: Once the environment puts
-        adequate data in the blockchain payload for the predicate to become
-        true, it will become true for all honest players.
-    \item The predicate has $\textit{common prefix}$: Once it becomes true for
-        one honest player, the rest will eventually follow.
-\end{itemize}
+We now describe the desirable property of predicates, \textit{monotonicity},
+which is an adequate condition to show that the predicats are provable. Based
+on predicate monotonicity, we show that a predicate has \textit{liveness} and
+\textit{persistence} and define chain predicate security appropriately.
+
+We allow our predicates to have an undefined value $\bot$ before they take
+on a truth value of $0$ or $1$.
+
+\begin{definition}{(Predicate monotonicity)}
+    A chain predicate $Q(\chain)$ is $\textit{monotonous}$ if for all chains
+    $\chain$ and for all blocks $B$ we have that:
+
+    \begin{equation*}
+        Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B)
+    \end{equation*}
+\end{definition}
+
+\begin{definition}{(Predicate switching position)}
+    A chain predicate $Q(\chain) \neq \bot$ has a switching position $i \in
+    \mathbb{N}$ in the chain $\chain$ defined as the minimum $i$ such that:
+
+    \begin{equation*}
+        Q(\chain^{\rest |\chain| - i}) \neq \bot
+    \end{equation*}
+\end{definition}
+
+\begin{definition}{(Predicate stability)}
+    Parameterized by $k \in \mathbb{N}$, a chain predicate $Q(\chain)$ has
+    $\textit{stability}$ if its switching position $i$ satisfies $i < |\chain|
+    - k$.
+\end{definition}
+
+\begin{definition}{(Predicate persistence)}
+    Parameterized by $k \in \mathbb{N}$, a chain predicate $Q(\chain)$ has
+    $\textit{persistence}$ if the following is true: When in a certain round
+    the predicate is $k$-stable in some honest party's chain, then whenever it is
+    $k$-stable in any honest party's chain, the truth value of the predicate is
+    the same. Furthermore, the change of truth value from $\bot$ to its final
+    truth value happened at the same blockchain depth.
+\end{definition}
+
+\begin{definition}{(Predicate liveness)}
+    Parameterized by $u, k \in \mathbb{N}$ (the ``wait time'' and ``depth''
+    parameters respectively), a chain predicate $Q(\chain)$ has
+    $\textit{liveness}$ if it is $k$-stable for one honest part in a certain
+    round, then it will also be $k$-stable for all honest parties after $u$ rounds.
+\end{definition}
+
+\begin{theorem}
+    If a chain predicate is monotonous, then it satisfies persistence with
+    parameter $k = 2\eta \kappa f$ with probability at least $1 -
+    e^{-\Omega(\kappa)}$.
+\end{theorem}
+
+\begin{proof}
+    Assume a typical execution and let $\chain_1$ be the chain of some honest
+    player $P_1$ at round $r_1$. Assume that the chain predicate $Q(\chain)$ is
+    $k$-stable for $P_1$ at round $r_1$, i.e.  $Q(\chain^{\rest k}) \neq \bot$.
+    The chain of any honest player $P_2$ will be at least as long from the next
+    round on and from common prefix we have that $\chain_1^{\rest k}
+    \preccurlyeq \chain_2$. Therefore the predicate will be $k$-stable, have
+    the same truth value, and have the same switching position for all honest
+    parties.
+\end{proof}
+
+\begin{theorem}
+    If a chain predicate is monotonous, then it satisfies liveness with
+    parameters $u = 4\eta(1 - \epsilon)^{-1}\kappa$ rounds and $k = 2\eta
+    \kappa f$ with probability at least $1 - e^{-\Omega(\kappa)}$.
+\end{theorem}
+
+\begin{proof}
+    ?
+\end{proof}
 
 \import{./}{algorithms/alg.nipopow-innerchain.tex}
 
