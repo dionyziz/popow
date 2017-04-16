@@ -1,0 +1,21 @@
+\section{Model}
+
+We work on the Backbone model (TODO: reference). We introduce two entities to
+the standard Backbone model: The Prover and the Verifier which work in the
+existing environment. The Prover is part of the existing miner node which
+exists in the backbone protocol. The Verifier is a completely new entity. When
+the game begins, the Prover and the Verifier are instantiated with a fixed
+predicate $q$, which generalized the notion of proof-of-mining and allows any
+blockchain property to be proven between the Prover and the Verifier. Some of
+these predicates are more suitable for succinct proofs than others. We focus
+our attention in what we call \textit{ reliable} predicates; that is,
+predicates which are monotonic and stable.  These predicates have the
+exceptional property that all honest miners share their view of them in a way
+that is updated in a predictable manner, with a decision that persists as the
+blockchain grows.  Furthermore, we are interested in \textit{succinct}
+predicates, predicates which can be proven using a succinct protocol, a
+protocol which requires proofs that are short in terms of the total blockchain
+size. Finally, we formalize the notion of non-interactivity.
+
+We use this model to explore which predicates are reliable and can be proven
+succinctly.
