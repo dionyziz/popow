@@ -1,0 +1,25 @@
+\begin{figure}[t]
+\begin{algorithm}[H]
+    \caption{\label{alg.backbone-prover} Our generic honest Prover entity addition to the
+        backbone model. It is augmented with a{ \em
+        proof generating function} $\textsf{Prove}_q(\cdot)$ parameterized by a
+        predicate $q$}
+    \begin{algorithmic}[1]
+     \Statex
+     \Let\chain\varepsilon
+        \Let{st}\varepsilon
+        \Let{round}1
+        \While{\textsc{True}}
+            \Let{\tilde\chain}{\mathsf{maxvalid}( \chain, \mbox{any chain $\chain'$ found in  \textsc{Receive}()}) }
+            \If{$\textsc{Input}()\mbox{ contains }\textsc{ReadProof}$}
+                \Let{\overline \Pi}{\textsf{Prove}_q(\chain)}
+                \State\textsc{Diffuse}{$(\overline \Pi)$}
+            \Else
+                \State\textsc{Diffuse}{$(\bot)$}
+            \EndIf
+            \Let{round}{round+1}
+        \EndWhile
+        \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
+\end{figure}
