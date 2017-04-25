@@ -5,7 +5,7 @@
             \Let{\textsf{innerChain}}{[\nobreakspace]}
             \Let{B}{\chain[\chain.length]}
             \Let{count}{0}
-            \While{$count \neq boundary$}
+            \While{$count < boundary$}
                 \Let{count}{count + 1}
                 \Let{blockid}{B.\textsf{interlink}[i]}
                 \Let{B}{\textsf{blockById}(blockid)}
