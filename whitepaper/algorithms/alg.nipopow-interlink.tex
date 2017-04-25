@@ -1,0 +1,18 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.nipopow_interlink}updateInterlink}
+    \begin{algorithmic}[1]
+        \Function{\sf updateInterlink}{$B'$}
+            \Let{(s', x', ctr', \textsf{interlink'})}{B'}
+            \Comment{Deconstruct block $B'$ into its data}
+            \Let{\textsf{interlink}}{\textsf{interlink'}}
+            \Let{\textsf{blockid}}{H(ctr', G(s', x', \textsf{interlink'}))}
+            \Let{\mu}{0}
+            \While{$\textsf{blockid} < \frac{T}{2^\mu}$}
+                \Let{\textsf{interlink}[\mu]}{\textsf{blockid}}
+                \Let{\mu}{\mu + 1}
+            \EndWhile
+            \State\Return{\textsf{interlink}}
+        \EndFunction
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
