@@ -2,14 +2,12 @@
     \caption{\label{alg.nipopow_construct_innerchain}constructInnerChain}
     \begin{algorithmic}[1]
         \Function{\sf constructInnerChain}{$\chain, i, boundary$}
-            \Let{\textsf{innerChain}}{[\nobreakspace]}
-            \Let{B}{\chain[\chain.length]}
-            \Let{count}{0}
-            \While{$count < boundary$}
-                \Let{count}{count + 1}
+            \Let{B}{\chain[-1]}
+            \Let{\textsf{innerChain}}{[B]}
+            \While{$B \neq boundary$}
                 \Let{blockid}{B.\textsf{interlink}[i]}
                 \Let{B}{\textsf{blockById}(blockid)}
-                \State{\textsf{innerChain.append}($B$.interlink[$i$])}
+                \State{\textsf{innerChain.append}(B)}
             \EndWhile
             \State\Return{\textsf{innerChain}}
         \EndFunction
