@@ -7,13 +7,13 @@
             \Let{i}{\chain[size].\mathsf{interlink}.length}
             \Let{boundary}{\chain[1]}
             \Comment{Genesis block}
-            \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain^{\rest k - 1}, i, boundary)}
+            \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain[:-k], i, boundary)}
             \While{$i > 0$}
                 \If{$\pi[i].length \geq m$}
                     \Let{boundary}{\pi[i][-m]}
                 \EndIf
                 \Let{i}{i - 1}
-                \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain^{\rest k - 1}, i, boundary)}
+                \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain[:-k], i, boundary)}
             \EndWhile
             \State\Return{$\pi$}
         \EndFunction
