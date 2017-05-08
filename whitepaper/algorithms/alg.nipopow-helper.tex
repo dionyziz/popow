@@ -1,0 +1,18 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.nipopow_helper}Helper functions needed for the NiPoPoW
+    construction. \textit{blockid} determines the id of a block given its
+    contents. \textit{lvl} determines the maximum superblock level of a block.}
+    \begin{algorithmic}[1]
+        \Function{\sf blockid}{$B$}
+            \Let{(s, x, ctr, \textsf{interlink})}{B}
+            \Let{\textsf{id}}{H(ctr, G(s, x, \textsf{interlink}))}
+            \State\Return{\textsf{id}}
+        \EndFunction
+
+        \Function{\sf lvl}{$B$}
+            \Let{\mu}{\left \lfloor \log(T) - \log(\sf{blockid}(B)) \right \rfloor}
+            \State\Return{$\mu$}
+        \EndFunction
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
