@@ -1,5 +1,21 @@
 \section{Security}
 
+\begin{lemma}
+    If the maximum level superchain belonging to the honest parties is of level
+    $\mu$, then the adversary cannot produce a superchain of level better than
+    $\mu + 1$ except with negligible probability.
+\end{lemma}
+\begin{proof}
+    ???
+\end{proof}
+
+Based on the above, observe that the adversarial proof cannot exceed the
+superblock level of the honest proof by more than one, except with negligible
+probability. Therefore, proofs that are of much inferior superblock level can
+be rejected immediately. This allows us to assume that for two competing proofs
+$\overline{\Pi}_\alpha$ and $\overline{\Pi}_\beta$ it holds that
+$||\overline{\Pi}_A| - |\overline{\Pi}_B|| \leq 1$.
+
 \begin{theorem}
     The non-interactive proofs-of-proofs-of-work construction is secure.
 \end{theorem}
@@ -7,12 +23,6 @@
 \begin{proof}
     Let $\overline{\Pi}_A, \overline{\Pi}_B$ be an adversarial and an honest
     proof respectively.
-
-    First, observe that the adversarial proof cannot exceed the superblock
-    level of the honest proof by more than one, except with negligible
-    probability. Therefore, proofs that are of much inferior superblock level
-    can be rejected immediately. This allows us to assume that
-    $||\overline{\Pi}_A| - |\overline{\Pi}_B|| \leq 1$.
 
     Let $b$ be the LCA of $\overline{\Pi}_A$ and $\overline{\Pi}_B$ and assume
     that $A$ is the adversary. Let $\mu$ be the highest level at which one of $A$
