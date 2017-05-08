@@ -7,8 +7,6 @@
     \begin{algorithmic}[1]
      \Statex
      \Let\chain\varepsilon
-        \Let{st}\varepsilon
-        \Let{round}1
         \While{\textsc{True}}
             \Let{\tilde\chain}{\mathsf{maxvalid}( \chain, \mbox{any chain $\chain'$ found in  \textsc{Receive}()}) }
             \If{$\textsc{Input}()\mbox{ contains }\textsc{ReadProof}$}
@@ -17,7 +15,6 @@
             \Else
                 \State\textsc{Diffuse}{$(\bot)$}
             \EndIf
-            \Let{round}{round+1}
         \EndWhile
         \vskip8pt
     \end{algorithmic}
