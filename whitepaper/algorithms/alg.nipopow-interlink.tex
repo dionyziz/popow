@@ -2,10 +2,8 @@
     \caption{\label{alg.nipopow_interlink}updateInterlink}
     \begin{algorithmic}[1]
         \Function{\sf updateInterlink}{$B'$}
-            \Let{(s', x', ctr', \textsf{interlink'})}{B'}
-            \Comment{Deconstruct block $B'$ into its data}
-            \Let{\textsf{interlink}}{\textsf{interlink'}}
-            \Let{\textsf{blockid}}{H(ctr', G(s', x', \textsf{interlink'}))}
+            \Let{\textsf{interlink}}{B'.\textsf{interlink}}
+            \Let{\textsf{id}}{blockid(B')}
             \Let{\mu}{0}
             \While{$\textsf{blockid} < \frac{T}{2^\mu}$}
                 \Let{\textsf{interlink}[\mu]}{\textsf{blockid}}
