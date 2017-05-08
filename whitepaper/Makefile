@@ -27,7 +27,7 @@ all: ${PDF}
 %.cls:   %.ins %.dtx
 	pdflatex $<
 
-%.pdf:  %.tex *.tex algorithms/*.tex *.bib   $(PACKAGE).cls ACM-Reference-Format.bst
+%.pdf:  %.tex *.tex algorithms/*.tex figures/*.png *.bib   $(PACKAGE).cls ACM-Reference-Format.bst
 	pdflatex $<
 	- bibtex $*
 	pdflatex $<
