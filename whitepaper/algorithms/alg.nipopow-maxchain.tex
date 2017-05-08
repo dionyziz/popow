@@ -1,0 +1,53 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.nipopow_maxchain}The \textsf{MaxChain} algorithm
+    for the NiPoPoW protocol. Returns True if the underlying chain of player
+    $\alpha$ is deemed longer than the underlying chain of player $\beta$}
+    \begin{algorithmic}[1]
+        \Function{\sf maxChain$_m$}{$\tilde{\Pi}_\alpha, \tilde{\Pi}_\beta$}
+            \Let{\overline{\Pi}_\alpha}{\textsf{parse}(\tilde{\Pi}_\alpha)}
+            \Let{\overline{\Pi}_\beta}{\textsf{parse}(\tilde{\Pi}_\beta)}
+            \If{$\lnot \textsf{valid}(\overline{\Pi}_\alpha)$}
+                \State\Return{False}
+                \Comment{$\beta$ wins}
+            \EndIf
+            \If{$\lnot \textsf{valid}(\overline{\Pi}_\beta)$}
+                \State\Return{True}
+                \Comment{$\alpha$ wins}
+            \EndIf
+            \If{$|\overline{\Pi}_\alpha| > |\overline{\Pi}_\beta|$}
+                \State\Return{$
+                    \lnot
+                    \textsf{maxChain}_m
+                    (\tilde{\Pi}_\beta, \tilde{\Pi}_\alpha)
+                $}
+            \EndIf
+            \If{$|\overline{\Pi}_\beta - \overline{\Pi}_\alpha| > 1$}
+                \State\Return{False}
+            \EndIf
+            \Let{b}{\textsf{LCA}(\tilde{\Pi}_\alpha, \tilde{\Pi}_\beta)}
+            \For{$\mu = |\overline{\Pi}_\beta|$ down to $0$}
+                \Let{\textsf{adv}_\alpha}{
+                    |\overline{\Pi}_\alpha[\mu]| -
+                    \textsf{findInChain}(\overline{\Pi}_\alpha[\mu], b)
+                }
+                \Let{\textsf{adv}_\beta}{
+                    |\overline{\Pi}_\beta[\mu]| -
+                    \textsf{findInChain}(\overline{\Pi}_\beta[\mu], b)
+                }
+                \If{$\textsf{adv}_\alpha \geq m \lor \textsf{adv}_\beta \geq m$}
+                    \If{$\textsf{adv}_\alpha > \textsf{adv}_\beta$}
+                        \State\Return{True}
+                    \Else
+                        \State\Return{False}
+                    \EndIf
+                \EndIf
+            \EndFor
+            \If{$|\overline{\Pi}_\alpha[0]| > |\overline{\Pi}_\beta[0]|$}
+                \State\Return{True}
+            \Else
+                \State\Return{False}
+            \EndIf
+        \EndFunction
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
