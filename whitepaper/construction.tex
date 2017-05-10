@@ -1,13 +1,13 @@
 \section{Constructing blockchain proofs}
 
-We introduce a helper algorithm, ConstructInnerChain, shown in
-Algorithm~\ref{alg.nipopow_construct_innerchain}. This algorithm returns the innerchain
+We introduce a helper algorithm, constructInnerChain, shown in
+Algorithm~\ref{alg.nipopow-innerchain}. This algorithm returns the innerchain
 of level $i$ extracted from the blockchain $\chain$. If boundary is provided,
 it only returns the blocks more recent than the boundary block supplied.
 
 \import{./}{algorithms/alg.nipopow-prover.tex}
 
-The NiPoPoW proof construction is shown in Algorithm~\ref{alg.nipopow_construct_proof}.
+The NiPoPoW proof construction is shown in Algorithm~\ref{alg.nipopow-construct-proof}.
 This produces a non-interactive PoPoW in parameter $m$ which consists of a
 number of blocks for every level $i$. The number of blocks per level is
 approximately $2m$.
