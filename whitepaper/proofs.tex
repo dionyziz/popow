@@ -1,8 +1,8 @@
 \section{Non-interactive blockchain proofs}
 
 A non-interactive proof-of-proof of work is a game between a Prover and a
-Verifier parameterized by predicate $q$ which the prover tries to convince the
-verifier for. The predicate $q$ is a function of a chain $\chain$, which the
+Verifier parameterized by predicate $Q$ which the prover tries to convince the
+verifier for. The predicate $Q$ is a function of a chain $\chain$, which the
 prover claims to be the longest chain.
 
 \import{./}{algorithms/alg.verifier-framework.tex}
@@ -10,6 +10,6 @@ prover claims to be the longest chain.
 \import{./}{algorithms/alg.verifier-lite.tex}
 
 At the beginning of the game, two Provers generate proofs $\pi_A$, $\pi_B$
-claiming potentially different truth values for the predicate $q$ based on
+claiming potentially different truth values for the predicate $Q$ based on
 their claimed local longest chains. The Verifier receives these proofs and
 accepts one of the two proofs, determining the truth value of the predicate.
