@@ -79,7 +79,7 @@ the interlink data structure.
 Now that the consensus layer details have been presented, we move on to
 illustrate that, in fact, no fork is needed. Given that intuitively these
 changes constitute rule modifications to the consensus layer, we call this
-technique a \textit{forkless fork}.
+technique a \textit{velvet fork}.
 
 The way to achieve this is by requiring upgraded miners to include the
 interlink data structure in the form of a Merkle chain root hash in their
@@ -112,12 +112,12 @@ proofs, as they are only able to present shorter chains in that case. The
 honest Prover can simply ignore such pointers as if they were not included at
 all.
 
-The forkless Prover is shown in Algorithm~\ref{alg.nipopow-forkess-prover}. The
+The velvet Prover is shown in Algorithm~\ref{alg.nipopow-velvet-prover}. The
 Prover works as usual, but additionally mantains a reallink data structure
 which stores the correct interlink for each block. Whenever a block is received
 from the network, the Prover checks to see if the interlink included in the block is
 correct and corresponds to their internal state reallink. If so, these
 interlinks are used in the Prover's proofs; otherwise they are ignored.
 
-\import{./}{algorithms/alg.backbone-forkless-prover.tex}
-\import{./}{algorithms/alg.nipopow-forkless-innerchain.tex}
+\import{./}{algorithms/alg.backbone-velvet-prover.tex}
+\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
