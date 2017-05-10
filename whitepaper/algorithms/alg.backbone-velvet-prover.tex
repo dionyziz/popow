@@ -5,18 +5,18 @@
     \begin{algorithmic}[1]
      \Statex
         \Let\chain{[\textsf{Genesis}]}
-        \Let{\textsf{realInterlink}}{\{\}}
+        \Let{\textsf{realLink}}{\{\}}
         \Let{\textsf{blockById}}{\{\}}
         \Let{\textsf{genesisId}}{\textsf{blockid}(\textsf{Genesis})}
         \Let{\textsf{blockById}[\textsf{genesisId}]}{\textsf{Genesis}}
-        \Let{\textsf{realInterlink}[\textsf{genesisId}]}{[\textsf{Genesis}]}
+        \Let{\textsf{realLink}[\textsf{genesisId}]}{[\textsf{Genesis}]}
         \While{\textsc{True}}
             \Let{\tilde\chain}{\mathsf{maxvalid}( \chain, \mbox{any chain $\chain'$ found in  \textsc{Receive}()}) }
             \Let{\textsf{new}}{[]}
             \For{$i = |\chain| - 1$ down to $0$}
-                \If{$\chain[i] \in \textsf{realInterlink}$}
+                \If{$\chain[i] \in \textsf{realLink}$}
                     \Let{B'}{\chain[i]}
-                    \Let{\textsf{interlink}}{\textsf{realInterlink}[B']}
+                    \Let{\textsf{interlink}}{\textsf{realLink}[B']}
                     \State\textbf{break}
                 \EndIf
                 \State\textsf{new.append}{$(\chain[i])$}
@@ -27,10 +27,10 @@
                 \EndFor
                 \Let{B'}{B}
                 \Let{\textsf{blockById}[blockid(B)]}{B}
-                \Let{\textsf{realInterlink}[B]}{\textsf{interlink}}
+                \Let{\textsf{realLink}[B]}{\textsf{interlink}}
             \EndFor
             \If{$\textsc{Input}()\mbox{ contains }\textsc{ReadProof}$}
-                \Let{\overline \Pi}{\textsf{Prove}_q(\chain, \textsf{realInterlink}, \textsf{blockById})}
+                \Let{\overline \Pi}{\textsf{Prove}_q(\chain, \textsf{realLink}, \textsf{blockById})}
                 \State\textsc{Diffuse}{$(\overline \Pi)$}
             \Else
                 \State\textsc{Diffuse}{$(\bot)$}

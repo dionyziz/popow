@@ -3,12 +3,12 @@
     that allows for a velvet fork.}
     \begin{algorithmic}[1]
         \Function{\sf constructInnerChain}{$\chain, \mu, boundary,
-            \textsf{reallink}, \textsf{blockById}$}
+            \textsf{realLink}, \textsf{blockById}$}
             \Let{B}{\chain[-1]}
             \Let{\textsf{aux}}{[B]}
             \Let{\pi}{[B]}
             \While{$B \neq boundary$}
-                \If{$B.\textsf{interlink}[\mu] = \textsf{reallink}[blockid(B)][\mu]$}
+                \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[blockid(B)][\mu]$}
                     \Let{blockid}{B.\textsf{interlink}[\mu]}
                     \Let{B}{\textsf{blockById}(blockid)}
                 \Else

@@ -112,11 +112,11 @@ proofs, as they are only able to present shorter chains in that case. The
 honest Prover can simply ignore such pointers as if they were not included at
 all.
 
-The velvet Prover is shown in Algorithm~\ref{alg.nipopow-velvet-prover}. The
-Prover works as usual, but additionally mantains a reallink data structure
+The velvet Prover is shown in Algorithm~\ref{alg.backbone-velvet-prover}. The
+Prover works as usual, but additionally mantains a realLink data structure
 which stores the correct interlink for each block. Whenever a block is received
 from the network, the Prover checks to see if the interlink included in the block is
-correct and corresponds to their internal state reallink. If so, these
+correct and corresponds to their internal state realLink. If so, these
 interlinks are used in the Prover's proofs; otherwise they are ignored.
 
 \import{./}{algorithms/alg.backbone-velvet-prover.tex}
