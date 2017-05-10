@@ -22,4 +22,7 @@
 *.tgz
 *.zip
 *.rpi
+*.d
+*.fls
+*.*.make
 .DS_Store

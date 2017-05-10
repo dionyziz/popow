@@ -40,7 +40,8 @@ clean:
 	*.cfg *.glo *.idx *.toc \
 	*.ilg *.ind *.out *.lof \
 	*.lot *.bbl *.blg *.gls *.cut *.hd \
-	*.dvi *.ps *.thm *.tgz *.zip *.rpi
+	*.dvi *.ps *.thm *.tgz *.zip *.rpi \
+	*.d *.fls *.*.make
 
 distclean: clean
 	$(RM) $(PDF) *-converted-to.pdf
