@@ -2,10 +2,10 @@
     \caption{\label{alg.nipopow-verifier}The \textsf{Verify} algorithm
     for the NiPoPoW protocol}
     \begin{algorithmic}[1]
-        \Function{\sf Verify$_{m,k}$}{$\bar\Pi$}
-            \Let{best}{\bar\Pi[1]}
-            \For{$i=1$ to $\bar\Pi.length$}
-                \Let{best}{\mathsf{bestChain}(best, \bar\Pi[i])}
+        \Function{\sf Verify$_{m,k}$}{$\mathcal{P}$}
+            \Let{best}{\mathcal{P}[0]}
+            \For{$\tilde{\Pi} \in \mathcal{P}$}
+                \Let{best}{\mathsf{maxChain}_m(best, \tilde\Pi)}
             \EndFor
             \State\Return{best}
         \EndFunction
