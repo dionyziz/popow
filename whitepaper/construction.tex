@@ -14,6 +14,11 @@ verifying payments in the SPV case. Furthermore, these predicates are
 expressive enough to describe the inclusion of the specific transactions needed
 for building sidechains.
 
+The \textsc{Verify} function of our NiPoPoW construction is described in
+Algorithm~\ref{alg.nipopow-verifier}.
+
+\import{./}{algorithms/alg.verifier-lite.tex}
+
 We introduce a helper algorithm, constructInnerChain, shown in
 Algorithm~\ref{alg.nipopow-innerchain}. This algorithm returns the innerchain
 of level $i$ extracted from the blockchain $\chain$. If boundary is provided,
