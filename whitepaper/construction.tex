@@ -1,5 +1,19 @@
 \section{Constructing blockchain proofs}
 
+Based on the model we introduced previously, we now move on to provide a
+concrete non-interactive PoPoW construction which allows proving certain
+predicates $Q$ of the chain $\chain$. Among the predicates which are stable, we
+limit ourselves to the class of predicates which are functions of only the
+chain suffix $\chain[:-k]$. As we will illustrate, these predicates are
+significantly easier to prove, but at the same time seem to be the most useful
+class of predicates which one needs for applications.
+
+Specifically, these predicates allow proving that a transaction occurred in the
+longest chain and in a block burried under $k$ blocks, which is sufficient for
+verifying payments in the SPV case. Furthermore, these predicates are
+expressive enough to describe the inclusion of the specific transactions needed
+for building sidechains.
+
 We introduce a helper algorithm, constructInnerChain, shown in
 Algorithm~\ref{alg.nipopow-innerchain}. This algorithm returns the innerchain
 of level $i$ extracted from the blockchain $\chain$. If boundary is provided,
