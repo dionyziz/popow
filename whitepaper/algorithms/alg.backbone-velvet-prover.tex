@@ -30,7 +30,7 @@
                 \Let{\textsf{realLink}[B]}{\textsf{interlink}}
             \EndFor
             \If{$\textsc{Input}()\mbox{ contains }\textsc{ReadProof}$}
-                \Let{\overline \Pi}{\textsf{Prove}_q(\chain, \textsf{realLink}, \textsf{blockById})}
+                \Let{\overline \Pi}{\textsf{Prove}'_q(\chain, \textsf{realLink}, \textsf{blockById})}
                 \State\textsc{Diffuse}{$(\overline \Pi)$}
             \Else
                 \State\textsc{Diffuse}{$(\bot)$}
