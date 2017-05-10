@@ -2,18 +2,17 @@
     \caption{\label{alg.nipopow-velvet-innerchain}The modified constructInnerChain
     that allows for a velvet fork.}
     \begin{algorithmic}[1]
-        \Function{\sf constructInnerChain'}{$\chain, \mu, boundary,
-            \textsf{realLink}, \textsf{blockById}$}
+        \Function{\sf constructInnerChain'}{$\chain$, $\mu$, $b$, realLink, blockById}
             \Let{B}{\chain[-1]}
             \Let{\textsf{aux}}{[B]}
             \Let{\pi}{[B]}
-            \While{$B \neq boundary$}
-                \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[blockid(B)][\mu]$}
-                    \Let{blockid}{B.\textsf{interlink}[\mu]}
-                    \Let{B}{\textsf{blockById}(blockid)}
+            \While{$B \neq b$}
+                \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[\textsf{blockid}(B)][\mu]$}
+                    \Let{id}{B.\textsf{interlink}[\mu]}
+                    \Let{B}{\textsf{blockById}[id]}
                 \Else
                     \Comment{Invalid interlink}
-                    \Let{B}{\textsf{blockById}(B.\textsf{interlink}[0])}
+                    \Let{B}{\textsf{blockById}[B.\textsf{interlink}[0]]}
                 \EndIf
                 \If{$\textsf{level}(B) = \mu$}
                     \State{$\pi$.append($B$)}
