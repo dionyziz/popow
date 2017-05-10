@@ -1,10 +1,10 @@
 \begin{algorithm}[H]
     \caption{\label{alg.verifier-full}The full verifier}
     \begin{algorithmic}[1]
-        \Function{\sf Prove$_Q$}{$\chain$}
+        \Function{\sf Prove$^Q$}{$\chain$}
             \State\Return{$\chain$}
         \EndFunction
-        \Function{\sf Verify$_Q$}{$\bar\chain$}
+        \Function{\sf Verify$^Q$}{$\bar\chain$}
             \Let{\chain}{\mathsf{maxvalid}(\bar\chain)}
             \State\Return{$Q(\chain)$}
         \EndFunction
