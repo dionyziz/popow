@@ -69,9 +69,11 @@ the interlink data structure.
     \caption{\label{fig.merkle_chain}
     A Merkle chain hashing the interlink data structure for short
     proof sizes. The gray root node hash is included in the coinbase
-    transaction. Here, the prover wishes to present superblock pointers of
-    levels 4 and above. They must include the data of the black nodes in their
-    proof.}
+    transaction. Nodes with numbers in them contain the interlink pointer of
+    the indicated level. Blank nodes contain the hash of their children. Child
+    nodes point to their parent. Here, the Prover wishes to present superblock
+    pointers of levels 4 and above. They must include the data of the black
+    nodes in their proof.}
     \centering
     \includegraphics[width=0.3\textwidth,keepaspectratio]{figures/merkle-chain.png}
 \end{figure}
