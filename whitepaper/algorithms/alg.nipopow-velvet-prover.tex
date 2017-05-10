@@ -1,0 +1,27 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.nipopow-velvet-prover}The \textsf{Prove} algorithm
+    for the NiPoPoW protocol, modified for a velvet fork.}
+    \begin{algorithmic}[1]
+        \Function{\sf{Prove}'$_{m,k}$}{$\chain, \textsf{realLink}, \textsf{blockById}$}
+            \Let{size}{|\chain| - (k - 1)}
+            \Let{i}{|\chain[size].\mathsf{interlink}|}
+            \Let{b}{\chain[1]}
+            \Let{\tilde\Pi}{\emptyset}
+            \Comment{Genesis block}
+            \For{$\mu = |\textsf{realLink}[\chain[-k-1]]|$ down to $0$}
+                \State $\pi, aux \gets$
+                    \begin{varwidth}[t]{\linewidth}
+                        $\textsf{constructInnerChain'}$
+                        \par
+                        $(\chain[:-k], \mu, b, \textsf{realLink}, \textsf{blockById})$
+                    \end{varwidth}
+                \If{$|\pi| \geq m$}
+                    \Let{b}{\pi[-m]}
+                \EndIf
+                \Let{\tilde\Pi}{\tilde\Pi \cup aux}
+            \EndFor
+            \State\Return{$\tilde\Pi$}
+        \EndFunction
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
