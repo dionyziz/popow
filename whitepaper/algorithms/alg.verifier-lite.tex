@@ -2,12 +2,15 @@
     \caption{\label{alg.nipopow-verifier}The \textsf{Verify} algorithm
     for the NiPoPoW protocol}
     \begin{algorithmic}[1]
-        \Function{\sf Verify$_{m,k}$}{$\mathcal{P}$}
-            \Let{best}{\mathcal{P}[0]}
-            \For{$\tilde{\Pi} \in \mathcal{P}$}
-                \Let{best}{\mathsf{maxChain}_m(best, \tilde\Pi)}
+        \Function{\sf Verify$^Q_{m,k}$}{$\mathcal{P}$}
+            \Let{(\tilde{\Pi}, \chi)}{\mathcal{P}[0]}
+            \Let{best}{\chi}
+            \For{$(\tilde{\Pi}, \chi) \in \mathcal{P}$}
+                \If{$\mathsf{maxChain}_m(\tilde\Pi, best)$}
+                    \Let{best}{\chi}
+                \EndIf
             \EndFor
-            \State\Return{best}
+            \State\Return{$Q(\chi)$}
         \EndFunction
     \vskip8pt
     \end{algorithmic}
