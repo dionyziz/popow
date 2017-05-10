@@ -1,5 +1,7 @@
 \section{Upgrading the consensus layer}
 
+\subsection{Soft fork}
+
 Our construction requires an upgrade to the bitcoin consensus layer. In this
 section we outline a possible upgrade path for the bitcoin network. The obvious
 path forward for implementing our construction requires building an altcoin or
@@ -78,6 +80,8 @@ the interlink data structure.
     \includegraphics[width=0.3\textwidth,keepaspectratio]{figures/merkle-chain.png}
 \end{figure}
 
+\subsection{Velvet fork}
+
 Now that the consensus layer details have been presented, we move on to
 illustrate that, in fact, no fork is needed. Given that intuitively these
 changes constitute rule modifications to the consensus layer, we call this
@@ -116,11 +120,14 @@ all.
 
 The velvet Prover is shown in Algorithm~\ref{alg.backbone-velvet-prover}. The
 Prover works as usual, but additionally mantains a realLink data structure
-which stores the correct interlink for each block. Whenever a block is received
-from the network, the Prover checks to see if the interlink included in the block is
-correct and corresponds to their internal state realLink. If so, these
-interlinks are used in the Prover's proofs; otherwise they are ignored.
+which stores the correct interlink for each block. Whenever a new winning chain
+is received from the network, the Prover checks it for blocks that it hasn't
+seen before. For those blocks, it maintains its own realLink data structure
+which it updates accordingly to make sure it is correct regardless of what the
+interlink data structure of the received block claims.
 
 \import{./}{algorithms/alg.backbone-velvet-prover.tex}
+
+
 \import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
 \import{./}{algorithms/alg.nipopow-velvet-prover.tex}
