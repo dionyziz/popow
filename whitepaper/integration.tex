@@ -48,13 +48,9 @@ In this section we discussion several integration scenarios that can benefit.
 
 \subsection{Upgrade Paths}
 
-\paragraph{Proof of Work.}
 
-\paragraph{Proof of Stake.}
 
-\subsection{Application Scenarios}
-
-\paragraph{Multi-blockchain wallets.}
+\subsection{Multi-blockchain wallets.}
 As mentioned, one application of our technique is the potential for a multi-cryptocurrency client.
 
 At the current time of writing, a total of 731 cryptocurrencies are listed on 
@@ -90,31 +86,27 @@ Similarly, many multi-asset wallet applications, such as Jaxx\footnote{\url{http
 In Table 1, we show the costs associated with running a client supporting multiple cryptocurrencies. Our estimates are based on an assumption that the header for each block is 80 bytes, as is the case with Bitcoin. For EtHash based currencies, this is an underestimate, since according to the Ethereum whitepaper,\footnote{\url{https://github.com/ethereum/wiki/wiki/White-Paper}}
 the header of an Ethereum block is approximately 200 bytes.
 
-
-Two obstacles. First, require making multiple connections to the peer-to-peer network.
-
-
 \paragraph{Catena.}
 
-In Catena, propose development of.
+In Catena,~\cite{} propose development of.
+
+\anote{TODO: Copy cost estimates and usage experiments from Catena paper.}
 
 Develop a header relay network as a way of releasing.
+If relay header network instead provided proofs based on NiPoPoWs, 
 
 \subsection{Sidechains}
-
-
 
 
 \section{Related Work}
 
 \paragraph{Cross Chain Transactions.}
-An application of our technique is for 
-
+An application of our technique is for sidechains.
+Hash lock contract are supported by most cryptocurrency scripting languages, including Bitcoin script and the Ethereum virtual machine. Only relies on the ability to verify that a user provided input is the preimage of a given hash.
 
 \paragraph{BTCRelay.}
 BTCRelay~\cite{btcrelay} is an Ethereum smart contract written in Ethereum that acts as an SPV client for the Bitcoin blockchain.
-This allows an Ethereum smart contract to act .
+This allows Ethereum smart contract to condition their behavior based on the presence of particular transactions in the Bitcoin blockchain.
+Users can interact with the client to submit Bitcoin.
 
-Users can interact with the client to submit itcoin
-
-At the current time.
+At the current time, Ethereum does not provide built-in support for other hashes like scrypt, or even EtHash, the basis for Ethereum's own proof of work. Ethereum could be upgraded to support such opcodes in the future. This would 
