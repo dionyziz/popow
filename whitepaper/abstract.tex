@@ -1,18 +1,43 @@
 % \begin{abstract}
-Blockchain protocols such as bitcoin have created decentralized consensus
-mechanisms that allow monetary and other applications. In order to experiment
-and propose different consensus rules and avoid hard forks, sidechains were
-proposed. To transfer a coin between sidechains, a transaction must include a
-proof that proof-of-work has been performed. This proof is linear in size in
-the case of both a full node or an SPV. Using lite proofs-of-proofs-of-work,
-these proofs can become sublinear, but require interactivity. We modify PoPoWs
-to produce non-interactive proofs. We describe how exactly these proofs can be
-constructed. We show that these proofs remain sublinear in size. We then prove,
-using a classical cryptographic reduction argument, that these proofs provide
-equivalent security to interactive proofs. Finally, we argue that their
-adoption can be achieved in bitcoin using a soft fork which requires only a
-minority of miners to update. This construction provides a solution to the
-previously open problem of building secure and efficient sidechains. Our
-construction is of general interest and can be applied to any PoW-based
-cryptocurrency.
+Blockchain protocols such as bitcoin provide decentralized consensus
+mechanisms based on proofs of work (PoWs) 
+that allow monetary and other applications. 
+%
+In this work we introduce and implement a new primitive for blockchain protocols, called Noninteractive-Proofs-of-Proofs-of-Work, (NiPoPoWs), which can be adapted into existing cryptocurrencies to support more efficient clients.
+Unlike a traditional blockchain client, which must verify the entire chain of PoWs, which grows linearly over time, clients based on NiPoPoWs require resources only logarithmic in the length of the blockchain.
+
+%This proof is linear in size in
+%the case of both a full node or an SPV. Using lite proofs-of-proofs-of-work,
+%these proofs can become sublinear, but require interactivity. We modify PoPoWs
+%to produce non-interactive proofs. We describe how exactly these proofs can be
+%constructed. 
+NiPoPoWs solve two important open questions for PoW based consensus
+protocols. Specifically the problem  
+of constructing efficient transaction verification (sometimes called
+``simple payment verification'' - SPV) clients and 
+the problem of constructing efficient sidechain proofs. 
+%
+%Sidechains is a mechanism that enables 
+% experimenting with different consensus rules while avoid hard forks. 
+%Secure implementation to transfer a coin between sidechains, a transaction must include a
+%proof that proof-of-work has been performed. t
+%
+We provide a formal model of NiPoPoWs, a construction that we prove
+secure in our model 
+via a cryptographic reduction argument and 
+an implementation that we benchmark to demonstrate  its efficiency. 
+Finally, we provide two ways that our NiPoPoW's can be adopted by 
+ existing blockchain protocols, first via a soft fork, that enables the 
+   adoption of the NiPoPoW related data structures
+  as part of the underlying consensus mechanism, 
+ and second  via a new update mechanism 
+that we term a ``velvet fork'' and enables to harness some of
+the performance benefits of NiPoPoWs even without reaching consensus about its use
+across nodes. 
+
+%This construction provides a solution to the
+%previously open problem of building secure and efficient sidechains. Our
+%construction is of general interest and can be applied to any PoW-based
+%cryptocurrency.
 % \end{abstract}
+
