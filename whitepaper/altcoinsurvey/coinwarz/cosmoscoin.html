@@ -1,0 +1,3439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="CoinWarz cryptocurrencies. Select a cryptocurrency to view cryptocurrency charts, mining information, current difficulty, and exchange rates for the selected cryptocurrency." />
+    <title>Cryptocurrencies - Mining Information - Exchange Rates | CoinWarz</title>
+    <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="/Content/css?v=azBLoMEAQziI0hnPpfPUzjG04HaLiXcZu6mQULqImEY1" rel="stylesheet"/>
+
+    <link href="/Content/bootstrap?v=Nj3pw1suUaATJxiJbES9sXM_j74Mke6N-rJuDs34Vto1" rel="stylesheet"/>
+
+    <script src="/bundles/jquery?v=iGCuHdVbVIAQiVRovAUYVN387CecwJIjYzlOtBHBLvo1"></script>
+
+    <script src="/bundles/bootstrap?v=au99dmOS7FdMUNweYLRiEq5a9dHTjWT4n6zTHldDmLg1"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Iceland' rel='stylesheet' type='text/css' />
+    <style>
+        #skin
+        {
+            position: absolute;
+            width: 100%;
+            height: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+            top: 0px;
+            left: 0px;
+            z-index: 1;
+        }
+        .antiSkin
+        {
+            background-color: #fff; 
+            z-index: 2; 
+            position: relative;
+            margin-bottom: -20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="background" style="position: fixed; display: none; left: 0pt; z-index: 1;
+        width: 100%; height: 100%; top: 20px;">
+            <div style="float:left;">
+                 <iframe id="takeoverLeft" src="/content/html5/gm/index.html" style="background-color:#fff;" width="330" height="996" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen></iframe>
+                <!--<a href="https://www.genesis-mining.com/a/205266" onclick="_gaq.push(['_trackEvent', 'Ads', 'Click', 'Genesis Mining Takeover Left 11-20 1M']);" target="_blank"><img id="bg1" src="/content/images/GM_BTC_1920.png" /></a>-->
+            </div>
+             <div style="float:right;">
+             <iframe id="takeoverRight" src="/content/html5/gm/index.html" style="background-color:#fff;" width="330" height="996" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen></iframe>
+                <!--<a href="https://www.genesis-mining.com/a/205266" onclick="_gaq.push(['_trackEvent', 'Ads', 'Click', 'Genesis Mining Takeover Right 11-20 1M']);" target="_blank"><img id="bg2" src="/content/images/GM_BTC_1920.png" /></a>-->
+            </div>
+    </div>
+   
+    <div id="fixedheader">
+        <div class="container" style="margin-top: 0px !important;">
+            <div id="fixedheaderC" style="margin-right: auto; margin-left: auto;">
+                <div style="float: left; width: 150px;">
+                    <h1 class="brand" style="margin: 0px; line-height: 20px;">
+                        <a href="/cryptocurrency">
+                            <img src="/content/images/coin-warz.png" alt="CoinWarz - Cryptocurrency Mining Profitability"
+                                style="height: 20px; width: 150px;"></a></h1>
+                </div>
+                <div style="width: 300px; margin-left: 15px; float: left;">
+                    <div style="float: left; width: auto; margin-right: 10px; margin-top: 4px; font-size: .85em;
+                        width: 60px;">
+                        <a href="/cryptocurrency/coins/bitcoin/">
+                            <img src="/content/images/bitcoin-64x64.png" alt="Bitcoin (BTC) Cryptocurrency" style="height:16px;margin-top: -2px; " /></a>&nbsp;<a
+                                href="/cryptocurrency/coins/bitcoin/" style="color: #252525;"><b>Bitcoin</b></a>
+                    </div>
+                    <div style="border: 1px solid #e5e5e5; background: #fff; border-radius: 6px; padding: 4px;
+                        height: 16px; font-size: .85em; float: left; width: auto; position: relative;">
+                        <div class="tickerBTC" style="width: 170px; margin-top: -3px;">
+                            <ul style="display: none;">
+                                    <li><span class="bold"><a href="https://www.bitfinex.com/" target="_blank">
+                                        <img src="/content/images/Bitfinex.png" alt="Bitfinex Exchanage" /></a>&nbsp;<a href="https://www.bitfinex.com/" target="_blank" style="color:#252525;">Bitfinex:</a>
+                                    </span><span class="brandText">$1,821.40</span>
+                                    </li>
+                                    <li><span class="bold"><a href="http://bit.ly/1ALvsm8" target="_blank">
+                                        <img src="/content/images/CEX.io.png" alt="CEX.io Exchanage" /></a>&nbsp;<a href="http://bit.ly/1ALvsm8" target="_blank" style="color:#252525;">CEX.io:</a>
+                                    </span><span class="brandText">$1,819.18</span>
+                                    </li>
+                                    <li><span class="bold"><a href="https://coinbase.com/?r=52212f780719cc31c6000083" target="_blank">
+                                        <img src="/content/images/Coinbase.png" alt="Coinbase Exchanage" /></a>&nbsp;<a href="https://coinbase.com/?r=52212f780719cc31c6000083" target="_blank" style="color:#252525;">Coinbase:</a>
+                                    </span><span class="brandText">$1,810.65</span>
+                                    </li>
+                                    <li><span class="bold"><a href="https://www.itbit.com/" target="_blank">
+                                        <img src="/content/images/itBit.png" alt="itBit Exchanage" /></a>&nbsp;<a href="https://www.itbit.com/" target="_blank" style="color:#252525;">itBit:</a>
+                                    </span><span class="brandText">$1,797.41</span>
+                                    </li>
+                                    <li><span class="bold"><a href="https://www.bitstamp.net/" target="_blank">
+                                        <img src="/content/images/Bitstamp.png" alt="Bitstamp Exchanage" /></a>&nbsp;<a href="https://www.bitstamp.net/" target="_blank" style="color:#252525;">Bitstamp:</a>
+                                    </span><span class="brandText">$1,784.65</span>
+                                    </li>
+                                    <li><span class="bold"><a href="https://btc-e.com" target="_blank">
+                                        <img src="/content/images/BTCe.png" alt="BTCe Exchanage" /></a>&nbsp;<a href="https://btc-e.com" target="_blank" style="color:#252525;">BTCe:</a>
+                                    </span><span class="brandText">$1,715.99</span>
+                                    </li>
+                            </ul>
+                        </div>
+                        <div style="position: absolute; right: 2px; top: 2px; width: 20px;">
+                            <div id="tickerBTCUp" style="float: left; width: 8px; margin-right: 2px; font-size: 7.5pt;
+                                cursor: pointer;">
+                                &#8593;</div>
+                            <div id="tickerBTCDown" style="float: left; width: 8px; font-size: 7.5pt; cursor: pointer;">
+                                &#8595;</div>
+                            <div style="clear: both;">
+                            </div>
+                        </div>
+                        <div style="clear: both;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <header style="margin: 0px 0px; background-color: transparent;
+        height: 50px; z-index:3; position:relative;">
+     <div class="container">       
+        <div style="float:left;margin-left: 10px;margin-top:16px; height:20px;">
+            <nav>
+                <ul class="nav nav-pills">
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#MiningProfitability">Mining Profitability<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        <li><a href="/cryptocurrency">Cryptocurrency Mining vs. Bitcoin Mining Profitability</a></li>
+                        <li><a href="/miningprofitability/sha-256">Cryptocurrency Mining vs. Bitcoin Mining Profitability (SHA-256 Only)</a></li>
+                        <li><a href="/miningprofitability/litecoin">Cryptocurrency Mining vs. Litecoin Mining Profitability (Scrypt & Scrypt-N Only)</a></li>
+                        <li><a href="/miningprofitability/quark">Cryptocurrency Mining vs. Quark Mining Profitability (Quark Only)</a></li>
+                        </ul>                        
+                    </li>
+                    <li>
+                        <a href="/calculators">Mining Calculators</a>                       
+                    </li>
+                        <li>
+                        <a href="/cryptocurrency/coins">Cryptocurrencies</a>                          
+                    </li> 
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#Charts">Cryptocurrency Charts<b class="caret"></b></a>                        
+                        <ul class="dropdown-menu">
+                        <li><a href="/charts/difficulty-charts">Difficulty Charts</a></li>
+                        <li><a href="/charts/exchange-rate-charts">Exchange Rate Charts</a></li>
+                        <li><a href="/charts/network-hashrate-charts">Network Hashrate Charts </a></li>
+                        </ul>                     
+                    </li>                 
+                </ul>              
+            </nav>
+        </div>
+        <div style="margin-top:20px; float:right; height:20px;">            
+            <div style="float: right;">
+                <div class="g-plusone" data-size="medium">
+                </div>
+            </div>
+            <div style="float: right; margin-right:10px;">
+                <!--<a href="https://twitter.com/share" class="twitter-share-button" data-via="CoinWarz">
+                    Tweet</a>-->
+                    <a class="twitter-follow-button" href="https://twitter.com/CoinWarz">Follow @CoinWarz</a>
+            </div>
+            <div style="clear: both;">
+            </div>
+        </div>
+        <div style="clear:both;">
+        </div>
+    </div>
+</header>
+    <div class="container antiSkin" style="margin-top: 10px;">
+       
+<div style="margin: 0px auto 10px auto; width: 768px; position: relative; text-align: center;">
+                <a href="http://exscudo.com/ico/?utm_source=site_coinwarz" target="_blank" onclick="_gaq.push(['_trackEvent', 'Ads', 'Click', 'Exscudo 728x90 1M']);"
+            title="">
+            <img src="/content/images/Exscudo_728x90.gif?v=1.1" alt="Exscudo" onload="_gaq.push(['_trackEvent', 'Ads', 'Impression', 'Exscudo 728x90 1M']);" /></a>
+    <div style="position: absolute; right: 0px;">
+        <a href="/advertise-with-bitcoin" style="font-size:11px; color:#aaa;">Advertise
+            with us</a>
+    </div>
+</div>
+
+        <div id="body">
+            
+            <section class="content-wrapper main-content clear-fix">
+                <h2 class="pageTitle">
+        Cryptocurrencies</h2>
+    <div id="actionContainer">
+        <div style="text-align: left;">
+            <input type="text" id="filter" name="filter" placeholder="enter a cryptocurrency or tag to filter"
+                style="width: 300px;" />
+        </div>
+
+            <div class="calCoinCard coinCard" coin="365coin 365" id="365">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/365coin" >
+                        <img src="/content/images/365coin-64x64.png" alt="365coin (365) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(365)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/365coin" class="link bold">
+                            365coin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="42 42" id="42">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/42" >
+                        <img src="/content/images/42-64x64.png" alt="42 (42) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(42)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/42" class="link bold">
+                            42 Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="acoin acoin" id="acoin">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/acoin" >
+                        <img src="/content/images/acoin-64x64.png" alt="Acoin (ACOIN) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ACOIN)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/acoin" class="link bold">
+                            Acoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="alphacoin alf" id="alf">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/alphacoin" >
+                        <img src="/content/images/alphacoin-64x64.png" alt="Alphacoin (ALF) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ALF)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/alphacoin" class="link bold">
+                            Alphacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="anoncoin anc" id="anc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/anoncoin" >
+                        <img src="/content/images/anoncoin-64x64.png" alt="Anoncoin (ANC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ANC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/anoncoin" class="link bold">
+                            Anoncoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="aricoin ari" id="ari">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/aricoin" >
+                        <img src="/content/images/aricoin-64x64.png" alt="Aricoin (ARI) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ARI)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/aricoin" class="link bold">
+                            Aricoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="arkhash ark" id="ark">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/arkhash" >
+                        <img src="/content/images/arkhash-64x64.png" alt="Arkhash (ARK) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ARK)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/arkhash" class="link bold">
+                            Arkhash Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="artbyte aby" id="aby">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/artbyte" >
+                        <img src="/content/images/artbyte-64x64.png" alt="ArtByte (ABY) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ABY)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/artbyte" class="link bold">
+                            ArtByte Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="asiccoin asc" id="asc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/asiccoin" >
+                        <img src="/content/images/asiccoin-64x64.png" alt="ASICcoin (ASC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ASC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/asiccoin" class="link bold">
+                            ASICcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="auroracoin aur" id="aur">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/auroracoin" >
+                        <img src="/content/images/auroracoin-64x64.png" alt="Auroracoin (AUR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(AUR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/auroracoin" class="link bold">
+                            Auroracoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bancorcoin bncr" id="bncr">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bancorcoin" >
+                        <img src="/content/images/bancorcoin-64x64.png" alt="BancorCoin (BNCR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BNCR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bancorcoin" class="link bold">
+                            BancorCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bata bta" id="bta">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bata" >
+                        <img src="/content/images/bata-64x64.png" alt="BATA (BTA) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BTA)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bata" class="link bold">
+                            BATA Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="battlecoin bcx" id="bcx">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/battlecoin" >
+                        <img src="/content/images/battlecoin-64x64.png" alt="Battlecoin (BCX) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BCX)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/battlecoin" class="link bold">
+                            Battlecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bbqcoin bqc" id="bqc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bbqcoin" >
+                        <img src="/content/images/bbqcoin-64x64.png" alt="BBQCoin (BQC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BQC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bbqcoin" class="link bold">
+                            BBQCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="beavercoin bvc" id="bvc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/beavercoin" >
+                        <img src="/content/images/beavercoin-64x64.png" alt="BeaverCoin (BVC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BVC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/beavercoin" class="link bold">
+                            BeaverCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="belacoin bela" id="bela">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/belacoin" >
+                        <img src="/content/images/belacoin-64x64.png" alt="Belacoin (BELA) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BELA)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/belacoin" class="link bold">
+                            Belacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="benjamins ben" id="ben">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/benjamins" >
+                        <img src="/content/images/benjamins-64x64.png" alt="Benjamins (BEN) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BEN)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/benjamins" class="link bold">
+                            Benjamins Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="betacoin bet" id="bet">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/betacoin" >
+                        <img src="/content/images/betacoin-64x64.png" alt="Betacoin (BET) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BET)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/betacoin" class="link bold">
+                            Betacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bigbullion big" id="big">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bigbullion" >
+                        <img src="/content/images/bigbullion-64x64.png" alt="BigBullion (BIG) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BIG)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bigbullion" class="link bold">
+                            BigBullion Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bitbar btb" id="btb">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bitbar" >
+                        <img src="/content/images/bitbar-64x64.png" alt="Bitbar (BTB) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BTB)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bitbar" class="link bold">
+                            Bitbar Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bitcoin btc" id="btc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bitcoin" >
+                        <img src="/content/images/bitcoin-64x64.png" alt="Bitcoin (BTC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BTC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bitcoin" class="link bold">
+                            Bitcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bitgem btg" id="btg">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bitgem" >
+                        <img src="/content/images/bitgem-64x64.png" alt="Bitgem (BTG) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BTG)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bitgem" class="link bold">
+                            Bitgem Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bitmark btm" id="btm">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bitmark" >
+                        <img src="/content/images/bitmark-64x64.png" alt="Bitmark (BTM) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BTM)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bitmark" class="link bold">
+                            Bitmark Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="blakecoin blc" id="blc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/blakecoin" >
+                        <img src="/content/images/blakecoin-64x64.png" alt="Blakecoin (BLC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BLC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/blakecoin" class="link bold">
+                            Blakecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bottlecaps cap" id="cap">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bottlecaps" >
+                        <img src="/content/images/bottlecaps-64x64.png" alt="Bottlecaps (CAP) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CAP)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bottlecaps" class="link bold">
+                            Bottlecaps Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="bytecoin bcn" id="bcn">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/bytecoin" >
+                        <img src="/content/images/bytecoin-64x64.png" alt="Bytecoin (BCN) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BCN)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/bytecoin" class="link bold">
+                            Bytecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="caishen cai" id="cai">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/caishen" >
+                        <img src="/content/images/caishen-64x64.png" alt="Caishen (CAI) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CAI)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/caishen" class="link bold">
+                            Caishen Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="cannabiscoin cann" id="cann">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/cannabiscoin" >
+                        <img src="/content/images/cannabiscoin-64x64.png" alt="CannabisCoin (CANN) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CANN)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/cannabiscoin" class="link bold">
+                            CannabisCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="casinocoin csc" id="csc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/casinocoin" >
+                        <img src="/content/images/casinocoin-64x64.png" alt="Casinocoin (CSC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CSC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/casinocoin" class="link bold">
+                            Casinocoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="catcoin cat" id="cat">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/catcoin" >
+                        <img src="/content/images/catcoin-64x64.png" alt="Catcoin (CAT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CAT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/catcoin" class="link bold">
+                            Catcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="chncoin cnc" id="cnc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/chncoin" >
+                        <img src="/content/images/chncoin-64x64.png" alt="CHNCoin (CNC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CNC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/chncoin" class="link bold">
+                            CHNCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="cinnamoncoin cin" id="cin">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/cinnamoncoin" >
+                        <img src="/content/images/cinnamoncoin-64x64.png" alt="Cinnamoncoin (CIN) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CIN)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/cinnamoncoin" class="link bold">
+                            Cinnamoncoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="cnotes cnote" id="cnote">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/cnotes" >
+                        <img src="/content/images/cnotes-64x64.png" alt="CNotes (CNOTE) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CNOTE)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/cnotes" class="link bold">
+                            CNotes Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="coino con" id="con">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/coino" >
+                        <img src="/content/images/coino-64x64.png" alt="Coino (CON) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CON)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/coino" class="link bold">
+                            Coino Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="conspiracycoin cyc" id="cyc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/conspiracycoin" >
+                        <img src="/content/images/conspiracycoin-64x64.png" alt="ConspiracyCoin (CYC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CYC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/conspiracycoin" class="link bold">
+                            ConspiracyCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="continuumcoin ctm" id="ctm">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/continuumcoin" >
+                        <img src="/content/images/continuumcoin-64x64.png" alt="Continuumcoin (CTM) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CTM)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/continuumcoin" class="link bold">
+                            Continuumcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="cosmoscoin cmc" id="cmc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/cosmoscoin" >
+                        <img src="/content/images/cosmoscoin-64x64.png" alt="Cosmoscoin (CMC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CMC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/cosmoscoin" class="link bold">
+                            Cosmoscoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="craftcoin crc" id="crc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/craftcoin" >
+                        <img src="/content/images/craftcoin-64x64.png" alt="Craftcoin (CRC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CRC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/craftcoin" class="link bold">
+                            Craftcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="crown crw" id="crw">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/crown" >
+                        <img src="/content/images/crown-64x64.png" alt="Crown (CRW) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CRW)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/crown" class="link bold">
+                            Crown Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="cryptcoin crypt" id="crypt">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/cryptcoin" >
+                        <img src="/content/images/cryptcoin-64x64.png" alt="Cryptcoin (CRYPT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CRYPT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/cryptcoin" class="link bold">
+                            Cryptcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="cryptobuck buk" id="buk">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/cryptobuck" >
+                        <img src="/content/images/cryptobuck-64x64.png" alt="CryptoBuck (BUK) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(BUK)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/cryptobuck" class="link bold">
+                            CryptoBuck Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="cryptobullion cbx" id="cbx">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/cryptobullion" >
+                        <img src="/content/images/cryptobullion-64x64.png" alt="CryptoBullion (CBX) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CBX)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/cryptobullion" class="link bold">
+                            CryptoBullion Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="cryptographicanomaly cga" id="cga">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/cryptographicanomaly" >
+                        <img src="/content/images/cryptographicanomaly-64x64.png" alt="CryptographicAnomaly (CGA) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CGA)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/cryptographicanomaly" class="link bold">
+                            CryptographicAnomaly Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="curecoin cure" id="cure">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/curecoin" >
+                        <img src="/content/images/curecoin-64x64.png" alt="Curecoin (CURE) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(CURE)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/curecoin" class="link bold">
+                            Curecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="dash dash" id="dash">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/dash" >
+                        <img src="/content/images/dash-64x64.png" alt="Dash (DASH) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(DASH)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/dash" class="link bold">
+                            Dash Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="devcoin dvc" id="dvc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/devcoin" >
+                        <img src="/content/images/devcoin-64x64.png" alt="Devcoin (DVC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(DVC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/devcoin" class="link bold">
+                            Devcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="diamond dmd" id="dmd">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/diamond" >
+                        <img src="/content/images/diamond-64x64.png" alt="Diamond (DMD) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(DMD)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/diamond" class="link bold">
+                            Diamond Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="digibyte dgb" id="dgb">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/digibyte" >
+                        <img src="/content/images/digibyte-64x64.png" alt="DigiByte (DGB) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(DGB)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/digibyte" class="link bold">
+                            DigiByte Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="digitalcoin-scrypt dgc" id="dgc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/digitalcoin-scrypt" >
+                        <img src="/content/images/digitalcoin-scrypt-64x64.png" alt="Digitalcoin-Scrypt (DGC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(DGC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/digitalcoin-scrypt" class="link bold">
+                            Digitalcoin-Scrypt Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="digitalcoin-sha-256 dgc" id="dgc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/digitalcoin-sha-256" >
+                        <img src="/content/images/digitalcoin-sha-256-64x64.png" alt="Digitalcoin-SHA-256 (DGC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(DGC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/digitalcoin-sha-256" class="link bold">
+                            Digitalcoin-SHA-256 Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="digitalcoin-x11 dgc" id="dgc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/digitalcoin-x11" >
+                        <img src="/content/images/digitalcoin-x11-64x64.png" alt="Digitalcoin-X11 (DGC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(DGC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/digitalcoin-x11" class="link bold">
+                            Digitalcoin-X11 Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="dnotes note" id="note">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/dnotes" >
+                        <img src="/content/images/dnotes-64x64.png" alt="DNotes (NOTE) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NOTE)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/dnotes" class="link bold">
+                            DNotes Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="dogecoin doge" id="doge">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/dogecoin" >
+                        <img src="/content/images/dogecoin-64x64.png" alt="Dogecoin (DOGE) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(DOGE)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/dogecoin" class="link bold">
+                            Dogecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="earthcoin eac" id="eac">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/earthcoin" >
+                        <img src="/content/images/earthcoin-64x64.png" alt="Earthcoin (EAC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(EAC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/earthcoin" class="link bold">
+                            Earthcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="einsteinium emc2" id="emc2">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/einsteinium" >
+                        <img src="/content/images/einsteinium-64x64.png" alt="Einsteinium (EMC2) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(EMC2)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/einsteinium" class="link bold">
+                            Einsteinium Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="emark dem" id="dem">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/emark" >
+                        <img src="/content/images/emark-64x64.png" alt="eMark (DEM) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(DEM)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/emark" class="link bold">
+                            eMark Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="emerald emd" id="emd">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/emerald" >
+                        <img src="/content/images/emerald-64x64.png" alt="Emerald (EMD) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(EMD)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/emerald" class="link bold">
+                            Emerald Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="entropycoin enc" id="enc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/entropycoin" >
+                        <img src="/content/images/entropycoin-64x64.png" alt="Entropycoin (ENC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ENC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/entropycoin" class="link bold">
+                            Entropycoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="ethereum eth" id="eth">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/ethereum" >
+                        <img src="/content/images/ethereum-64x64.png" alt="Ethereum (ETH) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ETH)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/ethereum" class="link bold">
+                            Ethereum Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="ethereum-classic etc" id="etc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/ethereum-classic" >
+                        <img src="/content/images/ethereum-classic-64x64.png" alt="Ethereum-Classic (ETC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ETC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/ethereum-classic" class="link bold">
+                            Ethereum-Classic Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="execoin exe" id="exe">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/execoin" >
+                        <img src="/content/images/execoin-64x64.png" alt="Execoin (EXE) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(EXE)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/execoin" class="link bold">
+                            Execoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="extremecoin exc" id="exc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/extremecoin" >
+                        <img src="/content/images/extremecoin-64x64.png" alt="Extremecoin (EXC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(EXC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/extremecoin" class="link bold">
+                            Extremecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="fairquark frq" id="frq">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/fairquark" >
+                        <img src="/content/images/fairquark-64x64.png" alt="FairQuark (FRQ) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FRQ)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/fairquark" class="link bold">
+                            FairQuark Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="fastcoin fst" id="fst">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/fastcoin" >
+                        <img src="/content/images/fastcoin-64x64.png" alt="Fastcoin (FST) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FST)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/fastcoin" class="link bold">
+                            Fastcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="feathercoin ftc" id="ftc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/feathercoin" >
+                        <img src="/content/images/feathercoin-64x64.png" alt="Feathercoin (FTC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FTC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/feathercoin" class="link bold">
+                            Feathercoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="fireflycoin ffc" id="ffc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/fireflycoin" >
+                        <img src="/content/images/fireflycoin-64x64.png" alt="Fireflycoin (FFC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FFC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/fireflycoin" class="link bold">
+                            Fireflycoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="flappycoin flap" id="flap">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/flappycoin" >
+                        <img src="/content/images/flappycoin-64x64.png" alt="Flappycoin (FLAP) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FLAP)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/flappycoin" class="link bold">
+                            Flappycoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="florincoin flo" id="flo">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/florincoin" >
+                        <img src="/content/images/florincoin-64x64.png" alt="Florincoin (FLO) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FLO)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/florincoin" class="link bold">
+                            Florincoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="fluttercoin flt" id="flt">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/fluttercoin" >
+                        <img src="/content/images/fluttercoin-64x64.png" alt="Fluttercoin (FLT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FLT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/fluttercoin" class="link bold">
+                            Fluttercoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="fractalcoin frac" id="frac">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/fractalcoin" >
+                        <img src="/content/images/fractalcoin-64x64.png" alt="Fractalcoin (FRAC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FRAC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/fractalcoin" class="link bold">
+                            Fractalcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="franko frk" id="frk">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/franko" >
+                        <img src="/content/images/franko-64x64.png" alt="Franko (FRK) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FRK)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/franko" class="link bold">
+                            Franko Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="freicoin frc" id="frc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/freicoin" >
+                        <img src="/content/images/freicoin-64x64.png" alt="Freicoin (FRC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FRC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/freicoin" class="link bold">
+                            Freicoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="frozen fz" id="fz">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/frozen" >
+                        <img src="/content/images/frozen-64x64.png" alt="Frozen (FZ) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(FZ)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/frozen" class="link bold">
+                            Frozen Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="galaxycoin glx" id="glx">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/galaxycoin" >
+                        <img src="/content/images/galaxycoin-64x64.png" alt="Galaxycoin (GLX) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(GLX)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/galaxycoin" class="link bold">
+                            Galaxycoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="gamecredits game" id="game">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/gamecredits" >
+                        <img src="/content/images/gamecredits-64x64.png" alt="GameCredits (GAME) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(GAME)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/gamecredits" class="link bold">
+                            GameCredits Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="globalcoin glc" id="glc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/globalcoin" >
+                        <img src="/content/images/globalcoin-64x64.png" alt="Globalcoin (GLC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(GLC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/globalcoin" class="link bold">
+                            Globalcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="globaldenomination gdn" id="gdn">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/globaldenomination" >
+                        <img src="/content/images/globaldenomination-64x64.png" alt="GlobalDenomination (GDN) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(GDN)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/globaldenomination" class="link bold">
+                            GlobalDenomination Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="goldcoin gld" id="gld">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/goldcoin" >
+                        <img src="/content/images/goldcoin-64x64.png" alt="Goldcoin (GLD) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(GLD)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/goldcoin" class="link bold">
+                            Goldcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="gpucoin gpuc" id="gpuc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/gpucoin" >
+                        <img src="/content/images/gpucoin-64x64.png" alt="GPUcoin (GPUC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(GPUC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/gpucoin" class="link bold">
+                            GPUcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="grandcoin gdc" id="gdc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/grandcoin" >
+                        <img src="/content/images/grandcoin-64x64.png" alt="Grandcoin (GDC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(GDC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/grandcoin" class="link bold">
+                            Grandcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="groestlcoin grs" id="grs">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/groestlcoin" >
+                        <img src="/content/images/groestlcoin-64x64.png" alt="Groestlcoin (GRS) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(GRS)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/groestlcoin" class="link bold">
+                            Groestlcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="gulden nlg" id="nlg">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/gulden" >
+                        <img src="/content/images/gulden-64x64.png" alt="Gulden (NLG) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NLG)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/gulden" class="link bold">
+                            Gulden Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="hamradiocoin ham" id="ham">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/hamradiocoin" >
+                        <img src="/content/images/hamradiocoin-64x64.png" alt="HAMRadioCoin (HAM) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(HAM)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/hamradiocoin" class="link bold">
+                            HAMRadioCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="hirocoin hiro" id="hiro">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/hirocoin" >
+                        <img src="/content/images/hirocoin-64x64.png" alt="Hirocoin (HIRO) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(HIRO)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/hirocoin" class="link bold">
+                            Hirocoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="hobonickels hbn" id="hbn">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/hobonickels" >
+                        <img src="/content/images/hobonickels-64x64.png" alt="HoboNickels (HBN) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(HBN)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/hobonickels" class="link bold">
+                            HoboNickels Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="icoin icn" id="icn">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/icoin" >
+                        <img src="/content/images/icoin-64x64.png" alt="iCoin (ICN) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ICN)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/icoin" class="link bold">
+                            iCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="infinitecoin ifc" id="ifc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/infinitecoin" >
+                        <img src="/content/images/infinitecoin-64x64.png" alt="Infinitecoin (IFC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(IFC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/infinitecoin" class="link bold">
+                            Infinitecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="ivugeocoin iec" id="iec">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/ivugeocoin" >
+                        <img src="/content/images/ivugeocoin-64x64.png" alt="IvugeoCoin (IEC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(IEC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/ivugeocoin" class="link bold">
+                            IvugeoCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="ixcoin ixc" id="ixc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/ixcoin" >
+                        <img src="/content/images/ixcoin-64x64.png" alt="Ixcoin (IXC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(IXC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/ixcoin" class="link bold">
+                            Ixcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="jackpotcoin jpc" id="jpc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/jackpotcoin" >
+                        <img src="/content/images/jackpotcoin-64x64.png" alt="JackpotCoin (JPC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(JPC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/jackpotcoin" class="link bold">
+                            JackpotCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="joulecoin xjo" id="xjo">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/joulecoin" >
+                        <img src="/content/images/joulecoin-64x64.png" alt="Joulecoin (XJO) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(XJO)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/joulecoin" class="link bold">
+                            Joulecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="karma karm" id="karm">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/karma" >
+                        <img src="/content/images/karma-64x64.png" alt="Karma (KARM) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(KARM)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/karma" class="link bold">
+                            Karma Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="kittehcoin meow" id="meow">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/kittehcoin" >
+                        <img src="/content/images/kittehcoin-64x64.png" alt="Kittehcoin (MEOW) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MEOW)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/kittehcoin" class="link bold">
+                            Kittehcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="klondikecoin kdc" id="kdc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/klondikecoin" >
+                        <img src="/content/images/klondikecoin-64x64.png" alt="Klondikecoin (KDC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(KDC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/klondikecoin" class="link bold">
+                            Klondikecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="krugercoin kgc" id="kgc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/krugercoin" >
+                        <img src="/content/images/krugercoin-64x64.png" alt="Krugercoin (KGC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(KGC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/krugercoin" class="link bold">
+                            Krugercoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="leafcoin leaf" id="leaf">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/leafcoin" >
+                        <img src="/content/images/leafcoin-64x64.png" alt="Leafcoin (LEAF) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(LEAF)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/leafcoin" class="link bold">
+                            Leafcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="legendarycoin lgd" id="lgd">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/legendarycoin" >
+                        <img src="/content/images/legendarycoin-64x64.png" alt="LegendaryCoin (LGD) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(LGD)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/legendarycoin" class="link bold">
+                            LegendaryCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="litecoin ltc" id="ltc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/litecoin" >
+                        <img src="/content/images/litecoin-64x64.png" alt="Litecoin (LTC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(LTC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/litecoin" class="link bold">
+                            Litecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="litecoindark ltcd" id="ltcd">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/litecoindark" >
+                        <img src="/content/images/litecoindark-64x64.png" alt="LitecoinDark (LTCD) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(LTCD)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/litecoindark" class="link bold">
+                            LitecoinDark Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="logicoin lgc" id="lgc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/logicoin" >
+                        <img src="/content/images/logicoin-64x64.png" alt="Logicoin (LGC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(LGC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/logicoin" class="link bold">
+                            Logicoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="lottocoin lot" id="lot">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/lottocoin" >
+                        <img src="/content/images/lottocoin-64x64.png" alt="Lottocoin (LOT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(LOT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/lottocoin" class="link bold">
+                            Lottocoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="luckycoin lky" id="lky">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/luckycoin" >
+                        <img src="/content/images/luckycoin-64x64.png" alt="Luckycoin (LKY) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(LKY)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/luckycoin" class="link bold">
+                            Luckycoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="lycancoin lyc" id="lyc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/lycancoin" >
+                        <img src="/content/images/lycancoin-64x64.png" alt="Lycancoin (LYC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(LYC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/lycancoin" class="link bold">
+                            Lycancoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="maxcoin max" id="max">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/maxcoin" >
+                        <img src="/content/images/maxcoin-64x64.png" alt="Maxcoin (MAX) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MAX)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/maxcoin" class="link bold">
+                            Maxcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="mazacoin mzc" id="mzc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/mazacoin" >
+                        <img src="/content/images/mazacoin-64x64.png" alt="Mazacoin (MZC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MZC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/mazacoin" class="link bold">
+                            Mazacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="megacoin mec" id="mec">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/megacoin" >
+                        <img src="/content/images/megacoin-64x64.png" alt="Megacoin (MEC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MEC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/megacoin" class="link bold">
+                            Megacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="mincoin mnc" id="mnc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/mincoin" >
+                        <img src="/content/images/mincoin-64x64.png" alt="Mincoin (MNC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MNC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/mincoin" class="link bold">
+                            Mincoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="mintcoin mint" id="mint">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/mintcoin" >
+                        <img src="/content/images/mintcoin-64x64.png" alt="Mintcoin (MINT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MINT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/mintcoin" class="link bold">
+                            Mintcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="monero xmr" id="xmr">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/monero" >
+                        <img src="/content/images/monero-64x64.png" alt="Monero (XMR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(XMR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/monero" class="link bold">
+                            Monero Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="monetaryunit mue" id="mue">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/monetaryunit" >
+                        <img src="/content/images/monetaryunit-64x64.png" alt="MonetaryUnit (MUE) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MUE)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/monetaryunit" class="link bold">
+                            MonetaryUnit Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="mooncoin moon" id="moon">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/mooncoin" >
+                        <img src="/content/images/mooncoin-64x64.png" alt="Mooncoin (MOON) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MOON)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/mooncoin" class="link bold">
+                            Mooncoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="murraycoin mry" id="mry">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/murraycoin" >
+                        <img src="/content/images/murraycoin-64x64.png" alt="Murraycoin (MRY) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MRY)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/murraycoin" class="link bold">
+                            Murraycoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="myriadcoin-scrypt myr" id="myr">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/myriadcoin-scrypt" >
+                        <img src="/content/images/myriadcoin-scrypt-64x64.png" alt="Myriadcoin-Scrypt (MYR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MYR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/myriadcoin-scrypt" class="link bold">
+                            Myriadcoin-Scrypt Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="myriadcoin-sha-256 myr" id="myr">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/myriadcoin-sha-256" >
+                        <img src="/content/images/myriadcoin-sha-256-64x64.png" alt="Myriadcoin-SHA-256 (MYR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(MYR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/myriadcoin-sha-256" class="link bold">
+                            Myriadcoin-SHA-256 Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="namecoin nmc" id="nmc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/namecoin" >
+                        <img src="/content/images/namecoin-64x64.png" alt="Namecoin (NMC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NMC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/namecoin" class="link bold">
+                            Namecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="nautiluscoin naut" id="naut">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/nautiluscoin" >
+                        <img src="/content/images/nautiluscoin-64x64.png" alt="Nautiluscoin (NAUT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NAUT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/nautiluscoin" class="link bold">
+                            Nautiluscoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="neocoin nec" id="nec">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/neocoin" >
+                        <img src="/content/images/neocoin-64x64.png" alt="Neocoin (NEC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NEC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/neocoin" class="link bold">
+                            Neocoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="neoscoin neos" id="neos">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/neoscoin" >
+                        <img src="/content/images/neoscoin-64x64.png" alt="NeosCoin (NEOS) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NEOS)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/neoscoin" class="link bold">
+                            NeosCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="netcoin net" id="net">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/netcoin" >
+                        <img src="/content/images/netcoin-64x64.png" alt="Netcoin (NET) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NET)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/netcoin" class="link bold">
+                            Netcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="noblecoin nobl" id="nobl">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/noblecoin" >
+                        <img src="/content/images/noblecoin-64x64.png" alt="Noblecoin (NOBL) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NOBL)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/noblecoin" class="link bold">
+                            Noblecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="noirbits nrb" id="nrb">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/noirbits" >
+                        <img src="/content/images/noirbits-64x64.png" alt="Noirbits (NRB) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NRB)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/noirbits" class="link bold">
+                            Noirbits Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="novacoin nvc" id="nvc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/novacoin" >
+                        <img src="/content/images/novacoin-64x64.png" alt="Novacoin (NVC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NVC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/novacoin" class="link bold">
+                            Novacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="nyancoin nyan" id="nyan">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/nyancoin" >
+                        <img src="/content/images/nyancoin-64x64.png" alt="Nyancoin (NYAN) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(NYAN)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/nyancoin" class="link bold">
+                            Nyancoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="omnicoin omc" id="omc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/omnicoin" >
+                        <img src="/content/images/omnicoin-64x64.png" alt="Omnicoin (OMC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(OMC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/omnicoin" class="link bold">
+                            Omnicoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="opensourcecoin osc" id="osc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/opensourcecoin" >
+                        <img src="/content/images/opensourcecoin-64x64.png" alt="OpenSourcecoin (OSC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(OSC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/opensourcecoin" class="link bold">
+                            OpenSourcecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="orbitcoin orb" id="orb">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/orbitcoin" >
+                        <img src="/content/images/orbitcoin-64x64.png" alt="Orbitcoin (ORB) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ORB)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/orbitcoin" class="link bold">
+                            Orbitcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="p7coin p7c" id="p7c">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/p7coin" >
+                        <img src="/content/images/p7coin-64x64.png" alt="P7Coin (P7C) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(P7C)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/p7coin" class="link bold">
+                            P7Coin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="paycoin xpy" id="xpy">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/paycoin" >
+                        <img src="/content/images/paycoin-64x64.png" alt="Paycoin (XPY) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(XPY)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/paycoin" class="link bold">
+                            Paycoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="peercoin ppc" id="ppc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/peercoin" >
+                        <img src="/content/images/peercoin-64x64.png" alt="Peercoin (PPC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(PPC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/peercoin" class="link bold">
+                            Peercoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="penguincoin peng" id="peng">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/penguincoin" >
+                        <img src="/content/images/penguincoin-64x64.png" alt="Penguincoin (PENG) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(PENG)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/penguincoin" class="link bold">
+                            Penguincoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="pesetacoin ptc" id="ptc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/pesetacoin" >
+                        <img src="/content/images/pesetacoin-64x64.png" alt="PesetaCoin (PTC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(PTC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/pesetacoin" class="link bold">
+                            PesetaCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="philosopherstone phs" id="phs">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/philosopherstone" >
+                        <img src="/content/images/philosopherstone-64x64.png" alt="Philosopherstone (PHS) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(PHS)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/philosopherstone" class="link bold">
+                            Philosopherstone Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="phoenixcoin pxc" id="pxc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/phoenixcoin" >
+                        <img src="/content/images/phoenixcoin-64x64.png" alt="Phoenixcoin (PXC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(PXC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/phoenixcoin" class="link bold">
+                            Phoenixcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="pioneercoin per" id="per">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/pioneercoin" >
+                        <img src="/content/images/pioneercoin-64x64.png" alt="Pioneercoin (PER) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(PER)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/pioneercoin" class="link bold">
+                            Pioneercoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="potcoin pot" id="pot">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/potcoin" >
+                        <img src="/content/images/potcoin-64x64.png" alt="Potcoin (POT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(POT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/potcoin" class="link bold">
+                            Potcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="quark qrk" id="qrk">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/quark" >
+                        <img src="/content/images/quark-64x64.png" alt="Quark (QRK) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(QRK)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/quark" class="link bold">
+                            Quark Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="quatloo qtl" id="qtl">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/quatloo" >
+                        <img src="/content/images/quatloo-64x64.png" alt="Quatloo (QTL) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(QTL)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/quatloo" class="link bold">
+                            Quatloo Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="razor rzr" id="rzr">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/razor" >
+                        <img src="/content/images/razor-64x64.png" alt="Razor (RZR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(RZR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/razor" class="link bold">
+                            Razor Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="reddcoin rdd" id="rdd">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/reddcoin" >
+                        <img src="/content/images/reddcoin-64x64.png" alt="Reddcoin (RDD) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(RDD)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/reddcoin" class="link bold">
+                            Reddcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="ronpaulcoin rpc" id="rpc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/ronpaulcoin" >
+                        <img src="/content/images/ronpaulcoin-64x64.png" alt="RonPaulcoin (RPC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(RPC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/ronpaulcoin" class="link bold">
+                            RonPaulcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="rotocoin rt2" id="rt2">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/rotocoin" >
+                        <img src="/content/images/rotocoin-64x64.png" alt="Rotocoin (RT2) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(RT2)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/rotocoin" class="link bold">
+                            Rotocoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="rubycoin rby" id="rby">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/rubycoin" >
+                        <img src="/content/images/rubycoin-64x64.png" alt="Rubycoin (RBY) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(RBY)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/rubycoin" class="link bold">
+                            Rubycoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="saffroncoin-scrypt sfr" id="sfr">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/saffroncoin-scrypt" >
+                        <img src="/content/images/saffroncoin-scrypt-64x64.png" alt="SaffronCoin-Scrypt (SFR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SFR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/saffroncoin-scrypt" class="link bold">
+                            SaffronCoin-Scrypt Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="saffroncoin-sha-256 sfr" id="sfr">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/saffroncoin-sha-256" >
+                        <img src="/content/images/saffroncoin-sha-256-64x64.png" alt="SaffronCoin-SHA-256 (SFR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SFR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/saffroncoin-sha-256" class="link bold">
+                            SaffronCoin-SHA-256 Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="saffroncoin-x11 sfr" id="sfr">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/saffroncoin-x11" >
+                        <img src="/content/images/saffroncoin-x11-64x64.png" alt="SaffronCoin-X11 (SFR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SFR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/saffroncoin-x11" class="link bold">
+                            SaffronCoin-X11 Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="saturncoin sat" id="sat">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/saturncoin" >
+                        <img src="/content/images/saturncoin-64x64.png" alt="Saturncoin (SAT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SAT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/saturncoin" class="link bold">
+                            Saturncoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="savecoin spc" id="spc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/savecoin" >
+                        <img src="/content/images/savecoin-64x64.png" alt="SaveCoin (SPC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SPC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/savecoin" class="link bold">
+                            SaveCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="scorecoin score" id="score">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/scorecoin" >
+                        <img src="/content/images/scorecoin-64x64.png" alt="ScoreCoin (SCORE) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SCORE)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/scorecoin" class="link bold">
+                            ScoreCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="securecoin src" id="src">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/securecoin" >
+                        <img src="/content/images/securecoin-64x64.png" alt="Securecoin (SRC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SRC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/securecoin" class="link bold">
+                            Securecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="sexcoin sxc" id="sxc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/sexcoin" >
+                        <img src="/content/images/sexcoin-64x64.png" alt="Sexcoin (SXC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SXC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/sexcoin" class="link bold">
+                            Sexcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="smartcoin smc" id="smc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/smartcoin" >
+                        <img src="/content/images/smartcoin-64x64.png" alt="Smartcoin (SMC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SMC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/smartcoin" class="link bold">
+                            Smartcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="spaincoin spa" id="spa">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/spaincoin" >
+                        <img src="/content/images/spaincoin-64x64.png" alt="Spaincoin (SPA) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SPA)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/spaincoin" class="link bold">
+                            Spaincoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="spec spec" id="spec">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/spec" >
+                        <img src="/content/images/spec-64x64.png" alt="SPEC (SPEC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SPEC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/spec" class="link bold">
+                            SPEC Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="spots spt" id="spt">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/spots" >
+                        <img src="/content/images/spots-64x64.png" alt="Spots (SPT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SPT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/spots" class="link bold">
+                            Spots Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="ssvcoin ssv" id="ssv">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/ssvcoin" >
+                        <img src="/content/images/ssvcoin-64x64.png" alt="SSVcoin (SSV) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SSV)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/ssvcoin" class="link bold">
+                            SSVcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="stablecoin sbc" id="sbc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/stablecoin" >
+                        <img src="/content/images/stablecoin-64x64.png" alt="Stablecoin (SBC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SBC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/stablecoin" class="link bold">
+                            Stablecoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="starcoin str" id="str">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/starcoin" >
+                        <img src="/content/images/starcoin-64x64.png" alt="Starcoin (STR) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(STR)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/starcoin" class="link bold">
+                            Starcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="startcoin start" id="start">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/startcoin" >
+                        <img src="/content/images/startcoin-64x64.png" alt="StartCoin (START) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(START)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/startcoin" class="link bold">
+                            StartCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="sterlingcoin slg" id="slg">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/sterlingcoin" >
+                        <img src="/content/images/sterlingcoin-64x64.png" alt="Sterlingcoin (SLG) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SLG)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/sterlingcoin" class="link bold">
+                            Sterlingcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="syscoin sys" id="sys">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/syscoin" >
+                        <img src="/content/images/syscoin-64x64.png" alt="Syscoin (SYS) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(SYS)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/syscoin" class="link bold">
+                            Syscoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="tagcoin tag" id="tag">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/tagcoin" >
+                        <img src="/content/images/tagcoin-64x64.png" alt="Tagcoin (TAG) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(TAG)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/tagcoin" class="link bold">
+                            Tagcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="takcoin tak" id="tak">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/takcoin" >
+                        <img src="/content/images/takcoin-64x64.png" alt="Takcoin (TAK) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(TAK)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/takcoin" class="link bold">
+                            Takcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="teacoin tea" id="tea">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/teacoin" >
+                        <img src="/content/images/teacoin-64x64.png" alt="Teacoin (TEA) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(TEA)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/teacoin" class="link bold">
+                            Teacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="tekcoin tek" id="tek">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/tekcoin" >
+                        <img src="/content/images/tekcoin-64x64.png" alt="TEKcoin (TEK) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(TEK)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/tekcoin" class="link bold">
+                            TEKcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="terracoin trc" id="trc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/terracoin" >
+                        <img src="/content/images/terracoin-64x64.png" alt="Terracoin (TRC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(TRC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/terracoin" class="link bold">
+                            Terracoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="teslacoin tes" id="tes">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/teslacoin" >
+                        <img src="/content/images/teslacoin-64x64.png" alt="Teslacoin (TES) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(TES)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/teslacoin" class="link bold">
+                            Teslacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="tigercoin tgc" id="tgc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/tigercoin" >
+                        <img src="/content/images/tigercoin-64x64.png" alt="Tigercoin (TGC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(TGC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/tigercoin" class="link bold">
+                            Tigercoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="titcoin tit" id="tit">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/titcoin" >
+                        <img src="/content/images/titcoin-64x64.png" alt="Titcoin (TIT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(TIT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/titcoin" class="link bold">
+                            Titcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="ufocoin ufo" id="ufo">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/ufocoin" >
+                        <img src="/content/images/ufocoin-64x64.png" alt="UFOcoin (UFO) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(UFO)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/ufocoin" class="link bold">
+                            UFOcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="ultracoin utc" id="utc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/ultracoin" >
+                        <img src="/content/images/ultracoin-64x64.png" alt="Ultracoin (UTC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(UTC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/ultracoin" class="link bold">
+                            Ultracoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="unbreakable unb" id="unb">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/unbreakable" >
+                        <img src="/content/images/unbreakable-64x64.png" alt="Unbreakable (UNB) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(UNB)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/unbreakable" class="link bold">
+                            Unbreakable Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="universalcurrency unit" id="unit">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/universalcurrency" >
+                        <img src="/content/images/universalcurrency-64x64.png" alt="UniversalCurrency (UNIT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(UNIT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/universalcurrency" class="link bold">
+                            UniversalCurrency Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="universecoin unvc" id="unvc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/universecoin" >
+                        <img src="/content/images/universecoin-64x64.png" alt="UniverseCoin (UNVC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(UNVC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/universecoin" class="link bold">
+                            UniverseCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="unobtanium uno" id="uno">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/unobtanium" >
+                        <img src="/content/images/unobtanium-64x64.png" alt="Unobtanium (UNO) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(UNO)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/unobtanium" class="link bold">
+                            Unobtanium Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="usde usde" id="usde">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/usde" >
+                        <img src="/content/images/usde-64x64.png" alt="USDe (USDE) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(USDE)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/usde" class="link bold">
+                            USDe Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="verge xvg" id="xvg">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/verge" >
+                        <img src="/content/images/verge-64x64.png" alt="Verge (XVG) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(XVG)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/verge" class="link bold">
+                            Verge Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="vertcoin vtc" id="vtc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/vertcoin" >
+                        <img src="/content/images/vertcoin-64x64.png" alt="Vertcoin (VTC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(VTC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/vertcoin" class="link bold">
+                            Vertcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="viacoin via" id="via">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/viacoin" >
+                        <img src="/content/images/viacoin-64x64.png" alt="Viacoin (VIA) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(VIA)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/viacoin" class="link bold">
+                            Viacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="virtualminingcoin vmc" id="vmc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/virtualminingcoin" >
+                        <img src="/content/images/virtualminingcoin-64x64.png" alt="VirtualMiningCoin (VMC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(VMC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/virtualminingcoin" class="link bold">
+                            VirtualMiningCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="vootcoin voot" id="voot">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/vootcoin" >
+                        <img src="/content/images/vootcoin-64x64.png" alt="Vootcoin (VOOT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(VOOT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/vootcoin" class="link bold">
+                            Vootcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="wankcoin wkc" id="wkc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/wankcoin" >
+                        <img src="/content/images/wankcoin-64x64.png" alt="WankCoin (WKC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(WKC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/wankcoin" class="link bold">
+                            WankCoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="wikicoin wiki" id="wiki">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/wikicoin" >
+                        <img src="/content/images/wikicoin-64x64.png" alt="Wikicoin (WIKI) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(WIKI)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/wikicoin" class="link bold">
+                            Wikicoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="wildbeastbitcoin wbb" id="wbb">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/wildbeastbitcoin" >
+                        <img src="/content/images/wildbeastbitcoin-64x64.png" alt="WildBeastBitcoin (WBB) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(WBB)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/wildbeastbitcoin" class="link bold">
+                            WildBeastBitcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="worldcoin wdc" id="wdc">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/worldcoin" >
+                        <img src="/content/images/worldcoin-64x64.png" alt="Worldcoin (WDC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(WDC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/worldcoin" class="link bold">
+                            Worldcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="yacoin yac" id="yac">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/yacoin" >
+                        <img src="/content/images/yacoin-64x64.png" alt="YAcoin (YAC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(YAC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/yacoin" class="link bold">
+                            YAcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="zcash zec" id="zec">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/zcash" >
+                        <img src="/content/images/zcash-64x64.png" alt="Zcash (ZEC) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ZEC)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/zcash" class="link bold">
+                            Zcash Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="zclassic zcl" id="zcl">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/zclassic" >
+                        <img src="/content/images/zclassic-64x64.png" alt="Zclassic (ZCL) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ZCL)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/zclassic" class="link bold">
+                            Zclassic Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="zedcoin zed" id="zed">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/zedcoin" >
+                        <img src="/content/images/zedcoin-64x64.png" alt="Zedcoin (ZED) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ZED)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/zedcoin" class="link bold">
+                            Zedcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="zeitcoin zeit" id="zeit">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/zeitcoin" >
+                        <img src="/content/images/zeitcoin-64x64.png" alt="Zeitcoin (ZEIT) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ZEIT)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/zeitcoin" class="link bold">
+                            Zeitcoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+            <div class="calCoinCard coinCard" coin="zetacoin zet" id="zet">
+                <div class="coinCardIcon">
+                    <a href="/cryptocurrency/coins/zetacoin" >
+                        <img src="/content/images/zetacoin-64x64.png" alt="Zetacoin (ZET) Cryptocurrency" />
+                    </a>
+                </div>
+                <div class="coinCardText">
+                    <div>
+                        <span class="bold">(ZET)</span></div>
+                    <div>
+                        <a href="/cryptocurrency/coins/zetacoin" class="link bold">
+                            Zetacoin Cryptocurrency</a>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            filter();
+
+            $('#filter').keyup(function () {
+                filter();
+            });
+        });
+
+        function filter() {
+            var textFilter = $('#filter').val();
+
+            if (textFilter != '') {
+
+                var allCoinCars = $(".coinCard");
+
+                var matchingElements = $(".coinCard[coin*='" + textFilter.toLowerCase() + "']");
+
+                allCoinCars.each(function () {
+
+                    var hasMatch = false;
+                    var coinTag = $(this).attr('id');
+
+                    matchingElements.each(function () {
+                        if ($(this).attr('id') == coinTag) {
+                            hasMatch = true;
+                            return false;
+                        }
+                    });
+
+                    if (hasMatch) {
+                        $(this).show('fast')
+                    }
+                    else {
+                        $(this).hide('fast')
+                    }
+                });
+
+            }
+            else {
+                var allCoinCars = $(".coinCard");
+
+                allCoinCars.each(function () {
+                    $(this).show('fast');
+                });
+            }
+        }
+    </script>
+
+
+        </section>
+        </div>
+        <br />
+        <br />
+    </div>
+    <footer style="z-index: 1045; position: relative;">
+        <div class="container">
+            <div class="row">
+                    <div class="span3">
+                <h4>Popular Cryptocurrencies</h4>
+                <ul>
+                    <li>
+	                    <a href="/cryptocurrency/coins/bitcoin" >
+		                    <img src="/content/images/bitcoin.png" alt="Bitcoin (BTC) Cryptocurrency" />
+		                    Bitcoin Cryptocurrency
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/cryptocurrency/coins/ethereum" >
+		                    <img src="/content/images/ethereum.png" alt="Ethereum (ETH) Cryptocurrency" />
+		                    Ethereum Cryptocurrency
+	                    </a>
+                    </li>
+                     <li>
+	                    <a href="/cryptocurrency/coins/ethereum-classic" >
+		                    <img src="/content/images/ethereum-classic.png" alt="Ethereum (ETC) Cryptocurrency" />
+		                    Ethereum Classic Cryptocurrency
+	                    </a>
+                    </li>
+                     <li>
+	                    <a href="/cryptocurrency/coins/zcash" >
+		                    <img src="/content/images/zcash.png" alt="Zcash (ZEC) Cryptocurrency" />
+		                    Zcash Cryptocurrency
+	                    </a>
+                    </li>
+                     <li>
+	                    <a href="/cryptocurrency/coins/dash" >
+		                    <img src="/content/images/dash.png" alt="Dash (DASH) Cryptocurrency" />
+		                    Dash Cryptocurrency
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/cryptocurrency/coins/litecoin" >
+		                    <img src="/content/images/litecoin.png" alt="Litecoin (LTC) Cryptocurrency" />
+		                    Litecoin Cryptocurrency
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/cryptocurrency/coins/dogecoin" >
+		                    <img src="/content/images/dogecoin.png" alt="Dogecoin (DOGE) Cryptocurrency" />
+		                    Dogecoin Cryptocurrency
+	                    </a>
+                    </li>                   
+                        
+                </ul>
+            </div>
+            <div class="span3">
+                <h4>Popular Mining Calculators</h4>
+                <ul>
+                    <li>
+	                    <a href="/calculators/bitcoin-mining-calculator" >
+		                    <img src="/content/images/bitcoin.png" alt="Bitcoin Mining Calculator" />
+		                    Bitcoin Mining Calculator
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/calculators/ethereum-mining-calculator" >
+		                    <img src="/content/images/ethereum.png" alt="Ethereum Mining Calculator" />
+		                    Ethereum Mining Calculator
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/calculators/ethereum-classic-mining-calculator" >
+		                    <img src="/content/images/ethereum-classic.png" alt="Ethereum Classic Mining Calculator" />
+		                    Ethereum Classic Mining Calculator
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/calculators/zcash-mining-calculator" >
+		                    <img src="/content/images/zcash.png" alt="Zcash Mining Calculator" />
+		                    Zcash Mining Calculator
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/calculators/dash-mining-calculator" >
+		                    <img src="/content/images/dash.png" alt="Dash Mining Calculator" />
+		                    Dash Mining Calculator
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/calculators/litecoin-mining-calculator" >
+		                    <img src="/content/images/litecoin.png" alt="Litecoin Mining Calculator" />
+		                    Litecoin Mining Calculator
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/calculators/dogecoin-mining-calculator" >
+		                    <img src="/content/images/dogecoin.png" alt="Dogecoin Mining Calculator" />
+		                    Dogecoin Mining Calculator
+	                    </a>
+                    </li>                         
+                </ul>
+            </div>
+            <div class="span3">
+                <h4>Popular Cryptocurrency Charts</h4>
+                <ul>
+                    <li>
+	                    <a href="/exchange-charts/bitcoin-exchange-rate-chart" >
+		                    <img src="/content/images/bitcoin.png" alt="Bitcoin (BTC) Exchange Rate Chart" />
+		                    Bitcoin Exchange Rate Chart
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/difficulty-charts/bitcoin-difficulty-charts" >
+		                    <img src="/content/images/bitcoin.png" alt="Bitcoin (BTC) Difficulty Chart" />
+		                    Bitcoin Difficulty Chart
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/difficulty-charts/litecoin-difficulty-charts" >
+		                    <img src="/content/images/litecoin.png" alt="Litecoin (LTC) Difficulty Chart" />
+		                    Litecoin Difficulty Chart
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/exchange-charts/dogecoin-exchange-rate-chart" >
+		                    <img src="/content/images/dogecoin.png" alt="Dogecoin (DOGE) Exchange Rate Chart" />
+		                    Dogecoin Exchange Rate Chart
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/difficulty-charts/dogecoin-difficulty-charts" >
+		                    <img src="/content/images/dogecoin.png" alt="Dogecoin (DOGE) Difficulty Chart" />
+		                    Dogecoin Difficulty Chart
+	                    </a>
+                    </li>
+                    <li>
+	                    <a href="/difficulty-charts/novacoin-difficulty-charts" >
+		                    <img src="/content/images/novacoin.png" alt="Novacoin (NVC) Difficulty Chart" />
+		                    Novacoin Difficulty Chart
+	                    </a>
+                    </li>
+                    <!--<li>
+	                    <a href="/difficulty-charts/fastcoin-difficulty-charts" >
+		                    <img src="/content/images/fastcoin.png" alt="Fastcoin (FST) Difficulty Chart" />
+		                    Fastcoin Difficulty Chart
+	                    </a>
+                    </li>-->
+                </ul>
+            </div>
+            <div class="span3">
+                <h4>Links</h4>
+                    <ul>  
+                        <li>
+                            <a href="/advertise-with-bitcoin">Advertise</a>
+                        </li>                         
+                        <li>
+                            <a href="/faq">Frequently Asked Questions</a>
+                        </li>
+                        <li>
+                            <a href="/api">API Documentation</a>
+                        </li>
+                        <li>
+                            <a href="/contact">Cryptocurrency Submission</a>
+                        </li>                           
+                        <li>
+                            <a href="/contact">Contact Us</a>
+                        </li>
+                        <li>
+                            <a href="https://twitter.com/CoinWarz" target="_blank">Follow Us on Twitter</a>
+                        </li>
+                        <li>
+                            <a href="/terms">Terms of Service</a>
+                        </li>
+                        <li>
+                            <a href="/privacy">Privacy Policy</a>
+                        </li>
+                    </ul>
+
+
+            </div>
+            </div>
+            <div style="text-align:left; margin:10px 0px;">
+                <p>&copy; 2017 <a href="/cryptocurrency">CoinWarz</a></p>
+<p>...</p>
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            //$('#fixedheaderC').width($('.container').width()).show();
+
+            $('.tickerBTC').easyTicker({
+                direction: 'up',
+                easing: 'swing',
+                speed: 'slow',
+                interval: 5000,
+                height: 'auto',
+                visible: 1,
+                mousePause: 1,
+                controls: {
+                    up: '#tickerBTCUp',
+                    down: '#tickerBTCDown',
+                }
+            });
+
+            $('.tickerBTC ul').show();
+
+            // SCROLL TO FUNCTIONS
+            $(".scrollTo").click(function () {
+                var scrollPos = $("#scrollFrom" + $(this).attr("id")).offset().top - 16;
+
+                $("html, body").animate({ scrollTop: scrollPos }, 1000, function () { BindScrollTop(); });
+
+            });
+
+            $(window).scroll(function () {
+                if ($(window).scrollTop() <= 200) {
+                    $(".scrollTop").hide("fast");
+                    $(".scrollTop").remove();
+                } else {
+                    BindScrollTop();
+                }
+            });
+
+            
+
+            $( window ).resize(function() {
+                setBg();
+            });
+
+            setBg();
+        });
+
+        function setBg()
+        {
+            //set correct BG
+            var width = $(window).width();
+
+            //alert(width);
+
+            if(width > 1880)
+            {
+                //$("#bg1").attr("src", "/content/images/GM_BTC_1920.png");
+                //$("#bg2").attr("src", "/content/images/GM_BTC_1920.png");
+
+                $("#takeoverLeft").attr("width","330").attr("height", "996");
+                $("#takeoverRight").attr("width","330").attr("height", "996");                
+
+                $("#background").css("background", "url('/content/images/tobg-1920.jpg') no-repeat left top transparent");
+
+                //$("#bg1").show();
+                //$("#bg2").show();
+
+                $("#background").show();
+            }
+            else if(width >=1640)
+            {
+                //$("#bg1").attr("src", "/content/images/GM_BTC_1680.png");
+                //$("#bg2").attr("src", "/content/images/GM_BTC_1680.png");
+
+                $("#takeoverLeft").attr("width","220").attr("height", "664");
+                $("#takeoverRight").attr("width","220").attr("height", "664");
+
+                $("#background").css("background", "");
+
+                //$("#bg1").show();
+                //$("#bg2").show();
+
+                $("#background").show();
+            }
+            else if(width >=1560)
+            {
+               //$("#bg1").attr("src", "/content/images/GM_BTC_1600.png");
+               //$("#bg2").attr("src", "/content/images/GM_BTC_1600.png");
+
+               $("#takeoverLeft").attr("width","188").attr("height", "550");
+               $("#takeoverRight").attr("width","188").attr("height", "550");
+
+               
+
+               $("#background").css("background", "");
+
+               //$("#bg1").show();
+               //$("#bg2").show();
+
+               $("#background").show();
+            }
+            else
+            {
+                //$("#bg1").hide();
+                //$("#bg2").hide();
+
+                $("#background").hide();
+            }
+
+
+            setTimeout(function() { LoadOtherScripts() }, 500);
+
+	
+            
+        }
+
+        function LoadOtherScripts()
+        {
+            var script=document.createElement('script');
+            script.type='text/javascript';
+            script.src='//apps.cointraffic.io/js/?wkey=Amwi0F';
+
+            $("body").append(script);
+        }
+
+        function BindScrollTop() {
+
+            $("body").append("<div class='scrollTop' style='display:none;'></div>");
+            $(".scrollTop").fadeIn("fast");
+    
+            $(".scrollTop").unbind("click");  
+            $(".scrollTop").click(function () {
+                $("html, body").animate({ scrollTop: 0 }, 500);
+                $(".scrollTop").fadeOut("fast");
+                $(".scrollTop").remove();
+            });
+
+            $(".scrollTop:not(:first)").remove();
+    
+        }
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-5489523-27']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+    <script>        !function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https'; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = p + '://platform.twitter.com/widgets.js'; fjs.parentNode.insertBefore(js, fjs); } } (document, 'script', 'twitter-wjs');</script>
+    <script type="text/javascript">
+        (function () {
+            var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+            po.src = 'https://apis.google.com/js/platform.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+        })();
+    </script>
+    
+    <span id="ct_I4FEKR"></span>
+</body>
+</html>
