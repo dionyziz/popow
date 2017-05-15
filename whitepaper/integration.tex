@@ -1,0 +1,116 @@
+\section{Implementation and Parametrization}
+In this section
+
+\subsection{Prototype Implementation}
+We provide an implementation of our protocol in Python. Our protocol consists of a prover, 
+Our simulation evalute the
+
+\subsection{Concrete Parameterization}
+In this section we work through an example of choosing concreter parameters for our scheme.
+
+We make two assumptions.
+
+First, as in all Backbone-based security models, we must make an assumption that a majority of the network's overall hashpower is honest. Letting $\alpha$ represent an assumed bound on the strength of an adversary,
+we require at most $\alpha < \frac{1}{2}$.
+We take $\alpha = 20\%$.
+
+We must make an assumption about the strength (in hashpower) that we can tolerate.
+
+\begin{figure}
+  \caption{Cost for varying functions of.}
+\end{figure}
+\anote{Include a graph here!}
+
+
+\subsection{Comparison with alternatives.}
+
+\paragraph{.}
+
+\begin{table}
+  \begin{tabular}{lll}
+    Our technique    & & \\
+    PoPoW~\cite{kls} & & \\
+    Drivechain    & & \\
+    Federated Sidechains & & \\
+  \end{tabular}
+\end{table}
+
+In the case of 
+
+% We have identified flaws in the proof of the original KLS paper?
+
+\section{Integration Scenarios}
+
+In this section we discussion several integration scenarios that can benefit.
+
+\subsection{Upgrade Paths}
+
+\paragraph{Proof of Work.}
+
+\paragraph{Proof of Stake.}
+
+\subsection{Application Scenarios}
+
+\paragraph{Multi-blockchain wallets.}
+As mentioned, one application of our technique is the potential for a multi-cryptocurrency client.
+
+At the current time of writing, a total of 731 cryptocurrencies are listed on 
+\url{https://coinmarketcap.com/}.
+
+\anote{graph of market caps of proof-of-work based cryptocurrencies}
+
+Multiple online services provide access to multiple cryptocurrencies. These come with the drawback of relying on a third party.
+Similarly, many multi-asset wallet applications, such as Jaxx\footnote{\url{https://jaxx.io/}} and Coinomi\footnote{\url{https://coinomi.com/}} do not connect to the peer-to-peer networks.
+
+\begin{table}
+  \caption{Proof of Work Types}
+  \begin{tabular}{l|ll|ll}
+    & {\bf Altcoins} & {\bf Growth rate} & {\bf Size today} &  \\\\
+    Scrypt  & 33  & 4.2 GB  & 4.0 MB / day \  \\
+    SHA-256  & 19  & 2.5 GB  & 1.6 MB / day \  \\
+    X11  & 5  & 591.2 MB  & 556.3 kB / day \  \\
+    Quark  & 3  & 647.9 MB  & 518.4 kB / day \  \\
+    NeoScrypt  & 3  & 420.7 MB  & 230.4 kB / day \  \\
+    CryptoNight  & 2  & 199.0 MB  & 115.2 kB / day \  \\
+    EtHash  & 2  & 588.6 MB  & 921.6 kB / day \  \\
+    Groestl  & 2  & 300.3 MB  & 184.2 kB / day \  \\
+    Equihash  & 2  & 17.7 MB  & 92.2 kB / day \  \\
+    Keccak  & 1  & 161.1 MB  & 115.2 kB / day \  \\
+    Blake-256  & 1  & 45.8 MB  & 38.4 kB / day \  \\
+    Lyra2REv2  & 1  & 57.4 MB  & 46.1 kB / day \  \\
+    \hline
+    Total  & 74   &  9.7 GB  & 8.4 MB  / day  \\
+  \end{tabular}
+\end{table}
+
+According to the Ethereum whitepaper, the header of an Ethereum block is approximately 200 bytes.
+https://github.com/ethereum/wiki/wiki/White-Paper
+
+
+Two obstacles. First, require making multiple connections to the peer-to-peer network.
+
+
+\paragraph{Catena.}
+
+In Catena, propose development of.
+
+Develop a header relay network as a way of releasing.
+
+\subsection{Sidechains}
+
+
+
+
+\section{Related Work}
+
+\paragraph{Cross Chain Transactions.}
+An application of our technique is for 
+
+
+\paragraph{BTCRelay.}
+BTCRelay~\cite{btcrelay} is an Ethereum smart contract written in Ethereum that acts as an SPV client for the Bitcoin blockchain.
+This allows an Ethereum smart contract to act .
+
+Users can interact with the client to submit itcoin
+
+At the current time.

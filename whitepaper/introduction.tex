@@ -1,20 +1,45 @@
 \section{Introduction}
+Cryptocurrencies such as Bitcoin~\cite{bitcoin} and Ethereum~\cite{ethereum} have seen tremendous success in recent years.
+These are peer-to-peer networks that maintain a globally consistent transaction log, using a new consensus protocol based on proof-of-work puzzles. Worker nodes called ``miners'' expend computational work in order to reach agreement on the state of the network.
+Clients on the network, such as mobile phone apps, must verify these proofs-of-work in order to determine the correct view of the network's state, as necessary to transmit and receive payments.
 
-Bitcoin \cite{bitcoin} is the first decentralized currency. Several
-cryptocurrencies have surfaced since, many of which use different consensus
-rules. Such different proposals for consensus rules must necessarily be
-implemented either as an altcoin or a hard-fork. Pegged sidechains provide an
-alternative: While consensus rules can be different across blockchains, it is
-useful to have one unit of value which can be moved between various
-blockchains. This allows for consensus rules innovation and experimentation.
+In this work we develop a new primitive, called Noninteractive-Proofs-of-Proofs-of-Work, (NiPoPoWs), which can be adapted into existing cryptocurrencies to support more efficient clients.
+Unlike a traditional blockchain client, which must verify the entire chain of proofs-of-work, which grows longer and longer as time goes on, clients based on NiPoPoWs require resources only logarithmic in the length of the blockchain.
 
-In the simplest version of sidechains, the nodes participating in the consensus
-protocol must all maintain the different blockchains. This is not efficient and
-adoption will be hindered. The solution for this is to provide succinct
+Three trends motivate the need for more efficient clients.
+First, while Bitcoin remains by the largest and most widely used cryptocurrency, the ecosystem has become significantly more diverse. Today there are hundreds of competitors (commonly called ``altcoins''), and Bitcoin's dominance in the market is at an all time low.~\cite{marketcap}.\footnote{There are numerous problems with using the market cap as a measure of economic size, such as defining what it means to quantify the quantity “in circulation” counting the number of this is outside the scope of our paper.}
+  We envision that our protocol will form the basis of an efficient multi-blockchain client, which could efficiently support payments using hundreds of separate cryptocurrencies.
+
+  Second, cryptocurrencies are increasingly used as components of larger systems (the cryptocurrency system is typically called a ``blockchain'' when its currency feature is not salient).
+  As one example, a recent system called Catena~\cite{catena} uses the Bitcoin blockchain as an authenticated log; the browser embeds a Bitcoin client that uses the blockchain to validate HTTPS certificates.
+  The bandwidth costs that are tolerable for a dedicated Bitcoin wallet are likely unacceptable in such embedded contexts. Our techniques can directly reduce the cost of Catena and similar systems.
+
+  Finally, there has been significant interest in the development of ``cross-chain'' applications, i.e. logical transactions that span multiple separate cryptocurrencies.
+  Simple cross-chain transactions are feasible today: the most well-known is the atomic exchange,~\cite{tiernolan} e.g. a trade of Bitcoins for Ether.
+  However, more sophisticated applications could be enabled by our protocol, which would allow one cryptocurrency to embed a client of a separate cryptocurrency.
+  This concept initially popularized by a proposal by Back et al.,~\cite{sidechains} particularly can be used to avoid difficult ugprade process: a new blockchain with additional features (such as experimental opcodes) can be backed by deposits in the original Bitcoin currency, obviating the need to bootstrap new currencies from scratch.
+  This has been heralded as a key enabling scalability of the Bitcoin ecosystem;
+  however, the sidechains proposal is incomplete, as it does not provide a protocol that satisfies a natural security definition (e.g., where attacks succeed with only negligible probability). Our work is the first to answer the open problem posed by Back et al.
+
+  In this paper we make the following contributions:
+  \begin{itemize}
+    \item Our main technical contribution is the development of a non-interactive variant of a scheme by Kiayias et al., for interactive Proofs-of-Proofs-of-Work (PoPoWs), which we build on. We provide a new rigorous security definition and construction for non-noninteractive proofs of work. Our definition corrects weakness in prior security definitions, especially the notion of ``Dynamic Member Multisignature'' by Back et al., which lead to attacks.
+  \item We provide an implementation, concrete parameterization, and empirical analysis focusing to show the potential savings of our approach versus existing clients.
+   \item We describe safely deployable upgrade path for NiPoPoWs that existing cryptocurrencies can gradually adopt to support efficient clients.
+  \end{itemize}
+
+%In the simplest version of sidechains, the nodes participating in the consensus
+%protocol must all maintain the different blockchains.
+%This is not efficient and
+  %adoption will be hindered.
+  \ignore{
+The solution for this is to provide succinct
 stand-alone proofs that the winning chain of a block tree is a particular one.
 These succinct proofs prove that proof-of-work took place without presenting
 the actual proof-of-work. Succinctness requires that these proofs are
-significantly shorter than presenting the whole chain. Technically, if the
+significantly shorter than presenting the whole chain.
+
+Technically, if the
 claimed winning blockchain has a length of $|\chain|$ blocks, we want the
 succinct proofs to have a size of $O(polylg|\chain|)$. These short proofs can
 then be subsequently included in sidechain blocks where funds are locked in one
@@ -41,3 +66,4 @@ upgraded to adopt our scheme without having to orchestrate a hard or a soft
 fork. Finally, we evaluate the feasibility of our construction by proposing
 specific values for the security parameters and analyzing the size of our
 actual proofs in the real bitcoin blockchain.
+}
