@@ -27,11 +27,14 @@ We must make an assumption about the strength (in hashpower) that we can tolerat
 \paragraph{.}
 
 \begin{table}
-  \begin{tabular}{lll}
-    Our technique    & & \\
-    PoPoW~\cite{kls} & & \\
-    Drivechain    & & \\
-    Federated Sidechains & & \\
+  \caption{Comparison of Sidechains Techniques ($B$ blocks in between transactions)}
+  \begin{tabular}{llll}
+    {\bf Technique}  & {\bf Cost}       & {\bf Rounds}    & {\bf Trust Model} \\
+    Our technique    & $O(m polylog B)$ &              & \\
+    PoPoW~\cite{kls} & $O(m polylog B)$ &              & \\
+    Plain SPV        &   $O(B)$         & & \\
+Drivechains~\cite{sztorc}& $O(1)$       &              & \\
+    Federated        &     $O(1)$       &              & Centralized \\
   \end{tabular}
 \end{table}
 
@@ -63,9 +66,10 @@ Multiple online services provide access to multiple cryptocurrencies. These come
 Similarly, many multi-asset wallet applications, such as Jaxx\footnote{\url{https://jaxx.io/}} and Coinomi\footnote{\url{https://coinomi.com/}} do not connect to the peer-to-peer networks.
 
 \begin{table}
-  \caption{Proof of Work Types}
+  \caption{Cost of header chains for all active Proof-of-Work-based cryptocurrencies (collected from \url{Coinwarz.com})}
+\small
   \begin{tabular}{l|ll|ll}
-    & {\bf Altcoins} & {\bf Growth rate} & {\bf Size today} &  \\\\
+    {\bf Hash} & {\bf \# Instances} & {\bf Growth rate} & {\bf Size today} &  \\\\
     Scrypt  & 33  & 4.2 GB  & 4.0 MB / day \  \\
     SHA-256  & 19  & 2.5 GB  & 1.6 MB / day \  \\
     X11  & 5  & 591.2 MB  & 556.3 kB / day \  \\
@@ -83,8 +87,8 @@ Similarly, many multi-asset wallet applications, such as Jaxx\footnote{\url{http
   \end{tabular}
 \end{table}
 
-According to the Ethereum whitepaper, the header of an Ethereum block is approximately 200 bytes.
-https://github.com/ethereum/wiki/wiki/White-Paper
+In Table 1, we show the costs associated with running a client supporting multiple cryptocurrencies. Our estimates are based on an assumption that the header for each block is 80 bytes, as is the case with Bitcoin. For EtHash based currencies, this is an underestimate, since according to the Ethereum whitepaper,\footnote{\url{https://github.com/ethereum/wiki/wiki/White-Paper}}
+the header of an Ethereum block is approximately 200 bytes.
 
 
 Two obstacles. First, require making multiple connections to the peer-to-peer network.
