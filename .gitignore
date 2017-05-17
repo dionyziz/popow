@@ -20,6 +20,7 @@
 *.ps
 *.thm
 *.tgz
+*.gz
 *.zip
 *.rpi
 *.d
