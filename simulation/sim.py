@@ -3,9 +3,9 @@ from math import log, floor
 
 MAX_MU = 32
 ROUNDS = 20
-CONFIDENCE = 1000
+NUMBER_OF_TRIALS = 10000
 MAX_TARGET = 2**MAX_MU
-m = 10
+m = 6
 
 # adversary power
 q = 1.0 / 10
@@ -25,12 +25,11 @@ def count_level_blocks(C, mu):
     return len(filter(lambda x: x >= mu, C))
 
 def proof_level(C):
-    if len(C) < 2 * m:
+    if len(C) < m:
         return 0
 
-    superblocks = 0
     for mu in range(MAX_MU):
-        if count_level_blocks(C, mu) < 2 * m:
+        if count_level_blocks(C, mu) < m:
             return mu - 1
     assert(False)
 
@@ -49,7 +48,7 @@ def run():
     good = (ROUNDS + 1) * [0]
     bad = (ROUNDS + 1) * [0]
 
-    for monte_carlo in range(CONFIDENCE):
+    for monte_carlo in range(NUMBER_OF_TRIALS):
         adversary_chain = []
         honest_chain = []
 
@@ -58,12 +57,14 @@ def run():
                 adversary_chain.append(level(mine_block()))
             else:
                 honest_chain.append(level(mine_block()))
-            z = len(honest_chain)
+            z = max(len(honest_chain), len(adversary_chain))
             if max_chain(adversary_chain, honest_chain):
-                bad[successful_round] += 1
+                bad[z] += 1
             else:
-                good[successful_round] += 1
+                good[z] += 1
 
     for z in range(ROUNDS + 1):
         if bad[z] > 0 and good[z] > 0:
             print 'Pr[BAD|z = %i, m = %i, q = %f] = %.10f' % (z, m, q, float(bad[z]) / (bad[z] + good[z]))
+
+run()
