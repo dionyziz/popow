@@ -7,17 +7,10 @@
             \Let{\textsf{aux}}{[B]}
             \Let{\pi}{[B]}
             \While{$B \neq b$}
-                \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[\textsf{blockid}(B)][\mu]$}
-                    \Let{id}{B.\textsf{interlink}[\mu]}
-                    \Let{B}{\textsf{blockById}[id]}
-                \Else
-                    \Comment{Invalid interlink}
-                    \Let{B}{\textsf{blockById}[B.\textsf{interlink}[0]]}
-                \EndIf
-                \If{$\textsf{level}(B) = \mu$}
-                    \State{$\pi$.append($B$)}
-                \EndIf
-                \State{\textsf{aux}.append($B$)}
+                \Let{(B, \textsf{aux'})}{\textsf{followTail}(B, \mu,
+                \textsf{realInterlink}, \textsf{blockById})}
+                \State{$\textsf{aux}$.append($\textsf{aux'}$)}
+                \State{$\pi$.append($B$)}
             \EndWhile
             \State\Return{$\pi$, aux}
         \EndFunction

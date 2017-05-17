@@ -1,0 +1,25 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.nipopow-velvet-follow}The follow function which
+    produces the necessary blocks to connect two superblocks in velvet forks.}
+    \begin{algorithmic}[1]
+        \Function{\sf followTail}{$B$, $\mu$, realLink, blockById}
+            \Let{\textsf{aux}}{[B]}
+            \While{$B \neq \textsf{Genesis}$}
+                \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[\textsf{blockid}(B)][\mu]$}
+                    \Let{id}{B.\textsf{interlink}[\mu]}
+                    \Let{B}{\textsf{blockById}[id]}
+                \Else
+                    \Comment{Invalid interlink}
+                    \Let{id}{B.\textsf{interlink}[0]}
+                    \Let{B}{\textsf{blockById}[id]}
+                \EndIf
+                \State{\textsf{aux}.append($B$)}
+                \If{$\textsf{level}(B) = \mu$}
+                    \State\Return{$B$, aux}
+                \EndIf
+            \EndWhile
+            \State\Return{$B$, aux}
+        \EndFunction
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
