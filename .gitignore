@@ -26,4 +26,5 @@
 *.d
 *.fls
 *.*.make
+*.pyc
 .DS_Store
