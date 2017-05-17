@@ -27,12 +27,12 @@ In summary,  we make the following contributions in this paper.
   \begin{itemize}
     \item Our main technical contribution is the introduction of 
     a new cryptographic
-     primitive called Non-Interactive Proofs of Proof of Work (NiPoPoW). We present a formal model and a provably secure  
-     instantiation of NiPoPoWs in the model of \cite{GKL15}. 
+     primitive called Non-Interactive Proofs of Proof of Work (NiPoPoW). We present a formal model and a provably secure
+     instantiation of NiPoPoWs in the model of \cite{backbone}.
      Our contribution builds on previous work by  Kiayias et al., who posed
-     (interactive) Proofs-of-Proofs-of-Work (PoPoWs) \cite{}. 
-     Our definition fills the gap in terms of security modeling and design that existed in previous proposals, especially the notion of cumulative  ``Dynamic Member Multisignature'' by Back et al., \cite{}. Moreover it is also the first truly efficient PoPoW since, as we demonstrate, even the efficient PoPoW construction of \cite{KLS16} is susceptible to a ``slow-down'' attack that we illustrate. 
-     
+     (interactive) Proofs-of-Proofs-of-Work (PoPoWs) \cite{KLS}.
+     Our definition fills the gap in terms of security modeling and design that existed in previous proposals, especially the notion of cumulative  ``Dynamic Member Multisignature'' by Back et al., \cite{}. Moreover it is also the first truly efficient PoPoW since, as we demonstrate, even the efficient PoPoW construction of \cite{KLS} is susceptible to a ``slow-down'' attack that we illustrate.
+
   \item We provide an implementation, concrete parameterization, and empirical analysis focusing to show the potential savings of our approach versus existing clients.
 Using actual data from the bitcoin blockchain we quantify the actual savings of NiPoPoWs over 
 the previous known techniques of constructing efficient SPV verifiers. 
