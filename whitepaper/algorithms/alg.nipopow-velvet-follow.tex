@@ -1,8 +1,8 @@
 \begin{algorithm}[H]
-    \caption{\label{alg.nipopow-velvet-follow}The follow function which
+    \caption{\label{alg.nipopow-velvet-follow}The followUp function which
     produces the necessary blocks to connect two superblocks in velvet forks.}
     \begin{algorithmic}[1]
-        \Function{\sf followTail}{$B$, $\mu$, realLink, blockById}
+        \Function{\sf followUp}{$B$, $\mu$, realLink, blockById}
             \Let{\textsf{aux}}{[B]}
             \While{$B \neq \textsf{Genesis}$}
                 \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[\textsf{blockid}(B)][\mu]$}
