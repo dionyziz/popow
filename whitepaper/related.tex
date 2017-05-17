@@ -1,10 +1,29 @@
 \section{Related work}
 
-In the paper which introduced bitcoin \cite{bitcoin}, Nakamoto was well aware
-of the requirement for shorter proofs-of-work. He proposed SPV clients there,
-which, while linear in $|\chain|$ had low coefficients and achieved proofs of
-$80|\chain|$ bytes, given that each block header is $|\chain|$ long (in
-addition to the size required by the Merkle proofs-of-inclusion).
+
+\paragraph{Lightweight ``SPV'' Clients.}
+Nakamoto's original Bitcoin whitepaper~\cite{bitcoin} anticipated the rising costs of an evergrowing blockchain, and proposed a protocol for lightweight clients, called ``Simplified Payment Verification'' (SPV). Unlike ``full nodes'' which process and validate the entire blockchain (including all transactions and signatures), SPV clients only process the proof-of-work chain and transactions directly pertaining to them.
+When initialized for the first time, an SPV client downloads (and stores) the entire chain blockchain, which is thus linear in $|\chain|$, and therefore grows unbounded over time, although it has low constant fators, i.e.
+$80|\chain|$ bytes.
+When an SPV client receives a payment, it requests a proof-of-inclusion (i.e., a Merkle tree branch proof) in order to confirm that the transaction is included in one of the blocks whose header is already stored by the client.
+Most widely used clients, especially mobile wallets based on BitcoinJ, implement SPV.
+
+%It is safe for users to run SPV clients; they enjoy the same security guarantees as if they run full nodes, as long as we assume a majority of miners faithfully process all transactions. However, in July 2015, a miners were following not fully verifying transactions, 
+
+As an alternative to downloading all block headers at first startup, the SPV client software could in principle embed a hardcoded checkpoint (perhaps chosen conservatively, e.g. many months in the past) blocks prior to which the client ignores. This would introduce additional assumptions about the maintenance of the code; although BitcoinJ software provides a mechanism for users to build ``Checkpoint Files,''\footnote{https://bitcoinj.github.io/speeding-up-chain-sync} but does not embed these. Similarly, ~\cite{betterspv}, clients at first startup could proceed optimistically,
+\anote{THIS IS BROKEN BECAUSE MULTIBIT SEEMS TO EMBED CHECKPOINTS}
+
+\paragraph{BTCRelay.}
+BTCRelay~\cite{btcrelay} is an Ethereum~\cite{ethereum} smart contract written in Ethereum that acts as an SPV client for the Bitcoin blockchain.
+That is, the smart contract contains rules for parsing 
+This allows Ethereum smart contract to condition their behavior based on the presence of particular transactions in the Bitcoin blockchain.
+Users can interact with the client to submit Bitcoin.
+
+At the current time, Ethereum does not provide built-in support for other hashes like scrypt, or even EtHash, the basis for Ethereum's own proof of work. Ethereum could be upgraded to support such opcodes in the future. This would 
+
+\paragraph{Cross Chain Transactions.}
+An application of our technique is for sidechains.
+Hash lock contract are supported by most cryptocurrency scripting languages, including Bitcoin script and the Ethereum virtual machine. Only relies on the ability to verify that a user provided input is the preimage of a given hash.
 
 In \cite{KLS}, it was discovered that these proofs can be sublinear in size. In
 that paper they achieved proof sizes constant with respect to the chain size

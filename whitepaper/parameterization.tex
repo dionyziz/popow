@@ -1,5 +1,89 @@
-\section{Concrete parameterization}
+\section{Implementation and Parametrization}
 
+\subsection{Prototype Implementation}
+We provide an implementation of our protocol in Python. Our protocol consists of a prover, 
+\anote{TODO: fill in some details about the python implementation.}
+
+We describe several optimizations made in designing the interlink data structure.
+
+\paragraph{Interlink Optimizations}
+We now discuss the exact manner in which the interlink data structure should be
+hashed to provide a single hash within the coinbase transaction. In \cite{KLS},
+they propose the use of a Merkle tree to hash the interlink data structure.
+However, no further discussion is made in this regard. Observe that NIPoPoWs
+form a single chain of various levels which can skip certain blocks. However,
+it does not form a tree. Therefore, for each block included in the proof, only
+a single pointer needs to be presented to convince the Verifier. Near genesis,
+the pointers that need to be included correspond to high levels; while near the
+most recently generated block, the pointers correspond to low levels. One
+important observation is this: In the formal construction of the proof, the
+highest level superchain with at least $m$ blocks is included, and assume it is
+of level $\mu$. The next level superchain, $\mu - 1$ is completely included and
+has an expected number of $2m$ blocks. But note that since all $\mu$-level
+superblocks are also $(\mu - 1)$-level superblocks, only the $\mu - 1$ level
+needs to be in fact included. Among the expected $2m$ blocks of level $\mu -
+1$, the last $m$ will need to be supported by level $\mu - 2$. Using the same
+argument, since $(\mu - 1)$-level superblocks are also $(\mu - 2)$ level
+superblocks, in expectation only $m$ blocks need to be included in level $\mu
+- 1$. The argument continues inductively, until an expected number of $2m$
+blocks needs to be included at level $0$ immediately before the $\chi$ suffix.
+This gives us an exact estimation on the size of the proof: The proof will
+contain exactly $m (\log(|\chain|) - \log(m))$ blocks in expectation, $m$ at each of
+the $\mu - 1$ levels and $2m$ at level $0$.
+
+By organizing the interlink pointers into a Merkle tree of $\log(|\chain|)$
+items, a proof-of-inclusion in the pointers Merkle tree can be provided in
+$\log \log(|\chain|)$ space, noting that the $0$-level pointer need not be
+included in this Merkle tree, but the genesis block needs to be. Then the root
+of the pointers Merkle tree can be proved to have been included in the block
+header in $\log(|\overline x|)$ using the standard Merkle tree of transactions,
+where $\overline x$ is the vector of all transactions in the given block. This
+makes the proof size require $\log(|\overline x|) + \log\log(|\chain|)$ hashes per
+block for a total of $m (\log(|\chain|) - \log(m))(\log(|\overline x|) +
+\log\log(|\chain|)$ hashes. In addition, $m (\log(|\chain|) - \log(m))$ block headers
+and coinbase transactions are needed. More concretely, given that currently
+$|\chain| = 464,185$, we have that $\log(|\chain|) = 18$ and $\log\log(|\chain|) =
+5$.  Typically, $|\overline x| = 2000$ in the current bitcoin setting, which
+makes $\log(|\overline x|) = 11$. For the $k$-suffix, only $k$ block headers need
+to be included. We set $k = 6$ as is traditional in the bitcoin setting and see
+that block headers are $80$ bytes and hash outputs are $32$ bytes. However, we
+note that block headers do not need to include the previous block header hash
+for the $k$-suffix, as each previous block header hash can be calculated by the
+Verifier, limiting header sizes to $48$ bytes for the $k$ last blocks.
+Furthermore, the $k$-suffix does not require the presentation of the coinbase
+transaction data. These are also true for the $2m$ blocks in $\overline \Pi[0]$.
+Note also that for the proof prefix $\overline \Pi$, the coinbase transaction
+hash need not be included: It can be evaluated by the Verifier when building
+the Merkle tree during the proof-of-inclusion. Similarly, the root of the
+pointers Merkle tree can be omitted from the coinbase transaction data when
+transmitting the proof. Additionally, the leaf of the pointers Merkle tree can
+also be omitted, as it can be obtained by the Verifier by simply hashing the
+previous block in the proof. In fact, no block ids need to be transmitted at
+all, as they can all be built from the Verifier starting from the knowledge of
+Genesis.
+
+Based on these observations, we provide an estimate for proof sizes of our
+scheme for various parameterizations of $m$ in Table~\ref{table.size}.
+
+\begin{table}
+  \caption{\label{table.size}
+    Estimated size of NIPoPoWs for various values of the security parameter $m$
+    setting $k = 6$ and with current values for transaction count, block count,
+    coinbase size and hash output length.}
+  \begin{tabular}{llll}
+      {\bf m}  & {\bf NIPoPoW size (KB)} & {\bf \# of blocks} & {\bf
+      \# of hashes}\\
+      $6$   & $70$  & $108$ & $1440$  \\
+      $15$  & $146$ & $231$ & $2925$  \\
+      $30$  & $270$ & $426$ & $5400$  \\
+      $50$  & $412$ & $656$ & $8250$ \\
+      $100$ & $750$ & $1206$ & $15000$ \\
+      $127$ & $952$ & $1530$ & $19050$ \\
+  \end{tabular}
+\end{table}
+
+
+\subsection{Parameterization}
 In order to determine concrete values for the security parameter $m$, we now
 turn our attention to a particular adversarial strategy of interest and analyze
 its probability of success under specific conditions. It is important to keep

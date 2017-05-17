@@ -1,30 +1,9 @@
-\section{Implementation and Parametrization}
-In this section
+\section{Applications and Evaluation}
 
-\subsection{Prototype Implementation}
-We provide an implementation of our protocol in Python. Our protocol consists of a prover, 
-Our simulation evalute the
-
-\subsection{Concrete Parameterization}
-In this section we work through an example of choosing concreter parameters for our scheme.
-
-We make two assumptions.
-
-First, as in all Backbone-based security models, we must make an assumption that a majority of the network's overall hashpower is honest. Letting $\alpha$ represent an assumed bound on the strength of an adversary,
-we require at most $\alpha < \frac{1}{2}$.
-We take $\alpha = 20\%$.
-
-We must make an assumption about the strength (in hashpower) that we can tolerate.
-
-\begin{figure}
-  \caption{Cost for varying functions of.}
-\end{figure}
-\anote{Include a graph here!}
-
-
+\ignore{
 \subsection{Comparison with alternatives.}
 
-\paragraph{.}
+In Table
 
 \begin{table}
   \caption{Comparison of Sidechains Techniques ($B$ blocks in between transactions)}
@@ -39,14 +18,7 @@ Drivechains~\cite{sztorc}& $O(1)$       &              & \\
 \end{table}
 
 In the case of 
-
-% We have identified flaws in the proof of the original KLS paper?
-
-\section{Integration Scenarios}
-
-In this section we discussion several integration scenarios that can benefit.
-
-\subsection{Upgrade Paths}
+}
 
 
 
@@ -96,18 +68,6 @@ In Catena,~\cite{} propose development of.
 Develop a header relay network as a way of releasing.
 If relay header network instead provided proofs based on NiPoPoWs, 
 
-\subsection{Sidechains}
+\paragraph{Sidechains.}
 
 
-\section{Related Work}
-
-\paragraph{Cross Chain Transactions.}
-An application of our technique is for sidechains.
-Hash lock contract are supported by most cryptocurrency scripting languages, including Bitcoin script and the Ethereum virtual machine. Only relies on the ability to verify that a user provided input is the preimage of a given hash.
-
-\paragraph{BTCRelay.}
-BTCRelay~\cite{btcrelay} is an Ethereum smart contract written in Ethereum that acts as an SPV client for the Bitcoin blockchain.
-This allows Ethereum smart contract to condition their behavior based on the presence of particular transactions in the Bitcoin blockchain.
-Users can interact with the client to submit Bitcoin.
-
-At the current time, Ethereum does not provide built-in support for other hashes like scrypt, or even EtHash, the basis for Ethereum's own proof of work. Ethereum could be upgraded to support such opcodes in the future. This would 

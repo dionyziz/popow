@@ -181,7 +181,9 @@ def simulate():
         # 48 - header size
         # coinbase transaction: ??
         # hash_size: 32
-        size = nipopow_size(C, x=1, m=6, k=6, block_header_size=80,
+        m = 40
+        C = max(C, m+1)
+        size = nipopow_size(C, x=1, m=40, k=40, block_header_size=80,
                             suffix_block_header_size=48, coinbase_size=0, hash_size=32)
         if coin not in ('bitcoin', 'ethereum'):
             print 'Drawing from coin', coin
@@ -189,3 +191,4 @@ def simulate():
             print humanize.naturalsize(sum(size))
         total_size += sum(size)
     print 'Total:', humanize.naturalsize(total_size)
+    print state
