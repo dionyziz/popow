@@ -9,10 +9,10 @@ using namespace std;
 typedef unsigned long long int blockid_t;
 
 const int NUMBER_OF_TRIALS = 1000000;
-const int n = 10; // number of total parties
+const int n = 3; // number of total parties
 const int t = 1; // number of adversarially-corrupted parties
 const int MIN_M = 1; // nipopow security parameter min
-const int MAX_M = 10; // and max
+const int MAX_M = 30; // and max
 const int k = 6; // bitcoin block stability security parameter
 const int NUM_ROUNDS_OF_PREMINING = 100;
 const int MAX_MU = 63; // maximum superblock level
@@ -157,7 +157,7 @@ int main() {
 
     srand(time(NULL));
 
-    for (int m = MIN_M; m < MAX_M; ++m) {
+    for (int m = MIN_M; m <= MAX_M; ++m) {
         int count_bad = 0;
         int count_all = 0;
 
