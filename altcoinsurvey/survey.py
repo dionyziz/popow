@@ -2,7 +2,6 @@ from BeautifulSoup import BeautifulSoup as BS
 from pylab import *
 import glob
 
-
 # CoinWarz scrapes
 coins = [_.split('.')[0] for _ in glob.glob('coinwarz/*.html')]
 
@@ -132,3 +131,61 @@ def histog():
     clf();
 
     
+
+
+# Run the simulation
+from size import nipopow_size
+
+def simulate():
+
+    import humanize
+    # Prepare healthy
+    healthy = [d for d in coindata if 'Status' in coindata[d] and coindata[d]['Symbol'] in market_cap and market_cap[coindata[d]['Symbol']] > 100000]
+
+    for d in healthy:
+        time = coindata[d]['Block Time']
+        try:
+            amt = float(time.split(' ')[0])
+        except: continue
+        amt = amt * 60. if 'minute' in time else amt
+        coindata[d]['freq'] = 1./amt
+
+    total = float(sum(market_cap[coindata[d]['Symbol']] for d in healthy))        
+
+    # Initially empty state for the SPV client, initially X blocks
+    state = dict((h,0) for h in healthy)
+    blocks = dict((h, coindata[h]['Block Count']) for h in healthy)
+
+    trials_per_day = 80
+    print "==" * 10    
+    print "Simulating %d transactions per day" % trials_per_day
+    total_size = 0
+    for day in range(365):
+      print '*'*10, 'Day', day, '*'*10
+      for i in range(trials_per_day):
+        # Update all the blocks!
+        secs = (3600*24/trials_per_day)
+        #print 'Time passed: %d seconds' % secs
+
+        for h in healthy:
+            blocks[h] += int(secs * coindata[d]['freq']) # Updated however many blocks per second
+        
+        coin = np.random.choice(healthy, p=[market_cap[coindata[d]['Symbol']]/total for d in healthy])
+        C = blocks[coin] - state[coin]
+        state[coin] = blocks[coin]
+
+        # C: length of chain
+        # x: # of transactions per block
+        # m,k: params
+        # block_header: prefix blocks 80
+        # 48 - header size
+        # coinbase transaction: ??
+        # hash_size: 32
+        size = nipopow_size(C, x=1, m=6, k=6, block_header_size=80,
+                            suffix_block_header_size=48, coinbase_size=0, hash_size=32)
+        if coin not in ('bitcoin', 'ethereum'):
+            print 'Drawing from coin', coin
+            print 'difference:', C, 'blocks:', blocks[coin]
+            print humanize.naturalsize(sum(size))
+        total_size += sum(size)
+    print 'Total:', humanize.naturalsize(total_size)
