@@ -33,17 +33,20 @@ with various values of $m$ for $y = 100$, indicating $100$ blocks of secret
 parallel mining. We make the simplifying assumption that honest party
 communication is perfect and immediate, meaning that all honest party rounds
 that are successful are also uniquely successful. We ran $1,000,000$ Monte
-Carlo executions of the experiment for each value of $m$ from $1$ to $30$. We
-ran the simulation for values close to the two values of computational power
-percentage used in \cite{bitcoin}, $q = 0.1$ and $q = 0.33$. The results are
-plotted in Figure~\ref{fig.nipopow-attack-experiment}.
+Carlo executions \footnote{The URL to the GitHub repository of this
+MIT-licensed experiment has been redacted for anonymity and will be provided in
+the proceedings version of this paper.} of the experiment for each value of $m$
+from $1$ to $30$. We ran the simulation for values of computational power
+percentage $q = 0.1$, $q = 0.2$ and $q = 0.3$. The results are plotted in
+Figure~\ref{fig.nipopow-attack-experiment}.
 
 \begin{figure}[h]
     \caption{\label{fig.nipopow-attack-experiment}
         Simulation results for a private mining attacker with $q = 0.1$ and $q
-        = 0.33$ computational power, suffix security $k = 6$ and parallel
+        = 0.3$ computational power, suffix security $k = 6$ and parallel
         mining parameter $y = 100$. Probabilities are plotted on a logarithmic
-        scale. The threshold probability of \cite{bitcoin} is indicated in red.
+        scale. The threshold probability of \cite{bitcoin} is indicated by the
+        horizontal line.
     }
     \centering
     \includegraphics[width=0.5\textwidth,keepaspectratio]{figures/nipopow-attack-experiment.png}
