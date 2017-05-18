@@ -4,11 +4,9 @@
         \Function{\sf updateInterlink}{$B'$}
             \Let{\textsf{interlink}}{B'.\textsf{interlink}}
             \Let{\textsf{id}}{blockid(B')}
-            \Let{\mu}{0}
-            \While{$\textsf{blockid} < \frac{T}{2^\mu}$}
+            \For{$\mu = 0$ to $\textsf{level}(B')$}
                 \Let{\textsf{interlink}[\mu]}{\textsf{blockid}}
-                \Let{\mu}{\mu + 1}
-            \EndWhile
+            \EndFor
             \State\Return{\textsf{interlink}}
         \EndFunction
     \vskip8pt
