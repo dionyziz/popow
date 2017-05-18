@@ -1,16 +1,45 @@
 \section{Consensus layer changes}
 
-For our proofs to work, we require certain changes in the consensus layer.
-An interlink data structure is proposed to be included in each block, replacing
-the existing pointer to the previous block with a list of pointers to a small
-number of previous blocks. The algorithm for this construction is shown in
+We will now start constructing a concrete blockchain proof protocol. Before
+we're able to define the prover and the verifier algorithms, we need to propose
+certain modifications to the consensus layer.
+
+Some helper functions are defined in Algorithm~\ref{alg.nipopow-helper}, which
+will become useful in a moment. The \textit{blockid} function calculates the
+id of a block given its data. This is done by applying the hashfunctions $H$
+and $G$ in a manner similar to \cite{backbone}. However, notice that block $B$
+maintains an \textit{interlink} data structure instead of a previous block
+pointer. We will get to this shortly. The \textit{level} function calculates
+the highest level of a block given its data. Knowing that the id of a block
+must be less than the target $T$ to satisfy the proof-of-work condition, we
+observe that some blocks will achieve a much lower id. If the block id is less
+than $\frac{T}{2^\mu}$ we say that the block is of level $\mu$. Clearly all
+blocks are blocks of level $0$. Observe then that in expectation, half of the
+blocks will be of level $1$, $1/4$ of the blocks will be of level $2$, $1/8$
+will be of level $3$ and so forth. We term blocks that have a level above 0
+\textit{superblocks} of their respective level. Note that, in expectation, the
+number of superblock levels of a chain $\chain$ will be $\log(\chain)$.
+
+The \textit{interlink} data structure is proposed to be included in each block,
+replacing the existing pointer to the previous block with a list of pointers to
+a small number of previous blocks. For each superblock level $\mu$, this data
+structure contains a pointer to the most recent preceeding block of level
+$\mu$. The algorithm for this construction is shown in
 Algorithm~\ref{alg.nipopow-interlink} and is borrowed from \cite{KLS}. By
 convention, we assume that the Genesis block is of infinite level and hence a
 pointer to it is included in every block at the first available index within
-the interlink data structure.
+the interlink data structure. For more information about the interlink data
+structure, see \cite{KLS}.
 
-Some helper functions are defined in Algorithm~\ref{alg.nipopow-helper}, which
-will become useful for future algorithms also.
+The updateInterlink algorithm accepts a block $B'$, which already has an
+interlink data structure defined on it. The function then evaluates the
+interlink data structure which needs to be included as part of the next block.
+The algorithm proceeds by copying the existing interlink data structure and
+then modifying some of its entries from level $0$ to the level of block $B'$ to
+point to the block $B'$. Observe that the pointers stored are block ids and
+hence block data needs to be looked up based on blockid. To this end, the full
+node maintains a \textit{blockbyid} dictionary which, queried with the block
+id, returns the block data.
 
 \import{./}{algorithms/alg.nipopow-helper.tex}
 \import{./}{algorithms/alg.nipopow-interlink.tex}
