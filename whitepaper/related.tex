@@ -1,6 +1,5 @@
 \section{Related work}
 
-
 \paragraph{Lightweight ``SPV'' Clients.}
 Nakamoto's original Bitcoin whitepaper~\cite{bitcoin} anticipated the rising costs of an evergrowing blockchain, and proposed a protocol for lightweight clients, called ``Simplified Payment Verification'' (SPV). Unlike ``full nodes'' which process and validate the entire blockchain (including all transactions and signatures), SPV clients only process the proof-of-work chain and transactions directly pertaining to them.
 When initialized for the first time, an SPV client downloads (and stores) the entire chain blockchain, which is thus linear in $|\chain|$, and therefore grows unbounded over time, although it has low constant fators, i.e.

@@ -191,21 +191,25 @@ def simulate(trials_per_day=500, days=60):
         # 48 - header size
         # coinbase transaction: ??
         # hash_size: 32
-        m = 6
-        C = max(C, m+1)
-        size = nipopow_size(C, x=tx_per_block, m=6, k=24, block_header_size=80,
+        m = 24
+        C2 = max(C, 2*m+1)
+        size = nipopow_size(C2, x=tx_per_block, m=24, k=6, block_header_size=80,
                             suffix_block_header_size=48, coinbase_size=200, hash_size=32)
-
+        size = sum(size)
+        # Otherwise just include the headers!
+        #if size > C*48 + math.ceil(math.log(tx_per_block, 2)) * 32 + 200:
+        #    print 'Falling back to SPV!'
+        size = min(size, C*48 + math.ceil(math.log(tx_per_block, 2)) * 32 + 200)
 
         # Add just the total SPV
         total_SPV_size += math.ceil(math.log(tx_per_block, 2)) * 32 + 200 # Bytes in the merkle proof
         
         if 0 and coin not in ('bitcoin', 'ethereum'):
             print 'Drawing from coin', coin
-            print 'difference:', C, 'blocks:', blocks[coin]
-            print humanize.naturalsize(sum(size))
+            print 'difference:', C2, 'blocks:', blocks[coin]
+            print humanize.naturalsize(size)
             print tx_per_block
-        total_size += sum(size)
+        total_size += size
 
         total_today[day] = total_size
         total_SPV_today[day] = 48 * sum(blocks.values()) + total_SPV_size
@@ -229,7 +233,8 @@ def simulate(trials_per_day=500, days=60):
 def experiment():
     import humanize
     global total_size, marginal_size, total_SPV_size, marginal_SPV_size
-    for tx_per_day in (100,500,1000):
+    #for tx_per_day in (100,500,1000):
+    for tx_per_day in (100,500,1000,3000,):
       total_size, marginal_size, total_SPV_size, marginal_SPV_size = [],[],[],[]
       for i in range(10):
         a,b,c,d = simulate(tx_per_day)
@@ -243,7 +248,19 @@ def experiment():
       print 'total_size:', humanize.naturalsize(mean(total_size)), \
             'marginal_size:', humanize.naturalsize(mean(marginal_size)), \
             'total_SPV_size:', humanize.naturalsize(mean(total_SPV_size)), \
-            'marginal_SPV_size:', humanize.naturalsize(mean(marginal_SPV_size))
+            'marginal_SPV_size:', humanize.naturalsize(mean(marginal_SPV_size)), \
+            'fraction:', 1 - (mean(total_size) / mean(total_SPV_size)), \
+            '()', 1 - (mean(marginal_size) / mean(marginal_SPV_size))
+      print '%d &  %s & (%s)   & %s & (%s)   & %.25 (%.25)' % (tx_per_day, \
+                humanize.naturalsize(mean(total_SPV_size)),
+                humanize.naturalsize(mean(marginal_SPV_size)),
+                humanize.naturalsize(mean(total_size)),
+                humanize.naturalsize(mean(marginal_size)),
+                1 - (mean(total_size) / mean(total_SPV_size)),
+                1 - (mean(marginal_size) / mean(marginal_SPV_size)))
+      
+                                                           
+                                      
     
 
 def do_plots1():
