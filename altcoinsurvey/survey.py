@@ -136,7 +136,7 @@ def histog():
 # Run the simulation
 from size import nipopow_size
 
-def simulate():
+def simulate(trials_per_day=500, days=60):
 
     import humanize
     # Prepare healthy
@@ -156,24 +156,34 @@ def simulate():
     state = dict((h,0) for h in healthy)
     blocks = dict((h, coindata[h]['Block Count']) for h in healthy)
 
-    trials_per_day = 80
-    print "==" * 10    
-    print "Simulating %d transactions per day" % trials_per_day
+    plainspv_size = 0
+
+    #print "==" * 10    
+    #print "Simulating %d transactions per day" % trials_per_day
     total_size = 0
-    for day in range(365):
-      print '*'*10, 'Day', day, '*'*10
+    total_SPV_size = 0
+    global total_today, total_SPV_today
+    total_today = {}
+    total_SPV_today = {}
+    for day in range(days):
+      #print '*'*10, 'Day', day, '*'*10
+      
       for i in range(trials_per_day):
         # Update all the blocks!
-        secs = (3600*24/trials_per_day)
+        secs = (3600*24./trials_per_day)
         #print 'Time passed: %d seconds' % secs
 
         for h in healthy:
-            blocks[h] += int(secs * coindata[d]['freq']) # Updated however many blocks per second
+            blocks[h] += (secs * coindata[d]['freq']) # Updated however many blocks per second
         
         coin = np.random.choice(healthy, p=[market_cap[coindata[d]['Symbol']]/total for d in healthy])
-        C = blocks[coin] - state[coin]
+        C = int(blocks[coin] - state[coin])
         state[coin] = blocks[coin]
 
+        # Average number of Bitcoin transaction per block:
+        # - 2000
+        frac_of_bitcoin = float(market_cap[coindata[coin]['Symbol']]) / market_cap['BTC']
+        tx_per_block = max(2, ceil(2000 * frac_of_bitcoin))
         # C: length of chain
         # x: # of transactions per block
         # m,k: params
@@ -181,14 +191,90 @@ def simulate():
         # 48 - header size
         # coinbase transaction: ??
         # hash_size: 32
-        m = 40
+        m = 6
         C = max(C, m+1)
-        size = nipopow_size(C, x=1, m=40, k=40, block_header_size=80,
-                            suffix_block_header_size=48, coinbase_size=0, hash_size=32)
-        if coin not in ('bitcoin', 'ethereum'):
+        size = nipopow_size(C, x=tx_per_block, m=6, k=24, block_header_size=80,
+                            suffix_block_header_size=48, coinbase_size=200, hash_size=32)
+
+
+        # Add just the total SPV
+        total_SPV_size += math.ceil(math.log(tx_per_block, 2)) * 32 + 200 # Bytes in the merkle proof
+        
+        if 0 and coin not in ('bitcoin', 'ethereum'):
             print 'Drawing from coin', coin
             print 'difference:', C, 'blocks:', blocks[coin]
             print humanize.naturalsize(sum(size))
+            print tx_per_block
         total_size += sum(size)
-    print 'Total:', humanize.naturalsize(total_size)
-    print state
+
+        total_today[day] = total_size
+        total_SPV_today[day] = 48 * sum(blocks.values()) + total_SPV_size
+    
+    total_SPV_size += 48 * sum(blocks.values())
+    
+    marginal_size = (total_size-total_today[0])/(len(total_today))
+    marginal_SPV_size = (total_SPV_size-total_SPV_today[0])/(len(total_SPV_today))
+    #print 'Total:', humanize.naturalsize(total_size)
+    #print 'Average marginal:', humanize.naturalsize(marginal_size)
+    #print 'Total (SPV):', humanize.naturalsize(total_SPV_size)
+    #print 'Average marginal:', humanize.naturalsize(marginal_SPV_size)
+    #print state
+
+    figure(1)
+    clf()
+    plot(np.array(total_SPV_today.values()) / (1024*1024.), label='Naive SPV')
+    plot(np.array(total_today.values()) / (1024*1024.), label='NiPoPoW')
+    return total_size, marginal_size, total_SPV_size, marginal_SPV_size
+
+def experiment():
+    import humanize
+    global total_size, marginal_size, total_SPV_size, marginal_SPV_size
+    for tx_per_day in (100,500,1000):
+      total_size, marginal_size, total_SPV_size, marginal_SPV_size = [],[],[],[]
+      for i in range(10):
+        a,b,c,d = simulate(tx_per_day)
+        total_size.append(a)
+        marginal_size.append(b)
+        total_SPV_size.append(c)
+        marginal_SPV_size.append(d)
+
+      print '**'*10,
+      print 'tx_per_day:', tx_per_day
+      print 'total_size:', humanize.naturalsize(mean(total_size)), \
+            'marginal_size:', humanize.naturalsize(mean(marginal_size)), \
+            'total_SPV_size:', humanize.naturalsize(mean(total_SPV_size)), \
+            'marginal_SPV_size:', humanize.naturalsize(mean(marginal_SPV_size))
+    
+
+def do_plots1():
+    figure(1)
+    clf()
+    f, (ax, ax2) = subplots(2, 1, sharex=True, num=1)
+
+    # Plot with broken axis
+    # https://matplotlib.org/examples/pylab_examples/broken_axis.html
+    
+    ax.plot(np.array(total_SPV_today.values()) / (1024*1024.), label='Naive SPV')
+    ax2.plot(np.array(total_SPV_today.values()) / (1024*1024.), label='Naive SPV')
+    ax.plot(np.array(total_today.values()) / (1024*1024.), label='NiPoPoW')
+    ax2.plot(np.array(total_today.values()) / (1024*1024.), label='NiPoPoW')
+    ax.set_ylim(4500, 7000)  # outliers only
+    ax2.set_ylim(0, 200)  # most of the data
+    ax.spines['bottom'].set_visible(False)
+    ax2.spines['top'].set_visible(False)
+    ax.xaxis.tick_top()
+    ax.tick_params(labeltop='off')  # don't put tick labels at the top
+    ax2.xaxis.tick_bottom()
+    d = .015  # how big to make the diagonal lines in axes coordinates
+
+    # arguments to pass to plot, just so we don't keep repeating them
+    kwargs = dict(transform=ax.transAxes, color='k', clip_on=False)
+    ax.plot((-d, +d), (-d, +d), **kwargs)        # top-left diagonal
+    ax.plot((1 - d, 1 + d), (-d, +d), **kwargs)  # top-right diagonal
+    kwargs.update(transform=ax2.transAxes)  # switch to the bottom axes
+    ax2.plot((-d, +d), (1 - d, 1 + d), **kwargs)  # bottom-left diagonal
+    ax2.plot((1 - d, 1 + d), (1 - d, 1 + d), **kwargs)  # bottom-right diagonal
+    ax.set_ylabel('Megabytes')
+    ax2.set_ylabel('Megabytes')
+    xlabel('Days')
+    

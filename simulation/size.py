@@ -15,7 +15,9 @@ def nipopow_size(C, x, m, k, block_header_size, suffix_block_header_size, coinba
     count_chi_blocks = k + 2 * m
     blocks_size = (block_header_size + coinbase_size) * count_pi_blocks + suffix_block_header_size * count_chi_blocks
     count_pointer_inclusion = ceil(log(mu, 2)) * count_pi_blocks
-    count_coinbase_inclusion = ceil(log(x, 2)) * count_pi_blocks
+    #count_coinbase_inclusion = ceil(log(x, 2)) * count_pi_blocks
+    count_coinbase_inclusion = 0 # Ignore the coinbase inclusion for now
+    count_transaction_inclusion = ceil(log(x, 2))
     hashes_size = (count_pointer_inclusion + count_coinbase_inclusion) * hash_size
     return (hashes_size + blocks_size), count_pi_blocks + count_chi_blocks, count_pointer_inclusion + count_coinbase_inclusion
 

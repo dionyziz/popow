@@ -67,9 +67,11 @@ scheme for various parameterizations of $m$ in Table~\ref{table.size}.
 
 \begin{table}
   \caption{\label{table.size}
-    Estimated size of NIPoPoWs for various values of the security parameter $m$
-    setting $k = 6$ and with current values for transaction count, block count,
-    coinbase size and hash output length.}
+    Estimated size of NIPoPoWs, applied to the Bitcoin blockchain today ($\approx$450k blocks) for various values of the security parameter $m$
+    setting $k = 6$.
+    %and with current values for transaction count, block count,
+    %coinbase size and hash output length.
+  }
   \begin{tabular}{llll}
       {\bf m}  & {\bf NIPoPoW size (KB)} & {\bf \# of blocks} & {\bf
       \# of hashes}\\
@@ -83,7 +85,7 @@ scheme for various parameterizations of $m$ in Table~\ref{table.size}.
 \end{table}
 
 
-\subsection{Parameterization}
+\subsection{Choosing Secure Parameters}
 In order to determine concrete values for the security parameter $m$, we now
 turn our attention to a particular adversarial strategy of interest and analyze
 its probability of success under specific conditions. It is important to keep
