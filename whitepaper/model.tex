@@ -21,10 +21,9 @@ ommitted blocks also took place. The same logic can be applied to any
 
 \subsection{Backbone algorithms}
 
-Following previous work \cite{backbone} \cite{KLS}, we assume the verifier will
-always connect to at least one honest prover. We now move on to formally define
-these entities in terms of a mathematical model which can be used for our
-analysis.
+We assume the verifier will always connect to at least one honest prover. We
+now move on to formally define these entities in terms of a mathematical model
+which can be used for our analysis.
 
 In order to study the syntax and properties of NIPoPoWs
 we abstract their operation in a way that is akin to non-interactive
@@ -40,10 +39,12 @@ We introduce the Prover and the Verifier in
 the standard Backbone model as follows. The Prover will extend the functionality
 of the miner node. The Verifier will be a completely new entity that can be spawned
 by the environment and process a NiPoPow produced by the miner nodes running
-the Prover code. 
+the Prover code. Detailed algorithms for the integration with the formal
+environment provided by backbone are provided in
+Appendix~\ref{sec.appendix-backbone}.
 
 The predicates of interest in our context are predicates on the active blockchain. 
-Some of the predicates are more suitable for (succinct) proofs than others. We focus
+Some of the predicates are more suitable for succinct proofs than others. We focus
 our attention in what we call \textit{reliable} predicates; that is,
 predicates which are monotonic and stable notions that we define below.  
 These predicates have the
@@ -54,13 +55,6 @@ predicates, predicates which can be proven using a succinct protocol, a
 protocol which requires proofs that are short in terms of the total blockchain
 size. Finally, we formalize the notion of non-interactivity.
 
-%We use this model to explore which predicates are reliable and can be proven
-%succinctly.
-
-\import{./}{algorithms/alg.backbone.tex}
-\import{./}{algorithms/alg.backbone-prover.tex}
-\import{./}{algorithms/alg.verifier-framework.tex}
-
 For blockchain addressing we use the Python range notation of brackets $[~]$.
 A positive number in a bracket indicates the indexed block in the blockchain,
 starting from zero. A negative number indicates a block indexed from the end. A
@@ -68,30 +62,27 @@ range of two numbers separated by a $:$ indicates a subarray starting on the
 left index and ending on the right index, inclusive. Omitting one of the range
 indices takes it to the beginning or end of the blockchain respectively.
 
-The backbone protocol of a miner node is shown in Algorithm~\ref{alg.backbone}.
-Its rationale is described in more detail in \cite{backbone}. In short, the
-honest miner maintains the longest chain from the network and tries to mine on
-top of it. In Algorithm~\ref{alg.backbone-prover}, we illustrate our new entity
-for the model, the full node or \textit{prover}. While the full node is not
-mining, it maintains a state with the longest chain from the network.
-Furthermore, whenever it is asked to prove a predicate $Q$ about its local
-chain $\chain$, it calls a Prove function to provide the proof. We leave this
-Prove function undefined for now, as it is part of the concrete protocol
-construction. On the other hand, in Algorithm~\ref{alg.generic-verifier} we
-illustrate another new entity to the model, the generic \textit{verifier},
-which is stateless, but receives proofs from the provers on the network (via
-the environment) and takes a decision about a predicate on the blockchain it
-believes to be the longest.
+The honest entities that live on the blockchain network are of three kinds:
+First, miners, who try to mine new blocks on top of the longest known blockchain and
+broadcast their blocks as soon as they are discovered. Second, full nodes,
+which maintain the longest blockchain but without mining. Full nodes also act
+as the provers in the network, producing proofs by calling a Prove function
+which we leave undefined for now, as it is part of the proof protocol. And
+third, verifiers or stateless clients, which connect to provers and ask for
+proofs in regards to which blockchain is the largest. The verifiers attempt to
+determine the value of a predicate on these chains.
 
 A non-interactive proof of proof-of-work protocol is a game between a prover
 and a verifier parameterized by predicate $Q$ which the prover tries to
 convince the verifier for. The predicate $Q$ is a function of a chain $\chain$,
 which the prover claims to be the longest chain.
 
-At the beginning of the game, two provers generate proofs $\pi_A$, $\pi_B$
-claiming potentially different truth values for the predicate $Q$ based on
-their claimed local longest chains. The verifier receives these proofs and
-accepts one of the two proofs, determining the truth value of the predicate.
+When asked to do so by the environment, two provers generate proofs $\pi_A$,
+$\pi_B$ claiming potentially different truth values for the predicate $Q$ based
+on their claimed local longest chains. The verifier receives these proofs and
+accepts one of the two proofs, determining the truth value of the predicate. In
+this setting, one of the two proofs could be adversarial, as defined in the
+security section.
 
 We define a \textit{blockchain proof protocol} for a predicate $Q$ as a pair
 $(P, V)$ where $P$ is called the \textit{prover} and $V$ is called the
