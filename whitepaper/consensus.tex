@@ -4,21 +4,25 @@ We will now start constructing a concrete blockchain proof protocol. Before
 we're able to define the prover and the verifier algorithms, we need to propose
 certain modifications to the consensus layer.
 
-Some helper functions are defined in Algorithm~\ref{alg.nipopow-helper}, which
-will become useful in a moment. The \textit{blockid} function calculates the
-id of a block given its data. This is done by applying the hashfunctions $H$
-and $G$ in a manner similar to \cite{backbone}. However, notice that block $B$
-maintains an \textit{interlink} data structure instead of a previous block
-pointer. We will get to this shortly. The \textit{level} function calculates
-the highest level of a block given its data. Knowing that the id of a block
-must be less than the target $T$ to satisfy the proof-of-work condition, we
-observe that some blocks will achieve a much lower id. If the block id is less
-than $\frac{T}{2^\mu}$ we say that the block is of level $\mu$. Clearly all
-blocks are blocks of level $0$. Observe then that in expectation, half of the
-blocks will be of level $1$, $1/4$ of the blocks will be of level $2$, $1/8$
-will be of level $3$ and so forth. We term blocks that have a level above 0
-\textit{superblocks} of their respective level. Note that, in expectation, the
-number of superblock levels of a chain $\chain$ will be $\log(\chain)$.
+Some helper functions need to be defined first.  The \textit{blockid} function
+calculates the id of a block given its data. This is done by applying the
+hashfunctions $H$ and $G$ in a manner similar to \cite{backbone}:
+$\textsf{id} = H(ctr, G(s, x, \textsf{interlink}))$. However, note that block
+$B$ maintains an \textit{interlink} data structure instead of a previous block
+pointer. We will get to this shortly. Note also that, while we spell out the
+transaction vector $x$, this in practice contains only the root of the Merkle
+tree of the transactins. We also define the \textit{level} function which
+calculates the highest level of a block given its data. Knowing that the id of
+a block must be less than the mining target $T$ to satisfy the proof-of-work
+condition, we observe that some blocks will achieve a much lower id. If the
+block id is less than $\frac{T}{2^\mu}$ we say that the block is of level
+$\mu$. Clearly all blocks are blocks of level $0$. Observe then that in
+expectation, half of the blocks will be of level $1$, $1/4$ of the blocks will
+be of level $2$, $1/8$ will be of level $3$ and so forth. We term blocks that
+have a level above 0 \textit{superblocks} of their respective level. Note that,
+in expectation, the number of superblock levels of a chain $\chain$ will be
+$\log(\chain)$. The level of a block is formally given as $\mu = \left \lfloor
+\log(T) - \log(\sf{blockid}(B)) \right \rfloor$.
 
 The \textit{interlink} data structure is proposed to be included in each block,
 replacing the existing pointer to the previous block with a list of pointers to
@@ -41,5 +45,5 @@ hence block data needs to be looked up based on blockid. To this end, the full
 node maintains a \textit{blockbyid} dictionary which, queried with the block
 id, returns the block data.
 
-\import{./}{algorithms/alg.nipopow-helper.tex}
+% \import{./}{algorithms/alg.nipopow-helper.tex}
 \import{./}{algorithms/alg.nipopow-interlink.tex}
