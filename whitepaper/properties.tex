@@ -16,8 +16,14 @@ size $|\pi|$ across all honest provers for a given round $r$ is
 $O(polylog(r))$.
 \end{definition}
 
-Based on these definitions, we now provide the model for a stateless typical
-bitcoin SPV node in Algorithm~\ref{alg.verifier-full}. This verifier is
-trivially secure, but not succinct.
+Based on these definitions, it is easy to see that it is trivial to construct a
+secure but not succinct protocol: The prover provides the chain $\chain$ itself
+as a proof and the verifier simply compares the proofs received by length:
+Since the longest proof is literally the longest chain, the protocol is
+trivially secure but not succinct.
 
-\import{./}{algorithms/alg.verifier-full.tex}
+% we now provide the model for a stateless typical
+% bitcoin SPV node in Algorithm~\ref{alg.verifier-full}. This verifier is
+% trivially secure, but not succinct.
+
+% \import{./}{algorithms/alg.verifier-full.tex}
