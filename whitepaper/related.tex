@@ -5,39 +5,21 @@ Nakamoto's original Bitcoin whitepaper~\cite{bitcoin} anticipated the rising cos
 When initialized for the first time, an SPV client downloads (and stores) the entire chain blockchain, which is thus linear in $|\chain|$, and therefore grows unbounded over time, although it has low constant fators, i.e.
 $80|\chain|$ bytes.
 When an SPV client receives a payment, it requests a proof-of-inclusion (i.e., a Merkle tree branch proof) in order to confirm that the transaction is included in one of the blocks whose header is already stored by the client.
-Most widely used clients, especially mobile wallets based on BitcoinJ, implement SPV.
+Most widely used clients, especially mobile wallets based on BitcoinJ, implement SPV. 
 
 %It is safe for users to run SPV clients; they enjoy the same security guarantees as if they run full nodes, as long as we assume a majority of miners faithfully process all transactions. However, in July 2015, a miners were following not fully verifying transactions, 
 
-As an alternative to downloading all block headers at first startup, the SPV client software could in principle embed a hardcoded checkpoint (perhaps chosen conservatively, e.g. many months in the past) blocks prior to which the client ignores. This would introduce additional assumptions about the maintenance of the code; although BitcoinJ software provides a mechanism for users to build ``Checkpoint Files,''\footnote{https://bitcoinj.github.io/speeding-up-chain-sync} but does not embed these. Similarly, ~\cite{betterspv}, clients at first startup could proceed optimistically,
+As an alternative to downloading all block headers at first startup, the SPV client software could embed a hardcoded checkpoint (perhaps chosen conservatively, e.g. many months in the past), blocks prior to which are ignored.\footnote{See \url{https://bitcoinj.github.io/speeding-up-chain-sync}} The BitcoinJ software provides mechanisms for users to build ``Checkpoint Files,'' and at least some applciations, such as Multibit,\footnote{\url{https://multibit.org/help/hd0.3/how-spv-works.html}} includes checkpoints. Although this approach is very efficient, it introduces additional trust assumptions on software maintainers. 
 \anote{THIS IS BROKEN BECAUSE MULTIBIT SEEMS TO EMBED CHECKPOINTS}
+%~\cite{betterspv}, clients at first startup could proceed optimistically,
 
-\paragraph{BTCRelay.}
-BTCRelay~\cite{btcrelay} is an Ethereum~\cite{ethereum} smart contract written in Ethereum that acts as an SPV client for the Bitcoin blockchain.
-That is, the smart contract contains rules for parsing 
-This allows Ethereum smart contract to condition their behavior based on the presence of particular transactions in the Bitcoin blockchain.
-Users can interact with the client to submit Bitcoin.
+\paragraph{Proofs of Proofs of Work}
+Kiayias et al. (KLS)~\cite{KLS} proposed a variation of the SPV protocol that avoids the need to transmit the entire chain of proof-of-work. Instead, in their scheme only a sublinear-sized sample of the proofs-of-work are sent, i.e. a ``proof of proof-of-work'' or PoPoW. They define security in a setting with a verifier (modeling the client) and multiple provers (modeling peers in the network), at least one of which is assumed to be honest. The KLS protocol is interactive; the verifier may need to interact with the provers over a number of rounds logarithmicin the length of the proof-of-work chain.
+Our protocol is inspired by KLS, but improves on it in several ways. First, our protocol is non-interactive, completing in one communication round regardless of adversarial prover's behavior. We also provide a concrete implementation including practical optimizations to reduce proof size.
 
-At the current time, Ethereum does not provide built-in support for other hashes like scrypt, or even EtHash, the basis for Ethereum's own proof of work. Ethereum could be upgraded to support such opcodes in the future. This would 
+In a widely cited whitepaper~\cite{sidechains}, Back et al. proposed the use of efficient non-interactive SPV proofs as a way of enabling applications spanning multiple cryptocurrencies, called. One such application would be a virtual asset in one cryptocurrency, called a ``sidechain,'' that is backed by a deposit of value in another cryptocurrency. Several subsequent efforts by Poelstra~\cite{pos} and Friedenbach~\cite{compactspv} explored this design space, however a secure construction has remained an open problem. In particular, proposals so far have been vulnerable to a ``high variance'' attack, i.e. an attack that does not succeed on average, but succeeds with non-negligible probability. 
 
-\paragraph{Cross Chain Transactions.}
-An application of our technique is for sidechains.
-Hash lock contract are supported by most cryptocurrency scripting languages, including Bitcoin script and the Ethereum virtual machine. Only relies on the ability to verify that a user provided input is the preimage of a given hash.
-
-In \cite{KLS}, it was discovered that these proofs can be sublinear in size. In
-that paper they achieved proof sizes constant with respect to the chain size
-$\Theta(m + k)$, but these proofs required interactivity. Furthermore, the
-succinctness argument only worked for the optimistic case where all parties
-were honest.
-
-Improving on both of these works, we successfully presented PoPoWs that are
-both sublinear and non-interactive.
-
-Efficiency of PoPoWs has been explored in the blockchain community especially
-around the topic of sidechains \cite{sidechains}, but to our knowledge no
-concrete provably secure solution has been previously proposed.
-
-% \section{Interactive Stateless Verification}
+% \Section{Interactive Stateless Verification}
 %
 % The Nakamoto protocol is modified as such:
 % - Every node still works to extend the longest valid chain.

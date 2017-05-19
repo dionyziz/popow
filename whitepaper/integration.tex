@@ -101,4 +101,24 @@ The steady state cost of operating a Catena client depends on how frequently cer
 The  savings would increase further if Catena were implemented using any proof-of-work blockchain with more frequent blocks, such as Ethereum or Litecon.
 
 \paragraph{Sidechains.}
-Back et al. proposed 
+Back et al.~\cite{sidechains} proposed .
+
+An application of our technique is for sidechains.
+Hash lock contract are supported by most cryptocurrency scripting languages, including Bitcoin script and the Ethereum virtual machine. Only relies on the ability to verify that a user provided input is the preimage of a given hash.
+
+
+Improving on both of these works, we successfully presented PoPoWs that are
+both sublinear and non-interactive.
+
+Efficiency of PoPoWs has been explored in the blockchain community especially
+around the topic of sidechains \cite{sidechains}, but to our knowledge no
+concrete provably secure solution has been previously proposed.
+
+BTCRelay~\cite{btcrelay} is an Ethereum~\cite{ethereum} smart contract written in Ethereum that acts as an SPV client for the Bitcoin blockchain.
+That is, the smart contract contains rules for parsing 
+This allows Ethereum smart contract to condition their behavior based on the presence of particular transactions in the Bitcoin blockchain.
+Users can interact with the client to submit Bitcoin.
+
+At the current time, Ethereum does not provide built-in support for other hashes like scrypt, or even EtHash, the basis for Ethereum's own proof of work. Ethereum could be upgraded to support such opcodes in the future. This would 
+
+
