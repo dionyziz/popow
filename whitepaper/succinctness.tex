@@ -58,11 +58,9 @@ We now move on to prove that our construction produces succinct proofs.
     distribution, we have that:
 
     \begin{align*}
-             &\Pr[|\pi[\mu]| = m]\\
-        \leq &\Pr[|\pi[\mu]| \leq m]\\
-           = &\Pr[|\pi[\mu]| \leq (1 - \frac{1}{2})2m]\\
-        \leq &\exp(-\frac{(1/2)^2}{2} 2m)\\
-        \leq &\exp(-\frac{m}{4})
+            \Pr[|\pi[\mu]| = m] &\leq \Pr[|\pi[\mu]| \leq m]&&\\
+           = \Pr[|\pi[\mu]| \leq (1 - \frac{1}{2})2m] &\leq \exp(-\frac{(1/2)^2}{2} 2m)&&\\
+             &\leq \exp(-\frac{m}{4})&&
     \end{align*}
 
     This is negligible in $m$. This probability bounds the probability of fewer
