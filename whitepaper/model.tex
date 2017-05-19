@@ -9,6 +9,18 @@ The challenge is, then, to build a client that is able to communicate with the
 network and, without downloading the whole chain headers, is convinced in a
 secure manner that a transaction has taken place. We term such a client a
 \textit{verifier} and we term \textit{provers} the full nodes it connects to.
+
+The intuition behind these proofs is quite simple: Let $T$ be the mining target
+for the network. Then because block ids are generated uniformly at random, half
+of the blocks will have an id less than $T / 2$. By having the prover present
+to the verifier just these blocks which capture more proof-of-work than their
+neighbour counterparts, the verifier is convinced that the proof-of-work of the
+ommitted blocks also took place. The same logic can be applied to any
+\textit{superblocks} of level $\mu$, namely blocks with id less than $T
+2^{-\mu}$.
+
+\subsection{Backbone algorithms}
+
 Following previous work \cite{backbone} \cite{KLS}, we assume the verifier will
 always connect to at least one honest prover. We now move on to formally define
 these entities in terms of a mathematical model which can be used for our
