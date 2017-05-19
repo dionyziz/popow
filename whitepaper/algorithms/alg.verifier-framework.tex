@@ -4,17 +4,14 @@
         with a{ \em proof verification function} $\textsc{Verify}^Q(\cdot)$
         parameterized by a predicate $Q$}
     \begin{algorithmic}[1]
-        \Statex
-        \While{\textsc{True}}
-            \Let{\Pi}{\mbox{all proofs found in \textsc{Receive}()}}
-            \If{$\Pi \neq \emptyset$}
-                \Let{\chain}{\textsc{Verify}^Q(\Pi)}
-		\State{{\bf write} $\chain$ to \textsc{Output}()}
-            \EndIf
-            \If{$\textsc{Input}()\mbox{ contains }\textsc{Challenge}$}
-                \State\textsc{Diffuse}{$(\textsc{ReadProof})$}
-            \EndIf
-        \EndWhile
+        \Let{\Pi}{\mbox{all proofs found in \textsc{Receive}()}}
+        \If{$\Pi \neq \emptyset$}
+            \Let{\chain}{\textsc{Verify}^Q(\Pi)}
+            \State{{\bf write} $\chain$ to \textsc{Output}()}
+        \EndIf
+        \If{$\textsc{Input}()\mbox{ contains }\textsc{Challenge}$}
+            \State\textsc{Diffuse}{$(\textsc{ReadProof})$}
+        \EndIf
         \vskip8pt
     \end{algorithmic}
 \end{algorithm}
