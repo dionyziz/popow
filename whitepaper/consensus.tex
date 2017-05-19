@@ -59,7 +59,9 @@ then modifying some of its entries from level $0$ to the level of block $B'$ to
 point to the block $B'$. Observe that the pointers stored are block ids and
 hence block data needs to be looked up based on blockid. To this end, the full
 node maintains a \textit{blockbyid} dictionary which, queried with the block
-id, returns the block data.
+id, returns the block data. Finally, the full node also maintains a
+\textit{depth} data structure which, given a block, returns its distance from
+the Genesis block.
 
 % \import{./}{algorithms/alg.nipopow-helper.tex}
 \import{./}{algorithms/alg.nipopow-interlink.tex}
