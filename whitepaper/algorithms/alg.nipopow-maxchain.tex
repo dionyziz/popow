@@ -6,14 +6,6 @@
         \Function{\sf maxChain$_m$}{$\tilde{\Pi}_\alpha, \tilde{\Pi}_\beta$}
             \Let{\overline{\Pi}_\alpha}{\textsf{parse}(\tilde{\Pi}_\alpha)}
             \Let{\overline{\Pi}_\beta}{\textsf{parse}(\tilde{\Pi}_\beta)}
-            \If{$\lnot \textsf{valid}(\overline{\Pi}_\alpha)$}
-                \State\Return{False}
-                \Comment{$\beta$ wins}
-            \EndIf
-            \If{$\lnot \textsf{valid}(\overline{\Pi}_\beta)$}
-                \State\Return{True}
-                \Comment{$\alpha$ wins}
-            \EndIf
             \If{$|\overline{\Pi}_\alpha| > |\overline{\Pi}_\beta|$}
                 \State\Return{$
                     \lnot
@@ -21,9 +13,9 @@
                     (\tilde{\Pi}_\beta, \tilde{\Pi}_\alpha)
                 $}
             \EndIf
-            \If{$|\overline{\Pi}_\beta - \overline{\Pi}_\alpha| > 1$}
-                \State\Return{False}
-            \EndIf
+            % \If{$|\overline{\Pi}_\beta - \overline{\Pi}_\alpha| > 1$}
+            %     \State\Return{False}
+            % \EndIf
             \Let{b}{\textsf{LCA}(\tilde{\Pi}_\alpha, \tilde{\Pi}_\beta)}
             \For{$\mu = |\overline{\Pi}_\beta|$ down to $0$}
                 \Let{\textsf{adv}_\alpha}{
@@ -35,18 +27,20 @@
                     \textsf{findInChain}(\overline{\Pi}_\beta[\mu], b)
                 }
                 \If{$\textsf{adv}_\alpha \geq m \lor \textsf{adv}_\beta \geq m$}
-                    \If{$\textsf{adv}_\alpha > \textsf{adv}_\beta$}
-                        \State\Return{True}
-                    \Else
-                        \State\Return{False}
-                    \EndIf
+                    \State\Return{$(\textsf{adv}_\alpha > \textsf{adv}_\beta)$}
+                    % \If{$\textsf{adv}_\alpha > \textsf{adv}_\beta$}
+                    %     \State\Return{True}
+                    % \Else
+                    %     \State\Return{False}
+                    % \EndIf
                 \EndIf
             \EndFor
-            \If{$|\overline{\Pi}_\alpha[0]| > |\overline{\Pi}_\beta[0]|$}
-                \State\Return{True}
-            \Else
-                \State\Return{False}
-            \EndIf
+            \State\Return{$(|\overline{\Pi}_\alpha[0]| > |\overline{\Pi}_\beta[0]|)$}
+            % \If{$|\overline{\Pi}_\alpha[0]| > |\overline{\Pi}_\beta[0]|$}
+            %     \State\Return{True}
+            % \Else
+            %     \State\Return{False}
+            % \EndIf
         \EndFunction
     \vskip8pt
     \end{algorithmic}
