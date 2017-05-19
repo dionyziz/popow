@@ -5,7 +5,7 @@ We envision that new cryptocurrencies will adopt our construction in order to su
 However, existing cryptocurrencies could also benefit by adopting our construction as an upgrade.
 In this section we outline several possible upgrade paths. We also contribute a novel upgrade approach, called a ``velvet fork,'' which allows for gradual deployment without harming unupgraded nodes or miners at all.
 
-\subsubsection{Hard Forks and Soft Forks}
+\subsection{Hard Forks and Soft Forks}
 The most obvious to upgrade a cryptocurrency to support our protocol is a hard fork: the block header could be modified to include our additional interlink structure, and the validation rules would be modified to require that new blocks (after a ``flag day'') contain a correctly-formed interlink hash.
 
 The safety of the hard fork approach is often debated: it is not ``forward compatible,'' in the sense that nodes failing to uprade in time would not be able to process newly created blocks. Hard forks are also associated with ``schisms'': in one notable case, Ethereum applied a hard fork in order to reverse the effects of an exploited vulnerability; this decision was controversial, and dissenters splintered off into a new network, Ethereum Classic~\cite{daofork}. However, both Ethereum and Ethereum Classic have subsequently applied hard fork upgrades without incident. The Monero cryptocurrency has applied hard forks on a predictable schedule~\cite{monerohardforks}.
@@ -28,7 +28,7 @@ only increase the PoPoW sizes by a constant factor per block, allowing for the
 communication complexity to remain at $\Theta(polylog(|\chain|))$.
 
 
-\subsubsection{Velvet fork}
+\subsection{Velvet Forks}
 We now describe a novel upgrade path that avoids the need for a fork at all.
 The key idea is that clients can make use of our scheme, even if only some blocks in the blockchain include the interlink structure.
 
