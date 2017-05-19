@@ -100,32 +100,32 @@ We now move on to prove that our construction produces succinct proofs.
     Therefore the size of the proof is $4m \log(|\chain|)$, which is succinct.
 \end{proof}
 
-\subsection{Slow-down attacks}
-
-We have proven that honest provers working on honest chains always produce succinct
-proofs. We observe that this is an improvement over \cite{KLS}. We notice that
-their construction is vulnerable to an adversary which can cause honest provers
-working on honest chains to produce non-succinct proofs, and their succinctness
-argument works only in the optimistic case where all provers are honest. We
-term this a ``slow-down'' attack.
-
-The attack occurs when an adversarial prover produces a proof which includes
-some adversarially mined blocks. This adversarial proof is succinct, yet it
-causes honest provers working on completely honest chains to produce long
-proofs. Specifically, the adversary works as follows: After the honest chain
-has grown to a considerable length, she starts mining $m$ blocks starting from
-the Genesis block. After having mined $m$ blocks, the adversary produces a
-succinct proof of $m$ blocks at level $0$ and sends it to the verifier. The
-honest parties produce a succinct proof of higher level as usual. The verifier,
-comparing the two proofs, observes that the lowest common ancestor of the two
-proofs is the Genesis block. Hence, it requests the honest chain of level $0$
-starting from Genesis. However, this is nothing but the whole blockchain,
-requiring the honest parties to send a large amount of data.
-
-Interestingly, this attack is an amplification attack: While the adversary is
-only required to send a small amount of data, the honest parties are forced to
-send large amounts of data. Furthermore, observe that the adversary does not
-even have to mine the first $m$ blocks; instead, they can produce the first $m$
-honest blocks of the blockchain. If the highest superblock level of at least
-$m$ blocks of the honest chain is high enough, these $m$ blocks will not have a
-common block with the honest proof.
+% \subsection{Slow-down attacks}
+%
+% We have proven that honest provers working on honest chains always produce succinct
+% proofs. We observe that this is an improvement over \cite{KLS}. We notice that
+% their construction is vulnerable to an adversary which can cause honest provers
+% working on honest chains to produce non-succinct proofs, and their succinctness
+% argument works only in the optimistic case where all provers are honest. We
+% term this a ``slow-down'' attack.
+%
+% The attack occurs when an adversarial prover produces a proof which includes
+% some adversarially mined blocks. This adversarial proof is succinct, yet it
+% causes honest provers working on completely honest chains to produce long
+% proofs. Specifically, the adversary works as follows: After the honest chain
+% has grown to a considerable length, she starts mining $m$ blocks starting from
+% the Genesis block. After having mined $m$ blocks, the adversary produces a
+% succinct proof of $m$ blocks at level $0$ and sends it to the verifier. The
+% honest parties produce a succinct proof of higher level as usual. The verifier,
+% comparing the two proofs, observes that the lowest common ancestor of the two
+% proofs is the Genesis block. Hence, it requests the honest chain of level $0$
+% starting from Genesis. However, this is nothing but the whole blockchain,
+% requiring the honest parties to send a large amount of data.
+%
+% Interestingly, this attack is an amplification attack: While the adversary is
+% only required to send a small amount of data, the honest parties are forced to
+% send large amounts of data. Furthermore, observe that the adversary does not
+% even have to mine the first $m$ blocks; instead, they can produce the first $m$
+% honest blocks of the blockchain. If the highest superblock level of at least
+% $m$ blocks of the honest chain is high enough, these $m$ blocks will not have a
+% common block with the honest proof.

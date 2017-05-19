@@ -6,7 +6,7 @@ Clients on the network, such as mobile phone apps, must verify these proofs-of-w
 In this work we introduce, analyze and implement  a new primitive, called Noninteractive-Proofs-of-Proofs-of-Work, (NiPoPoWs), which can be adapted into existing cryptocurrencies to support more efficient clients.
 Unlike a traditional blockchain client, which must verify the entire chain of proofs-of-work, which grows linearly over time, clients based on NiPoPoWs require resources only logarithmic in the length of the blockchain.
 
-There are three trends that motivate the need for more efficient clients: specifically clients that can verify transactions without having to process the whole blockchain. 
+There are three trends that motivate the need for more efficient clients: specifically clients that can verify transactions without having to process the whole blockchain.
 First, while Bitcoin remains by far the largest and most widely used cryptocurrency, the ecosystem has become significantly more diverse. Today there are hundreds of competitors (commonly called ``altcoins''), and Bitcoin's dominance in the market is at an all time low.~\cite{marketcap}.\footnote{There are numerous problems with using the market cap as a measure of economic size, such as defining what it means to quantify the quantity ``in circulation'' counting the number of this is outside the scope of our paper.}
   We envision that our protocol will form the basis of an efficient multi-blockchain client, which could efficiently support payments using hundreds of separate cryptocurrencies.
 
@@ -21,24 +21,29 @@ First, while Bitcoin remains by far the largest and most widely used cryptocurre
   This has been heralded as a key enabling scalability of the Bitcoin ecosystem;
   however, the sidechains proposal is incomplete, as it does not provide a protocol that satisfies a natural security definition (e.g., where attacks succeed with only negligible probability). Our work is the first to answer the open problem posed by Back et al.
 
-\noindent 
+\noindent
 \paragraph{Our contributions.}
-In summary,  we make the following contributions in this paper. 
+In summary,  we make the following contributions in this paper.
   \begin{itemize}
-    \item Our main technical contribution is the introduction of 
+    \item Our main technical contribution is the introduction of
     a new cryptographic
      primitive called Non-Interactive Proofs of Proof of Work (NiPoPoW). We present a formal model and a provably secure
      instantiation of NiPoPoWs in the model of \cite{backbone}.
      Our contribution builds on previous work by  Kiayias et al., who posed
      (interactive) Proofs-of-Proofs-of-Work (PoPoWs) \cite{KLS}.
-     Our definition fills the gap in terms of security modeling and design that existed in previous proposals, especially the notion of cumulative  ``Dynamic Member Multisignature'' by Back et al., \cite{}. Moreover it is also the first truly efficient PoPoW since, as we demonstrate, even the efficient PoPoW construction of \cite{KLS} is susceptible to a ``slow-down'' attack that we illustrate.
+     Our definition fills the gap in terms of security modeling and design that
+      existed in previous proposals, especially the notion of cumulative
+      ``Dynamic Member Multisignature'' by Back et al., \cite{}. Moreover
+      it is also the first truly non-interactive PoPoW since even the
+      efficient PoPoW construction of \cite{KLS} is susceptible to forced
+      interactions when an adversarial prover is present.
 
   \item We provide an implementation, concrete parameterization, and empirical analysis focusing to show the potential savings of our approach versus existing clients.
-Using actual data from the bitcoin blockchain we quantify the actual savings of NiPoPoWs over 
-the previous known techniques of constructing efficient SPV verifiers. 
+Using actual data from the bitcoin blockchain we quantify the actual savings of NiPoPoWs over
+the previous known techniques of constructing efficient SPV verifiers.
    \item We describe two safely deployable upgrade paths for NiPoPoWs that existing cryptocurrencies can  adopt to support our efficient clients. Specifically
    we first outline how a ``soft-fork''  is feasible for NiPoPoWs so that the
-   adoption of the update can be decided by the underlying PoW based consensus mechanism. We then demonstrate that an even less disruptive update mechanism is also feasible that we term a ``velvet fork'' and which may be of independent interest. In a velvet fork update the clients that have forked from the original implementation continue to be fully compatible with unupdated clients. It follows that in a velvet fork, the blockchain system can remain supported by a forked software codebase indefinitely, while it can still enjoy, at least in proportion, some of the (efficiency in our case) benefits of the update without any of the  security downsides.  
+   adoption of the update can be decided by the underlying PoW based consensus mechanism. We then demonstrate that an even less disruptive update mechanism is also feasible that we term a ``velvet fork'' and which may be of independent interest. In a velvet fork update the clients that have forked from the original implementation continue to be fully compatible with unupdated clients. It follows that in a velvet fork, the blockchain system can remain supported by a forked software codebase indefinitely, while it can still enjoy, at least in proportion, some of the (efficiency in our case) benefits of the update without any of the  security downsides.
   \end{itemize}
 
 %In the simplest version of sidechains, the nodes participating in the consensus
