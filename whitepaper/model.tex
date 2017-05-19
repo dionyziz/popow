@@ -1,24 +1,35 @@
 \section{Model}
 
-We work on the Backbone model \cite{backbone}. We introduce two entities to
-the standard Backbone model: The Prover and the Verifier which work in the
-existing environment. The Prover is part of the existing miner node which
-exists in the backbone protocol. The Verifier is a completely new entity. When
-the game begins, the Prover and the Verifier are instantiated with a fixed
-predicate $Q$, which generalized the notion of proof-of-mining and allows any
-blockchain property to be proven between the Prover and the Verifier. Some of
-these predicates are more suitable for succinct proofs than others. We focus
-our attention in what we call \textit{ reliable} predicates; that is,
-predicates which are monotonic and stable.  These predicates have the
+In order to study the syntax and properties of NiPoPoWs
+we abstract their operation in a way that is akin to non-interactive
+zero-knowledge proofs (NIZK), \cite{BFM88}. In such protocols, a prover
+shares some context with a verifier (called the common reference string).
+For a given predicate, the prover computes the proof string and transmits it
+to the verifier. The verifier accepts or rejects the string. Given that in our
+setting the predicates will be referring to an active evolving chain 
+we should define them in the presence of a blockchain protocol. 
+Our theoretical abstraction is based on ``backbone'' model of
+\cite{backbone} that formalizes the operation of the bitcoin protocol.
+We introduce the Prover and the Verifier in
+the standard Backbone model as follows. The Prover will extend the functionality
+of the miner node. The Verifier will be a completely new entity that can be spawned
+by the environment and process a NiPoPow produced by the miner nodes running
+the Prover code. 
+
+The predicates of interest in our context are predicates on the active blockchain. 
+Some of the predicates are more suitable for (succinct) proofs than others. We focus
+our attention in what we call \textit{reliable} predicates; that is,
+predicates which are monotonic and stable notions that we define below.  
+These predicates have the
 exceptional property that all honest miners share their view of them in a way
-that is updated in a predictable manner, with a decision that persists as the
+that is updated in a predictable manner, with a truth-value that persists as the
 blockchain grows.  Furthermore, we are interested in \textit{succinct}
 predicates, predicates which can be proven using a succinct protocol, a
 protocol which requires proofs that are short in terms of the total blockchain
 size. Finally, we formalize the notion of non-interactivity.
 
-We use this model to explore which predicates are reliable and can be proven
-succinctly.
+%We use this model to explore which predicates are reliable and can be proven
+%succinctly.
 
 \import{./}{algorithms/alg.backbone.tex}
 \import{./}{algorithms/alg.backbone-prover.tex}
