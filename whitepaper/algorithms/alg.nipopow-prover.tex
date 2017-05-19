@@ -5,7 +5,7 @@
         \Function{\sf Prove$_{m,k}$}{$\chain$}
             \Let{size}{\chain.length - (k - 1)}
             \Let{i}{\chain[size].\mathsf{interlink}.length}
-            \Let{boundary}{\chain[1]}
+            \Let{boundary}{\chain[0]}
             \Comment{Genesis block}
             \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain[:-k], i, boundary)}
             \While{$i > 0$}
