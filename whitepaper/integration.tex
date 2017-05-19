@@ -28,7 +28,7 @@ In the case of
 One potential application of our technique is an efficient multi-cryptocurrency client.
 Consider for example a merchant that wishes to accept payments in any cryptocurrency, not just the most popular ones.
 A na\"ive approach would be for the merchant to simply install an SPV client for each known cryptocurrency. However, this approach would entail downloading the header chain for each cryptocurrency, and periodically (e.g., each day) syncing up by fetching any newly generated block headers.
-Another alternative would be to use an online service supporting multiple currencies, such as an exchange, although this introduces reliance on a third party. Similarly, existing multi-cryptocurrency apps, such as Jaxx\footnote{\url{https://jaxx.io/}} and Coinomi\footnote{\url{https://coinomi.com/}} rely on third party networks rather than peer-to-peer networks.
+Another alternative would be to use an online service supporting multiple currencies, such as an exchange, although this introduces reliance on a third party. Similarly, existing multi-cryptocurrency apps, such as Jaxx and Coinomi rely on third party networks rather than peer-to-peer networks.
 
 \paragraph{A multi-blockchain wallet based on NIPoPoWs}
  The NIPoPoW-based client maintains a most recent $k$-stable block hash for each of its supported cryptocurrencies, initially the genesis block for each.
