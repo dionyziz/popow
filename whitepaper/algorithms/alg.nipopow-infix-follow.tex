@@ -3,13 +3,14 @@
     produces the necessary blocks to connect a superblock $hi$ to a preceeding
     regular block $lo$, enabling infix proofs.}
     \begin{algorithmic}[1]
-        \Function{\sf followDown}{$hi$, $lo$, depth, realLink, blockById}
+        \Function{\sf followDown}{$hi$, $lo$, depth} %, realLink, blockById}
             \Let{\textsf{aux}}{[hi]}
             \Let{B}{hi}
             \Let{aux}{[]}
             \Let{\mu}{\textsf{level}(hi)}
             \While{$B \neq lo$}
-                \Let{(B', aux')}{\textsf{followUp}(B, \mu, \textsf{realLink}, \textsf{blockById})}
+                % \Let{(B', aux')}{\textsf{followUp}(B, \mu, \textsf{realLink}, \textsf{blockById})}
+                \Let{B'}{blockById[B.interlink[\mu]]}
                 \If{$\textsf{depth}[B'] < \textsf{depth}[lo]$}
                     \Let{\mu}{\mu - 1}
                 \Else
