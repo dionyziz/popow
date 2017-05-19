@@ -1,11 +1,10 @@
-\section{Applications and Evaluation}
+\section{Gradual Deployment Without Forks}
 
-\subsection{Deployment Paths}
 Our construction requires an upgrade to the cryptocurrency consensus layer.
 We envision that new cryptocurrencies will adopt our construction in order to support efficient light clients.
 
 However, existing cryptocurrencies could also benefit by adopting our construction as an upgrade.
-In this section we outline several possible upgrade paths. We also outline a new approach, which allows for gradual deployment without the need for a flag day.
+In this section we outline several possible upgrade paths. We also contribute a novel upgrade approach, called ``velvet forks,'' which allows for gradual deployment without the need for a fork at all.
 
 \subsubsection{Hard Forks and Soft Forks}
 The most obvious to upgrade a cryptocurrency to support our protocol is a hard fork: the block header could be modified to include our additional interlink structure, and the validation rules would be modified to require that new blocks (after a ``flag day'') contain a correctly-formed interlink hash.

@@ -20,6 +20,9 @@ In the case of
 
 
 
+\section{Applications and Evaluation}
+\label{sec:applications}
+
 \subsection{Multi-blockchain wallets.}
 \label{sec:multichain}
 One potential application of our technique is an efficient multi-cryptocurrency client.
@@ -88,9 +91,8 @@ In Table~\ref{fig:experiment} we show the resulting bandwidth costs from simulat
     \end{tabular}
   \end{table}
 
-\subsection{More Applications}
-\label{sec:applications}
-\paragraph{Catena.}
+\subsection{Certificate Transparency}
+\label{sec:catena}
 In Catena,~\cite{catena} the Bitcoin blockchain is used as an equivocation-resistant public log in which to publish commitments to SSL certificates. The Catena client prototype is based on the BitcoinJ SPV library, and therefore requires downloading the entire Bitcoin proof-of-work chain.
 Catena could therefore immediately be improved by using NIPoPoWs.
 
@@ -98,7 +100,8 @@ First, we note that the Catena authors anticipate needing to launch a dedicated 
 The steady state cost of operating a Catena client depends on how frequently certificate digests are published. For example, one usage scenario cited by Catena~\cite{catena} is Keybase, a service which publishes certificate digests every 6 hours. During a 6 hour period, Bitcoin would generate 6 kilobytes of headers, whereas a NIPoPoW proof covering the same range would require less than half this size.
 The  savings would increase further if Catena were implemented using any proof-of-work blockchain with more frequent blocks, such as Ethereum or Litecon.
 
-\paragraph{Sidechains.}
+\subsection{Sidechains}
+\label{sec:sidechains}
 At the time of writing, it is widely known that Bitcoin faces significant scaling hurdles~\cite{onscaling}, but upgrading Bitcoin is notoriously difficult.
 A widely anticipated solution, first proposed by Back et al.~\cite{sidechains}, is to treat the Bitcoin blockchain as a host for ``sidechains,'' which are proof-of-work blockchains separate from Bitcoin, but that can be backed by Bitcoin deposits. Our NIPoPoW construction solves an open problem posed by Back et al., and thus enables this vision.
 
