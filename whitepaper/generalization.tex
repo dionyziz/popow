@@ -10,7 +10,7 @@ multiple blocks, sometimes even blocks burried deep within the blockchain.
 
 We will now extend our prover to support this generalization of predicates. The
 generalized prover allows proving any predicate $Q(\chain)$ that depends on a
-small number of blocks that can appear anywhere within the chain. These blocks
+number of blocks that can appear anywhere within the chain. These blocks
 constitute a \textit{subchain} $\chain'$ which is a subsequence of the original
 blockchain. For our proofs to work, the blocks contained within the subchain
 have to be $k$-stable; that is, they cannot be one of the most recent $k$
@@ -27,7 +27,15 @@ coin was moved between a series of addresses in a particular order.
 \import{./}{algorithms/alg.nipopow-infix-prover.tex}
 
 \subsection{Security}
+The security of infix proofs follows immediately from
+Theorem~\ref{thm.security}. To see this, notice that the verifier will still
+verify the suffix proof. Upon determining which of the blockchains is the
+longest securely, it will subsequently verify that the subchain blocks have
+been properly included within the referenced chain. However, if the chain is
+honest, this proof of inclusion cannot be produced by the adversary.
 
 \subsection{Succinctness}
 As long as the number of blocks on which the predicate depends is
 polylogarithmic with respect to the chain length, our proofs remain succinct.
+% Specifically, the proof size for the suffix has exactly the same size. Then
+% TODO
