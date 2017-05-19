@@ -17,14 +17,13 @@ for $V$ using $P$.
 A \textit{blockchain proof protocol} is \textit{secure} if for all environments
 and for all PPT adversaries $\mathcal{A}$ the output of $V$ on round $r$ is the
 same as the evaluation of $Q(\chain)$ on all honest parties' chains $\chain$ as
-long as $Q(\chain)$ is the same for all honest parties after round $r$, except
-with negligible probability in $\kappa$.
+long as $Q(\chain)$ is the same for all honest parties after round $r$.
 \end{definition}
 
 \begin{definition}{(Succinctness)}
 A \textit{blockchain proof protocol} is \textit{succinct} if the maximum proof
-size $|\pi|$ across all honest provers for a given round $r$ is $O(polylog(r))$
-except with negligible probability in $\kappa$.
+size $|\pi|$ across all honest provers for a given round $r$ is
+$O(polylog(r))$.
 \end{definition}
 
 Based on these definitions, we now provide the model for a stateless typical
