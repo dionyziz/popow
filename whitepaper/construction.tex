@@ -1,59 +1,86 @@
-\section{Constructing blockchain proofs}
+\section{Blockchain suffix proofs}
 
-Based on the model we introduced previously, we now move on to provide a
-concrete non-interactive PoPoW construction which allows proving certain
-predicates $Q$ of the chain $\chain$. Among the predicates which are stable, we
-limit ourselves to the class of predicates which are functions of only the
-chain suffix $\chain[:-k]$. As we will illustrate, these predicates are
-significantly easier to prove, but at the same time seem to be the most useful
-class of predicates which one needs for applications.
+We now provide a concrete non-interactive PoPoW construction which allows
+proving certain predicates $Q$ of the chain $\chain$. Among the predicates
+which are stable, we limit ourselves to the class of predicates which are
+functions of only the chain suffix $\chain[:-k]$. As we will illustrate, these
+predicates are significantly easier to prove, but at the same time seem to be
+the most useful class of predicates which one needs for applications.
 
-Specifically, these predicates allow proving that a transaction occurred in the
-longest chain and in a block burried under $k$ blocks, which is sufficient for
-verifying payments in the SPV case. Furthermore, these predicates are
-expressive enough to describe the inclusion of the specific transactions needed
-for building sidechains.
+Specifically, these predicates allow proving that a recent transaction occurred
+in the longest chain and in a block burried under $k$ blocks, which is
+sufficient for verifying payments in the SPV case. Furthermore, these
+predicates are expressive enough to describe the inclusion of the specific
+recent transactions needed for building sidechains. Extending our construction,
+we will generalize this class of predicates in a later section.
 
-The \textsc{Verify} function of our NIPoPoW construction is described in
-Algorithm~\ref{alg.nipopow-verifier}.
+\subsection{Construction}
+
+The \textsf{Verify} function of our NIPoPoW construction is described in
+Algorithm~\ref{alg.nipopow-verifier}. The verifier algorithm is parameterized
+by a predicate $Q$ and security parameters $k$ and $m$. The parameter $k$
+pertains to the amount of proof-of-work needed to bury a block so that it is
+believed to remain stable; in bitcoin's case, we often set $k = 6$. The
+parameter $m$ is a security parameter pertaining to the prefix of the proof,
+which connects the Genesis block to the $k$-sized suffix.  The verifier
+receives several proofs by different provers in a collection of proofs
+$\mathcal{P}$. Iterating over these proofs, it extracts the best one by
+comparing these proofs. The comparison is done by calling the maxChain
+algorithm. All proofs are checked for validity before comparison, in particular
+that the first block of the suffix $\chi$ contains a pointer to the last block
+of the prefix $\Pi$. The exact structure of these parts of the proofs will
+become clear momentarily when the prover algorithm is presented.
+
+Note that the verifier evaluates the predicate $Q$ on a chain which has the
+suffix $\chi$ and a fake prefix consisting of the empty block $\epsilon$
+repeated as needed to form a chain of appropriate length. Because the predicate
+only depends on the chain suffix, this does not make a difference. Observe as
+well that the full chain $\chain$ is never sent to the verifier.
 
 \import{./}{algorithms/alg.verifier-lite.tex}
 
-We introduce a helper algorithm, constructInnerChain, shown in
-Algorithm~\ref{alg.nipopow-innerchain}. This algorithm returns the innerchain
-of level $i$ extracted from the blockchain $\chain$. If boundary is provided,
-it only returns the blocks more recent than the boundary block supplied.
+To build our prover, we introduce a helper algorithm, constructInnerChain,
+shown in Algorithm~\ref{alg.nipopow-innerchain}. This algorithm returns the
+superchain of level $\mu$ extracted from the blockchain $\chain$. A
+$\mu$-level superchain is a subchain of the blockchain consisting of those
+superblocks that are of at least level $\mu$. Because of the interlink data
+structure, these blocks are connected between each other with pointers, and so
+a verifier receiving a superchain can verify that it is properly connected.
+If \textit{boundary} is provided, it only returns the blocks more recent than
+the boundary block supplied; otherwise it goes all the way back to genesis.
 
-\import{./}{algorithms/alg.nipopow-prover.tex}
 \import{./}{algorithms/alg.nipopow-innerchain.tex}
 
-The NIPoPoW proof construction is shown in Algorithm~\ref{alg.nipopow-construct-proof}.
+The NIPoPoW proof construction is shown in Algorithm~\ref{alg.nipopow-prover}.
 This produces a non-interactive PoPoW in parameter $m$ which consists of a
-number of blocks for every level $i$. The number of blocks per level is
-approximately $2m$.
+number of blocks for every level $\mu$. At the highest possible level at which
+at least $m$ blocks, all these blocks are presented. Then, inductively, for
+every superchain of level $\mu$ that is included in the proof, the suffix of
+length $m$ is taken. Then the underlying superchain of level $\mu - 1$ covering
+the same span as that suffix is also included, until level $0$ is reached.
+
+\import{./}{algorithms/alg.nipopow-prover.tex}
+
+% \begin{figure}[h]
+%     \caption{The first of a series of interactive proofs-of-proof-of-work for
+%     $m = k = 3$. This proof is the only one that needs to be sent in case it
+%     goes unchallenged.}
+%     \centering
+%     \includegraphics[width=0.5\textwidth,keepaspectratio]{figures/interactive-popow.png}
+% \end{figure}
+
+Figure~\ref{fig.nipopow} contains an example proof constructed for parameters
+$m = k = 3$. The top superchain level which contains at least $m$ blocks is
+level $\mu = 3$. For the $m$-sized suffix of that level, $5$ blocks of
+superblock level $2$ are included for support spanning the same range. For the
+last $3$ blocks of the level $2$ superchain, blocks of level $1$ are included
+for support.
 
 \begin{figure}[h]
-    \caption{The hierarchical blockchain. Existing blocks are shown in level 1.
-    Higher levels have achieved a lower target (higher difficulty) during mining.}
-    \centering
-    \includegraphics[width=0.5\textwidth,keepaspectratio]{figures/hierarchical-ledger.png}
-    \label{fig:hierarchy}
-\end{figure}
-
-\begin{figure}[h]
-    \caption{The first of a series of interactive proofs-of-proof-of-work for
-    $m = k = 3$. This proof is the only one that needs to be sent in case it
-    goes unchallenged.}
-    \centering
-    \includegraphics[width=0.5\textwidth,keepaspectratio]{figures/interactive-popow.png}
-\end{figure}
-
-\begin{figure}[h]
-    \caption{A non-interactive proof-of-work for $m = k = 3$. Any challenges
-    can be answered by the verifier directly by constructing a proof from the
-    data in this proof, without interaction with the prover.}
+    \caption{A non-interactive proof-of-work prefix for $m = k = 3$.}
     \centering
     \includegraphics[width=0.5\textwidth,keepaspectratio]{figures/non-interactive-popow.png}
+    \label{fig.nipopow}
 \end{figure}
 
 \import{./}{algorithms/alg.nipopow-maxchain.tex}
