@@ -1,51 +1,52 @@
 \section{Provable chain predicates}
 
-We now describe the desirable property of predicates, \textit{monotonicity}. Based
+In this section we characterize the set of blockchain predicates that will be of interest
+to us for constructing proofs.
+A useful property of predicates in our context is \textit{monotonicity}. Based
 on predicate monotonicity, we show that a predicate has \textit{liveness} and
-\textit{persistence} and define chain predicate security appropriately.
-
-We allow our predicates to have an undefined value $\bot$ before they take
-on a truth value of $0$ or $1$.
+\textit{persistence}. Formalizing the security of our  blockchain proofs  will be 
+preconditioned on such blockchain predicates. Given that we are in a decentralized
+setting it can be the case that for certain sensible blockchain predicate, there will
+be honest nodes that have not reached a conclusion about its value. For this reason
+we  allow our predicates to have an undefined value $\bot$ before they take
+on a truth value of $0$ or $1$. We define a number of predicate properties
+and prove a simple but useful relation between them. 
 
 \begin{definition}{(Predicate monotonicity)}
     A chain predicate $Q(\chain)$ is $\textit{monotonic}$ if for all chains
     $\chain$ and for all blocks $B$ we have that:
+%\begin{equation*}
+    $    Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B) $. 
+%\end{equation*}
 
-    \begin{equation*}
-        Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B)
-    \end{equation*}
-\end{definition}
-
-\begin{definition}{(Predicate switching position)}
+{(Predicate switching position)}
     A chain predicate $Q(\chain) \neq \bot$ has a switching position $i \in
     \mathbb{N}$ in the chain $\chain$ defined as the minimum $i$ such that:
-
-    \begin{equation*}
-        Q(\chain[:i]) \neq \bot
-    \end{equation*}
-\end{definition}
-
-\begin{definition}{(Predicate stability)}
+%    \begin{equation*}
+ $       Q(\chain[:i]) \neq \bot$. 
+%    \end{equation*}
+ 
+ {(Predicate stability)}
     Parameterized by $k \in \mathbb{N}$ and a chain $\chain$, a chain predicate
     $Q$ has $\textit{stability}$ if its switching position $i$ satisfies $i <
     |\chain| - k$.
-\end{definition}
 
-\begin{definition}{(Predicate persistence)}
+{(Predicate persistence)}
     Parameterized by $k \in \mathbb{N}$ and a chain $\chain$, a chain predicate
     $Q$ has $\textit{persistence}$ if the following is true: When in a certain
     round the predicate is $k$-stable in some honest party's chain, then
     whenever it is $k$-stable in any honest party's chain, the truth value of
     the predicate is the same. Furthermore, the change of truth value from
     $\bot$ to its final truth value happened at the same blockchain depth.
-\end{definition}
 
-\begin{definition}{(Predicate liveness)}
+\ignore{%%%%%
+{(Predicate liveness)}
     Parameterized by $u, k \in \mathbb{N}$ (the ``wait time'' and ``depth''
     parameters respectively) and a chain $\chain$, a chain predicate
-    $Q$ has $\textit{liveness}$ if it is $k$-stable for one honest part
+    $Q$ has $\textit{liveness}$ if it is $k$-stable for one honest party
     in a certain round, then it will also be $k$-stable for all honest parties
     after $u$ rounds.
+}%%%%
 \end{definition}
 
 \begin{theorem}
@@ -65,6 +66,7 @@ on a truth value of $0$ or $1$.
     parties.
 \end{proof}
 
+\ignore{%%%%
 \begin{theorem}
     If a chain predicate is monotonic, then it satisfies liveness with
     parameters $u = 1$ rounds and $k = 2\eta \kappa f$ with probability at
@@ -74,4 +76,4 @@ on a truth value of $0$ or $1$.
 \begin{proof}
     ?
 \end{proof}
-
+}%%%%
