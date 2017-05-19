@@ -3,15 +3,15 @@ Blockchain protocols such as bitcoin provide decentralized consensus
 mechanisms based on proofs of work (PoWs) 
 that allow monetary and other applications. 
 %
-In this work we introduce and implement a new primitive for blockchain protocols, called Noninteractive-Proofs-of-Proof-of-Work, (NiPoPoWs), which can be adapted into existing cryptocurrencies to support more efficient clients.
-Unlike a traditional blockchain client, which must verify the entire chain of PoWs, which grows linearly over time, clients based on NiPoPoWs require resources only logarithmic in the length of the blockchain.
+In this work we introduce and implement a new primitive for blockchain protocols, called Noninteractive-Proofs-of-Proof-of-Work, (NIPoPoWs), which can be adapted into existing cryptocurrencies to support more efficient clients.
+Unlike a traditional blockchain client, which must verify the entire chain of PoWs, which grows linearly over time, clients based on NIPoPoWs require resources only logarithmic in the length of the blockchain.
 
 %This proof is linear in size in
 %the case of both a full node or an SPV. Using lite proofs-of-proofs-of-work,
 %these proofs can become sublinear, but require interactivity. We modify PoPoWs
 %to produce non-interactive proofs. We describe how exactly these proofs can be
 %constructed. 
-NiPoPoWs solve two important open questions for PoW based consensus
+NIPoPoWs solve two important open questions for PoW based consensus
 protocols. Specifically the problem  
 of constructing efficient transaction verification (sometimes called
 ``simple payment verification'' - SPV) clients and 
@@ -22,17 +22,17 @@ the problem of constructing efficient sidechain proofs.
 %Secure implementation to transfer a coin between sidechains, a transaction must include a
 %proof that proof-of-work has been performed. t
 %
-We provide a formal model of NiPoPoWs, a construction that we prove
+We provide a formal model of NIPoPoWs, a construction that we prove
 secure in our model 
 via a cryptographic reduction argument and 
 efficiency-demonstrating benchmarks.
-Finally, we provide two ways that our NiPoPoWs can be adopted by
+Finally, we provide two ways that our NIPoPoWs can be adopted by
  existing blockchain protocols, first via a soft fork, that enables the 
-   adoption of the NiPoPoW related data structures
+   adoption of the NIPoPoW related data structures
   as part of the underlying consensus mechanism, 
  and second  via a new update mechanism 
 that we term a ``velvet fork'' and enables to harness some of
-the performance benefits of NiPoPoWs even without reaching consensus about its use
+the performance benefits of NIPoPoWs even without reaching consensus about its use
 across nodes. The velvet fork scheme is of independent interest to enable
 consensus layer upgrades without requiring an agreement by miner majority.
 
