@@ -3,11 +3,13 @@
     for the NIPoPoW protocol}
     \begin{algorithmic}[1]
         \Function{\sf Verify$^Q_{m,k}$}{$\mathcal{P}$}
-            \Let{(\tilde{\Pi}, \chi)}{\mathcal{P}[0]}
-            \Let{best}{\chi}
+            \Let{(\tilde\Pi, \chi)}{\mathcal{P}[0]}
+            \Let{best}{\emptyset}
             \For{$(\tilde{\Pi}, \chi) \in \mathcal{P}$}
-                \If{$\mathsf{maxChain}_m(\tilde\Pi, best)$}
-                    \Let{best}{\chi}
+                \If{$\mathsf{validProof}(\Pi, \chi)$}
+                    \If{$\mathsf{maxChain}_m(\tilde\Pi, best)$}
+                        \Let{best}{\chi}
+                    \EndIf
                 \EndIf
             \EndFor
             \State\Return{$Q(\chi)$}
