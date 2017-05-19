@@ -3,7 +3,7 @@ Cryptocurrencies such as Bitcoin~\cite{bitcoin} and Ethereum~\cite{ethereum} hav
 These are peer-to-peer networks that maintain a globally consistent transaction ledger, using a new consensus protocol based on proof-of-work (PoW) puzzles. Worker nodes called ``miners'' expend computational work in order to reach agreement on the state of the network.
 Clients on the network, such as mobile phone apps, must verify these proofs-of-work in order to determine the correct view of the network's state, as necessary to transmit and receive payments.
 
-In this work we introduce, analyze and implement  a new primitive, called Noninteractive-Proofs-of-Proofs-of-Work, (NIPoPoWs), which can be adapted into existing cryptocurrencies to support more efficient clients.
+In this work we introduce, analyze and implement  a new primitive, called Noninteractive-Proofs-of-Proof-of-Work, (NIPoPoWs), which can be adapted into existing cryptocurrencies to support more efficient clients.
 Unlike a traditional blockchain client, which must verify the entire chain of proofs-of-work, which grows linearly over time, clients based on NIPoPoWs require resources only logarithmic in the length of the blockchain.
 
 There are three trends that motivate the need for more efficient clients: specifically clients that can verify transactions without having to process the whole blockchain.
@@ -30,7 +30,7 @@ In summary,  we make the following contributions in this paper.
      primitive called Non-Interactive Proofs of Proof of Work (NIPoPoW). We present a formal model and a provably secure
      instantiation of NIPoPoWs in the model of \cite{backbone}.
      Our contribution builds on previous work by  Kiayias et al., who posed
-     (interactive) Proofs-of-Proofs-of-Work (PoPoWs) \cite{KLS}.
+     (interactive) Proofs-of-Proof-of-Work (PoPoWs) \cite{KLS}.
      Our definition fills the gap in terms of security modeling and design that
       existed in previous proposals, especially the notion of cumulative
       ``Dynamic Member Multisignature'' by Back et al., \cite{}. Moreover
@@ -64,7 +64,7 @@ then be subsequently included in sidechain blocks where funds are locked in one
 blockchain so that they can become available in another. This is in vast
 improvement as compared to SPV proofs which are $O(|\chain|)$.
 
-Proofs-of-proofs-of-work were explored in \cite{KLS}. These proofs
+Proofs-of-proof-of-work were explored in \cite{KLS}. These proofs
 had the disadvantage of requiring interaction between a prover and a verifier,
 making them unsuitable for sidechain adoption.
 
@@ -78,7 +78,7 @@ time.
 
 We provide generic definitions for what a PoPoW system should achieve. Next,
 the theoretical construction for succinct non-interactive
-proofs-of-proofs-of-work is presented. Subsequently, we prove the construction
+proofs-of-proof-of-work is presented. Subsequently, we prove the construction
 is succinct and secure. Next, we sketch a mechanism by which bitcoin can be
 upgraded to adopt our scheme without having to orchestrate a hard or a soft
 fork. Finally, we evaluate the feasibility of our construction by proposing
