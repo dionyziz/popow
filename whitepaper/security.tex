@@ -1,22 +1,22 @@
 \subsection{Security}
 
-\begin{lemma}
-    If the maximum level superchain belonging to the honest parties of at least
-    $m$ blocks is of level $\mu$, then the adversary cannot produce a
-    superchain of level better than $\mu + 1$ with at least $m$ blocks except
-    with negligible probability.
-\end{lemma}
-\begin{proof}
-    ???
-\end{proof}
-
-Based on the above, observe that the adversarial proof cannot exceed the
-superblock level of the honest proof by more than one, except with negligible
-probability. Therefore, proofs that are of much inferior superblock level can
-be rejected immediately. This allows us to assume that for two competing proofs
-$\overline{\Pi}_\alpha$ and $\overline{\Pi}_\beta$ it holds that
-$||\overline{\Pi}_A| - |\overline{\Pi}_B|| \leq 1$.
-
+% \begin{lemma}
+%     If the maximum level superchain belonging to the honest parties of at least
+%     $m$ blocks is of level $\mu$, then the adversary cannot produce a
+%     superchain of level better than $\mu + 1$ with at least $m$ blocks except
+%     with negligible probability.
+% \end{lemma}
+% \begin{proof}
+%     ???
+% \end{proof}
+%
+% Based on the above, observe that the adversarial proof cannot exceed the
+% superblock level of the honest proof by more than one, except with negligible
+% probability. Therefore, proofs that are of much inferior superblock level can
+% be rejected immediately. This allows us to assume that for two competing proofs
+% $\overline{\Pi}_\alpha$ and $\overline{\Pi}_\beta$ it holds that
+% $||\overline{\Pi}_A| - |\overline{\Pi}_B|| \leq 1$.
+%
 \begin{theorem}
     \label{thm.security}
     The non-interactive proofs-of-proof-of-work construction is secure.
