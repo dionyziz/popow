@@ -28,8 +28,10 @@ First, while Bitcoin remains by far the largest and most widely used cryptocurre
 \noindent
 \paragraph{Our contributions.}
 In summary,  we make the following contributions in this paper.
-  \begin{itemize}[leftmargin=3.2mm]
-    \item Our main technical contribution is the introduction of
+
+%  \begin{itemize}[leftmargin=3.2mm]
+%\item
+  Our main technical contribution is the introduction of
     a new cryptographic
      primitive called Non-Interactive Proofs of Proof of Work (NIPoPoW). We present a formal model and a provably secure
      instantiation of NIPoPoWs in the model of \cite{backbone}.
@@ -42,13 +44,14 @@ In summary,  we make the following contributions in this paper.
       efficient PoPoW construction of \cite{KLS} is susceptible to forced
       interactions when an adversarial prover is present.
 
-  \item We provide concrete parameterization and empirical analysis focusing to show the potential savings of our approach versus existing clients.
+We provide concrete parameterization and empirical analysis focusing to show the potential savings of our approach versus existing clients.
 Using actual data from the bitcoin blockchain we quantify the actual savings of NIPoPoWs over
 the previous known techniques of constructing efficient SPV verifiers.
-   \item We describe two safely deployable upgrade paths for NIPoPoWs that existing cryptocurrencies can  adopt to support our efficient clients. Specifically
+
+We describe two safely deployable upgrade paths for NIPoPoWs that existing cryptocurrencies can  adopt to support our efficient clients. Specifically
    we first outline how a ``soft-fork''  is feasible for NIPoPoWs so that the
    adoption of the update can be decided by the underlying PoW based consensus mechanism. We then demonstrate that an even less disruptive update mechanism is also feasible that we term a ``velvet fork'' and which may be of independent interest. In a velvet fork update the clients that have forked from the original implementation continue to be fully compatible with unupdated clients. It follows that in a velvet fork, the blockchain system can remain supported by a forked software codebase indefinitely, while it can still enjoy, at least in proportion, some of the (efficiency in our case) benefits of the update without any of the  security downsides.
-  \end{itemize}
+%  \end{itemize}
 
 %In the simplest version of sidechains, the nodes participating in the consensus
 %protocol must all maintain the different blockchains.

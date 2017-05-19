@@ -1,5 +1,26 @@
 \section{Implementation \& Parameters}
 
+\begin{table}
+  \caption{\label{table.size}
+    Estimated size of NIPoPoWs, applied to the Bitcoin blockchain today ($\approx$450k blocks) for various values of the security parameter $m$
+    setting $k = 6$.
+    %and with current values for transaction count, block count,
+    %coinbase size and hash output length.
+  }
+  \begin{tabular}{llll}
+      {\bf m}  & {\bf NIPoPoW size (KB)} & {\bf \# of blocks} & {\bf
+      \# of hashes}\\
+      $6$   & $70$  & $108$ & $1440$  \\
+      $15$  & $146$ & $231$ & $2925$  \\
+      $30$  & $270$ & $426$ & $5400$  \\
+      $50$  & $412$ & $656$ & $8250$ \\
+      $100$ & $750$ & $1206$ & $15000$ \\
+      $127$ & $952$ & $1530$ & $19050$ \\
+  \end{tabular}
+\end{table}
+
+
+
 \paragraph{Interlink Optimizations}
 We now discuss the exact manner in which the interlink data structure should be
 hashed to provide a single hash within the coinbase transaction.  A Merkle tree
@@ -56,27 +77,7 @@ previous block in the proof. In fact, no block ids need to be transmitted at
 all, as they can all be built from the Verifier starting from the knowledge of
 Genesis.
 
-Based on these observations, we provide an estimate for proof sizes of our
-scheme for various parameterizations of $m$ in Table~\ref{table.size}.
-
-\begin{table}
-  \caption{\label{table.size}
-    Estimated size of NIPoPoWs, applied to the Bitcoin blockchain today ($\approx$450k blocks) for various values of the security parameter $m$
-    setting $k = 6$.
-    %and with current values for transaction count, block count,
-    %coinbase size and hash output length.
-  }
-  \begin{tabular}{llll}
-      {\bf m}  & {\bf NIPoPoW size (KB)} & {\bf \# of blocks} & {\bf
-      \# of hashes}\\
-      $6$   & $70$  & $108$ & $1440$  \\
-      $15$  & $146$ & $231$ & $2925$  \\
-      $30$  & $270$ & $426$ & $5400$  \\
-      $50$  & $412$ & $656$ & $8250$ \\
-      $100$ & $750$ & $1206$ & $15000$ \\
-      $127$ & $952$ & $1530$ & $19050$ \\
-  \end{tabular}
-\end{table}
+From these observations, we estimate our scheme's proof sizes  for various parameterizations of $m$ in Table~\ref{table.size}.
 
 
 \subsection{Choosing Secure Parameters}
@@ -87,7 +88,6 @@ in mind that this adversarial strategy is only one possible strategy and an
 advanced adversary can perform more sophisticated attacks. However, the fact
 that this attack is reasonable and possible to simulate allows us to extract
 specific values for $m$.
-
 The attack is an extension of the stochastic processes originally described in
 \cite{bitcoin} and further explored in \cite{rosenfeld}.
 
@@ -120,7 +120,7 @@ from $1$ to $30$. We ran the simulation for values of computational power
 percentage $q = 0.1$, $q = 0.2$ and $q = 0.3$. The results are plotted in
 Figure~\ref{fig.nipopow-attack-experiment}.
 
-\begin{figure}[h]
+\begin{figure}
     \caption{\label{fig.nipopow-attack-experiment}
         Simulation results for a private mining attacker with $q = 0.1$ and $q
         = 0.3$ computational power, suffix security $k = 6$ and parallel
@@ -129,7 +129,7 @@ Figure~\ref{fig.nipopow-attack-experiment}.
         horizontal line.
     }
     \centering
-    \includegraphics[width=0.5\textwidth,keepaspectratio]{figures/nipopow-attack-experiment.png}
+    \includegraphics[width=0.45\textwidth,keepaspectratio]{figures/nipopow-attack-experiment.png}
 \end{figure}
 
 Based on this data, we conclude that $m = 6$ is sufficient to achieve a $0.001$

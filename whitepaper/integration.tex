@@ -42,7 +42,9 @@ Another alternative would be to use an online service supporting multiple curren
 This list includes many defunct cryptocurrencies that are no longer functioning at all.
 We narrow our focus to the 80 cryptocurrencies that have their own proof-of-work blockchains
 , (i.e., no proof of stake) and that have a market cap of over USD \$100,000.
-In Table~\ref{tbl:currencies} we show aggregate statistics about these 80 cryptocurrencies, grouped according to the their proof-of-work puzzle (e.g., Litecoin uses the scrypt hash function, while Bitcoin uses the SHA-256 function). The ``Size today'' column reflects the current size of all the proof-of-work headers, while ``Growth rate'' reflects the additional proof-of-work headers generated each day. Here we make the conservative assumption that the size of a block header is exactly 80 bytes, as it is in Bitcoin.
+In Table~\ref{tbl:currencies} we show aggregate statistics about these 80 cryptocurrencies, grouped according to the their proof-of-work puzzle.
+%(e.g., Litecoin uses the scrypt hash function, while Bitcoin uses the SHA-256 function). The ``Size today'' column reflects the current size of all the proof-of-work headers, while ``Growth rate'' reflects the additional proof-of-work headers generated each day.
+%Here we make the conservative assumption that the size of a block header is exactly 80 bytes, as it is in Bitcoin.
 Bitcoin's 10 minute block time is relatively slow; other cryptocurrencies typically use faster block times, e.g. 12 seconds for Ethereum and 2 minutes for Litecoin. Thus while the entire chain of proof-of-work puzzles in Bitcoin today only amounts to about 40 MB, taken together, the 80 cryptocurrencies comprise nearly 10 GB of proofs-of-work, and generate nearly 10 MB more each day.
 
  In our simulation we choose NIPoPoW parameters based as in the previous section, with $m=6$ and $k=24$.
@@ -96,9 +98,8 @@ In Table~\ref{tbl:experiment} we show the resulting bandwidth costs from simulat
 \label{sec:catena}
 In Catena,~\cite{catena} the Bitcoin blockchain is used as an equivocation-resistant public log in which to publish commitments to SSL certificates. The Catena client prototype is based on the BitcoinJ SPV library, and therefore requires downloading the entire Bitcoin proof-of-work chain.
 Catena could therefore immediately be improved by using NIPoPoWs.
-
 First, we note that the Catena authors anticipate needing to launch a dedicated Header Relay Network~\cite{catena} to accomodate the extra bandwidth demands from new Catena clients. A variant based on NIPoPoWs could obviate this, since it eliminates the need to bootstrap new clients by transmitting the entire 40MB Bitcoin header chain.
-The steady state cost of operating a Catena client depends on how frequently certificate digests are published. For example, one usage scenario cited by Catena~\cite{catena} is Keybase, a service which publishes certificate digests every 6 hours. During a 6 hour period, Bitcoin would generate 6 kilobytes of headers, whereas a NIPoPoW proof covering the same range would require less than half this size.
+Second, the steady state cost of operating a Catena client depends on how frequently certificate digests are published. For example, one usage scenario cited by Catena~\cite{catena} is Keybase, a service which publishes certificate digests every 6 hours. During a 6 hour period, Bitcoin would generate 6 kilobytes of headers, whereas a NIPoPoW proof covering the same range would require less than half this size.
 The  savings would increase further if Catena were implemented using any proof-of-work blockchain with more frequent blocks, such as Ethereum or Litecon.
 
 \subsection{Sidechains}
