@@ -2,28 +2,28 @@
 
 \paragraph{Interlink Optimizations}
 We now discuss the exact manner in which the interlink data structure should be
-hashed to provide a single hash within the coinbase transaction. In \cite{KLS},
-they propose the use of a Merkle tree to hash the interlink data structure.
-However, no further discussion is made in this regard. Observe that NIPoPoWs
-form a single chain of various levels which can skip certain blocks. However,
-it does not form a tree. Therefore, for each block included in the proof, only
-a single pointer needs to be presented to convince the Verifier. Near genesis,
-the pointers that need to be included correspond to high levels; while near the
-most recently generated block, the pointers correspond to low levels. One
-important observation is this: In the formal construction of the proof, the
-highest level superchain with at least $m$ blocks is included, and assume it is
-of level $\mu$. The next level superchain, $\mu - 1$ is completely included and
-has an expected number of $2m$ blocks. But note that since all $\mu$-level
-superblocks are also $(\mu - 1)$-level superblocks, only the $\mu - 1$ level
-needs to be in fact included. Among the expected $2m$ blocks of level $\mu -
-1$, the last $m$ will need to be supported by level $\mu - 2$. Using the same
-argument, since $(\mu - 1)$-level superblocks are also $(\mu - 2)$ level
-superblocks, in expectation only $m$ blocks need to be included in level $\mu
-- 1$. The argument continues inductively, until an expected number of $2m$
-blocks needs to be included at level $0$ immediately before the $\chi$ suffix.
-This gives us an exact estimation on the size of the proof: The proof will
-contain exactly $m (\log(|\chain|) - \log(m))$ blocks in expectation, $m$ at each of
-the $\mu - 1$ levels and $2m$ at level $0$.
+hashed to provide a single hash within the coinbase transaction.  A Merkle tree
+should be used to hash the interlink data structure into a single hash
+\cite{KLS}.  Observe that NIPoPoWs form a single chain of various levels which
+can skip certain blocks. However, it does not form a tree. Therefore, for each
+block included in the proof, only a single pointer needs to be presented to
+convince the Verifier. Near genesis, the pointers that need to be included
+correspond to high levels; while near the most recently generated block, the
+pointers correspond to low levels. One important observation is this: In the
+formal construction of the proof, the highest level superchain with at least
+$m$ blocks is included, and assume it is of level $\mu$. The next level
+superchain, $\mu - 1$ is completely included and has an expected number of $2m$
+blocks. But note that since all $\mu$-level superblocks are also $(\mu -
+1)$-level superblocks, only the $\mu - 1$ level needs to be in fact included.
+Among the expected $2m$ blocks of level $\mu - 1$, the last $m$ will need to be
+supported by level $\mu - 2$. Using the same argument, since $(\mu - 1)$-level
+superblocks are also $(\mu - 2)$ level superblocks, in expectation only $m$
+blocks need to be included in level $\mu - 1$. The argument continues
+inductively, until an expected number of $2m$ blocks needs to be included at
+level $0$ immediately before the $\chi$ suffix.  This gives us an exact
+estimation on the size of the proof: The proof will contain exactly $m
+(\log(|\chain|) - \log(m))$ blocks in expectation, $m$ at each of the $\mu - 1$
+levels and $2m$ at level $0$.
 
 By organizing the interlink pointers into a Merkle tree of $\log(|\chain|)$
 items, a proof-of-inclusion in the pointers Merkle tree can be provided in
