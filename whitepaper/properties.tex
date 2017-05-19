@@ -3,16 +3,6 @@
 We now move on to define the various desired properties of a proof protocol, in
 particular \textit{succinctness} and \textit{security}.
 
-We define a \textit{blockchain proof protocol} for a predicate $Q$ as a pair
-$(P, V)$ where $P$ is called the \textit{prover} and $V$ is called the
-\textit{verifier}. $P$ is a PPT algorithm that is spawned by an honest miner
-when they wish to produce a proof, accepts as input a full chain $\chain$ and
-produces a proof $\pi$ as its output. $V$ is a PPT algorithm which is spawned
-by the environment at some round, receives a vector of proofs $\bar{\pi}$ from
-both honest parties and the adversary and returns its decision $d \in \{T, F,
-\bot\}$ before the next round and terminates. The honest parties produce proofs
-for $V$ using $P$.
-
 \begin{definition}{(Security)}
 A \textit{blockchain proof protocol} is \textit{secure} if for all environments
 and for all PPT adversaries $\mathcal{A}$ the output of $V$ on round $r$ is the

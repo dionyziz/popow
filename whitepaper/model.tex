@@ -1,8 +1,22 @@
 \section{Model}
 
+We define our problem in the setting of a blockchain client which is completely
+stateless beyond the knowledge of the Genesis block. Without loss of
+generality, this single reference block could be any stable checkpoint block,
+either hard-coded in the client or obtained through a previous interaction with
+the network. However, importantly, the client does not maintain a blockchain.
+The challenge is, then, to build a client that is able to communicate with the
+network and, without downloading the whole chain headers, is convinced in a
+secure manner that a transaction has taken place. We term such a client a
+\textit{verifier} and we term \textit{provers} the full nodes it connects to.
+Following previous work \cite{backbone} \cite{KLS}, we assume the verifier will
+always connect to at least one honest prover. We now move on to formally define
+these entities in terms of a mathematical model which can be used for our
+analysis.
+
 In order to study the syntax and properties of NIPoPoWs
 we abstract their operation in a way that is akin to non-interactive
-zero-knowledge proofs (NIZK), \cite{BFM88}. In such protocols, a prover
+zero-knowledge proofs (NIZK) \cite{BFM88}. In such protocols, a prover
 shares some context with a verifier (called the common reference string).
 For a given predicate, the prover computes the proof string and transmits it
 to the verifier. The verifier accepts or rejects the string. Given that in our
@@ -42,3 +56,37 @@ range of two numbers separated by a $:$ indicates a subarray starting on the
 left index and ending on the right index, inclusive. Omitting one of the range
 indices takes it to the beginning or end of the blockchain respectively.
 
+The backbone protocol of a miner node is shown in Algorithm~\ref{alg.backbone}.
+Its rationale is described in more detail in \cite{backbone}. In short, the
+honest miner maintains the longest chain from the network and tries to mine on
+top of it. In Algorithm~\ref{alg.backbone-prover}, we illustrate our new entity
+for the model, the full node or \textit{prover}. While the full node is not
+mining, it maintains a state with the longest chain from the network.
+Furthermore, whenever it is asked to prove a predicate $Q$ about its local
+chain $\chain$, it calls a Prove function to provide the proof. We leave this
+Prove function undefined for now, as it is part of the concrete protocol
+construction. On the other hand, in Algorithm~\ref{alg.generic-verifier} we
+illustrate another new entity to the model, the generic \textit{verifier},
+which is stateless, but receives proofs from the provers on the network (via
+the environment) and takes a decision about a predicate on the blockchain it
+believes to be the longest.
+
+A non-interactive proof of proof-of-work protocol is a game between a prover
+and a verifier parameterized by predicate $Q$ which the prover tries to
+convince the verifier for. The predicate $Q$ is a function of a chain $\chain$,
+which the prover claims to be the longest chain.
+
+At the beginning of the game, two provers generate proofs $\pi_A$, $\pi_B$
+claiming potentially different truth values for the predicate $Q$ based on
+their claimed local longest chains. The verifier receives these proofs and
+accepts one of the two proofs, determining the truth value of the predicate.
+
+We define a \textit{blockchain proof protocol} for a predicate $Q$ as a pair
+$(P, V)$ where $P$ is called the \textit{prover} and $V$ is called the
+\textit{verifier}. $P$ is a PPT algorithm that is spawned by a full node
+when they wish to produce a proof, accepts as input a full chain $\chain$ and
+produces a proof $\pi$ as its output. $V$ is a PPT algorithm which is spawned
+by the environment at some round, receives a vector of proofs $\bar{\pi}$ from
+both honest parties and the adversary and returns its decision $d \in \{T, F,
+\bot\}$ before the next round and terminates. The honest parties produce proofs
+for $V$ using $P$.
