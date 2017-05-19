@@ -77,15 +77,14 @@ proofs, as they are only able to present shorter chains in that case. The
 honest prover can simply ignore such pointers as if they were not included at
 all.
 
-The velvet prover is shown in Algorithm~\ref{alg.backbone-velvet-prover}. The
-prover works as usual, but additionally maintains a realLink data structure
-which stores the correct interlink for each block. Whenever a new winning chain
-is received from the network, the prover checks it for blocks that it hasn't
-seen before. For those blocks, it maintains its own realLink data structure
-which it updates accordingly to make sure it is correct regardless of what the
-interlink data structure of the received block claims.
+The velvet prover works as usual, but additionally maintains a
+\textit{realLink} data structure as part of its full node, which stores the
+correct interlink for each block.  Whenever a new winning chain is received
+from the network, the prover checks it for blocks that it hasn't seen before.
+For those blocks, it maintains its own realLink data structure which it updates
+accordingly to make sure it is correct regardless of what the interlink data
+structure of the received block claims.
 
-\import{./}{algorithms/alg.backbone-velvet-prover.tex}
 \import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
 \import{./}{algorithms/alg.nipopow-velvet-follow.tex}
 \import{./}{algorithms/alg.nipopow-velvet-prover.tex}

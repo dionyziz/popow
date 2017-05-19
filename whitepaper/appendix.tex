@@ -1,5 +1,5 @@
 \section{Backbone integration}
-\label{sec:appendix-backbone}
+\label{sec.appendix-backbone}
 
 %We use this model to explore which predicates are reliable and can be proven
 %succinctly.
@@ -24,3 +24,9 @@ believes to be the longest.
 \import{./}{algorithms/alg.backbone.tex}
 \import{./}{algorithms/alg.backbone-prover.tex}
 \import{./}{algorithms/alg.verifier-framework.tex}
+
+The prover which additionally maintains the \textit{blockById} and
+\textit{depth} data structures is illustrated in
+Algorithm~\ref{alg.backbone-velvet-prover}.
+
+\import{./}{algorithms/alg.backbone-velvet-prover.tex}
