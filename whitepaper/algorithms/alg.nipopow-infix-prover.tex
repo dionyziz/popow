@@ -6,8 +6,8 @@
             \Let{(\pi, \chi)}{\textsf{Prove}_{m,k}(\chain)}
             \For{$B' \in \chain'$}
                 \For{$E \in \pi$}
-                    \If{$\textsf{depth}[E] > \textsf{depth}[B']$}
-                        \Let{R}{\textsf{followDown}(E, B', \textsf{depth}} %, \textsf{realLink}, \textsf{blockById})}
+                    \If{$\textsf{depth}[E] \geq \textsf{depth}[B']$}
+                        \Let{R}{\textsf{followDown}(E, B', \textsf{depth})} %, \textsf{realLink}, \textsf{blockById})}
                         % \Let{L}{\textsf{followUp}(B', \textsf{level}(E'), \textsf{realLink}, \textsf{blockById})}
                         % \Let{aux}{aux \cup L}
                         \Let{aux}{aux \cup R}
@@ -16,7 +16,7 @@
                     \Let{E'}{E}
                 \EndFor
             \EndFor
-            \State\Return{aux}
+            \State\Return{$(aux \cup \pi, \chi)$}
         \EndFunction
     \vskip8pt
     \end{algorithmic}
