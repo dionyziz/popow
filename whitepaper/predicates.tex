@@ -1,31 +1,31 @@
 \section{Provable chain predicates}
 
-In this section we characterize the set of blockchain predicates that will be of interest
-to us for constructing proofs.
+Not all predicates can be proved. In this section we characterize the class of
+blockchain predicates that will be of interest to us for constructing proofs.
 A useful property of predicates in our context is \textit{monotonicity}. Based
 on predicate monotonicity, we show that a predicate has \textit{liveness} and
-\textit{persistence}. Formalizing the security of our  blockchain proofs  will be 
-preconditioned on such blockchain predicates. Given that we are in a decentralized
-setting it can be the case that for certain sensible blockchain predicate, there will
-be honest nodes that have not reached a conclusion about its value. For this reason
-we  allow our predicates to have an undefined value $\bot$ before they take
-on a truth value of $0$ or $1$. We define a number of predicate properties
-and prove a simple but useful relation between them. 
+\textit{persistence}. Formalizing the security of our  blockchain proofs  will
+be preconditioned on such blockchain predicates. Given that we are in a
+decentralized setting it can be the case that for certain sensible blockchain
+predicate, there will be honest nodes that have not reached a conclusion about
+its value. For this reason we  allow our predicates to have an undefined value
+$\bot$ before they take on a truth value of $0$ or $1$. We define a number of
+predicate properties and prove a simple but useful relation between them.
 
 \begin{definition}{(Predicate monotonicity)}
     A chain predicate $Q(\chain)$ is $\textit{monotonic}$ if for all chains
     $\chain$ and for all blocks $B$ we have that:
 %\begin{equation*}
-    $    Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B) $. 
+    $    Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B) $.
 %\end{equation*}
 
 {(Predicate switching position)}
     A chain predicate $Q(\chain) \neq \bot$ has a switching position $i \in
     \mathbb{N}$ in the chain $\chain$ defined as the minimum $i$ such that:
 %    \begin{equation*}
- $       Q(\chain[:i]) \neq \bot$. 
+ $       Q(\chain[:i]) \neq \bot$.
 %    \end{equation*}
- 
+
  {(Predicate stability)}
     Parameterized by $k \in \mathbb{N}$ and a chain $\chain$, a chain predicate
     $Q$ has $\textit{stability}$ if its switching position $i$ satisfies $i <
@@ -56,14 +56,14 @@ and prove a simple but useful relation between them.
 \end{theorem}
 
 \begin{proof}
-    Assume a typical execution and let $\chain_1$ be the chain of some honest
-    player $P_1$ at round $r_1$. Assume that the chain predicate $Q(\chain)$ is
-    $k$-stable for $P_1$ at round $r_1$, i.e.  $Q(\chain[:-k]) \neq \bot$.
-    The chain of any honest player $P_2$ will be at least as long from the next
-    round on and from common prefix we have that $\chain_1[:-k]
-    \preccurlyeq \chain_2$. Therefore the predicate will be $k$-stable, have
-    the same truth value, and have the same switching position for all honest
-    parties.
+    Assume a typical execution as defined in \cite{backbone} and let $\chain_1$
+    be the chain of some honest player $P_1$ at round $r_1$. Assume that the
+    chain predicate $Q(\chain)$ is $k$-stable for $P_1$ at round $r_1$, i.e.
+    $Q(\chain[:-k]) \neq \bot$.  The chain of any honest player $P_2$ will be
+    at least as long from the next round on and from common prefix we have that
+    $\chain_1[:-k] \preccurlyeq \chain_2$. Therefore the predicate will be
+    $k$-stable, have the same truth value, and have the same switching position
+    for all honest parties.
 \end{proof}
 
 \ignore{%%%%
