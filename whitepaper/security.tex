@@ -57,99 +57,104 @@ $||\overline{\Pi}_A| - |\overline{\Pi}_B|| \leq 1$.
 \end{proof}
 
 The critical issue is to avoid Bahack-style attack \cite{bahack} where the
-adversary constructs "lucky" high-difficulty superblocks without filling in
-the underlying proof-of-work in the lower levels.
+adversary constructs ``lucky'' high-difficulty superblocks without filling in
+the underlying proof-of-work in the lower levels. Observe that, while setting
+$m = 1$ ``preserves'' the proof-of-work in the sense that expectations remain
+the same, the probability of an adversarial attack becomes proportional to the
+adversary power. With higher values of $m$, the probability of an adversarial
+attack drops exponentially, even though they maintain constant computational
+power, and hence satisfy a strong notion of security.
 
-\begin{itemize}
-    \item
-        We will enforce both a lower bound and an upper bound for the length of
-        each superchain in the proof. The lower bound will be $m$. The upper
-        bound could be something like $5m$ or $m^2$? We want a limit such that
-        the probability of the proof requiring this size for an honest party is
-        negligible, therefore larger proofs can be automatically dismissed as
-        adversarial. That way we can ensure that the proofs will necessarily be
-        sublinear in size, but can also help with the security proof.
-    \item
-        When comparing an adversarial and an honest proof, they can be at the
-        same level or at different levels.
-    \item
-        If they are at the same level, then the lowest common ancestor of the
-        two chains will necessarily be close to the end of the proof, except
-        with negligible probability. This stems from the fact that in the
-        opposite case, the adversary would have to produce proof-of-work faster
-        than the honest parties and for a significant amount of time.
-    \item
-        Therefore, if the proofs are at the same level, they can be compared by
-        recursing into a lower level, one level at a time. The negligibility
-        argument for the lowest common ancestor being near the suffix applies
-        to all levels, and hence recursion should be possible.
-    \item
-        If the adversarial proof is of a higher superblock level than the
-        honest proof, then this proof will necessarily extend some honest block
-        included in the honest proof. If the honest proof is of level $\mu$ and
-        the adversarial proof is of level $\mu + 1$ this means that the
-        adversary was able to produce one or more $(\mu + 1)$-level blocks
-        which extended the $(\mu + 1)$-level blocks that exist in the
-        $\mu$-level proof of the honest parties.
-    \item
-        By the previous reasoning, the adversary should not be able to produce
-        too many of these independently of the honest party, and therefore they
-        will share a lowest common ancestor near the suffix. Proofs comparison
-        can therefore continue recursively.
-    \item
-        It seems unlikely that the adversary will be able to present a proof of
-        a higher level than the honest parties for $i >> 1$ or even $i > 1$.
-        Perhaps we can think of a formal argument for this.
-    \item
-        In case the adversarial proof is of a lower level than the honest
-        proof, it still cannot exceed the enforced upper bound of proof size.
-        Assume the upper bound were $2m$. That would necessarily entail that
-        the honest party has more proof of work than the adversarial party.
-        Does the same argument work for other upper bounds?
-    \item
-        In the above, proof-of-work amount comparison must cross different
-        superchains. i.e. the total amount of proof of work considered in each
-        case must be a weighted sum of proof-of-work for each level.
-    \item
-        This weighted sum could look as follows:
-        \begin{equation}
-            PoW =
-            \sum_{j = \mu}^{\mu + i}
-            {|\overline{\Pi}_j \setminus \overline{\Pi}_{j - 1}|}
-            + \overline{\Pi}_{\mu - 1}
-        \end{equation}
-    \item
-        When the adversary presents a lower-level superchain of level $\mu$:
-        The honest party has already presented a lower-level superchain of at
-        least $m$ blocks. The adversarial lower-level superchain can share some
-        block of these at level $\mu$ (note that the honest party has not
-        provided $\mu$-level superblocks all the way back to genesis, so a
-        common ancestor does not trivially exist). If they share a lowest
-        common ancestor within the $m$ blocks of level $\mu$ presented by the
-        honest party, then the proof comparison can continue as usual.
-    \item
-        On the other hand, if there are no shared blocks between the
-        adversarial proof and the $\mu$-level superchain of the honest proof,
-        then that means that the adversary has either produced their own
-        $\mu$-level blocks or has reused earlier $\mu$-level honest blocks.
-    \item
-        Reusing $\mu$-level honest blocks cannot be done arbitrarily. Once
-        enough blocks have been used, the proof will be upgraded to $\mu +
-        1$-level.
-    \item
-        Adversarially producing $\mu$-level blocks is possible, but $\mu +
-        1$-level blocks generated during this adversarial mining procedure must
-        be discarded after $m - 1$ blocks of superblock level $\mu + 1$ have
-        been generated.
-    \item
-        The argument then goes as follows: Assuming honest superblock proof
-        level $\mu + i$, it is hard for the adversary to produce $m$ blocks of
-        level $\mu + i - 1$, while the honest proof already has $m$ blocks of
-        that level. It becomes easier for the adversary as we approach level
-        $\mu$. But proof-of-work has to be added across multiple levels to
-        achieve a fair comparison. I'm not sure how to do that exactly.
-    \item
-        Note than in practice succinct proofs are just sets of blocks. The
-        proof level is therefore extracted by the validator by comparing
-        the blockids against $T / 2^i$.
-\end{itemize}
+% \begin{itemize}
+%     \item
+%         We will enforce both a lower bound and an upper bound for the length of
+%         each superchain in the proof. The lower bound will be $m$. The upper
+%         bound could be something like $5m$ or $m^2$? We want a limit such that
+%         the probability of the proof requiring this size for an honest party is
+%         negligible, therefore larger proofs can be automatically dismissed as
+%         adversarial. That way we can ensure that the proofs will necessarily be
+%         sublinear in size, but can also help with the security proof.
+%     \item
+%         When comparing an adversarial and an honest proof, they can be at the
+%         same level or at different levels.
+%     \item
+%         If they are at the same level, then the lowest common ancestor of the
+%         two chains will necessarily be close to the end of the proof, except
+%         with negligible probability. This stems from the fact that in the
+%         opposite case, the adversary would have to produce proof-of-work faster
+%         than the honest parties and for a significant amount of time.
+%     \item
+%         Therefore, if the proofs are at the same level, they can be compared by
+%         recursing into a lower level, one level at a time. The negligibility
+%         argument for the lowest common ancestor being near the suffix applies
+%         to all levels, and hence recursion should be possible.
+%     \item
+%         If the adversarial proof is of a higher superblock level than the
+%         honest proof, then this proof will necessarily extend some honest block
+%         included in the honest proof. If the honest proof is of level $\mu$ and
+%         the adversarial proof is of level $\mu + 1$ this means that the
+%         adversary was able to produce one or more $(\mu + 1)$-level blocks
+%         which extended the $(\mu + 1)$-level blocks that exist in the
+%         $\mu$-level proof of the honest parties.
+%     \item
+%         By the previous reasoning, the adversary should not be able to produce
+%         too many of these independently of the honest party, and therefore they
+%         will share a lowest common ancestor near the suffix. Proofs comparison
+%         can therefore continue recursively.
+%     \item
+%         It seems unlikely that the adversary will be able to present a proof of
+%         a higher level than the honest parties for $i >> 1$ or even $i > 1$.
+%         Perhaps we can think of a formal argument for this.
+%     \item
+%         In case the adversarial proof is of a lower level than the honest
+%         proof, it still cannot exceed the enforced upper bound of proof size.
+%         Assume the upper bound were $2m$. That would necessarily entail that
+%         the honest party has more proof of work than the adversarial party.
+%         Does the same argument work for other upper bounds?
+%     \item
+%         In the above, proof-of-work amount comparison must cross different
+%         superchains. i.e. the total amount of proof of work considered in each
+%         case must be a weighted sum of proof-of-work for each level.
+%     \item
+%         This weighted sum could look as follows:
+%         \begin{equation}
+%             PoW =
+%             \sum_{j = \mu}^{\mu + i}
+%             {|\overline{\Pi}_j \setminus \overline{\Pi}_{j - 1}|}
+%             + \overline{\Pi}_{\mu - 1}
+%         \end{equation}
+%     \item
+%         When the adversary presents a lower-level superchain of level $\mu$:
+%         The honest party has already presented a lower-level superchain of at
+%         least $m$ blocks. The adversarial lower-level superchain can share some
+%         block of these at level $\mu$ (note that the honest party has not
+%         provided $\mu$-level superblocks all the way back to genesis, so a
+%         common ancestor does not trivially exist). If they share a lowest
+%         common ancestor within the $m$ blocks of level $\mu$ presented by the
+%         honest party, then the proof comparison can continue as usual.
+%     \item
+%         On the other hand, if there are no shared blocks between the
+%         adversarial proof and the $\mu$-level superchain of the honest proof,
+%         then that means that the adversary has either produced their own
+%         $\mu$-level blocks or has reused earlier $\mu$-level honest blocks.
+%     \item
+%         Reusing $\mu$-level honest blocks cannot be done arbitrarily. Once
+%         enough blocks have been used, the proof will be upgraded to $\mu +
+%         1$-level.
+%     \item
+%         Adversarially producing $\mu$-level blocks is possible, but $\mu +
+%         1$-level blocks generated during this adversarial mining procedure must
+%         be discarded after $m - 1$ blocks of superblock level $\mu + 1$ have
+%         been generated.
+%     \item
+%         The argument then goes as follows: Assuming honest superblock proof
+%         level $\mu + i$, it is hard for the adversary to produce $m$ blocks of
+%         level $\mu + i - 1$, while the honest proof already has $m$ blocks of
+%         that level. It becomes easier for the adversary as we approach level
+%         $\mu$. But proof-of-work has to be added across multiple levels to
+%         achieve a fair comparison. I'm not sure how to do that exactly.
+%     \item
+%         Note than in practice succinct proofs are just sets of blocks. The
+%         proof level is therefore extracted by the validator by comparing
+%         the blockids against $T / 2^i$.
+% \end{itemize}
