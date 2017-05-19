@@ -84,8 +84,10 @@ for support.
 \end{figure}
 
 Finally, the maxChain algorithm which performs the actual comparison of proofs
-is presented in Algorithm~\ref{alg.nipopow-maxchain}. Initially the algorithm
-parses the sets of blocks into chains by putting them in topological order. It
+is presented in Algorithm~\ref{alg.nipopow-maxchain}. It takes two proofs as
+parameters and returns true if the first proof is winning, otherwise it return
+false to indicate the second proof is winning. Initially the algorithm parses
+the sets of blocks into chains by arranging them in topological order. It
 rejects proofs that are not valid chains. It then computes the lowest common
 ancestor block $b$ between the two proofs by calling the LCA function. Finally,
 it finds the highest superblock level in which at least one of the proofs has
