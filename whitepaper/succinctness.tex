@@ -23,29 +23,22 @@ We now prove that our construction produces succinct proofs.
     For level $\mu$ to exist in any valid proof, at least $m$ blocks of level
     $\mu$ must have been produced by the honest parties or the adversary. We
     will now show that $m$ blocks of level $\mu = \log(|S|)$ are produced with
-    negligible probability in $m$. For this $\mu$ we have that $E[D_\mu] = 1$.
+    negligible probability in $m$.
 
     As all of the $X^{\mu}$ are independent, we can apply a Binomial Chernoff
-    bound to the probability of the sum. Therefore we have:
+    bound to the probability of the sum. Therefore we have
 
-    \begin{align*}
-        \Pr[D_\mu \geq (1 + \Delta)E[D_\mu]] &\leq \exp(-\frac{\Delta^2}{2 + \Delta}E[D_\mu]) \\
-        \Pr[D_\mu \geq 1 + \Delta] &\leq \exp(-\frac{\Delta^2}{2 + \Delta})
-    \end{align*}
-
-    Requiring $1 + \Delta = m$, we have:
-
-    \begin{align*}
-        \Pr[D_\mu \geq m] &\leq \exp(-\frac{(m - 1)^2}{m + 1})
-    \end{align*}
-
-    This is negligible in $m$.
+    $\Pr[D_\mu \geq (1 + \Delta)E[D_\mu]] \leq \exp(-\frac{\Delta^2}{2 +
+    \Delta}E[D_\mu])$. But for this $\mu$ we have that $E[D_\mu] = 1$.
+    Therefore $\Pr[D_\mu \geq 1 + \Delta] \leq \exp(-\frac{\Delta^2}{2 +
+    \Delta})$. Requiring $1 + \Delta = m$, we get $\Pr[D_\mu \geq m] \leq
+    \exp(-\frac{(m - 1)^2}{m + 1})$, which is negligible in $m$.
 \end{proof}
 
 \begin{theorem}
     \label{thm.large-expansion}
-    Given an honest $(\mu - 1)$-level superchain of at least $4m$ blocks
-    starting at block $B$ and ending at block $B'$, the respective $\mu$-level
+    Given an honest $(\mu - 1)$-level superchain of at least $4m$ blocks,
+    the respective $\mu$-level
     superchain which covers the same span of blocks has more than $m$ blocks,
     with overwhelming probability in $m$.
 \end{theorem}
@@ -53,27 +46,23 @@ We now prove that our construction produces succinct proofs.
     Assume the $(\mu - 1)$-level superchain had $4m$ blocks. Because each block
     of level $\mu - 1$ was generated as a query to the random oracle, it
     constitutes an independent Bernoulli trial and the number of blocks in
-    level $\mu$, namely $\pi[\mu]$ is a Binomial distribution with parameters
-    $(4m, 1/2)$ and expected value $2m$. Applying a Chernoff bound to the
-    distribution, we have that:
+    level $\mu$, namely $\pi[\mu]$, is a Binomial distribution with parameters
+    $(4m, 1/2)$. Applying a Chernoff bound to the
+    distribution, we have that $\Pr[|\pi[\mu]| = m] \leq \Pr[|\pi[\mu]| \leq
+    m]$. Observing that $E[\pi[mu]] = 2m$ the previous probability becomes
+    $\Pr[|\pi[\mu]| \leq (1 - \frac{1}{2})2m] \leq \exp(-\frac{(1/2)^2}{2} 2m)$
+    which is negligible in $m$.
 
-    \begin{align*}
-            \Pr[|\pi[\mu]| = m] &\leq \Pr[|\pi[\mu]| \leq m]&&\\
-           = \Pr[|\pi[\mu]| \leq (1 - \frac{1}{2})2m] &\leq \exp(-\frac{(1/2)^2}{2} 2m)&&\\
-             &\leq \exp(-\frac{m}{4})&&
-    \end{align*}
-
-    This is negligible in $m$. This probability bounds the probability of fewer
+    This probability bounds the probability of fewer
     than $m$ blocks occurring in the $\mu$ level restriction of $(\mu -
     1)$-level superchains of more than $4m$ blocks.
 \end{proof}
 
 \begin{corollary}
     \label{crly.small-support}
-    Given an honest $\mu$-level superchain with $m$ blocks starting at block
-    $B$ and ending at block $B'$, the respective $(\mu - 1)$-level superchain
-    starting at block $B$ and ending at block $B'$ has fewer than $4m$ blocks,
-    with overwhelming probability in $m$.
+    Given an honest $\mu$-level superchain with $m$ blocks, the respective
+    $(\mu - 1)$-level superchain spanning the same blocks has fewer than $4m$
+    blocks, with overwhelming probability in $m$.
 \end{corollary}
 \begin{proof}
     Assume the $(\mu - 1)$-level superchain had at least $4m$ blocks. Then by
@@ -85,7 +74,8 @@ We now prove that our construction produces succinct proofs.
 \begin{theorem}
     \label{thm.succinctness}
     Non-interactive proofs-of-proof-of-work produced by honest provers on
-    honest chains are succinct, with overwhelming probability in $m$.
+    honest chains are succinct with the number of blocks bounded by $4m
+    \log(|\chain|)$, with overwhelming probability in $m$.
 \end{theorem}
 \begin{proof}
     Assume $\chain$ is the honest parties chain. From \ref{thm.few-levels}, the
@@ -93,7 +83,7 @@ We now prove that our construction produces succinct proofs.
     overwhelming probability in $m$.
 
     First, observe that the count of blocks in the highest level will be less
-    than $4m$ from Theorem~\ref{thm.small-expansion}; otherwise a higher
+    than $4m$ from Theorem~\ref{thm.large-expansion}; otherwise a higher
     superblock level would exist. Then for the $m$-long suffix of each
     superchain of level $\mu$, the supporting superchain of level $\mu - 1$
     will have at most $4m$ blocks from Corollary~\ref{crly.small-support}.
