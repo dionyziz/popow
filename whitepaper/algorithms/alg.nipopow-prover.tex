@@ -7,6 +7,7 @@
             \Let{i}{\chain[size].\mathsf{interlink}.length}
             \Let{boundary}{\chain[0]}
             \Comment{Genesis block}
+            \Let{\tilde\Pi}{\emptyset}
             \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain[:-k], i, boundary)}
             \While{$i > 0$}
                 \If{$\pi[i].length \geq m$}
@@ -14,8 +15,10 @@
                 \EndIf
                 \Let{i}{i - 1}
                 \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain[:-k], i, boundary)}
+                \Let{\tilde\Pi}{\tilde\Pi \cup \pi[i]}
             \EndWhile
-            \State\Return{$\pi$}
+            \Let{\chi}{\chain[-k:]}
+            \State\Return{($\tilde\Pi$, $\chi$)}
         \EndFunction
     \vskip8pt
     \end{algorithmic}
