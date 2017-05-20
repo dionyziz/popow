@@ -11,7 +11,7 @@ Most widely used clients, especially mobile wallets based on BitcoinJ, implement
 
 %It is safe for users to run SPV clients; they enjoy the same security guarantees as if they run full nodes, as long as we assume a majority of miners faithfully process all transactions. However, in July 2015, a miners were following not fully verifying transactions, 
 
-As an alternative to downloading all block headers at first startup, the SPV client software could embed a hardcoded checkpoint (perhaps chosen conservatively, e.g. many months in the past), blocks prior to which are ignored.\footnote{See \url{https://bitcoinj.github.io/speeding-up-chain-sync}} The BitcoinJ software provides mechanisms for users to build ``Checkpoint Files,'' and at least some applciations, such as Multibit,\footnote{\url{https://multibit.org/help/hd0.3/how-spv-works.html}} includes checkpoints. Although this approach is very efficient, it introduces additional trust assumptions on software maintainers. 
+As an alternative to downloading all block headers at first startup, the SPV client software could embed a hardcoded checkpoint (perhaps chosen conservatively, e.g. many months in the past), blocks prior to which are ignored.\footnote{See \url{https://bitcoinj.github.io/speeding-up-chain-sync}} The BitcoinJ software provides mechanisms for users to build ``Checkpoint Files,'' and at least some applications, such as Multibit,\footnote{\url{https://multibit.org/help/hd0.3/how-spv-works.html}} includes checkpoints. Although this approach is very efficient, it introduces additional trust assumptions on software maintainers. 
 %~\cite{betterspv}, clients at first startup could proceed optimistically,
 
 \paragraph{Proofs of Proofs of Work}

@@ -6,7 +6,7 @@ While the previous proofs we constructed were proving predicates on the blocks
 and transactions pertaining to the chain suffix of the last $k$ blocks, similar
 to the kind of proofs possible with \cite{KLS}, we note that the most useful
 class of proofs would allow proving more general predicates that can depend on
-multiple blocks, sometimes even blocks burried deep within the blockchain.
+multiple blocks, sometimes even blocks buried deep within the blockchain.
 
 We will now extend our prover to support this generalization of predicates. The
 generalized prover allows proving any predicate $Q(\chain)$ that depends on a
@@ -71,7 +71,7 @@ high-level pointer.
     are part of $\pi$, while the blue blocks of level $1$ and $3$ are produced
     by followDown to get to the block of level $0$ which is part of $\chain'$.
     Notice how in this proof the blocks happened to be distributed slightly
-    different from expectation and there are two consequtive $0$-level blocks.}
+    different from expectation and there are two consecutive $0$-level blocks.}
     \centering
     \includegraphics[width=\columnwidth,keepaspectratio]{figures/infix.png}
     \label{fig.infix}

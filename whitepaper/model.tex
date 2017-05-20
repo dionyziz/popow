@@ -14,8 +14,8 @@ The intuition behind these proofs is quite simple: Let $T$ be the mining target
 for the network. Then because block ids are generated uniformly at random, half
 of the blocks will have an id less than $T / 2$. By having the prover present
 to the verifier just these blocks which capture more proof-of-work than their
-neighbour counterparts, the verifier is convinced that the proof-of-work of the
-ommitted blocks also took place. The same logic can be applied to any
+neighbor counterparts, the verifier is convinced that the proof-of-work of the
+omitted blocks also took place. The same logic can be applied to any
 \textit{superblocks} of level $\mu$, namely blocks with id less than $T
 2^{-\mu}$.
 
@@ -34,11 +34,11 @@ to the verifier. The verifier accepts or rejects the string. Given that in our
 setting the predicates will be referring to an active evolving chain 
 we should define them in the presence of a blockchain protocol. 
 Our theoretical abstraction is based on ``backbone'' model of
-\cite{backbone} that formalizes the operation of the bitcoin protocol.
+\cite{backbone} that formalizes the operation of the Bitcoin protocol.
 We introduce the Prover and the Verifier in
 the standard Backbone model as follows. The Prover will extend the functionality
 of the miner node. The Verifier will be a completely new entity that can be spawned
-by the environment and process a NiPoPow produced by the miner nodes running
+by the environment and process a NiPoPoW produced by the miner nodes running
 the Prover code. Detailed algorithms for the integration with the formal
 environment provided by backbone are provided in
 Appendix~\ref{sec.appendix-backbone}.

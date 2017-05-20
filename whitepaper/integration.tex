@@ -98,16 +98,16 @@ In Table~\ref{tbl:experiment} we show the resulting bandwidth costs from simulat
 \label{sec:catena}
 In Catena~\cite{catena} the Bitcoin blockchain is used as an equivocation-resistant public log in which to publish commitments to SSL certificates. The Catena client prototype is based on the BitcoinJ SPV library, and therefore requires downloading the entire Bitcoin proof-of-work chain.
 Catena could therefore immediately be improved by using NIPoPoWs.
-First, we note that the Catena authors anticipate needing to launch a dedicated Header Relay Network~\cite{catena} to accomodate the extra bandwidth demands from new Catena clients. A variant based on NIPoPoWs could obviate this, since it eliminates the need to bootstrap new clients by transmitting the entire 40MB Bitcoin header chain.
+First, we note that the Catena authors anticipate needing to launch a dedicated Header Relay Network~\cite{catena} to accommodate the extra bandwidth demands from new Catena clients. A variant based on NIPoPoWs could obviate this, since it eliminates the need to bootstrap new clients by transmitting the entire 40MB Bitcoin header chain.
 Second, the steady state cost of operating a Catena client depends on how frequently certificate digests are published. For example, one usage scenario cited by Catena~\cite{catena} is Keybase, a service which publishes certificate digests every 6 hours. During a 6 hour period, Bitcoin would generate 6 kilobytes of headers, whereas a NIPoPoW proof covering the same range would require less than half this size.
-The  savings would increase further if Catena were implemented using any proof-of-work blockchain with more frequent blocks, such as Ethereum or Litecon.
+The  savings would increase further if Catena were implemented using any proof-of-work blockchain with more frequent blocks, such as Ethereum or Litecoin.
 
 \subsection{Sidechains}
 \label{sec:sidechains}
 At the time of writing, it is widely known that Bitcoin faces significant scaling hurdles~\cite{onscaling}, but upgrading Bitcoin is notoriously difficult.
 A widely anticipated solution, first proposed by Back et al.~\cite{sidechains}, is to treat the Bitcoin blockchain as a host for ``sidechains,'' which are proof-of-work blockchains separate from Bitcoin, but that can be backed by Bitcoin deposits. Our NIPoPoW construction solves an open problem posed by Back et al., and thus enables this vision.
 
-In the following, we explain sidechains in an incremental fashion, by first providing some context on other protocols involving cross-blockchain interactions. The most well known is the ``atomic swap''~\cite{tiernolan}, due to TierNolan, by which a quantity of one cryptocurrency can be atomically traded for a quantity of another (e.g., Bitcoin for Litecoin). This protocol relies only on configuring the two blockchains to both rely on a common event, namely the publishing of a certain hash preimage, which is already supported by Bitcoin script.
+In the following, we explain sidechains in an incremental fashion, by first providing some context on other protocols involving cross-blockchain interactions. The most well known is the ``atomic swap''~\cite{tiernolan}, due to Tier Nolan, by which a quantity of one cryptocurrency can be atomically traded for a quantity of another (e.g., Bitcoin for Litecoin). This protocol relies only on configuring the two blockchains to both rely on a common event, namely the publishing of a certain hash preimage, which is already supported by Bitcoin script.
 
 As a more complicated example, BTCRelay is an Ethereum~\cite{ethereum} smart  that acts as an SPV client for the Bitcoin blockchain.
 Users submit Ethereum transactions containing Bitcoin block headers and transaction inclusion Merkle tree proofs, which the BTCRelay contracts validates and stores. This allows Ethereum smart contracts to condition their behavior based on events in the Bitcoin blockchain.
