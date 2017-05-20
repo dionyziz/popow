@@ -55,7 +55,7 @@ header in $\log(|\overline x|)$ using the standard Merkle tree of transactions,
 where $\overline x$ is the vector of all transactions in the given block. This
 makes the proof size require $\log(|\overline x|) + \log\log(|\chain|)$ hashes per
 block for a total of $m (\log(|\chain|) - \log(m))(\log(|\overline x|) +
-\log\log(|\chain|)$ hashes. In addition, $m (\log(|\chain|) - \log(m))$ block headers
+\log\log(|\chain|))$ hashes. In addition, $m (\log(|\chain|) - \log(m))$ block headers
 and coinbase transactions are needed. More concretely, given that currently
 $|\chain| = 464,185$, we have that $\log(|\chain|) = 18$ and $\log\log(|\chain|) =
 5$.  Typically, $|\overline x| = 2000$ in the current bitcoin setting, which
