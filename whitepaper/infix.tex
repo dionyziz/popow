@@ -58,6 +58,25 @@ reached, which concludes the algorithm.
 
 \import{./}{algorithms/alg.nipopow-infix-prover.tex}
 
+An example of the kind of auxiliary sequences that followDown produces is seen
+in Figure~\ref{fig.infix}. This is only a portion of the proof shown at the
+point where the superblock levels are at level $4$, but a descend to level $0$
+was necessary so that a regular block would be included in the chain. Note that
+the level $0$ block can jump immediately back up to level $4$ because it has a
+high-level pointer.
+
+\begin{figure}[h]
+    \caption{An infix proof descending down to level $0$ and back up to level
+    $4$. Only blue blocks are included in the proof. Blue blocks of level $4$
+    are part of $\pi$, while the blue blocks of level $1$ and $3$ are produced
+    by followDown to get to the block of level $0$ which is part of $\chain'$.
+    Notice how in this proof the blocks happened to be distributed slightly
+    different from expectation and there are two consequtive $0$-level blocks.}
+    \centering
+    \includegraphics[width=\columnwidth,keepaspectratio]{figures/infix.png}
+    \label{fig.infix}
+\end{figure}
+
 \subsection{Security}
 The security of infix proofs follows immediately from
 Theorem~\ref{thm.security}. To see this, notice that the verifier will still
