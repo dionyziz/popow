@@ -14,6 +14,9 @@ all: ${PDF}
 # 	pdflatex nipopows.tex && \
 # 	rm -rf *.aux *.log *.out;
 
+minimal:
+	pdflatex nipopows.tex
+
 %.pdf:  %.dtx   $(PACKAGE).cls
 	pdflatex $<
 	- bibtex $*
