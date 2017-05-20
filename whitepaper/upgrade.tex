@@ -86,9 +86,40 @@ For those blocks, it maintains its own realLink data structure which it updates
 accordingly to make sure it is correct regardless of what the interlink data
 structure of the received block claims.
 
+The velvet constructInnerChain' shown in
+Algorithm~\ref{alg.nipopow-velvet-innerchain} is implemented identically as
+before, except that instead of following the interlink pointer blindly it now
+calls the helper function called \textit{followUp}. The followUp algorithm is
+shown in Algorithm~\ref{alg.nipopow-velvet-follow}. It
+accepts a block $B$ and a level $\mu$ and creates a connection from $B$ back to
+the most recent preceeding level-$\mu$ block. It does this by following the
+interlink pointer if it is available and correct. Otherwise, it follows the
+previd link which is available in unupgraded blocks, and tries to follow the
+interlink pointer again from there. Finally, the velvet prover shown in
+Algorithm~\ref{alg.nipopow-velvet-prover} simply calls the velvet
+constructInnerChain' function and includes the auxiliary connecting nodes
+within the final proof. No changes in the verifier are needed.
+
 \import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
 \import{./}{algorithms/alg.nipopow-velvet-follow.tex}
 \import{./}{algorithms/alg.nipopow-velvet-prover.tex}
+
+The reason we were able to upgrade using a velvet fork was because the changes
+we made were helpful but verifiable by those looking at the chain. Note that we
+would not have been able to pull off this upgrade without modifications to the
+consensus layer in the sense that the interlink data structure could not have
+been maintained somewhere independently of the blockchain: It is critical that
+the proof-of-work commits to the interlink data structure. However,
+interestingly, the interlink data structure does not even need to be part of
+the coinbase transaction and could even be produced and included in regular
+transactions by users (such as OP\_RETURN transactions). In that manner, the
+miners can be completely oblivious to it, while users and provers make use of
+the feature. The way to realize this would be to ask users to regularily create
+transactions containing the most recent interlink pointers so that they are
+included in the next block. If the transaction makes it to the next block, it
+can be used by the prover who keeps track of these. Otherwise, if it becomes
+part of a subsequent block, in which case some of the pointers it contains are
+invalid, it can be simply be ignored or only partially used.
 
 \paragraph{Supporting clients with different beliefs.}
 We note that the interlink format does not depend at all on the parameters $m$ and $k$.
