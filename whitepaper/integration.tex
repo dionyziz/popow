@@ -47,7 +47,7 @@ In Table~\ref{tbl:currencies} we show aggregate statistics about these 80 crypto
 %Here we make the conservative assumption that the size of a block header is exactly 80 bytes, as it is in Bitcoin.
 Bitcoin's 10 minute block time is relatively slow; other cryptocurrencies typically use faster block times, e.g. 12 seconds for Ethereum and 2 minutes for Litecoin. Thus while the entire chain of proof-of-work puzzles in Bitcoin today only amounts to about 40 MB, taken together, the 80 cryptocurrencies comprise nearly 10 GB of proofs-of-work, and generate nearly 10 MB more each day.
 
- In our simulation we choose NIPoPoW parameters based as in the previous section, with $m=6$ and $k=24$.
+ In our simulation we choose NIPoPoW parameters based as in the previous section, with $m=24$ and $k=6$.
 In Table~\ref{tbl:experiment} we show the resulting bandwidth costs from simulating a period of 60 days, with varying rates of payments received.
 
  For the na\"ive SPV client, the total bandwidth cost is dominated by the need to fetch the entire chain of block headers, which the NIPoPoW client does not need to do. The marginal cost for na\"ive SPV depends on the number of blocks generated each day, as well as the transaction inclusion proofs associated with each payment. The NIPoPoW based client provides the most savings when the number of transactions per day is smallest, reducing the necessary bandwidth per day (not including the initial synch up) by 90\%.
