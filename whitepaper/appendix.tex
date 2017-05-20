@@ -140,3 +140,19 @@ Algorithm~\ref{alg.backbone-velvet-prover}.
 
     Therefore the size of the proof is $4m \log(|\chain|)$, which is succinct.
 \end{proof}
+
+\restateThmVelvetSuccinctness*
+
+\begin{proof}
+    From Theorem~\ref{thm.succinctness} we know that the proofs $\pi$ contain
+    only a $O(polylog(m))$ amount of blocks. For each of these blocks, the
+    velvet client needs to include a followUp tail of blocks. Assume a
+    percentage $0 < g \leq 1$ of miners have upgraded with NIPoPoW support.
+    Then the question of whether each block in the honest chain is upgraded
+    follows a Bernoulli distribution. If the velvet proof were to be larger
+    than $\Delta$ times the soft fork proof in the number of blocks included,
+    then this would require at least one of the followUp tails to include at
+    least $\Delta$ sequential unupgraded blocks. But since the upgrade status
+    of each block is independent, the probability of this occurring is
+    $g^\Delta$, which is negligible in $\Delta$.
+\end{proof}

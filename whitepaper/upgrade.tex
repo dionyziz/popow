@@ -134,25 +134,6 @@ can be used by the prover who keeps track of these. Otherwise, if it becomes
 part of a subsequent block, in which case some of the pointers it contains are
 invalid, it can be simply be ignored or only partially used.
 
-% It is straight-forward to see that velvet NIPoPoWs preserve security. But
-% observe that if a constant minority of miners has upgraded their nodes to add
-% NIPoPoW support, then succinctness is also preserved, as there is only a
-% constant factor penalty as proven in the following theorem.
-%
-% \begin{theorem}
-%     Velvet non-interactive proofs-of-proof-of-work on honest chains by honest
-%     provers remain succinct as long as a constant percentage $g$ of miners has
-%     upgraded.
-% \end{theorem}
-% \begin{proof}
-%     From Theorem~\ref{thm.succinctness} we know that the proofs $\pi$ contain
-%     only a $O(polylog(m))$ amount of blocks. For each of these blocks, the
-%     velvet client needs to include a followUp tail of blocks. Assume a
-%     percentage $0 < y \leq 1$ of miners have upgraded with NIPoPoW support.
-%     Then the question of whether each block in the honest chain is upgraded
-%     follows a Bernoulli distribution
-% \end{proof}
-
 \paragraph{Supporting clients with different beliefs.}
 We note that the interlink format does not depend at all on the parameters $m$ and $k$.
 Therefore, regardless of the upgrade procedure, it is not necessary to reach consensus agreement on a particular choice of these parameters. Instead, the choice of $m$ and $k$ can be exposed as a user-configurable parameter to clients.
