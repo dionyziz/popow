@@ -86,8 +86,8 @@ For those blocks, it maintains its own realLink data structure which it updates
 accordingly to make sure it is correct regardless of what the interlink data
 structure of the received block claims.
 
-The velvet constructInnerChain' shown in
-Algorithm~\ref{alg.nipopow-velvet-innerchain} is implemented identically as
+The velvet constructInnerChain % ' shown in Algorithm~\ref{alg.nipopow-velvet-innerchain}
+is implemented identically as
 before, except that instead of following the interlink pointer blindly it now
 calls the helper function called \textit{followUp}. The followUp algorithm is
 shown in Algorithm~\ref{alg.nipopow-velvet-follow}. It
@@ -95,14 +95,27 @@ accepts a block $B$ and a level $\mu$ and creates a connection from $B$ back to
 the most recent preceeding level-$\mu$ block. It does this by following the
 interlink pointer if it is available and correct. Otherwise, it follows the
 previd link which is available in unupgraded blocks, and tries to follow the
-interlink pointer again from there. Finally, the velvet prover shown in
-Algorithm~\ref{alg.nipopow-velvet-prover} simply calls the velvet
-constructInnerChain' function and includes the auxiliary connecting nodes
+interlink pointer again from there. Finally, the velvet prover % shown in
+% Algorithm~\ref{alg.nipopow-velvet-prover}
+simply calls the velvet
+constructInnerChain % '
+function and includes the auxiliary connecting nodes
 within the final proof. No changes in the verifier are needed.
 
-\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
+% \import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
 \import{./}{algorithms/alg.nipopow-velvet-follow.tex}
-\import{./}{algorithms/alg.nipopow-velvet-prover.tex}
+% \import{./}{algorithms/alg.nipopow-velvet-prover.tex}
+
+It is straight-forward to see that velvet NIPoPoWs preserve security. But
+observe that if a constant minority of miners has upgraded their nodes to add
+NIPoPoW support, then succinctness is also preserved, as there is only a
+constant factor penalty as proven in the following theorem.
+
+\begin{restatable}{theorem}{restateThmVelvetSuccinctness}
+    Velvet non-interactive proofs-of-proof-of-work on honest chains by honest
+    provers remain succinct as long as a constant percentage $g$ of miners has
+    upgraded, with overwhelming probability.
+\end{restatable}
 
 The reason we were able to upgrade using a velvet fork was because the changes
 we made were helpful but verifiable by those looking at the chain. Note that we
