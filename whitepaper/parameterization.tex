@@ -55,7 +55,7 @@ header in $\log(|\overline x|)$ using the standard Merkle tree of transactions,
 where $\overline x$ is the vector of all transactions in the given block. This
 makes the proof size require $\log(|\overline x|) + \log\log(|\chain|)$ hashes per
 block for a total of $m (\log(|\chain|) - \log(m))(\log(|\overline x|) +
-\log\log(|\chain|)$ hashes. In addition, $m (\log(|\chain|) - \log(m))$ block headers
+\log\log(|\chain|))$ hashes. In addition, $m (\log(|\chain|) - \log(m))$ block headers
 and coinbase transactions are needed. More concretely, given that currently
 $|\chain| = 464,185$, we have that $\log(|\chain|) = 18$ and $\log\log(|\chain|) =
 5$.  Typically, $|\overline x| = 2000$ in the current bitcoin setting, which
@@ -91,15 +91,16 @@ specific values for $m$.
 The attack is an extension of the stochastic processes originally described in
 \cite{bitcoin} and further explored in \cite{rosenfeld}.
 
-The experiment works as follows: Initially, the values $m$ and $k$ are fixed
-and some adversarial computational power percentage $q$ over the total network
-computational power is chosen. A number of blocks $y$ during which parallel
-mining will occur is also fixed. Then the experiment begins with the adversary
-and the honest parties sharing a common blockchain which ends in block $B$. As
-soon as $B$ is mined, the adversary starts mining in secret and in parallel
-with the honest parties on his own private fork on top of $B$. She ignores the
-honest chain and does not publish her private fork, so that the two chains
-remain disjoint after $B$. As soon as $y$ blocks have been mined in total, the
+The experiment works as follows: Initially, the value $m$ is fixed and some
+adversarial computational power percentage $q$ over the total network
+computational power is chosen. $k$ is chosen based on $q$ according to Nakamoto
+\cite{bitcoin}. The number of blocks $y$ during which parallel mining will
+occur is also fixed. Then the experiment begins with the adversary and the
+honest parties sharing a common blockchain which ends in block $B$. As soon as
+$B$ is mined, the adversary starts mining in secret and in parallel with the
+honest parties on his own private fork on top of $B$. She ignores the honest
+chain and does not publish her private fork, so that the two chains remain
+disjoint after $B$. As soon as $y$ blocks have been mined in total, the
 adversary attempts a double spend by creating two conflicting transactions
 which are committed to an honest block and an adversarial block respectively on
 top of each current chain. Finally, the adversary mines $k$ blocks on top of
@@ -108,7 +109,7 @@ blocks have been mined, she published her private chain in an attempt to
 overcome the honest chain.
 
 Based on the above experiment, we measure the probability of success of the
-adversary. Setting $k = 6$ as is common in bitcoin tradition, we experiment
+adversary. We experiment
 with various values of $m$ for $y = 100$, indicating $100$ blocks of secret
 parallel mining. We make the simplifying assumption that honest party
 communication is perfect and immediate, meaning that all honest party rounds
@@ -122,17 +123,17 @@ Figure~\ref{fig.nipopow-attack-experiment}.
 
 \begin{figure}
     \caption{\label{fig.nipopow-attack-experiment}
-        Simulation results for a private mining attacker with $q = 0.1$ and $q
-        = 0.3$ computational power, suffix security $k = 6$ and parallel
-        mining parameter $y = 100$. Probabilities are plotted on a logarithmic
-        scale. The threshold probability of \cite{bitcoin} is indicated by the
-        horizontal line.
+        Simulation results for a private mining attacker with $q \in \{0.1,
+        0.2, 0.3\}$ computational power, suffix security $k$ according to
+        Nakamoto and parallel mining parameter $y = 100$. Probabilities are
+        plotted on a logarithmic scale. The threshold probability of
+        \cite{bitcoin} is indicated by the horizontal line.
     }
     \centering
     \includegraphics[width=\columnwidth,keepaspectratio]{figures/nipopow-attack-experiment.png}
 \end{figure}
 
-Based on this data, we conclude that $m = 6$ is sufficient to achieve a $0.001$
+Based on this data, we conclude that $m = 5$ is sufficient to achieve a $0.001$
 probability of failure against an adversary with $10\%$ mining power. To secure
 against a powerful adversary who controls more than $30\%$ of the network's
-mining power, a choice of $m = 30$ is needed.
+mining power, a choice of $m = 15$ is needed.
