@@ -9,6 +9,10 @@ We now prove that our construction produces succinct proofs.
     probability in $m$.
 \end{restatable}
 
+The above theorem establishes that the number of superchains is small. What
+remains to be shown is that few blocks will be included at each superchain
+level.
+
 \begin{restatable}{theorem}{restateThmLargeExpansion}
     \label{thm.large-expansion}
     Given an honest $(\mu - 1)$-level superchain of at least $4m$ blocks,
@@ -24,12 +28,18 @@ We now prove that our construction produces succinct proofs.
     blocks, with overwhelming probability in $m$.
 \end{restatable}
 
+This last theorem establishes the fact that the support of blocks needed under
+the $m$-sized chain suffix to move from one level to the one below is small.
+Based on this, we can establish our theorem on succinctness:
+
 \begin{restatable}{theorem}{restateThmSuccinctness}
     \label{thm.succinctness}
     Non-interactive proofs-of-proof-of-work produced by honest provers on
     honest chains are succinct with the number of blocks bounded by $4m
     \log(|\chain|)$, with overwhelming probability in $m$.
 \end{restatable}
+
+Full proofs of these facts are provided in Appendix~\ref{sec.proofs}.
 
 % \subsection{Slow-down attacks}
 %
