@@ -9,6 +9,10 @@ We now prove that our construction produces succinct proofs.
     probability in $m$.
 \end{restatable}
 
+\ifonecolumn
+\import{./}{proofs/fewlevels.tex}
+\fi
+
 The above theorem establishes that the number of superchains is small. What
 remains to be shown is that few blocks will be included at each superchain
 level.
@@ -21,12 +25,20 @@ level.
     with overwhelming probability in $m$.
 \end{restatable}
 
+\ifonecolumn
+\import{./}{proofs/largeexpansion.tex}
+\fi
+
 \begin{restatable}{corollary}{restateThmSmallSupport}
     \label{crly.small-support}
     Given an honest $\mu$-level superchain with $m$ blocks, the respective
     $(\mu - 1)$-level superchain spanning the same blocks has fewer than $4m$
     blocks, with overwhelming probability in $m$.
 \end{restatable}
+
+\ifonecolumn
+\import{./}{proofs/smallsupport.tex}
+\fi
 
 This last theorem establishes the fact that the support of blocks needed under
 the $m$-sized chain suffix to move from one level to the one below is small.
@@ -39,7 +51,11 @@ Based on this, we can establish our theorem on succinctness:
     \log(|\chain|)$, with overwhelming probability in $m$.
 \end{restatable}
 
+\ifonecolumn
+\import{./}{proofs/succinctness.tex}
+\else
 Full proofs of these facts are provided in Appendix~\ref{sec.proofs}.
+\fi
 
 % \subsection{Slow-down attacks}
 %
