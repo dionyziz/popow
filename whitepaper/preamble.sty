@@ -2,11 +2,13 @@
 
 \usepackage[english]{babel}
 \usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
 % \let\proof\relax
 % \let\endproof\relax
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\iftwocolumn
 \usepackage{amsthm}
+\fi
 \usepackage{mathtools}
 \usepackage{lmodern}
 \usepackage{listings}
@@ -18,7 +20,9 @@
 \usepackage{thmtools}
 \usepackage{thm-restate}
 
+\iftwocolumn
 \g@addto@macro{\UrlBreaks}{\UrlOrds}
+\fi
 
 \def\Let#1#2{\State $#1\gets#2$}
 \newcommand{\e}{\varepsilon}
@@ -72,4 +76,6 @@
 %pagestyle{plain}
 
 %bibliography style set to splncs
-%\bibliographystyle{splncs}
+\ifonecolumn
+\bibliographystyle{splncs}
+\fi
