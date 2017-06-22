@@ -48,9 +48,8 @@ We provide concrete parameterization and empirical analysis focusing to show the
 Using actual data from the bitcoin blockchain we quantify the actual savings of NIPoPoWs over
 the previous known techniques of constructing efficient SPV verifiers.
 
-We describe two safely deployable upgrade paths for our NIPoPoWs that existing cryptocurrencies can  adopt to support our efficient clients. Specifically
-   we first outline how a ``soft-fork''  is feasible for NIPoPoWs so that the
-   adoption of the update can be decided by the underlying PoW based consensus mechanism. We then demonstrate that an even less disruptive update mechanism is also feasible that we term a ``velvet fork'' and which may be of independent interest. In a velvet fork update the clients that have ``forked'' from the original implementation continue to be fully compatible with unupdated clients. It follows that in a velvet fork, the blockchain system can remain supported by a diverse software codebase indefinitely, while it can still enjoy, at least in proportion, some of the (efficiency in our case) benefits of the update without any of the  security downsides.
+We describe two practical deployment paths for our NIPoPoWs that existing cryptocurrencies can  adopt to support our efficient clients. Specifically,
+   we first outline how NiPoPoW's can be deployed using either a ``soft fork'' or a ``hard fork'' ugprade procedure, both of which have been successfuly used by existing cryptocurrencies. We then present a less disruptive update mechanism that we term a ``velvet fork'' and which may be of independent interest. In a velvet fork update the clients that have ``forked'' from the original implementation continue to be fully compatible with unupdated clients. It follows that in a velvet fork, the blockchain system can remain supported by a diverse software codebase indefinitely, while it can still enjoy, at least in proportion, some of the (efficiency in our case) benefits of the update without any of the  security downsides.
 %  \end{itemize}
 
 %In the simplest version of sidechains, the nodes participating in the consensus
