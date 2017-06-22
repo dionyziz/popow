@@ -1,0 +1,16 @@
+\documentclass[11pt]{llncs}
+\newif\iftwocolumn
+\newif\ifonecolumn
+\onecolumntrue
+
+\usepackage{preamble}
+
+\begin{document}
+\import{./}{title.tex}
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+\thispagestyle{plain}
+\import{./}{nipopows-body.tex}
+\import{./}{references.tex}
+\end{document}
