@@ -28,11 +28,12 @@ protocol is non-interactive, completing in one communication round regardless
 of adversarial prover's behavior. Furthermore, we also provide concrete implementation
 recommendations including practical optimizations to reduce proof size.
 
-In a highly influential whitepaper~\cite{sidechains}, Back et al. proposed the
+In an influential whitepaper~\cite{sidechains}, Back et al. proposed the
 use of efficient non-interactive SPV proofs as a way of enabling applications
 spanning multiple cryptocurrencies. One such application would be a virtual
-asset in one cryptocurrency, called a ``sidechain,'' that is backed by a
-deposit of value in another cryptocurrency. Several subsequent efforts by
+asset in a new cryptocurrency, called a ``sidechain,'' that is backed by a
+deposit of value in an existing cryptocurrency such as Bitcoin.
+Several subsequent efforts by
 Poelstra~\cite{pos} and Friedenbach~\cite{compactspv} explored this design
 space, however a security definition and suitable construction has remained an
 open problem. In particular, prior proposals have been vulnerable to ``high
