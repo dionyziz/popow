@@ -23,6 +23,17 @@
 \iftwocolumn
 \g@addto@macro{\UrlBreaks}{\UrlOrds}
 \fi
+\ifonecolumn
+\usepackage{geometry}
+\geometry{
+    a4paper,         % or letterpaper
+    textwidth=15cm,  % llncs has 12.2cm
+    textheight=24cm, % llncs has 19.3cm
+    heightrounded,   % integer number of lines
+    hratio=1:1,      % horizontally centered
+    vratio=2:3,      % not vertically centered
+}
+\fi
 
 \def\Let#1#2{\State $#1\gets#2$}
 \newcommand{\e}{\varepsilon}
