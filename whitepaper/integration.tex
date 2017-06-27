@@ -5,8 +5,9 @@ In Table
 
 \begin{table}
   \caption{Comparison of Sidechains Techniques ($B$ blocks in between transactions)}
-  \begin{tabular}{llll}
+  \begin{tabular}{l|l|l|l}
     {\bf Technique}  & {\bf Cost}       & {\bf Rounds}    & {\bf Trust Model} \\
+    \hline
     Our technique    & $O(m polylog B)$ &              & \\
     PoPoW~\cite{kls} & $O(m polylog B)$ &              & \\
     Plain SPV        &   $O(B)$         & & \\
@@ -85,8 +86,8 @@ In Table~\ref{tbl:experiment} we show the resulting bandwidth costs from simulat
   \small
   \centering
   \begin{tabular}{@{\hspace{0.1pt}}l|l@{\hspace{3pt}}l@{\hspace{3pt}}|l@{\hspace{3pt}}l@{\hspace{3pt}}|l@{\hspace{0.1pt}}}
-               & \multicolumn{2}{c|}{Naive SPV} & \multicolumn{2}{c|}{NIPoPoW} \\
-    Tx/day & Total & (Per day) & Total & (Per day) & Savings \\
+               & \multicolumn{2}{c|}{\bf Naive SPV} & \multicolumn{2}{c|}{\bf NIPoPoW} \\
+      {\bf Tx/day} & {\bf Total} & {\bf (Per day)} & {\bf Total} & {\bf (Per day)} & {\bf Savings} \\
     \hline
     100   &  5.5 GB & (5.5 MB)   & 31.7 MB & (507.4 kB)   & 0.99 (0.91) \\
     500   &  5.5 GB & (5.7 MB)   & 68.2 MB & (1.1 MB)     & 0.99 (0.81) \\

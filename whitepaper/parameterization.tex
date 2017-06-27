@@ -1,15 +1,18 @@
 \section{Implementation \& Parameters}
 
 \begin{table}
-  \caption{\label{table.size}
+  \caption{
+    \label{table.size}
     Estimated size of NIPoPoWs, applied to the Bitcoin blockchain today ($\approx$450k blocks) for various values of the security parameter $m$
     setting $k = 6$.
     %and with current values for transaction count, block count,
     %coinbase size and hash output length.
   }
-  \begin{tabular}{llll}
+  \centering
+  \begin{tabular}{l|l|l|l}
       {\bf m}  & {\bf NIPoPoW size (KB)} & {\bf \# of blocks} & {\bf
       \# of hashes}\\
+      \hline
       $6$   & $70$  & $108$ & $1440$  \\
       $15$  & $146$ & $231$ & $2925$  \\
       $30$  & $270$ & $426$ & $5400$  \\
