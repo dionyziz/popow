@@ -73,7 +73,11 @@ high-level pointer.
     Notice how in this proof the blocks happened to be distributed slightly
     different from expectation and there are two consecutive $0$-level blocks.}
     \centering
-    \includegraphics[width=\columnwidth,keepaspectratio]{figures/infix.png}
+    \iftwocolumn
+        \includegraphics[width=\columnwidth,keepaspectratio]{figures/infix.png}
+    \else
+        \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/infix.png}
+    \fi
     \label{fig.infix}
 \end{figure}
 

@@ -24,7 +24,11 @@ of the level below.
     \caption{The hierarchical blockchain.
     Higher levels have achieved a lower target (higher difficulty) during mining.}
     \centering
-    \includegraphics[width=\columnwidth,keepaspectratio]{figures/hierarchical-ledger.png}
+    \iftwocolumn
+        \includegraphics[width=\columnwidth,keepaspectratio]{figures/hierarchical-ledger.png}
+    \else
+        \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/hierarchical-ledger.png}
+    \fi
     \label{fig.hierarchy}
 \end{figure}
 

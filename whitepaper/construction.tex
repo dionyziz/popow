@@ -79,7 +79,11 @@ for support.
 \begin{figure}[h]
     \caption{Non-interactive proof-of-work prefix for $m=k = 3$.}
     \centering
-    \includegraphics[width=\columnwidth,keepaspectratio]{figures/non-interactive-popow.png}
+    \iftwocolumn
+        \includegraphics[width=\columnwidth,keepaspectratio]{figures/non-interactive-popow.png}
+    \else
+        \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/non-interactive-popow.png}
+    \fi
     \label{fig.nipopow}
 \end{figure}
 
