@@ -1,5 +1,35 @@
 \subsection{Security}
 
+We will call a query to the random oracle $\mu$-\textit{successful} if the
+random oracle returns a value $h$ such that $h \leq 2^{-\mu}T$.
+
+In order to prove our construction secure, we first define the boolean random
+variables $X_r^\mu$, $Y_r^\mu$ and $Z_r^\mu$, akin to the random variables
+$X_r$, $Y_r$ and $Z_r$ of the backbone setting\cite{backbone}. For each round $r$ and for each
+query index $j$ and for each $k$ adversarial party index, define these random
+variables as follows.  If at round $i$ an honest party obtains a POW with $id <
+2^{-\mu}T$, then $X_r^\mu = 1$, otherwise $X_r^\mu = 0$. If at round $r$
+exactly one honest party obtains a POW with $id < 2^{-\mu}T$, then $Y_r^\mu =
+1$, otherwise $Y_r^\mu = 0$. Regarding the adversary, if at round $r$ the
+$j$-th query of the $k$-th corrupted party is $\mu$-successful, then $Z_{ijk} =
+1$, otherwise $Z_{ijk} = 0$. Further define $Z^\mu_r = \sum_{k=1}^t
+\sum_{j=1}^q Z_{ijk}$, where $q$ denotes the total number of queries. For a set
+of rounds $S$, let $X(S) = \sum_{r \in S} X_r$ and similarly define $Y(S)$ and
+$Z(S)$.
+
+We now extend the definition of a \textit{typical execution} from the backbone
+setting\cite{backbone} with a parameter $\mu$.
+
+\begin{definition}{(Typical execution)}
+    An execution of the protocol is $(\epsilon, \eta, \mu)$-\textit{typical} if, for any set $S$ of consecutive rounds with $S \geq \eta\kappa$, the following hold.
+
+    \begin{itemize}
+        \item $(1 - \epsilon)E[X^\mu(S)] < X^\mu(S) < (1 + \epsilon)E[X^\mu(S)]$ and $(1 - \epsilon)E[Y^\mu(S)] < Y^\mu(s)$.
+        \item $Z^\mu(S) < (1 + \epsilon)E[Z^\mu(S)]$.
+        \item The execution is $(\epsilon, \eta)$-typical according to the backbone definition.
+    \end{itemize}
+\end{definition}
+
 % \begin{lemma}
 %     If the maximum level superchain belonging to the honest parties of at least
 %     $m$ blocks is of level $\mu$, then the adversary cannot produce a
@@ -19,7 +49,9 @@
 %
 \begin{restatable}{theorem}{restateThmSecurity}
     \label{thm.security}
-    The non-interactive proofs-of-proof-of-work construction is secure.
+    The non-interactive proofs-of-proof-of-work construction for $k$-stable
+    suffix-sensitive predicates is secure with overwhelming probability in
+    $\kappa$.
 \end{restatable}
 
 \ifonecolumn

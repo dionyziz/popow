@@ -1,34 +1,42 @@
 \begin{proof}
+    We will prove security by reductio ad absurdum. Assume a typical execution.
     Let $\overline{\Pi}_A, \overline{\Pi}_B$ be an adversarial and an honest
-    proof respectively.
+    proof respectively, and assume the security property is violated. That is,
+    the honest verifier is convinced that $Q(\chain)$ has a value different
+    from all honest full nodes.
 
     Let $b$ be the LCA of $\overline{\Pi}_A$ and $\overline{\Pi}_B$ and assume
-    that $A$ is the adversary. Let $\mu$ be the highest level at which one of $A$
-    or $B$ is able to present $m$ blocks of level $\mu$ after $b$. We will show
-    that if such a level exists, then the winning proof will necessarily be
+    that $A$ is the adversary. Let $\mu$ be the highest level at which $A$
+    is able to present $m$ blocks of level $\mu$ after $b$. We will show that
+    if such a level exists, then the winning proof will necessarily be
     $\overline{\Pi}_B$.
 
-    Indeed, because $\mu$ is the highest level at which any of the parties was
-    able to present at least $m$ blocks of that level after $b$, this means
-    that at every higher level $\mu + i$, it was true that $b$ was within the
-    last $m$ blocks of that level. Therefore, $B$, due to the way the proofs
-    are constructed, would have included all the blocks following $b$ of that
-    level. Hence, all the blocks of the honest chain following $b$ of level
-    $\mu$ have been included in the proof $\overline{\Pi}_B$.
+    Indeed, note that, because $A$ is winning, therefore $\mu$ is the highest
+    level at which any of the parties was able to present at least $m$ blocks
+    of that level after $b$. This means that at every higher level $\mu + i$
+    for $i > 0$, it was true that $b$ was within the last $m$ blocks of that
+    level.  Therefore, $B$, due to the way the proofs are constructed, would
+    have included all the blocks following $b$ of that level. Hence, all the
+    blocks of the honest chain following $b$ of level $\mu$ have been included
+    in the proof $\overline{\Pi}_B$.
 
     This means that the blocks presented after $b$ by $B$ at level $\mu$ must
     be disjoint from those presented after $b$ by $A$ at level $\mu$, since $b$
-    is defined as the LCA. But because $B$ presented all the honest chain
-    blocks of level $\mu$, therefore the $m$ blocks presented by $A$ at level
-    $\mu$ must be adversarially mined.  However, because both the honest
-    parties and the adversary started mining blocks of level $\mu$
-    simultaneously after the round during which block $b$ was generated, the
-    probability that the adversary is able to produce $m$ $\mu$-level blocks
-    after block $b$ faster than the honest parties are able to produce $m$
-    $\mu$-level blocks after block $b$ is negligible.
+    is defined as the LCA. But $B$ presented all the honest chain
+    blocks of level $\mu$. It follows from the backbone Common Prefix property
+    \cite{backbone} that the $m - k$ last blocks of the adversarial proof have
+    been adversarially mined.
+
+    Let $b'$ be the most recent honest block preceeding $b$ (which could be the
+    genesis block). Because both the honest parties and the adversary started
+    mining blocks of level $\mu$ simultaneously after the round during which
+    block $b'$ was generated, the probability that the adversary is able to
+    produce $m$ $\mu$-level blocks after block $b'$ faster than the honest
+    parties are able to produce $m$ $\mu$-level blocks after block $b'$ is
+    negligible.
 
     Therefore, if there exists such a level $\mu$, then the honest party proof
     will necessarily win. If there is no such level $\mu$, then the comparison
-    happens at the 0-level, and hence reduces to the security of a full
+    happens at the $0$-level, and hence reduces to the security of a full
     verifier.
 \end{proof}

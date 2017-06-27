@@ -1,9 +1,14 @@
 \section{Blockchain suffix proofs}
 
 We now provide a concrete non-interactive PoPoW construction which allows
-proving certain predicates $Q$ of the chain $\chain$. Among the predicates
-which are stable, we limit ourselves to the class of predicates which are
-functions of only the chain suffix $\chain[:-k]$. As we will illustrate, these
+proving certain predicates $Q$ of the chain $\chain$. The construction will
+be done in two steps: First, we will build a construction which is limited to
+a class of predicates that is easy to prove. Later, we will extend this class
+of predicates by augmenting the construction.
+
+Among the predicates which are stable, we now limit ourselves to the class of
+predicates which are functions of only the chain suffix $\chain[:-k]$. We call
+these predicates \textit{suffix sensitive}. As we will illustrate, these
 predicates are significantly easier to prove, but at the same time seem to be
 the most useful class of predicates which one needs for applications.
 
@@ -79,7 +84,11 @@ for support.
 \begin{figure}[h]
     \caption{Non-interactive proof-of-work prefix for $m=k = 3$.}
     \centering
-    \includegraphics[width=\columnwidth,keepaspectratio]{figures/non-interactive-popow.png}
+    \iftwocolumn
+        \includegraphics[width=\columnwidth,keepaspectratio]{figures/non-interactive-popow.png}
+    \else
+        \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/non-interactive-popow.png}
+    \fi
     \label{fig.nipopow}
 \end{figure}
 
