@@ -21,7 +21,11 @@ that depend on both the inclusion of the blocks of the subchain as well as
 their relative order within the subchain. This allows proving powerful
 statements such as, for example, whether a transaction took place at any point
 in history, or even ``following the money'' and proving a claim that a certain
-coin was moved between a series of addresses in a particular order.
+coin was moved between a series of addresses in a particular order. While, as
+illustrated in the previous section, it is possible to build an SPV client
+which is aware of the latest blocks using suffix proofs, a client which needs
+to learn about a transaction buried deep in the blockchain cannot expect suffix
+proofs to be efficient. Hence, the infix proofs construction is necessary.
 
 The manner to construct these proofs is shown in
 Algorithm~\ref{alg.nipopow-infix-prover}. The infix prover accepts two
