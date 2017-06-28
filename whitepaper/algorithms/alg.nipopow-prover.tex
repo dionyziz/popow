@@ -3,14 +3,14 @@
     for the NIPoPoW protocol}
     \begin{algorithmic}[1]
         \Function{\sf Prove$_{m,k}$}{$\chain$}
-            \Let{size}{\chain.length - (k - 1)}
-            \Let{i}{\chain[size].\mathsf{interlink}.length}
+            \Let{size}{|\chain| - (k - 1)}
+            \Let{i}{|\chain[size].\mathsf{interlink}|}
             \Let{boundary}{\chain[0]}
             \Comment{Genesis block}
             \Let{\tilde\Pi}{\emptyset}
             \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain[:-k], i, boundary)}
             \While{$i > 0$}
-                \If{$\pi[i].length \geq m$}
+                \If{$|\pi[i]| \geq m$}
                     \Let{boundary}{\pi[i][-m]}
                 \EndIf
                 \Let{i}{i - 1}
