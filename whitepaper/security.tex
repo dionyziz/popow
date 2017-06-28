@@ -23,7 +23,8 @@ setting\cite{backbone}.
 \begin{definition}{(Typical execution)}
     An execution of the protocol is $(\epsilon, \eta)$-\textit{typical} if, for
     all $\mu$ it holds that for any set $S$ of consecutive rounds with $|S| \geq
-    2^\mu \eta\kappa$, the following hold:
+    2^\mu \eta\kappa$, the following holds: If the random oracle answered at least
+    $m$ queries during the rounds in $S$ with a value $v \leq 2^{-\mu}T$ then:
 
     \begin{itemize}
         \item $(1 - \epsilon)E[X^\mu(S)] < X^\mu(S) < (1 + \epsilon)E[X^\mu(S)]$ and $(1 - \epsilon)E[Y^\mu(S)] < Y^\mu(s)$.
