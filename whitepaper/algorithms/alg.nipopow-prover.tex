@@ -4,18 +4,18 @@
     \begin{algorithmic}[1]
         \Function{\sf Prove$_{m,k}$}{$\chain$}
             \Let{size}{|\chain| - (k - 1)}
-            \Let{i}{|\chain[size].\mathsf{interlink}|}
+            \Let{\mu}{|\chain[size].\mathsf{interlink}|}
             \Let{boundary}{\chain[0]}
             \Comment{Genesis block}
             \Let{\tilde\Pi}{\emptyset}
-            \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain[:-k], i, boundary)}
-            \While{$i > 0$}
-                \If{$|\pi[i]| \geq m$}
-                    \Let{boundary}{\pi[i][-m]}
+            \Let{\pi[\mu]}{\mathsf{constructInnerChain}(\chain[:-k], \mu, boundary)}
+            \While{$\mu > 0$}
+                \If{$|\pi[\mu]| \geq m$}
+                    \Let{boundary}{\pi[\mu][-m]}
                 \EndIf
-                \Let{i}{i - 1}
-                \Let{\pi[i]}{\mathsf{constructInnerChain}(\chain[:-k], i, boundary)}
-                \Let{\tilde\Pi}{\tilde\Pi \cup \pi[i]}
+                \Let{\mu}{\mu - 1}
+                \Let{\pi[\mu]}{\mathsf{constructInnerChain}(\chain[:-k], \mu, boundary)}
+                \Let{\tilde\Pi}{\tilde\Pi \cup \pi[\mu]}
             \EndWhile
             \Let{\chi}{\chain[-k:]}
             \State\Return{($\tilde\Pi$, $\chi$)}
