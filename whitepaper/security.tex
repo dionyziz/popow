@@ -64,16 +64,19 @@ setting\cite{backbone}.
 Full proofs are included in Appendix~\ref{sec.proofs}.
 \fi
 
-The critical issue addressed by this security proof is to avoid Bahack-style
-attack \cite{bahack} where the adversary constructs ``lucky'' high-difficulty
-superblocks without filling in the underlying proof-of-work in the lower
-levels. Observe that, while setting $m = 1$ ``preserves'' the proof-of-work in
-the sense that expectations remain the same, the probability of an adversarial
-attack becomes approximately proportional to the adversary power if the
-adversary follows a suitable strategy (for a description of such a strategy,
-see the parametrization section). With higher values of $m$, the probability of
-an adversarial attack drops exponentially, even though they maintain constant
-computational power, and hence satisfy a strong notion of security.
+\begin{remark}{(Variance attacks)}
+    \label{rmk.variance}
+    The critical issue addressed by this security proof is to avoid Bahack-style
+    attack \cite{bahack} where the adversary constructs ``lucky'' high-difficulty
+    superblocks without filling in the underlying proof-of-work in the lower
+    levels. Observe that, while setting $m = 1$ ``preserves'' the proof-of-work in
+    the sense that expectations remain the same, the probability of an adversarial
+    attack becomes approximately proportional to the adversary power if the
+    adversary follows a suitable strategy (for a description of such a strategy,
+    see the parametrization section). With higher values of $m$, the probability of
+    an adversarial attack drops exponentially, even though they maintain constant
+    computational power, and hence satisfy a strong notion of security.
+\end{remark}
 
 % \begin{itemize}
 %     \item
