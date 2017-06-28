@@ -11,11 +11,11 @@ variables as follows.  If at round $i$ an honest party obtains a POW with $id <
 2^{-\mu}T$, then $X_r^\mu = 1$, otherwise $X_r^\mu = 0$. If at round $r$
 exactly one honest party obtains a POW with $id < 2^{-\mu}T$, then $Y_r^\mu =
 1$, otherwise $Y_r^\mu = 0$. Regarding the adversary, if at round $r$ the
-$j$-th query of the $k$-th corrupted party is $\mu$-successful, then $Z_{ijk} =
-1$, otherwise $Z_{ijk} = 0$. Further define $Z^\mu_r = \sum_{k=1}^t
-\sum_{j=1}^q Z_{ijk}$, where $q$ denotes the total number of queries. For a set
-of rounds $S$, let $X(S) = \sum_{r \in S} X_r$ and similarly define $Y(S)$ and
-$Z(S)$.
+$j$-th query of the $k$-th corrupted party is $\mu$-successful, then $Z^\mu_{ijk} =
+1$, otherwise $Z^\mu_{ijk} = 0$. Further define $Z^\mu_r = \sum_{k=1}^t
+\sum_{j=1}^q Z^\mu_{ijk}$, where $q$ denotes the total number of queries. For a set
+of rounds $S$, let $X^\mu(S) = \sum_{r \in S} X_r$ and similarly define
+$Y^\mu(S)$ and $Z^\mu(S)$.
 
 We now extend the definition of a \textit{typical execution} from the backbone
 setting\cite{backbone} with a parameter $\mu$.
