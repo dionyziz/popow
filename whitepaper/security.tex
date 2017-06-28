@@ -18,16 +18,20 @@ of rounds $S$, let $X^\mu(S) = \sum_{r \in S} X_r$ and similarly define
 $Y^\mu(S)$ and $Z^\mu(S)$.
 
 We now extend the definition of a \textit{typical execution} from the backbone
-setting\cite{backbone} with a parameter $\mu$.
+setting\cite{backbone}.
 
 \begin{definition}{(Typical execution)}
-    An execution of the protocol is $(\epsilon, \eta, \mu)$-\textit{typical} if, for any set $S$ of consecutive rounds with $S \geq \eta\kappa$, the following hold.
+    An execution of the protocol is $(\epsilon, \eta)$-\textit{typical} if, for
+    all $\mu$ it holds that for any set $S$ of consecutive rounds with $|S| \geq
+    2^\mu \eta\kappa$, the following hold:
 
     \begin{itemize}
         \item $(1 - \epsilon)E[X^\mu(S)] < X^\mu(S) < (1 + \epsilon)E[X^\mu(S)]$ and $(1 - \epsilon)E[Y^\mu(S)] < Y^\mu(s)$.
         \item $Z^\mu(S) < (1 + \epsilon)E[Z^\mu(S)]$.
-        \item The execution is $(\epsilon, \eta)$-typical according to the backbone definition.
     \end{itemize}
+
+    Furthermore, we require that the execution is typical according to the
+    backbone definition.
 \end{definition}
 
 % \begin{lemma}
