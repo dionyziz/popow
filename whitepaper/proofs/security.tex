@@ -5,6 +5,10 @@
     the honest verifier is convinced that $Q(\chain)$ has a value different
     from all honest full nodes.
 
+    Let $r_3$ be the round during which the honest proof $\overline{\Pi}_B$ was
+    constructed; that is, the current round. $\overline{\Pi}_B$ will be a proof
+    constructed based on an underlying blockchain $\chain_B$.
+
     Let $b$ be the LCA of $\overline{\Pi}_A$ and $\overline{\Pi}_B$ and assume
     that $A$ is the adversary. Let $\mu$ be the highest level at which $A$
     is able to present $m$ blocks of level $\mu$ after $b$. We will show that
@@ -20,20 +24,36 @@
     blocks of the honest chain following $b$ of level $\mu$ have been included
     in the proof $\overline{\Pi}_B$.
 
-    This means that the blocks presented after $b$ by $B$ at level $\mu$ must
-    be disjoint from those presented after $b$ by $A$ at level $\mu$, since $b$
-    is defined as the LCA. But $B$ presented all the honest chain
-    blocks of level $\mu$. It follows from the backbone Common Prefix property
-    \cite{backbone} that the $m - k$ last blocks of the adversarial proof have
-    been adversarially mined.
+    Let $\chain'_A$ be the adversarial $\mu$-level superchain after block $b$
+    and $\chain'_B$ be the honest party's $\mu$-level superchain after block
+    $b$.  These two chains will be disjoint since $b$ is defined as the LCA.
 
-    Let $b'$ be the most recent honest block preceeding $b$ (which could be the
-    genesis block). Because both the honest parties and the adversary started
-    mining blocks of level $\mu$ simultaneously after the round during which
-    block $b'$ was generated, the probability that the adversary is able to
-    produce $m$ $\mu$-level blocks after block $b'$ faster than the honest
-    parties are able to produce $m$ $\mu$-level blocks after block $b'$ is
-    negligible.
+    We will now show that $\chain'_A[k + 1:]$ contains no honestly mined
+    blocks. By contradiction, assume that $\chain'_A[i]$ for some $i > k + 1$
+    was honestly generated. But this means that an honest party had adopted the
+    chain $\chain'_A[i - 1]$ at some round $r_2 \leq r_3$. Because of the way the
+    honest parties adopt chains, this means that the superchain $\chain'_A[:i -
+    1]$ has an underlying properly constructed $0$-level chain $\chain_A$ which
+    starts at genesis and includes all the blocks of the superchain
+    $\chain'_A[:i - 1]$. Let $j$ be the index of block $b$ within $\chain_A$.
+    As $\chain_A$ contains at least all the blocks of the superchain
+    $\chain'_A$, observe that $|\chain_A[j + 1:]| \geq i - 1 > k$.
+    Therefore $\chain_A[:-k] \not\preccurlyeq \chain_B$. But, as $\chain_A$ was
+    adopted by an honest party at round $r_2$ which is prior to round $r_3$
+    during which $\chain_B$ was adopted by an honest party, this contradicts
+    the Common Prefix property of blockchains. It follows that the $m - k$ last
+    blocks of the adversarial proof have been adversarially mined.
+
+    Let $b'$ be the most recent honest block preceeding $b$, which could be the
+    genesis block and let $r_1$ be the round during which $b'$ was generated.
+    We will consider the set of consecutive rounds $S$ starting at round $r_1$
+    and ending at round $r_3$. We are considering a superchain of level
+    $\mu$ which has at least $m$ blocks. From the assumption that the
+    execution is typical, it follows that $Z^\mu(S)$ and $X^\mu(S)$ are
+    distributed close to their respective means. The probability that the
+    adversary is able to produce $m$ $\mu$-level blocks after block $b'$ faster
+    than the honest parties are able to produce $m$ $\mu$-level blocks after
+    block $b'$ is negligible.
 
     Therefore, if there exists such a level $\mu$, then the honest party proof
     will necessarily win. If there is no such level $\mu$, then the comparison
