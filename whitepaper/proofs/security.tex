@@ -1,4 +1,7 @@
 \begin{proof}
+    Let $m = k_1 + k_2$ and let $k_1 = k_1(\kappa)$ and $k_2 = k_2(\kappa)$ be
+    polynomial functions of the security parameter $\kappa$.
+
     We will prove security by reductio ad absurdum. Assume a typical execution.
     Let $\overline{\Pi}_A, \overline{\Pi}_B$ be an adversarial and an honest
     proof respectively, and assume the security property is violated. That is,
@@ -11,52 +14,53 @@
 
     Let $b$ be the LCA of $\overline{\Pi}_A$ and $\overline{\Pi}_B$ and assume
     that $A$ is the adversary. Let $\mu$ be the highest level at which $A$
-    is able to present $m$ blocks of level $\mu$ after $b$. We will show that
-    if such a level exists, then the winning proof will necessarily be
-    $\overline{\Pi}_B$.
-
-    Indeed, note that, because $A$ is winning, therefore $\mu$ is the highest
-    level at which any of the parties was able to present at least $m$ blocks
-    of that level after $b$. This means that at every higher level $\mu + i$
-    for $i > 0$, it was true that $b$ was within the last $m$ blocks of that
-    level.  Therefore, $B$, due to the way the proofs are constructed, would
-    have included all the blocks following $b$ of that level. Hence, all the
-    blocks of the honest chain following $b$ of level $\mu$ have been included
-    in the proof $\overline{\Pi}_B$.
+    is able to present $m$ blocks of level $\mu$ after $b$. We will first show
+    that the two chains after $b$ are disjoint. Because $A$ is winning,
+    therefore $\mu$ is the highest level at which any of the parties was able
+    to present at least $m$ blocks of that level after $b$.  This means that at
+    every higher level $\mu + i$ for $i > 0$, it was true that $b$ was within
+    the last $m$ blocks of that level.  Therefore, $B$, due to the way the
+    proofs are constructed, would have included all the blocks following $b$ of
+    that level. Hence, all the blocks of the honest chain following $b$ of
+    level $\mu$ have been included in the proof $\overline{\Pi}_B$.
 
     Let $\chain'_A$ be the adversarial $\mu$-level superchain after block $b$
     and $\chain'_B$ be the honest party's $\mu$-level superchain after block
     $b$.  These two chains will be disjoint since $b$ is defined as the LCA.
 
-    We will now show that $\chain'_A[k + 1:]$ contains no honestly mined
-    blocks. By contradiction, assume that $\chain'_A[i]$ for some $i > k + 1$
-    was honestly generated. But this means that an honest party had adopted the
-    chain $\chain'_A[i - 1]$ at some round $r_2 \leq r_3$. Because of the way the
-    honest parties adopt chains, this means that the superchain $\chain'_A[:i -
-    1]$ has an underlying properly constructed $0$-level chain $\chain_A$ which
-    starts at genesis and includes all the blocks of the superchain
-    $\chain'_A[:i - 1]$. Let $j$ be the index of block $b$ within $\chain_A$.
-    As $\chain_A$ contains at least all the blocks of the superchain
-    $\chain'_A$, observe that $|\chain_A[j + 1:]| \geq i - 1 > k$.
-    Therefore $\chain_A[:-k] \not\preccurlyeq \chain_B$. But, as $\chain_A$ was
-    adopted by an honest party at round $r_2$ which is prior to round $r_3$
+    We will now show that $\chain'_A[k_1 + 1:]$ contains no honestly mined
+    blocks. By contradiction, assume that the block $\chain'_A[i]$ for some $i
+    > k_1 + 1$ was honestly generated. But this means that an honest party had
+    adopted the chain $\chain'_A[i - 1]$ at some round $r_2 \leq r_3$. Because
+    of the way the honest parties adopt chains, this means that the superchain
+    $\chain'_A[:i - 1]$ has an underlying properly constructed $0$-level chain
+    $\chain_A$ which starts at genesis and includes all the blocks of the
+    superchain $\chain'_A[:i - 1]$. Let $j$ be the index of block $b$ within
+    $\chain_A$.  As $\chain_A$ contains at least all the blocks of the
+    superchain $\chain'_A$, observe that $|\chain_A[j + 1:]| \geq i - 1 > k_1$.
+    Therefore $\chain_A[:-k_1] \not\preccurlyeq \chain_B$. But, as $\chain_A$
+    was adopted by an honest party at round $r_2$ which is prior to round $r_3$
     during which $\chain_B$ was adopted by an honest party, this contradicts
-    the Common Prefix property of blockchains. It follows that the $m - k$ last
-    blocks of the adversarial proof have been adversarially mined.
+    the Common Prefix property of blockchains. It follows that with
+    overwhelming probability in $k_1$, the $k_2 = m - k_1$ last blocks of the
+    adversarial proof have been adversarially mined.
 
     Let $b'$ be the most recent honest block preceeding $b$, which could be the
-    genesis block and let $r_1$ be the round during which $b'$ was generated.
+    genesis block, and let $r_1$ be the round during which $b'$ was generated.
     We will consider the set of consecutive rounds $S$ starting at round $r_1$
-    and ending at round $r_3$. We are considering a superchain of level
-    $\mu$ which has at least $m$ blocks. From the assumption that the
-    execution is typical, it follows that $Z^\mu(S)$ and $X^\mu(S)$ are
-    distributed close to their respective means. The probability that the
-    adversary is able to produce $m$ $\mu$-level blocks after block $b'$ faster
-    than the honest parties are able to produce $m$ $\mu$-level blocks after
-    block $b'$ is negligible.
+    and ending at round $r_3$. We are considering a superchain of level $\mu$
+    which has at least $m$ blocks, and hence the random oracle must have
+    answered at least $m$ queries with a value $v < 2^{-\mu}T$ during $S$. From
+    the assumption that the execution is typical, it follows that $Z^\mu(S)$
+    and $X^\mu(S)$ are distributed close to their respective means. But the
+    probability that the adversary is able to produce $k_2$ $\mu$-level blocks
+    after block $b'$ faster than the honest parties are able to produce $m$
+    $\mu$-level blocks after block $b'$ is negligible.
 
-    Therefore, if there exists such a level $\mu$, then the honest party proof
-    will necessarily win. If there is no such level $\mu$, then the comparison
-    happens at the $0$-level, and hence reduces to the security of a full
-    verifier.
+    The last case to consider is if there is no such level $\mu$. But then the
+    comparison by the verifier happens at the $0$-level, and hence reduces to
+    the security of a full verifier. Due to the common prefix property at level
+    $0$ and the fact that the predicate $Q$ is stable, it follows that the
+    adversary cannot present a chain which will be accepted by an honest full
+    verifier and have a different value for $Q$.
 \end{proof}
