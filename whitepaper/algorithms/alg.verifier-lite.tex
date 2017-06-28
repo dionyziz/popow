@@ -4,15 +4,15 @@
     \begin{algorithmic}[1]
         \Function{\sf Verify$^Q_{m,k}$}{$\mathcal{P}$}
             \Let{(\tilde\Pi, \chi)}{\mathcal{P}[0]}
-            \Let{best}{\emptyset}
+            \Let{\psi}{\emptyset}
             \For{$(\tilde{\Pi}, \chi) \in \mathcal{P}$}
-                \If{$\mathsf{validProof}(\Pi, \chi)$}
-                    \If{$\mathsf{maxChain}_m(\tilde\Pi, best)$}
-                        \Let{best}{\chi}
+                \If{$\mathsf{validProof}(\tilde\Pi, \chi)$}
+                    \If{$\mathsf{maxChain}_m(\tilde\Pi, \psi)$}
+                        \Let{\psi}{\chi}
                     \EndIf
                 \EndIf
             \EndFor
-            \State\Return{$Q(\epsilon^{|\chain| - k} \chi)$}
+            \State\Return{$Q(\epsilon^{|\chain| - k} \psi)$}
         \EndFunction
     \vskip8pt
     \end{algorithmic}
