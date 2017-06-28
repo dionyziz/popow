@@ -62,9 +62,29 @@ number of blocks for every level $\mu$. At the highest possible level at which
 at least $m$ blocks, all these blocks are presented. Then, inductively, for
 every superchain of level $\mu$ that is included in the proof, the suffix of
 length $m$ is taken. Then the underlying superchain of level $\mu - 1$ covering
-the same span as that suffix is also included, until level $0$ is reached.
+the same span as that suffix is also included, until level $0$ is reached. This
+underlying superchain will have $2m$ blocks in expectation and always at least
+$m$ blocks.
 
 \import{./}{algorithms/alg.nipopow-prover.tex}
+
+The algorithm returns a pair $(\tilde\Pi, \chi)$. In this pair, $\chi$ is the
+suffix of the blockchain containing the most recent $k$ blocks. $\tilde\Pi$ is
+a set of blocks pertaining to the blockchain with the last $k$ blocks removed.
+Because the blocks are combined into $\tilde\Pi$ with the set union operator,
+the proof will contain each block once, even if that block exists in multiple
+superchain levels. When we take a superchain of level $\mu$ and are interested
+in its last $m$ blocks, we fill the same range of blocks with blocks from the
+superchain of level $\mu - 1$ below.  All the blocks of level $\mu$ which are
+within this last $m$ blocks range will also be superblocks of level $\mu - 1$
+and so we do not want to keep them in the proof structure twice.  Note
+furthermore that no check is necessary to make sure the top-most level has at
+least $m$ blocks, even though the verifier requires this. The reason is the
+following: Assume the blockchain has at least $m$ blocks in total. Then when a
+superchain of level $\mu$ has less than $m$ blocks in total, these blocks will
+all be necessarily included into the proof by a lower-level superchain $\mu -
+i$ for some $i > 0$.  Therefore, it does not hurt to add them to the set
+$\tilde\Pi$ earlier.
 
 % \begin{figure}[h]
 %     \caption{The first of a series of interactive proofs-of-proof-of-work for
