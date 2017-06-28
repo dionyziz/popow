@@ -87,6 +87,11 @@
 %page style set to plain
 %pagestyle{plain}
 
+\iftwocolumn
+    \theoremstyle{remark}
+    \newtheorem*{remark}{Remark}
+\fi
+
 %bibliography style set to splncs
 \ifonecolumn
 \bibliographystyle{splncs}
