@@ -5,9 +5,9 @@
         \Function{\sf{Prove}'$_{m,k}$}{$\chain, \textsf{realLink}, \textsf{blockById}$}
             \Let{size}{|\chain| - (k - 1)}
             \Let{i}{|\chain[size].\mathsf{interlink}|}
-            \Let{b}{\chain[1]}
-            \Let{\tilde\Pi}{\emptyset}
+            \Let{b}{\chain[0]}
             \Comment{Genesis block}
+            \Let{\tilde\Pi}{\emptyset}
             \For{$\mu = |\textsf{realLink}[\chain[-k-1]]|$ down to $0$}
                 \State $\pi, aux \gets$
                     \begin{varwidth}[t]{\linewidth}
