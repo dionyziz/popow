@@ -7,8 +7,8 @@
             \Let{\mu}{|\chain[size].\mathsf{interlink}|}
             \Let{boundary}{\chain[0]}
             \Comment{Genesis block}
-            \Let{\tilde\Pi}{\emptyset}
             \Let{\pi[\mu]}{\mathsf{constructInnerChain}(\chain[:-k], \mu, boundary)}
+            \Let{\tilde\Pi}{\pi[\mu]}
             \While{$\mu > 0$}
                 \If{$|\pi[\mu]| \geq m$}
                     \Let{boundary}{\pi[\mu][-m]}
@@ -23,4 +23,3 @@
     \vskip8pt
     \end{algorithmic}
 \end{algorithm}
-
