@@ -40,47 +40,75 @@
     \textbf{Case 2:} The $\textsf{maxChain}$ algorithm returned true at some
     level $\mu > 0$.
 
-    Then $\mu$ be the highest level at which $A$ is able to present $m$ blocks
-    of level $\mu$ after $b$. We will first show that the two chains after $b$
-    are disjoint. Because $A$ is winning, therefore $\mu$ is the highest level
-    at which any of the parties was able to present at least $m$ blocks of that
-    level after $b$.  This means that at every higher level $\mu + i$ for $i >
-    0$, it was true that $b$ was within the last $m$ blocks of that level.
-    Therefore, $B$, due to the way the proofs are constructed, would have
-    included all the blocks following $b$ of that level. Hence, all the blocks
-    of the honest chain following $b$ of level $\mu$ have been included in the
-    proof $\overline{\Pi}_B$.
+    Let $\chain'_\mathcal{A}$ be the adversarial $\mu$-level superchain after
+    block $b$ and $\chain'_B$ be the honest party's $\mu$-level superchain
+    after block $b$.
 
-    Let $\chain'_A$ be the adversarial $\mu$-level superchain after block $b$
-    and $\chain'_B$ be the honest party's $\mu$-level superchain after block
-    $b$.  These two chains will be disjoint since $b$ is defined as the LCA.
+    We will proceed in the proof by showing three successive claims: First,
+    $\chain'_\mathcal{A}$ and $\chain'_B$ are disjoint. Second,
+    $\chain'_\mathcal{A}$ contains mostly adversarially-generated blocks. And
+    third, the adversary is able to produce this $\chain'_\mathcal{A}$ with
+    negligible probability.
 
-    We will now show that $\chain'_A[k_1 + 1:]$ contains no honestly mined
-    blocks. By contradiction, assume that the block $\chain'_A[i]$ for some $i
-    > k_1 + 1$ was honestly generated. But this means that an honest party had
-    adopted the chain $\chain'_A[i - 1]$ at some round $r_2 \leq r_3$. Because
-    of the way the honest parties adopt chains, this means that the superchain
-    $\chain'_A[:i - 1]$ has an underlying properly constructed $0$-level chain
-    $\chain_A$ which starts at genesis and includes all the blocks of the
-    superchain $\chain'_A[:i - 1]$. Let $j$ be the index of block $b$ within
-    $\chain_A$.  As $\chain_A$ contains at least all the blocks of the
-    superchain $\chain'_A$, observe that $|\chain_A[j + 1:]| \geq i - 1 > k_1$.
-    Therefore $\chain_A[:-k_1] \not\preccurlyeq \chain_B$. But, as $\chain_A$
-    was adopted by an honest party at round $r_2$ which is prior to round $r_3$
-    during which $\chain_B$ was adopted by an honest party, this contradicts
-    the Common Prefix property of blockchains. It follows that with
-    overwhelming probability in $k_1$, the $k_2 = m - k_1$ last blocks of the
-    adversarial proof have been adversarially mined.
+    \textbf{Claim 1: } $\chain'_\mathcal{A}$ and $\chain'_B$ are dijoint.
 
-    Let $b'$ be the most recent honest block preceeding $b$, which could be the
-    genesis block, and let $r_1$ be the round during which $b'$ was generated.
-    We will consider the set of consecutive rounds $S$ starting at round $r_1$
-    and ending at round $r_3$. We are considering a superchain of level $\mu$
-    which has at least $m$ blocks, and hence the random oracle must have
-    answered at least $m$ queries with a value $v < 2^{-\mu}T$ during $S$. From
-    the assumption that the execution is typical, it follows that $Z^\mu(S)$
-    and $X^\mu(S)$ are distributed close to their respective means. But the
-    probability that the adversary is able to produce $k_2$ $\mu$-level blocks
-    after block $b'$ faster than the honest parties are able to produce $m$
-    $\mu$-level blocks after block $b'$ is negligible.
+    $\mu$ will be the highest level at which $\mathcal{A}$ is able to present $m$
+    blocks of level $\mu$ after $b$. Because $\mathcal{A}$ is winning,
+    therefore $\mu$ is the highest level at which any of the parties was able
+    to present at least $m$ blocks of that level after $b$.  This means that at
+    every higher level $\mu + i$ for $i > 0$, it was true that $b$ was within
+    the last $m$ blocks of that level.  Therefore, $B$, due to the way the
+    proofs are constructed, would have included all the blocks following $b$ of
+    that level. Hence, all the $\mu$-level superblocks following $b$ in
+    $\chain_B$ have been included in $\overline{\Pi}_B$. Because $b$ is the
+    LCA, it follows that $\chain'_\mathcal{A}$ and $\chain'_B$ are disjoint.
+
+    \textbf{Claim 2: } At least $k_2$ superblocks of $\chain'_\mathcal{A}$ are
+    adversarially generated.
+
+    We will show this by showing that $\chain'_\mathcal{A}[k_1 + 1:]$ contains
+    no honestly mined blocks. By contradiction, assume that the block
+    $\chain'_\mathcal{A}[i]$ for some $i \geq k_1 + 1$ was honestly generated.
+    But this means that an honest party had adopted the chain
+    $\chain'_\mathcal{A}[i - 1]$ at some round $r_2 \leq r_3$. Because of the
+    way the honest parties adopt chains, this means that the superchain
+    $\chain'_\mathcal{A}[:i - 1]$ has an underlying properly constructed
+    $0$-level chain $\chain_\mathcal{A}$ which starts at genesis and includes
+    all the blocks of the superchain $\chain'_\mathcal{A}[:i - 1]$. Let $j$ be
+    the index of block $b$ within $\chain_\mathcal{A}$.  As
+    $\chain_\mathcal{A}$ contains at least all the blocks of the superchain
+    $\chain'_\mathcal{A}$, observe that $|\chain_\mathcal{A}[j + 1:]| > i -
+    1 \geq k_1$.  Therefore $\chain_\mathcal{A}[:-k_1] \not\preccurlyeq
+    \chain_B$.  But, as $\chain_\mathcal{A}$ was adopted by an honest party at
+    round $r_2$ which is prior to round $r_3$ during which $\chain_B$ was
+    adopted by an honest party, this contradicts the Common Prefix property.
+    It follows that with overwhelming probability in $k_1$, the $k_2 = m - k_1$
+    last blocks of the adversarial proof have been adversarially mined.
+
+    \textbf{Claim 3: } $\mathcal{A}$ is able to produce $\chain'_\mathcal{A}$
+    with negligible probability.
+
+    Let $b'$ be the latest honestly generated block in $\chain'_\mathcal{A}$,
+    or $b$ if no honest block exists in $\chain'_\mathcal{A}$. Let $r_1$ be
+    the round during which $b'$ was generated. Let $j$ be the (zero-based)
+    index of block $b'$ within $\chain'_\mathcal{A}$, or $-1$ if $b' = b$. Let
+    $c$ be the number of $\mu$-level superblocks in $\chain_B$ prior to $b$.
+    At the end of round $r_1$, $b'$ was diffused and hence all honest party
+    chains must all have adopted a chain of at least $c + j + 1$ superblocks of
+    level $\mu$.
+
+    Consider now the set $S$ of consecutive rounds starting at round $r_1$ and
+    ending at round $r_3$. Let $z$ be the number of $\mu$-level superblocks
+    generated by the adversary during those rounds, and observe that $z \geq m
+    - (j + 1) \geq k_2$. From the assumption that the execution is typical, it
+    follows that either $Z^\mu(S) < k_2$, or that $Z^\mu(S)$ and $X^\mu(S)$
+    must be distributed close to their respective means. But in order for the
+    adversary to have generated $z$ blocks in $S$, it must hold that $Z^\mu(S)
+    \geq k_2$, and therefore $Z^\mu(S) < (1 - \frac{\delta}{2})X^\mu(S)$. However,
+    this means that the honest $\mu$-level superchain has grown by more than
+    $z$ superblocks and now contains at least $c + m$ superblocks. Therefore,
+    the honest chain now contains more than $c + j + 1 + z$ superblocks, while
+    the adversarial chain contains exactly $c + j + 1 + z$ superblocks.
+    $\textsf{maxChain}$ could not have returned true and
+    $\overline{\Pi}_\mathcal{A}$ could not have been the winning proof.
 \end{proof}
