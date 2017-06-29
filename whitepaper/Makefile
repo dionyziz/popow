@@ -31,7 +31,7 @@ minimal:
 %.cls:   %.ins %.dtx
 	pdflatex $<
 
-%.pdf:  %.tex *.tex algorithms/*.tex figures/*.png *.bib   $(PACKAGE).cls ACM-Reference-Format.bst *.sty
+%.pdf:  %.tex *.tex algorithms/*.tex proofs/*.tex figures/*.png *.bib   $(PACKAGE).cls ACM-Reference-Format.bst *.sty
 	pdflatex $<
 	- bibtex $*
 	pdflatex $<
