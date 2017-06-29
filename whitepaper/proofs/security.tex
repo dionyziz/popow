@@ -1,28 +1,55 @@
 \begin{proof}
-    Let $m = k_1 + k_2$ and let $k_1 = k_1(\kappa)$ and $k_2 = k_2(\kappa)$ be
-    polynomial functions of the security parameter $\kappa$.
+    We will prove security by contradiction.  Let $m = k_1 + k_2$ and let $k =
+    k(\kappa)$, $k_1 = k_1(\kappa)$ and $k_2 = k_2(\kappa)$ be polynomial
+    functions of the security parameter $\kappa$.  Let $Q$ be a $k$-stable
+    suffix sensitive chain predicate. Assume the NIPoPoWs construction with
+    parameters $m, k$ is not secure with respect to $Q$. Then, during an
+    execution at some round $r_3$, $Q(\chain)$ is defined and has the same
+    value for all honest miners.  Assume the execution is typical. The verifier
+    $V$ communicates with at least two provers, $\mathcal{A}$, the adversary,
+    and $B$, an honest prover.  The verifier receives the proofs
+    $\overline{\Pi}_\mathcal{A}, \overline{\Pi}_B$ from the adversary and the
+    honest prover respectively.  Because $B$ is honest, $\overline{\Pi}_B$ will
+    be a proof constructed based on an underlying blockchain $\chain_B$ which
+    is the adopted blockchain of $B$ during round $r_3$. The verifier then
+    outputs $\lnot Q(\chain_B)$, and so $\textsf{Verify}^Q_{m,k} = \lnot Q(\chain_B)$.
+    $\textsf{maxChain}$ provides a total order among proofs.  Thus it is
+    necessary that $\textsf{maxChain}(\overline{\Pi}_\mathcal{A},
+    \overline{\Pi}_B)$ evaluates to true, otherwise, because $Q$ is suffix
+    sensitive, $\textsf{Verify}^Q$ would have returned $Q(\chain_B)$. We will
+    now show that $\textsf{maxChain}$ returning true is a negligible event.
 
-    We will prove security by reductio ad absurdum. Assume a typical execution.
-    Let $\overline{\Pi}_A, \overline{\Pi}_B$ be an adversarial and an honest
-    proof respectively, and assume the security property is violated. That is,
-    the honest verifier is convinced that $Q(\chain)$ has a value different
-    from all honest full nodes.
+    Let $b$ be the LCA of $\overline{\Pi}_A$ and $\overline{\Pi}_B$.  There are
+    two ways in which $V$'s call to $\textsf{maxChain}$ can return true. Either
+    it happens within the \textit{for} loop and so the comparison is at the
+    superchain level, or it happens at the end and so the comparison is at
+    level $0$. We will deal with these cases separately.
 
-    Let $r_3$ be the round during which the honest proof $\overline{\Pi}_B$ was
-    constructed; that is, the current round. $\overline{\Pi}_B$ will be a proof
-    constructed based on an underlying blockchain $\chain_B$.
+    \textbf{Case 1:} The $\textsf{maxChain}$ algorithm returned true at level
+    $0$.
 
-    Let $b$ be the LCA of $\overline{\Pi}_A$ and $\overline{\Pi}_B$ and assume
-    that $A$ is the adversary. Let $\mu$ be the highest level at which $A$
-    is able to present $m$ blocks of level $\mu$ after $b$. We will first show
-    that the two chains after $b$ are disjoint. Because $A$ is winning,
-    therefore $\mu$ is the highest level at which any of the parties was able
-    to present at least $m$ blocks of that level after $b$.  This means that at
-    every higher level $\mu + i$ for $i > 0$, it was true that $b$ was within
-    the last $m$ blocks of that level.  Therefore, $B$, due to the way the
-    proofs are constructed, would have included all the blocks following $b$ of
-    that level. Hence, all the blocks of the honest chain following $b$ of
-    level $\mu$ have been included in the proof $\overline{\Pi}_B$.
+    This means that the \textit{for} loop was executed without the \textit{if}
+    statement ever becoming true, and so $b$ is a block towards the end of
+    $\chain_B$. Specifically, $\overline{\Pi}_B$ will contain all the blocks in
+    $\chain_B$ after $b$. In order to cause $V$ to output a different value for
+    the predicate $Q$, the adversary must present at least $k$ blocks after $b$
+    which are not in $\chain_B$. This is because the predicate is $k$-stable.
+    But this violates the Common Prefix property and thus occurs with
+    negligible probability.
+
+    \textbf{Case 2:} The $\textsf{maxChain}$ algorithm returned true at some
+    level $\mu > 0$.
+
+    Then $\mu$ be the highest level at which $A$ is able to present $m$ blocks
+    of level $\mu$ after $b$. We will first show that the two chains after $b$
+    are disjoint. Because $A$ is winning, therefore $\mu$ is the highest level
+    at which any of the parties was able to present at least $m$ blocks of that
+    level after $b$.  This means that at every higher level $\mu + i$ for $i >
+    0$, it was true that $b$ was within the last $m$ blocks of that level.
+    Therefore, $B$, due to the way the proofs are constructed, would have
+    included all the blocks following $b$ of that level. Hence, all the blocks
+    of the honest chain following $b$ of level $\mu$ have been included in the
+    proof $\overline{\Pi}_B$.
 
     Let $\chain'_A$ be the adversarial $\mu$-level superchain after block $b$
     and $\chain'_B$ be the honest party's $\mu$-level superchain after block
@@ -56,11 +83,4 @@
     probability that the adversary is able to produce $k_2$ $\mu$-level blocks
     after block $b'$ faster than the honest parties are able to produce $m$
     $\mu$-level blocks after block $b'$ is negligible.
-
-    The last case to consider is if there is no such level $\mu$. But then the
-    comparison by the verifier happens at the $0$-level, and hence reduces to
-    the security of a full verifier. Due to the common prefix property at level
-    $0$ and the fact that the predicate $Q$ is stable, it follows that the
-    adversary cannot present a chain which will be accepted by an honest full
-    verifier and have a different value for $Q$.
 \end{proof}
