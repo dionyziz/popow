@@ -13,13 +13,18 @@
     be a proof constructed based on an underlying blockchain $\chain_B$ which
     is the adopted blockchain of $B$ during round $r_3$. The verifier then
     outputs $\lnot Q(\chain_B)$, and so $\textsf{Verify}^Q_{m,k} = \lnot Q(\chain_B)$.
-    $\textsf{maxChain}$ provides a total order among proofs.  Thus it is
-    necessary that $\textsf{maxChain}(\overline{\Pi}_\mathcal{A},
-    \overline{\Pi}_B)$ evaluates to true, otherwise, because $Q$ is suffix
+    Thus it is
+    necessary that $\overline{\Pi}_\mathcal{A} \geq
+    \overline{\Pi}_B$, otherwise, because $Q$ is suffix
     sensitive, $\textsf{Verify}^Q$ would have returned $Q(\chain_B)$. We will
-    now show that $\textsf{maxChain}$ returning true is a negligible event.
+    now show that $\overline{\Pi}_\mathcal{A} \geq
+    \overline{\Pi}_B$ is a negligible event.
 
-    Let $b$ be the LCA of $\overline{\Pi}_A$ and $\overline{\Pi}_B$.  There are
+    Let $b$ be the LCA of $\overline{\Pi}_\mathcal{A}$ and $\overline{\Pi}_B$
+    and let the levels of comparison be $\mu_\mathcal{A}$ and $\mu_B$
+    respectively.
+
+    There are
     two ways in which $V$'s call to $\textsf{maxChain}$ can return true. Either
     it happens within the \textit{for} loop and so the comparison is at the
     superchain level, or it happens at the end and so the comparison is at

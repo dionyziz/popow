@@ -51,6 +51,76 @@ setting\cite{backbone}.
 % $\overline{\Pi}_\alpha$ and $\overline{\Pi}_\beta$ it holds that
 % $||\overline{\Pi}_A| - |\overline{\Pi}_B|| \leq 1$.
 %
+
+Let $\tilde\pi$ be an honestly generated proof parsed as $\overline\pi$ and constructed upon some adopted chain $\chain$ and let $b$ be any block in
+$\tilde\pi$. Then let $\mu'$ be defined as follows:
+
+\begin{equation*}
+\mu' = \max\{\mu: |\overline\pi[\mu]\{b:\}[1:]| \geq \max(m, (1 - \delta)2^{-\mu}|\overline\pi[\mu]\{b:\}[1:]\downchain|)\}
+\end{equation*}
+
+We call $\mu'$ the \textit{full} level of proof $\tilde\pi$
+
+\begin{lemma}
+$\chain\{b:\}\upchain^{\mu'} = \overline\pi[\mu']\{b:\}$
+\end{lemma}
+\begin{proof}
+    $\overline\pi[\mu']\{b:\} \subseteq \chain\{b:\}\upchain^{\mu'}$ is trivial.
+    For the converse, we will show that $\forall \mu^* > \mu'$, we have that in
+    the iteration of the Prove for loop with $\mu = \mu_B^*$, the block stored in variable $B$ preceeds block $b$
+    in $\chain$.
+
+    Suppose $\mu = \mu^*$ is the first for loop iteration during which the
+    property is violated. Clearly this cannot be the first iteration, as there
+    $B = \chain[0]$ and Genesis preceeds all blocks, including itself. By the
+    induction hypothesis we see that the variable $B$ at the iteration where
+    $\mu = \mu^*$ preceeded $b$. But from the definition of $\mu'$ we have that:
+    $|\overline\pi_B[\mu_B*^]\{b:\}[1:]| < m$ or $\lnot
+    \textsf{local-good}_\delta(\overline\pi[\mu^*]\{b:\}[1:], \chain, \mu^*)$.
+    In case \textsf{local-good} is violated, variable $B$ remains unmodified and
+    the induction step holds. If \textsf{local-good} is violated, then
+    $|\overline\pi[\mu^*]\{b:\}[1:]| < m$ and so $\overline\pi[\mu^*][-m]$
+    preceeds $b$, and so we are done.
+\end{proof}
+
+\begin{lemma}
+Suppose the verifier evaluates $\tilde\pi_\mathcal{A} \geq \tilde\pi_B$ in a protocol interaction where $B$ is honest and assume during the comparison that the compared level of the honest party is $\mu_B$.
+Let $b = LCA(\tilde\pi_\mathcal{A}, \tilde\pi_B)$ and
+let $\mu_B'$ be the full level of $\pi_B$ with respect to $b$.
+Then $\mu_B' \geq \mu_B$.
+\end{lemma}
+\begin{proof}
+    Because $\mu_B$ is the compared level of the honest party we have:
+
+    $2^{\mu_B}|\chain\{b:\}\upchain^{\mu_B}| > 2^{\mu_B}|\chain\{b:\}|$
+
+    We will prove the claim by contradiction. Suppose $\mu_B' < \mu_B$. Because
+    by definition $\mu_B'$ is the maximum level such that
+    $|\overline\pi_B[\mu]\{b:\}[1:]| \geq \max(m, (1 -
+    \delta)2^{-\mu}|\overline\pi_B[\mu]\{b:\}[1:]\downchain|)$, therefore
+    $\mu_B$ does not satisfy this condition. But we know that
+    $|\overline\pi_B[\mu_B]\{b:\}[1:]| \geq m$ because $\mu_B$ was selected by
+    the Verifier. So therefore,
+
+    \begin{equation}
+    2^{\mu_B}|\chain_B\{b:\}\upchain^{\mu_B}| < (1 - \delta)|\chain\{b:\}|
+    \end{equation}
+
+    By the fact that $\mu_B'$ satisfies goodness, we have that:
+
+    \begin{equation}
+    2^{\mu_B'}|\chain_B\{b:\}\upchain^{\mu_B'} > (1 - \delta)|\chain\{b:\}|
+    \end{equation}
+
+    From the first two equations, we obtain that:
+
+    \begin{equation}
+    (1 - \delta)|\chain\{b:\}| > 2^{\mu_B'}|\chain\{b:\}\upchain^{\mu_B'}|
+    \end{equation}
+
+    But the last two equations contradict, hence the claim holds.
+\end{proof}
+
 \begin{restatable}{theorem}{restateThmSecurity}
     \label{thm.security}
     The non-interactive proofs-of-proof-of-work construction for $k$-stable
