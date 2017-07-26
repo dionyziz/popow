@@ -1,4 +1,4 @@
-\section{Model}
+\section{Model and Definitions}
 
 We define our problem in the setting of a blockchain client which is completely
 stateless beyond the knowledge of the Genesis block. Without loss of
@@ -12,12 +12,11 @@ secure manner that a transaction has taken place. We term such a client a
 
 The intuition behind these proofs is quite simple: Let $T$ be the mining target
 for the network. Then because block ids are generated uniformly at random, half
-of the blocks will have an id less than $T / 2$. By having the prover present
-to the verifier just these blocks which capture more proof-of-work than their
+of the blocks will have an id less than $T / 2$. By having the prover present to
+the verifier just these blocks which capture more proof-of-work than their
 neighbor counterparts, the verifier is convinced that the proof-of-work of the
-omitted blocks also took place. The same logic can be applied to any
-\textit{superblocks} of level $\mu$, namely blocks with id less than $T
-2^{-\mu}$.
+omitted blocks also took place. The same logic can be applied to any level
+$\mu$, namely blocks with id less than $T 2^{-\mu}$.
 
 \subsection{Backbone algorithms}
 
@@ -31,8 +30,8 @@ zero-knowledge proofs (NIZK) \cite{BFM88}. In such protocols, a prover
 shares some context with a verifier (called the common reference string).
 For a given predicate, the prover computes the proof string and transmits it
 to the verifier. The verifier accepts or rejects the string. Given that in our
-setting the predicates will be referring to an active evolving chain 
-we should define them in the presence of a blockchain protocol. 
+setting the predicates will be referring to an active evolving chain
+we should define them in the presence of a blockchain protocol.
 Our theoretical abstraction is based on  the ``backbone'' model of
 \cite{backbone} that formalizes the operation of the Bitcoin protocol.
 We introduce the Prover and the Verifier in
@@ -43,34 +42,25 @@ the Prover code. Detailed algorithms for the integration with the formal
 environment provided by the backbone paper are provided in
 Appendix~\ref{sec.appendix-backbone}.
 
-The predicates of interest in our context are predicates on the active blockchain. 
-Some of the predicates are more suitable for succinct proofs than others. We focus
-our attention in what we call \textit{reliable} predicates; that is,
-predicates which are monotonic and stable notions that we define below.  
-These predicates have the
-exceptional property that all honest miners share their view of them in a way
-that is updated in a predictable manner, with a truth-value that persists as the
-blockchain grows.  Furthermore, we are interested in \textit{succinct}
-predicates, predicates which can be proven using a succinct protocol, a
-protocol which requires proofs that are short in terms of the total blockchain
-size. Finally, we formalize the notion of non-interactivity.
-
-For blockchain addressing we use the Python range notation of brackets $[~]$.
-A positive number in a bracket indicates the indexed block in the blockchain,
-starting from zero. A negative number indicates a block indexed from the end. A
-range of two numbers separated by a $:$ indicates a subarray starting on the
-left index and ending on the right index, inclusive. Omitting one of the range
-indices takes it to the beginning or end of the blockchain respectively.
+The predicates of interest in our context are predicates on the active
+blockchain. Some of the predicates are more suitable for succinct proofs than
+others. We focus our attention in what we call \textit{reliable} predicates;
+that is, predicates which are monotonic and stable notions that we define below.
+These predicates have the exceptional property that all honest miners share
+their view of them in a way that is updated in a predictable manner, with a
+truth-value that persists as the blockchain grows.  Furthermore, we are
+interested in \textit{succinct} predicates, predicates which can be proven using
+a succinct protocol, a protocol which requires proofs that are short in terms of
+the total blockchain size. Finally, we formalize the notion of non-interactivity.
 
 The honest entities that live on the blockchain network are of three kinds:
-First, miners, who try to mine new blocks on top of the longest known blockchain and
-broadcast their blocks as soon as they are discovered. Second, full nodes,
-which maintain the longest blockchain but without mining. Full nodes also act
-as the provers in the network, producing proofs by calling a Prove function
-which we leave undefined for now, as it is part of the proof protocol. And
-third, verifiers or stateless clients, which connect to provers and ask for
-proofs in regards to which blockchain is the largest. The verifiers attempt to
-determine the value of a predicate on these chains.
+First, miners, who try to mine new blocks on top of the longest known blockchain
+and broadcast their blocks as soon as they are discovered. Second, full nodes,
+which maintain the longest blockchain but without mining. Full nodes also act as
+the provers in the network, producing proofs by calling a Prove function which
+we leave undefined for now, as it is part of the proof protocol. And third,
+verifiers or stateless clients, which connect to provers and ask for proofs in
+regards to which blockchain is the largest. The verifiers attempt to determine the value of a predicate on these chains.
 
 A non-interactive proof of proof-of-work protocol is a game between a prover
 and a verifier parameterized by predicate $Q$ which the prover tries to
@@ -93,3 +83,98 @@ by the environment at some round, receives a vector of proofs $\bar{\pi}$ from
 both honest parties and the adversary and returns its decision $d \in \{T, F,
 \bot\}$ before the next round and terminates. The honest parties produce proofs
 for $V$ using $P$.
+
+\subsection{Blockchain addressing}
+
+Blockchains, or \textit{chains}, are finite sequences of blocks such that they
+obey the \textit{blockchain property} that for every block in the chain there
+exists a pointer to its previous block in the chain. A chain $\chain$ is
+\textit{anchored} if its first block is the designated \textit{Genesis} block, a
+known reference string.
+
+For chain addressing we use the Python range notation of brackets $[~]$. A
+positive number in a bracket indicates the indexed block in the chain, starting
+from zero. For example, $\chain[0]$ indicates the genesis block. A negative
+number indicates a block indexed from the end.  For example $\chain[-1]$
+indicates the tip of the chain. A range of two numbers $\chain[i:j]$ indicates a
+subarray starting on index $i$ (inclusive) and ending on index j (exclusive),
+which can be negative. Omitting one of the range indices takes it to the
+beginning or end of the chain respectively. So, for example $\chain[1:]$
+indicates a chain with the first block omitted and $\chain[:-k]$ indicates a
+chain with the last $k$ blocks omitted, the ``stable'' part of the chain
+according to \cite{backbone}.
+
+We will also use block-based addressing with the range notation of curly braces $\{~\}$.
+Given a chain $\chain$ and blocks $A, Z \in \chain$, we denote $\chain\{A:Z\}$
+the subarray of the chain starting from block $A$ (inclusive) and ending in
+block $Z$ (exclusive). Again we can omit blocks from the range to take the chain
+to the beginning or end respectively. Hence, for example, $\chain\{A:\}$
+indicates that the subarray of the chain from block $A$ and until the end of the
+chain is to be taken.
+
+Some helper functions need to be defined. The \textit{blockid} function
+calculates the id of a block given its data. This is done by applying the
+hashfunctions $H$ and $G$ in a manner similar to \cite{backbone}: $\textsf{id} =
+H(ctr, G(s, x, \textsf{interlink}))$. However, note that block $B$ maintains an
+\textit{interlink} data structure instead of a previous block pointer. We will
+explain this further in section \ref{sec:consensus}. Note also that, while we
+spell out the transaction vector $x$, this in practice contains only the root of
+the Merkle tree of the transactions \cite{princetonbook}.
+
+While the id of a block must always be less than the mining target $T$ to
+satisfy the proof-of-work condition\cite{antonopoulosbook}, some blocks will
+achieve a lower id. If the block id is less than $\frac{T}{2^\mu}$ we say that
+the block is of level $\mu$. Clearly all blocks are blocks of level $0$. We term
+blocks that have a level above 0 \textit{superblocks} of their respective level.
+The level of a block is given as $\mu = \left \lfloor \log(T) -
+\log(\sf{blockid}(B)) \right \rfloor$ and denoted $\textit{level}(B)$.
+
+In this paper, we will extend blocks to contain multiple pointers to previous
+blocks. Hence, certain blocks can be omitted from a chain, obtaining a subchain.
+However, the subchain must still maintain the blockchain property that each
+block must contain a pointer to its previous block in the sequence (except for
+the first block in the sequence). Subarrays of chains obtained by addressing
+with $[~]$ or $\{~\}$ are, naturally, subchains, as the only omit blocks from
+the beginning or the end of a chain. It will also become apparent that it is
+useful to omit certain blocks from the middle of a chain, while maintaining the
+blockchain property.
+
+While chains are sequences and not sets, we will use some set notation for
+convenience. The notation $B \in \chain$ will be used to indicate that a block
+$B$ is part of a chain $\chain$, while $B \not\in \chain$ will be used to
+indicate that it isn't. We will use $\emptyset$ to denote the empty blockchain.
+Finally, given a chain $\chain$ and two subchains $\chain_1$ and $\chain_2$ of
+it, we will write $\chain_1 \subseteq \chain_2$ (or $\chain_1 \not\subseteq
+\chain_2$) to indicate that $\chain_1$ is a (potentially improper) subchain of
+$\chain_2$, i.e. that for all blocks $B$ of $\chain_1$, we have that $B \in
+\chain_2$. Because both $\chain_1 \subseteq \chain$ and $\chain_2 \subseteq
+\chain$, we can define $\chain_1 \cup \chain_2$ to mean the chain obtained by
+sorting the blocks contained in both $\chain_1$ and $\chain_2$ into a sequence,
+provided that we can ensure the blockchain property is maintained. Hence, for
+example, if blocks $(B_1, B_2, B_3)$ form a blockchain $\chain$ such that $B_2$
+points to $B_1$ and $B_3$ points to $B_2$, but also $B_3$ points to $B_1$, then
+letting $\chain_1 = (B_1, B_3)$ and $\chain_2 = (B_2)$, we note that both
+$\chain_1$ and $\chain_2$ are blockchains and that $\chain_1 \cup \chain_2$ is a
+blockchain. Additionally, take two anchored chains $\chain_1$ and $\chain_2$,
+and note that $\chain_1$ and $\chain_2$ belong to the same blocktree but can
+potentially have forked. Then we use the notation $\chain_1 \cap \chain_2$ to
+mean the anchored chain $\{B: B \in \chain_1 \land B \in \chain_2\}$ provided it
+satisfies the blockchain property. We will also freely use set builder notation
+$\{B \in \chain: p(B)\}$ to obtain a subchain $\chain'$ from a chain $\chain$,
+provided the blockchain property is maintained. Note that in all these cases,
+because we are talking about blockchains and not blocktrees, any set of blocks
+has a unique order obtained by topologically sorting the blocks based on the
+order indicated by the underlying chain and so can be put into a unique
+sequence. For two chains $\chain_1$ and $\chain_2$, if $\chain_1[0] =
+\chain_2[0]$ and $\chain_1[-1] = \chain_2[-1]$, we will say that the two chains
+\textit{span} the same range of blocks.
+
+Given a chain $\chain$ and a level $\mu$, we define the \textit{upchain
+operator} $\chain\upchain^\mu$ to mean the chain $\{B \in \chain: level(B) \geq
+\mu\}$. We will call such a chain that contains only $\mu$-superblocks a
+$\mu$\textit{-superchain}. Given a chain $\chain'$ a chain $\chain$ such that
+$\chain' \subseteq \chain$, we define the \textit{downchain opeartor}
+$\chain'\downchain^\chain$ as the chain $\chain[\chain'[0]:\chain'[-1]]$ and we
+will call $\chain$ the \textit{underlying chain} of $\chain'$. If the underlying
+chain is implied by context, for example, if the chain $\chain'$ was obtained by
+applying the upchain operator on a known underlying chain $\chain$, we will simply write $\chain'\downchain$.
