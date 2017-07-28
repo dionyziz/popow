@@ -34,6 +34,60 @@ setting\cite{backbone}.
     backbone definition.
 \end{definition}
 
+Executions are typical with overwhelming probability.
+
+\begin{lemma}\label{lem:negbin}
+    Let $S$ be a set of consecutive rounds such that $Z_S \geq k$ for some
+    security parameter $k$. Then we have that $|S| \geq (1 -
+    \epsilon)2^\mu\frac{k}{pqt}$ with overwhelming probability in $k$.
+\end{lemma}
+\begin{proof}
+    First, observe that $Z_{ijk}^\mu \sim \textsf{Bern}(2^{-\mu}p)$ and these are
+    jointly independent. Therefore $Z_S^\mu \sim \textsf{Bin}(tq|S|, 2^{-\mu}p)$ and
+    $|S| \sim \textsf{NB}(Z_S, 2^{-\mu}p)$. So $\mathbb{E}(|S|) =
+    2^\mu\frac{Z_S}{pqt}$. Applying a tail bound to the negative binomial
+    distribution, we obtain that $\Pr[|S| < (1 - \epsilon)\mathbb{E}(|S|)] \in
+    \Omega(\epsilon^2 m)$.
+    \qed
+\end{proof}
+
+The following lemma is at the heart of the security proof that will follow.
+
+\begin{lemma}\label{lem:level-comparison}
+    Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$ and $\chain_B$ is
+    a chain adopted by an honest party at round $r_2$. Let $\chain_B^S = \{b \in
+    \chain_B: b \textnormal{ was generated during } S\}$. Let $\mu_\mathcal{A},
+    \mu_B \in \mathbb{N}$. Suppose $\chain_B^S\upchain^{\mu_B}$ is good.
+    Suppose $\chain'_\mathcal{A}$ is a $\mu_\mathcal{A}$-superchain containing
+    only adversarially generated blocks generated during $S$ and suppose that
+    $|\chain'_\mathcal{A}| \geq k$.
+    Then:
+
+    \begin{equation*}
+    2^{\mu_\mathcal{A}}|\chain'_\mathcal{A}| < \frac{1}{3}2^{\mu_B}|\chain_B^S\upchain^{\mu_B}|
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    From $|\chain'_\mathcal{A}| \geq k$ we know that $Z_S \geq k$. Applying
+    Lemma~\ref{lem:negbin}, we conclude that $|S| \geq (1 -
+    \epsilon')2^{\mu_A}\frac{1}{pqt}|\chain'_\mathcal{A}|$.
+
+    Applying the chain growth theorem \cite{backbone} we obtain that $|\chain_B^S|
+    \geq (1 - \epsilon)f|S|$. But from the goodness of $\chain_B^S\upchain^{\mu_B}$, we
+    know that $|\chain_B^S\upchain^{\mu_B}| \geq (1 -
+    \delta)2^{-\mu_B}|\chain_B^S|$. Therefore $|\chain_B^S\upchain^{\mu_B}| \geq
+    2^{-\mu_B}(1 - \delta)(1 - \epsilon)f(1 -
+    \epsilon')2^{\mu_\mathcal{A}}\frac{1}{pqt}|\chain'_\mathcal{A}|$ and so:
+
+    \begin{equation*}
+    2^{\mu_\mathcal{A}}|\chain'_\mathcal{A}|
+    <
+    \frac{pqt}{(1 - \delta)(1 -
+    \epsilon')(1 - \epsilon)f}2^{\mu_B}|\chain_B^S\upchain^{\mu_B}|
+    \end{equation*}
+    \qed
+\end{proof}
+
 % \begin{lemma}
 %     If the maximum level superchain belonging to the honest parties of at least
 %     $m$ blocks is of level $\mu$, then the adversary cannot produce a
@@ -51,6 +105,97 @@ setting\cite{backbone}.
 % $\overline{\Pi}_\alpha$ and $\overline{\Pi}_\beta$ it holds that
 % $||\overline{\Pi}_A| - |\overline{\Pi}_B|| \leq 1$.
 %
+
+\begin{definition}{(Full level of honest proof)}
+Let $\tilde\pi$ be an honestly generated proof parsed as $\overline\pi$ and constructed upon some adopted chain $\chain$ and let $b$ be any block in
+$\tilde\pi$. Then $\mu'$ is defined as follows:
+
+\begin{equation*}
+\mu' = \max\{\mu: |\overline\pi[\mu]\{b:\}[1:]| \geq \max(m, (1 - \delta)2^{-\mu}|\overline\pi[\mu]\{b:\}[1:]\downchain|)\}
+\end{equation*}
+
+We call $\mu'$ the \textit{full} level of proof $\tilde\pi$ with respect to
+block $b$ with security parameters $\delta$ and $m$.
+\end{definition}
+
+\begin{lemma}\label{lem:allblocks}
+Let $\overline\pi = \textsf{parse}(\tilde\pi)$ be the parsed proof of some
+honest proof $\tilde\pi$ generated with security parameters $\delta, m$. Let
+$\chain$ be the underlying chain, $b \in \chain$ be any block and $\mu'$ be the
+full level of the proof with respect to $b$ and the same security parameters.
+Then
+\begin{equation*}
+\chain\{b:\}\upchain^{\mu'} = \overline\pi[\mu']\{b:\}
+\end{equation*}
+\end{lemma}
+\begin{proof}
+    $\overline\pi[\mu']\{b:\} \subseteq \chain\{b:\}\upchain^{\mu'}$ is trivial.
+
+    For the converse, we will show that for all $\mu^* > \mu'$, we have that in
+    the iteration of the Prove \texttt{for} loop with $\mu = \mu^*$, the block stored
+    in variable $B$ preceeds block $b$ in $\chain$.
+
+    Suppose $\mu = \mu^*$ is the first \texttt{for} loop iteration during which the
+    property is violated. Clearly this cannot be the first iteration, as there
+    $B = \chain[0]$ and Genesis preceeds all blocks, including itself. By the
+    induction hypothesis we see that during the iteration $\mu = \mu^* + 1$,
+    block $B$ preceeded block $b$. But from the definition of $\mu'$ we know
+    that $\mu'$ is the highest level for which
+    $|\overline\pi[\mu']\{b:\}[1:]|
+    \geq \max(m, (1 -
+    \delta)2^{-\mu'}|\overline\pi[\mu']\{b:\}[1:]\downchain|)$.
+
+    Hence, this
+    property cannot hold for $\mu^* > \mu'$ and therefore
+    $|\overline\pi_B[\mu_B^*]\{b:\}[1:]| < m$ or
+    $\lnot \textsf{local-good}_\delta(\overline\pi[\mu^*]\{b:\}[1:], \chain, \mu^*)$.
+
+    In case \textsf{local-good} is violated, variable $B$ remains unmodified and
+    the induction step holds. If \textsf{local-good} is not violated, then
+    $|\overline\pi[\mu^*]\{b:\}[1:]| < m$ and so $\overline\pi[\mu^*][-m]$
+    preceeds $b$, and so we are done.
+    \qed
+\end{proof}
+
+\begin{lemma}
+Suppose the verifier evaluates $\tilde\pi_\mathcal{A} \geq \tilde\pi_B$ in a protocol interaction where $B$ is honest and assume during the comparison that the compared level of the honest party is $\mu_B$.
+Let $b = \textsf{LCA}(\tilde\pi_\mathcal{A}, \tilde\pi_B)$ and
+let $\mu_B'$ be the full level of $\pi_B$ with respect to $b$.
+Then $\mu_B' \geq \mu_B$.
+\end{lemma}
+\begin{proof}
+    Because $\mu_B$ is the compared level of the honest party we have:
+
+    $2^{\mu_B}|\chain\{b:\}\upchain^{\mu_B}| > 2^{\mu_B}|\chain\{b:\}|$
+
+    We will prove the claim by contradiction. Suppose $\mu_B' < \mu_B$. Because
+    by definition $\mu_B'$ is the maximum level such that
+    $|\overline\pi_B[\mu]\{b:\}[1:]| \geq \max(m, (1 -
+    \delta)2^{-\mu}|\overline\pi_B[\mu]\{b:\}[1:]\downchain|)$, therefore
+    $\mu_B$ does not satisfy this condition. But we know that
+    $|\overline\pi_B[\mu_B]\{b:\}[1:]| \geq m$ because $\mu_B$ was selected by
+    the Verifier. So therefore,
+
+    \begin{equation*}
+    2^{\mu_B}|\chain_B\{b:\}\upchain^{\mu_B}| < (1 - \delta)|\chain\{b:\}|
+    \end{equation*}
+
+    By the fact that $\mu_B'$ satisfies goodness, we have that:
+
+    \begin{equation*}
+    2^{\mu_B'}|\chain_B\{b:\}\upchain^{\mu_B'} > (1 - \delta)|\chain\{b:\}|
+    \end{equation*}
+
+    From the last two equations, we obtain that:
+
+    \begin{equation*}
+    (1 - \delta)|\chain\{b:\}| > 2^{\mu_B'}|\chain\{b:\}\upchain^{\mu_B'}|
+    \end{equation*}
+
+    But the last two equations contradict, hence the claim holds.
+    \qed
+\end{proof}
+
 \begin{restatable}{theorem}{restateThmSecurity}
     \label{thm.security}
     The non-interactive proofs-of-proof-of-work construction for $k$-stable
