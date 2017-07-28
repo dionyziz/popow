@@ -1,114 +1,182 @@
 \begin{proof}
-    We will prove security by contradiction.  Let $m = k_1 + k_2$ and let $k =
-    k(\kappa)$, $k_1 = k_1(\kappa)$ and $k_2 = k_2(\kappa)$ be polynomial
-    functions of the security parameter $\kappa$.  Let $Q$ be a $k$-stable
-    suffix sensitive chain predicate. Assume the NIPoPoWs construction with
-    parameters $m, k$ is not secure with respect to $Q$. Then, during an
-    execution at some round $r_3$, $Q(\chain)$ is defined and has the same
-    value for all honest miners.  Assume the execution is typical. The verifier
-    $V$ communicates with at least two provers, $\mathcal{A}$, the adversary,
-    and $B$, an honest prover.  The verifier receives the proofs
-    $\overline{\Pi}_\mathcal{A}, \overline{\Pi}_B$ from the adversary and the
-    honest prover respectively.  Because $B$ is honest, $\overline{\Pi}_B$ will
-    be a proof constructed based on an underlying blockchain $\chain_B$ which
-    is the adopted blockchain of $B$ during round $r_3$. The verifier then
-    outputs $\lnot Q(\chain_B)$, and so $\textsf{Verify}^Q_{m,k} = \lnot Q(\chain_B)$.
-    $\textsf{maxChain}$ provides a total order among proofs.  Thus it is
-    necessary that $\textsf{maxChain}(\overline{\Pi}_\mathcal{A},
-    \overline{\Pi}_B)$ evaluates to true, otherwise, because $Q$ is suffix
-    sensitive, $\textsf{Verify}^Q$ would have returned $Q(\chain_B)$. We will
-    now show that $\textsf{maxChain}$ returning true is a negligible event.
+    We will prove security by contradiction.  Let $m = k_1 + k_2 + k_3$ and let
+    $k_1, k_2, k_3$ be polynomial functions of the security parameter $\kappa$.
+    Let $Q$ be a $k$-stable suffix sensitive chain predicate. Assume the
+    NIPoPoWs construction with parameters $m, k$ is not secure with respect to
+    $Q$. Then, during an execution at some round $r_3$, $Q(\chain)$ is defined
+    and has the same value for all honest miners.  Assume the execution is
+    typical. The verifier $V$ communicates with at least two provers,
+    $\mathcal{A}$, the adversary, and $B$, an honest prover.  The verifier
+    receives the proofs $\tilde\pi_\mathcal{A}, \tilde\pi_B$ from the adversary
+    and the honest prover respectively and parses them into
+    $\overline\pi_\mathcal{A}$ and $\overline\pi_B$ respectively. Because $B$ is
+    honest, $\tilde\pi_B$ will be a proof constructed based on an underlying
+    blockchain $\chain_B$ which is the adopted blockchain of $B$ during round
+    $r_3$ at which $\tilde\pi_B$ was generated. Furthermore,
+    $\tilde\pi_\mathcal{A}$ will have been generated at some round $r_3' \leq
+    r_3$.
 
-    Let $b$ be the LCA of $\overline{\Pi}_A$ and $\overline{\Pi}_B$.  There are
-    two ways in which $V$'s call to $\textsf{maxChain}$ can return true. Either
-    it happens within the \textit{for} loop and so the comparison is at the
-    superchain level, or it happens at the end and so the comparison is at
-    level $0$. We will deal with these cases separately.
+    The verifier then outputs $\lnot Q(\chain_B)$, and so
+    $\textsf{Verify}^Q_{m,k} = \lnot Q(\chain_B)$. Thus it is necessary that
+    $\tilde\pi_\mathcal{A} \geq \tilde\pi_B$, otherwise, because $Q$
+    is suffix sensitive, $\textsf{Verify}^Q$ would have returned $Q(\chain_B)$.
+    We will now show that $\tilde\pi_\mathcal{A} \geq \tilde\pi_B$ is
+    a negligible event.
 
-    \textbf{Case 1:} The $\textsf{maxChain}$ algorithm returned true at level
-    $0$.
+    Let $b = \textsf{LCA}(\tilde\pi_\mathcal{A}, \tilde\pi_B)$ and let $b^*$ be
+    the most recent honestly generated block in $\chain_B$ preceeding $b$ (and note that $b^*$ necessarily exists because Genesis was honestly generated).
+    let the levels of comparison decided by the verifier be $\mu_\mathcal{A}$
+    and $\mu_B$ respectively.
 
-    This means that the \textit{for} loop was executed without the \textit{if}
-    statement ever becoming true, and so $b$ is a block towards the end of
-    $\chain_B$. Specifically, $\overline{\Pi}_B$ will contain all the blocks in
-    $\chain_B$ after $b$. In order to cause $V$ to output a different value for
-    the predicate $Q$, the adversary must present at least $k$ blocks after $b$
-    which are not in $\chain_B$. This is because the predicate is $k$-stable.
-    But this violates the Common Prefix property and thus occurs with
-    negligible probability.
+    Let $\mu_B'$ be the full level of proof $\tilde\pi_B$ with respect to block
+    $b$. Call $\alpha_\mathcal{A} =
+    \overline\pi_\mathcal{A}[\mu_\mathcal{A}]\{b:\}[1:]$,
+    $\alpha'_B = \overline\pi_B[\mu_B']\{b:\}[1:]$.
 
-    \textbf{Case 2:} The $\textsf{maxChain}$ algorithm returned true at some
-    level $\mu > 0$.
+    % There are
+    % two ways in which $V$'s call to $\textsf{maxChain}$ can return true. Either
+    % it happens within the \textit{for} loop and so the comparison is at the
+    % superchain level, or it happens at the end and so the comparison is at
+    % level $0$. We will deal with these cases separately.
 
-    Let $\chain'_\mathcal{A}$ be the adversarial $\mu$-level superchain after
-    block $b$ and $\chain'_B$ be the honest party's $\mu$-level superchain
-    after block $b$.
+    % \textbf{Case 1:} The $\textsf{maxChain}$ algorithm returned true at level
+    % $0$.
+%
+    % This means that the \textit{for} loop was executed without the \textit{if}
+    % statement ever becoming true, and so $b$ is a block towards the end of
+    % $\chain_B$. Specifically, $\overline{\Pi}_B$ will contain all the blocks in
+    % $\chain_B$ after $b$. In order to cause $V$ to output a different value for
+    % the predicate $Q$, the adversary must present at least $k$ blocks after $b$
+    % which are not in $\chain_B$. This is because the predicate is $k$-stable.
+    % But this violates the Common Prefix property and thus occurs with
+    % negligible probability.
+
+    % \textbf{Case 2:} The $\textsf{maxChain}$ algorithm returned true at some
+    % level $\mu > 0$.
+%
+    % Let $\chain'_\mathcal{A}$ be the adversarial $\mu$-level superchain after
+    % block $b$ and $\chain'_B$ be the honest party's $\mu$-level superchain
+    % after block $b$.
 
     We will proceed in the proof by showing three successive claims: First,
-    $\chain'_\mathcal{A}$ and $\chain'_B$ are disjoint. Second,
-    $\chain'_\mathcal{A}$ contains mostly adversarially-generated blocks. And
-    third, the adversary is able to produce this $\chain'_\mathcal{A}$ with
-    negligible probability.
+    $\alpha_\mathcal{A}$ and $\alpha'_B\downchain$ are mostly
+    disjoint. Second, $\alpha_\mathcal{A}$ contains mostly
+    adversarially-generated blocks. And third, the adversary is able to produce
+    this $\alpha_\mathcal{A}$ with negligible probability.
 
-    \textbf{Claim 1: } $\chain'_\mathcal{A}$ and $\chain'_B$ are dijoint.
+    \textbf{Claim 1a: } If $\mu_B' \leq \mu_\mathcal{A}$ then
+    $\alpha_\mathcal{A}[1:]$ and $\alpha'_B\downchain[1:]$ are completely
+    disjoint.
 
-    $\mu$ will be the highest level at which $\mathcal{A}$ is able to present $m$
-    blocks of level $\mu$ after $b$. Because $\mathcal{A}$ is winning,
-    therefore $\mu$ is the highest level at which any of the parties was able
-    to present at least $m$ blocks of that level after $b$.  This means that at
-    every higher level $\mu + i$ for $i > 0$, it was true that $b$ was within
-    the last $m$ blocks of that level.  Therefore, $B$, due to the way the
-    proofs are constructed, would have included all the blocks following $b$ of
-    that level. Hence, all the $\mu$-level superblocks following $b$ in
-    $\chain_B$ have been included in $\overline{\Pi}_B$. Because $b$ is the
-    LCA, it follows that $\chain'_\mathcal{A}$ and $\chain'_B$ are disjoint.
+    Applying Lemma~\ref{lem:allblocks}
+    to $\chain_B\{b:\}\upchain^{\mu_B'}$ we see that
+    $\chain_B\{b:\}\upchain^{\mu_B'} = \overline\pi_B[\mu_B']\{b:\}$ and so
+    indeed
+    $\overline\pi_B[\mu_B']\{b:\}[1:] \cap
+    \overline\pi_\mathcal{A}[\mu_\mathcal{A}]\{b:\}[1:] = \emptyset$.
 
-    \textbf{Claim 2: } At least $k_2$ superblocks of $\chain'_\mathcal{A}$ are
+    \begin{figure}
+        \caption{Two competing proofs at different levels.}
+        \centering
+        \includegraphics[width=\columnwidth,keepaspectratio]{figures/security-proof-chain.png}
+        \label{fig.sec-comparison}
+    \end{figure}
+
+    \textbf{Claim 1b: } If $\mu_\mathcal{A} < \mu_B'$ then
+    $|\alpha_\mathcal{A}[1:] \cap \alpha_B\downchain[1:]| \leq k_1$.
+
+    Suppose for contradiction that
+    $|\alpha_\mathcal{A}[1:] \cap \alpha_B\downchain[1:]| > k_1$. This means
+    that there are indices $i, j$ such that
+    $|\chain_B\upchain^{\mu_\mathcal{A}}[i:j]| > k_1$ but
+    $|\chain_B\upchain^{\mu_\mathcal{A}}[i:j]\downchain\upchain^{\mu_B'}| = 0$.
+    But this contradicts the goodness of $\chain_B\upchain^{\mu_B'}$ with
+    overwhelming probability in $k_1$.
+
+    From Claim 1a and Claim 1b, we conclude that there are at least $k_2 + k_3$
+    blocks after block $b$ in $\alpha_\mathcal{A}$ which do not exist in
+    $\alpha_B$. We now set $b_2 = \textsf{LCA}(\chain_B, \alpha_\mathcal{A})$.
+
+    \textbf{Claim 2: } At least $k_3$ superblocks of $\alpha_\mathcal{A}$ are
     adversarially generated.
 
-    We will show this by showing that $\chain'_\mathcal{A}[k_1 + 1:]$ contains
+    We will show this by showing that $\alpha_\mathcal{A}[k_2 + 1:]$ contains
     no honestly mined blocks. By contradiction, assume that the block
-    $\chain'_\mathcal{A}[i]$ for some $i \geq k_1 + 1$ was honestly generated.
+    $\alpha_\mathcal{A}[i]$ for some $i \geq k_1 + k_2 + 1$ was honestly generated.
     But this means that an honest party had adopted the chain
-    $\chain'_\mathcal{A}[i - 1]$ at some round $r_2 \leq r_3$. Because of the
+    $\alpha_\mathcal{A}[i - 1]$ at some round $r_2 \leq r_3$. Because of the
     way the honest parties adopt chains, this means that the superchain
-    $\chain'_\mathcal{A}[:i - 1]$ has an underlying properly constructed
-    $0$-level chain $\chain_\mathcal{A}$ which starts at genesis and includes
-    all the blocks of the superchain $\chain'_\mathcal{A}[:i - 1]$. Let $j$ be
-    the index of block $b$ within $\chain_\mathcal{A}$.  As
-    $\chain_\mathcal{A}$ contains at least all the blocks of the superchain
-    $\chain'_\mathcal{A}$, observe that $|\chain_\mathcal{A}[j + 1:]| > i -
-    1 \geq k_1$.  Therefore $\chain_\mathcal{A}[:-k_1] \not\preccurlyeq
-    \chain_B$.  But, as $\chain_\mathcal{A}$ was adopted by an honest party at
+    $\alpha_\mathcal{A}[:i - 1]$ has an underlying properly constructed
+    $0$-level anchored chain $\chain_\mathcal{A}$ such that
+    $\chain_\mathcal{A} \subseteq \alpha_\mathcal{A}[:i - 1]$. Let $j$ be
+    the index of block $b_2$ within $\chain_\mathcal{A}$.  As
+    $\alpha_\mathcal{A} \subseteq \chain_\mathcal{A}$, observe that
+    $|\chain_\mathcal{A}[j + 1:]| > i -
+    1 \geq k_2 + k_1$.  Therefore $\chain_\mathcal{A}[:-(k_2 + k_1)] \not\preccurlyeq
+    \chain_B$.  But $\chain_\mathcal{A}$ was adopted by an honest party at
     round $r_2$ which is prior to round $r_3$ during which $\chain_B$ was
-    adopted by an honest party, this contradicts the Common Prefix property.
-    It follows that with overwhelming probability in $k_1$, the $k_2 = m - k_1$
-    last blocks of the adversarial proof have been adversarially mined.
+    adopted by an honest party. This contradicts the Common Prefix
+    \cite{backbone} property with parameter $k_2$.
+    It follows that with overwhelming probability in $k_2$, the $k_3 = m - k_2 -
+    k_1$ last blocks of the adversarial proof have been adversarially mined.
 
-    \textbf{Claim 3: } $\mathcal{A}$ is able to produce $\chain'_\mathcal{A}$
+    \textbf{Claim 3: } $\mathcal{A}$ is able to produce $\alpha_\mathcal{A}$
     with negligible probability.
 
-    Let $b'$ be the latest honestly generated block in $\chain'_\mathcal{A}$,
-    or $b$ if no honest block exists in $\chain'_\mathcal{A}$. Let $r_1$ be
-    the round during which $b'$ was generated. Let $j$ be the (zero-based)
-    index of block $b'$ within $\chain'_\mathcal{A}$, or $-1$ if $b' = b$. Let
-    $c$ be the number of $\mu$-level superblocks in $\chain_B$ prior to $b$.
-    At the end of round $r_1$, $b'$ was diffused and hence all honest party
-    chains must all have adopted a chain of at least $c + j + 1$ superblocks of
-    level $\mu$.
+    Let $b'$ be the latest honestly generated block in $\alpha_\mathcal{A}$, or
+    $b^*$ if no honest block exists in $\alpha_\mathcal{A}$. Let $r_1$ be the
+    round during which $b^*$ was generated. Let $j$ be the index of block $b^*$.
+    Consider now the set $S$ of consecutive rounds $r_1 \ldots r_3$. Every block
+    in $\alpha_\mathcal{A}[-k_3:]$ has been adversarially generated during $S$
+    and $|\alpha_\mathcal{A}[-k_3:]| = k_3$. $\chain_B$ is a chain adopted by an
+    honest party at round $r_3$ and filtering the blocks by the rounds during
+    which they were generated to obtain $\chain_B^S$, we see that $\chain_B^S =
+    \chain_B\{b^*:\}$. But chain $\chain_B^S\upchain^{\mu_B'}$ is good with
+    respect to $\chain_B^S$. Applying Lemma~\ref{lem:level-comparison}, we
+    obtain that with overwhelming probability
 
-    Consider now the set $S$ of consecutive rounds starting at round $r_1$ and
-    ending at round $r_3$. Let $z$ be the number of $\mu$-level superblocks
-    generated by the adversary during those rounds, and observe that $z \geq m
-    - (j + 1) \geq k_2$. From the assumption that the execution is typical, it
-    follows that either $Z^\mu(S) < k_2$, or that $Z^\mu(S)$ and $X^\mu(S)$
-    must be distributed close to their respective means. But in order for the
-    adversary to have generated $z$ blocks in $S$, it must hold that $Z^\mu(S)
-    \geq k_2$, and therefore $Z^\mu(S) < (1 - \frac{\delta}{2})X^\mu(S)$. However,
-    this means that the honest $\mu$-level superchain has grown by more than
-    $z$ superblocks and now contains at least $c + m$ superblocks. Therefore,
-    the honest chain now contains more than $c + j + 1 + z$ superblocks, while
-    the adversarial chain contains exactly $c + j + 1 + z$ superblocks.
-    $\textsf{maxChain}$ could not have returned true and
-    $\overline{\Pi}_\mathcal{A}$ could not have been the winning proof.
+    \begin{equation*}
+    2^{\mu_\mathcal{A}}|\alpha_\mathcal{A}\{b':\}| <
+    \frac{1}{3}2^{\mu_B'}|\chain_B^S\upchain{\mu_B'}|
+    \end{equation*}
+
+    But $|\alpha_B| \geq |\chain_B^S\upchain{\mu_B'}|$ and
+    $|\alpha_\mathcal{A}\{b':\}| \geq |\alpha_\mathcal{A}| - k_2$, therefore:
+
+    \begin{equation*}
+    2^{\mu_\mathcal{A}}|\alpha_\mathcal{A}| - k_2 <
+    \frac{1}{3}2^{\mu_B'}|\alpha_B|
+    \end{equation*}
+
+    But $|\alpha_\mathcal{A}| - k_2 \geq k_3$, therefore
+    $\frac{1}{3}2^{\mu_B'}|\alpha_B| > k_3$ and so $2^{\mu_B'}|\alpha_B| > 3k_3$
+
+    Taking $k_2 = k_3$, we obtain:
+
+    \begin{equation*}
+    2^{\mu_\mathcal{A}}|\alpha_\mathcal{A}| <
+    \frac{1}{3}3k_3 + k_3 = 2k_3 < 2^{\mu_B'}|\alpha_B|
+    \end{equation*}
+
+    But this contradicts the fact that
+    $\tilde\pi_\mathcal{A} \geq \tilde\pi_A$, and so we are done.
+    \qed
+    % At the end of round $r_1$, $b'$ was diffused and hence all honest party
+    % chains must all have adopted a chain of at least $c + j + 1$ superblocks of
+    % level $\mu$.
+%
+    % Let $z$ be the number of $\mu$-level superblocks
+    % generated by the adversary during those rounds, and observe that $z \geq m
+    % - (j + 1) \geq k_3$.
+    % From the assumption that the execution is typical, it
+    % follows that either $Z^\mu(S) < k_3$, or that $Z^\mu(S)$ and $X^\mu(S)$
+    % must be distributed close to their respective means. But in order for the
+    % adversary to have generated $z$ blocks in $S$, it must hold that $Z^\mu(S)
+    % \geq k_3$, and therefore $Z^\mu(S) < (1 - \frac{\delta}{2})X^\mu(S)$. However,
+    % this means that the honest $\mu$-level superchain has grown by more than
+    % $z$ superblocks and now contains at least $c + m$ superblocks. Therefore,
+    % the honest chain now contains more than $c + j + 1 + z$ superblocks, while
+    % the adversarial chain contains exactly $c + j + 1 + z$ superblocks.
+    % $\textsf{maxChain}$ could not have returned true and
+    % $\overline{\Pi}_\mathcal{A}$ could not have been the winning proof.
 \end{proof}
