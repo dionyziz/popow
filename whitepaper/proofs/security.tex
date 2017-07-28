@@ -120,8 +120,8 @@
     It follows that with overwhelming probability in $k_2$, the $k_3 = m - k_2 -
     k_1$ last blocks of the adversarial proof have been adversarially mined.
 
-    \textbf{Claim 3: } $\mathcal{A}$ is able to produce $\alpha_\mathcal{A}$
-    with negligible probability.
+    \textbf{Claim 3: } $\mathcal{A}$ is able to produce a $\alpha_\mathcal{A}$
+    that wins against $\alpha_B$ with negligible probability.
 
     Let $b'$ be the latest honestly generated block in $\alpha_\mathcal{A}$, or
     $b^*$ if no honest block exists in $\alpha_\mathcal{A}$. Let $r_1$ be the
@@ -159,7 +159,16 @@
     \end{equation*}
 
     But this contradicts the fact that
-    $\tilde\pi_\mathcal{A} \geq \tilde\pi_A$, and so we are done.
+    $\tilde\pi_\mathcal{A} \geq \tilde\pi_A$, and so the claim is proven.
+
+    Therefore we have proven that $2^{\mu_B'}|\overline\pi_B[\mu_B']| \geq
+    2^{\mu_\mathcal{A}}|\overline\pi_\mathcal{A}[\mu_\mathcal{A}]|$.
+
+    From the definition of $\mu_B$, we know that
+    $2^{\mu_B}|\overline\pi_B[\mu_B]| \geq 2^{\mu_B'}|\overline\pi_B[\mu_B']|$,
+    and therefore we conclude that  $2^{\mu_B}|\overline\pi_B[\mu_B]| \geq
+    2^{\mu_\mathcal{A}}|\overline\pi_\mathcal{A}[\mu_\mathcal{A}]|$, which
+    completes the proof.
     \qed
     % At the end of round $r_1$, $b'$ was diffused and hence all honest party
     % chains must all have adopted a chain of at least $c + j + 1$ superblocks of
