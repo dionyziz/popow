@@ -78,20 +78,25 @@
     \begin{figure}
         \caption{Two competing proofs at different levels.}
         \centering
-        \includegraphics[width=\columnwidth,keepaspectratio]{figures/security-proof-chain.png}
+        \includegraphics[width=\columnwidth,keepaspectratio]{figures/security-proof-chain.pdf}
         \label{fig.sec-comparison}
     \end{figure}
 
     \textbf{Claim 1b: } If $\mu_\mathcal{A} < \mu_B'$ then
-    $|\alpha_\mathcal{A}[1:] \cap \alpha_B\downchain[1:]| \leq k_1$.
+    $|\alpha_\mathcal{A}[1:] \cap \alpha_B\downchain[1:]| \leq 2^{\mu_B' - \mu_\mathcal{A}} k_1$.
 
-    Suppose for contradiction that
-    $|\alpha_\mathcal{A}[1:] \cap \alpha_B\downchain[1:]| > k_1$. This means
-    that there are indices $i, j$ such that
-    $|\chain_B\upchain^{\mu_\mathcal{A}}[i:j]| > k_1$ but
+    First, observe that, because the adversary is winning, therefore
+    $|\alpha_\mathcal{A}| > 2^{\mu_B' - \mu_\mathcal{A}}m$.
+
+    Suppose for contradiction that $|\alpha_\mathcal{A}[1:] \cap
+    \alpha_B\downchain[1:]| > 2^{\mu_B' - \mu_\mathcal{A}} k_1$. This means that
+    there are indices $1 \leq i < j$ such that
+    $|\chain_B\upchain^{\mu_\mathcal{A}}[i:j]| > 2^{\mu_B' - \mu_\mathcal{A}}
+    k_1$ but
     $|\chain_B\upchain^{\mu_\mathcal{A}}[i:j]\downchain\upchain^{\mu_B'}| = 0$.
-    But this contradicts the goodness of $\chain_B\upchain^{\mu_B'}$ with
-    overwhelming probability in $k_1$.
+    But this contradicts the goodness of $\chain_B\upchain^{\mu_B'}$. Therefore
+    there are more than $2^{\mu_B' - \mu_\mathcal{A}}(k_2 + k_3)$ blocks in
+    $\alpha_\mathcal{A}$ that are not in $\alpha_B$, and clearly also more than $k_2 + k_3$ blocks.
 
     From Claim 1a and Claim 1b, we conclude that there are at least $k_2 + k_3$
     blocks after block $b$ in $\alpha_\mathcal{A}$ which do not exist in
