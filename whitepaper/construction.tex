@@ -33,7 +33,7 @@ $\mathcal{P}$. Iterating over these proofs, it extracts the best one by
 comparing these proofs. The comparison is done by calling the maxChain
 algorithm. All proofs are checked for validity before comparison, in particular
 that the first block of the suffix $\chi$ contains a pointer to the last block
-of the prefix $\Pi$. The exact structure of these parts of the proofs will
+of the prefix $\tilde\pi$. The exact structure of these parts of the proofs will
 become clear momentarily when the prover algorithm is presented.
 
 Note that the verifier evaluates the predicate $Q$ on a chain which has the
@@ -43,18 +43,6 @@ only depends on the chain suffix, this does not make a difference. Observe as
 well that the full chain $\chain$ is never sent to the verifier.
 
 \import{./}{algorithms/alg.verifier-lite.tex}
-
-To build our prover, we introduce a helper algorithm, constructInnerChain,
-shown in Algorithm~\ref{alg.nipopow-innerchain}. This algorithm returns the
-superchain of level $\mu$ extracted from the blockchain $\chain$. A
-$\mu$-level superchain is a subchain of the blockchain consisting of those
-superblocks that are of at least level $\mu$. Because of the interlink data
-structure, these blocks are connected between each other with pointers, and so
-a verifier receiving a superchain can verify that it is properly connected.
-If \textit{boundary} is provided, it only returns the blocks more recent than
-the boundary block supplied; otherwise it goes all the way back to genesis.
-
-\import{./}{algorithms/alg.nipopow-innerchain.tex}
 
 The NIPoPoW proof construction is shown in Algorithm~\ref{alg.nipopow-prover}.
 This produces a non-interactive PoPoW in parameter $m$ which consists of a
@@ -68,12 +56,12 @@ $m$ blocks.
 
 \import{./}{algorithms/alg.nipopow-prover.tex}
 
-The algorithm returns a pair $(\tilde\Pi, \chi)$. In this pair, $\chi$ is the
-suffix of the blockchain containing the most recent $k$ blocks. $\tilde\Pi$ is
-a set of blocks pertaining to the blockchain with the last $k$ blocks removed.
-Because the blocks are combined into $\tilde\Pi$ with the set union operator,
+The algorithm returns a pair $(\tilde\pi, \chi)$. In this pair, $\chi$ is the
+suffix of the blockchain containing the most recent $k$ blocks. $\tilde\pi$ is
+a subchain of the underlying blockchain with the last $k$ blocks removed.
+Because the blocks are combined into $\tilde\pi$ with the set union operator,
 the proof will contain each block once, even if that block exists in multiple
-superchain levels. When we take a superchain of level $\mu$ and are interested
+superchain levels. When we take a $\mu$-superchain and are interested
 in its last $m$ blocks, we fill the same range of blocks with blocks from the
 superchain of level $\mu - 1$ below.  All the blocks of level $\mu$ which are
 within this last $m$ blocks range will also be superblocks of level $\mu - 1$
@@ -84,7 +72,7 @@ following: Assume the blockchain has at least $m$ blocks in total. Then when a
 superchain of level $\mu$ has less than $m$ blocks in total, these blocks will
 all be necessarily included into the proof by a lower-level superchain $\mu -
 i$ for some $i > 0$.  Therefore, it does not hurt to add them to the set
-$\tilde\Pi$ earlier.
+$\tilde\pi$ earlier.
 
 % \begin{figure}[h]
 %     \caption{The first of a series of interactive proofs-of-proof-of-work for
