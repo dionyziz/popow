@@ -1,5 +1,7 @@
 \section{Consensus layer support} \label{sec:consensus}
 
+\subsection{The interlink pointers data structure}
+
 We will now start constructing a concrete blockchain proof protocol. Before
 we're able to define the prover and the verifier algorithms, we need to propose
 certain modifications to the consensus layer.
@@ -54,3 +56,87 @@ the Genesis block.
 
 % \import{./}{algorithms/alg.nipopow-helper.tex}
 \import{./}{algorithms/alg.nipopow-interlink.tex}
+
+\subsection{Superchain quality}
+
+We now formally describe the distribution of superblocks within a blockchain.
+
+\begin{definition}{(Locally good superchain)}
+A superchain $\chain'$ of level
+$\mu$ with underlying chain $\chain$ is said to be \textnormal{locally good}
+with respect to security parameter $\delta$, written
+$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, if $|\chain'| > (1 -
+\delta)2^{-\mu}|\chain|$.
+\end{definition}
+
+\begin{definition}{(Chain superquality)}
+The $(\delta, m)$ superquality property
+$Q^\mu_{scq}$ of a chain $\chain$ pertaining to level $\mu$ with security
+parameters $\delta \in \mathbb{R}$ and $m \in \mathbb{N}$ states that for all
+$m' \geq m$, it holds that $\textsf{local-good}_{\delta}(C\upchain^\mu[-m':],
+C\upchain^\mu[-m':]\downchain, \mu)$. That is, all suffixes that are
+sufficiently large are locally good.
+\end{definition}
+
+\begin{lemma}\label{lem:superquality}
+For all levels $\mu$, for all constant $\delta > 0$, a chain
+$\chain$ containing only honestly-generated blocks adopted by an honest party in
+an execution with random scheduling has $(\delta, m)$-superquality at level
+$\mu$ with overwhelming probability in $m$.
+\end{lemma}
+
+\begin{proof}
+Let $\chain' = \chain\upchain^\mu$ and let $|\chain^*| =
+\chain'[-m':]$ for some $m' \geq m$. Then let $B \in \chain^*\downchain$ and let
+$X_B$ be the random variable equal to $1$ if $\textit{level}(B) \geq \mu$ and
+$0$ otherwise. $\{ X_B: B \in \chain^* \}$ are mutually independent Bernoulli
+random variables with expectation $E(X_B) = 2^{-\mu}|\chain^*\downchain|$. Let
+$X = \sum_{B \in \chain^*\downchain}{X_B}$. Then $X$ follows a Binomial
+distribution with parameters $(m', 2^{-\mu})$ and note that $|\chain^*| = X$.
+Then $\mathbb{E}(|\chain^*|) = 2^{-\mu}|\chain^*|$. Applying a Chernoff bound on
+$|\chain^*|$ we obtain that:
+
+\begin{equation*}
+\Pr[|\chain^*| \leq (1 - \delta)2^{-\mu}] \leq
+\exp(-\delta^2 2^{-\mu-1}|\chain^*|)
+\end{equation*}
+\end{proof}
+
+\begin{definition}{(Multilevel quality)}
+A $\mu$-superchain $\chain'$ is said to have \textit{multilevel quality}, written
+$\textnormal{multi-good}_{\delta, k_1}(\chain, \chain', \mu)$ with respect to an
+underlying chain $\chain = \chain'\downchain$ with security parameters $k_1,
+\delta$ if for all $\mu' < \mu$ it holds that for any $\chain^* \subseteq \chain$,
+if $|\chain^*\upchain^{\mu'}| = k_1$, then $|\chain^*\upchain^{\mu}| \geq (1 -
+\delta)2^{\mu - \mu'}|\chain^*\upchain^{\mu'}|$
+\end{definition}
+
+Note also that for $\delta < 0.5$, multilevel quality implies that
+$|\chain^*\upchain^{\mu}| \geq 1$.
+
+\begin{lemma}\label{lem:multilevel}
+For all levels $\mu$, for all constant $0 < \delta \leq 0.5$, a chain $\chain$
+containing only honestly-generated blocks adopted by an honest party in an
+execution with random scheduling has $(\delta, k_1)$ multilevel quality at level
+$\mu$ with overwhelming probability in $k_1$.
+\end{lemma}
+\begin{proof}
+???
+\end{proof}
+
+\begin{definition}{(Good superchain)}{(lem:good)}
+A $\mu$-superchain $\chain'$ is said to be \textit{good}, written
+$\textnormal{good}_{\delta, k_1}(\chain, \chain', \mu)$, with respect to an
+underlying chain $\chain = \chain'\downchain$ if it has both superquality and multilevel quality with the same parameters $(\delta, m)$.
+\end{definition}
+
+\begin{corollary}{(Optimistic superchain distribution)}
+For all levels $\mu$, for all constant $0 < \delta < 0.5$, a chain
+$\chain$ containing only honestly-generated blocks adopted by an honest party in
+an execution with random scheduling is $(\delta, m)$-good at level
+$\mu$ with overwhelming probability in $m$.
+\end{corollary}
+\begin{proof}
+This is a direct consequence of Lemma~\ref{lem:superquality} and
+Lemma~\ref{lem:multilevel}.
+\end{proof}
