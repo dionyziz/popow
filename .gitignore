@@ -1,7 +1,6 @@
 *.aux
 *.log
 *.out
-*.pdf
 *.cls
 *.cfg
 *.glo
