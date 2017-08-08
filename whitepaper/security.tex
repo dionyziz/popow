@@ -35,6 +35,7 @@ setting\cite{backbone}.
 \end{definition}
 
 Executions are typical with overwhelming probability.
+\aknote{at least sketch the proof of this}
 
 \begin{lemma}\label{lem:negbin}
     Let $S$ be a set of consecutive rounds such that $Z_S \geq k$ for some
@@ -53,8 +54,12 @@ Executions are typical with overwhelming probability.
 
 The following lemma is at the heart of the security proof that will follow.
 
+\aknote{
+XXX mention below that you are a in typical execution XXX}
+
 \begin{lemma}\label{lem:level-comparison}
-    Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$ and $\chain_B$ is
+    Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$  
+    and $\chain_B$ is
     a chain adopted by an honest party at round $r_2$. Let $\chain_B^S = \{b \in
     \chain_B: b \textnormal{ was generated during } S\}$. Let $\mu_\mathcal{A},
     \mu_B \in \mathbb{N}$. Suppose $\chain_B^S\upchain^{\mu_B}$ is good.
