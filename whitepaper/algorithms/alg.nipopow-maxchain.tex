@@ -1,47 +1,26 @@
 \begin{algorithm}[H]
-    \caption{\label{alg.nipopow-maxchain}The \textsf{maxChain} algorithm
-    for the NIPoPoW protocol. Returns True if the underlying chain of player
-    $\alpha$ is deemed longer than the underlying chain of player $\beta$}
+    \caption{\label{alg.nipopow-maxchain}The algorithm implementation for the
+    $\geq$ operator to compare two proofs in the NIPoPoW protocol parameterized
+    with security parameter $m$. Returns True if the underlying chain of player
+    $A$ is deemed longer than the underlying chain of player $B$}
     \begin{algorithmic}[1]
-        \Function{\sf maxChain$_m$}{$\tilde{\Pi}_\alpha, \tilde{\Pi}_\beta$}
-            \Let{\overline{\Pi}_\alpha}{\textsf{parse}(\tilde{\Pi}_\alpha)}
-            \Let{\overline{\Pi}_\beta}{\textsf{parse}(\tilde{\Pi}_\beta)}
-            \If{$|\overline{\Pi}_\alpha| > |\overline{\Pi}_\beta|$}
-                \State\Return{$
-                    \lnot
-                    \textsf{maxChain}_m
-                    (\tilde{\Pi}_\beta, \tilde{\Pi}_\alpha)
-                $}
+        \Function{{\sf best-arg}$_m$}{$\overline\pi, b$}
+            \Let{M}{\{\mu: |\overline\pi[\mu]| \geq m\}}
+            \If{$M \neq \emptyset$}
+                \Let{\mu}{\argmax_{\mu \in M}\{2^\mu |\overline\pi[\mu]\{b:\}|\}}
+            \Else
+                \Let{\mu}{0}
             \EndIf
-            % \If{$|\overline{\Pi}_\beta - \overline{\Pi}_\alpha| > 1$}
-            %     \State\Return{False}
-            % \EndIf
-            \Let{b}{\textsf{LCA}(\tilde{\Pi}_\alpha, \tilde{\Pi}_\beta)}
-            \For{$\mu = |\overline{\Pi}_\beta|$ down to $0$}
-                \Let{\textsf{adv}_\alpha}{
-                    |\overline{\Pi}_\alpha[\mu]| -
-                    \textsf{findInChain}(\overline{\Pi}_\alpha[\mu], b)
-                }
-                \Let{\textsf{adv}_\beta}{
-                    |\overline{\Pi}_\beta[\mu]| -
-                    \textsf{findInChain}(\overline{\Pi}_\beta[\mu], b)
-                }
-                \If{$\textsf{adv}_\alpha \geq m \lor \textsf{adv}_\beta \geq m$}
-                    \State\Return{$(\textsf{adv}_\alpha > \textsf{adv}_\beta)$}
-                    % \If{$\textsf{adv}_\alpha > \textsf{adv}_\beta$}
-                    %     \State\Return{True}
-                    % \Else
-                    %     \State\Return{False}
-                    % \EndIf
-                \EndIf
-            \EndFor
-            \State\Return{$(|\overline{\Pi}_\alpha[0]| > |\overline{\Pi}_\beta[0]|)$}
-            % \If{$|\overline{\Pi}_\alpha[0]| > |\overline{\Pi}_\beta[0]|$}
-            %     \State\Return{True}
-            % \Else
-            %     \State\Return{False}
-            % \EndIf
+            \Let{\alpha}{\overline\pi[\mu]\{b:\}}
+            \State\Return{$2^\mu|\alpha|$}
         \EndFunction
+        \Operator{$\tilde\pi_A \geq_m \tilde\pi_B$}
+            \Let{\overline\pi_A}{\textsf{parse}(\tilde\pi_A)}
+            \Let{\overline\pi_B}{\textsf{parse}(\tilde\pi_B)}
+            \Let{b}{\textsf{LCA}(\tilde\pi_A, \tilde\pi_B)}
+            \State\Return{$\textsf{best-arg}_m(\overline\pi_A, b) \geq
+                           \textsf{best-arg}_m(\overline\pi_B, b)$}
+        \EndOperator
     \vskip8pt
     \end{algorithmic}
 \end{algorithm}

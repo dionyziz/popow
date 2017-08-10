@@ -34,6 +34,9 @@
 }
 \fi
 
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
 \def\Let#1#2{\State $#1\gets#2$}
 \newcommand{\e}{\varepsilon}
 \def\chain{\mathcal{C}}
@@ -45,6 +48,10 @@
 \def\chain{\mathcal{C}}
 \let\rest\lceil
 \let\suffix\rceil
+
+\algblockdefx[Operator]{Operator}{EndOperator}
+[1]{\textbf{operator #1}}
+[0]{\textbf{end operator}}
 
 \usepackage{color}
 
