@@ -60,16 +60,14 @@ XXX
 
 The following lemma is at the heart of the security proof that will follow.
 
-\aknote{
-XXX mention below that you are a in typical execution XXX}
-
 \aknote{It might be better if instead of $\chain'_\mathcal{A}$
 you just count the number of $\mu_\mathcal{A}$ blocks the adversary produced.}
 
 \begin{lemma}\label{lem:level-comparison}
-    Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$  
+    Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$
     and $\chain_B$ is
-    a chain adopted by an honest party at round $r_2$. Let $\chain_B^S = \{b \in
+    a chain adopted by an honest party at round $r_2$ of a typical execution.
+    Let $\chain_B^S = \{b \in
     \chain_B: b \textnormal{ was generated during } S\}$. Let $\mu_\mathcal{A},
     \mu_B \in \mathbb{N}$. Suppose $\chain_B^S\upchain^{\mu_B}$ is good.
     Suppose $\chain'_\mathcal{A}$ is a $\mu_\mathcal{A}$-superchain containing
