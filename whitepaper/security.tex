@@ -37,6 +37,8 @@ setting\cite{backbone}.
 Executions are typical with overwhelming probability.
 \aknote{at least sketch the proof of this}
 
+\aknote{the lemma below, if really needed, should be folded into typicality}
+
 \begin{lemma}\label{lem:negbin}
     Let $S$ be a set of consecutive rounds such that $Z_S \geq k$ for some
     security parameter $k$. Then we have that $|S| \geq (1 -
@@ -56,6 +58,9 @@ The following lemma is at the heart of the security proof that will follow.
 
 \aknote{
 XXX mention below that you are a in typical execution XXX}
+
+\aknote{It might be better if instead of $\chain'_\mathcal{A}$
+you just count the number of $\mu_\mathcal{A}$ blocks the adversary produced.}
 
 \begin{lemma}\label{lem:level-comparison}
     Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$  
@@ -115,6 +120,11 @@ XXX mention below that you are a in typical execution XXX}
 Let $\tilde\pi$ be an honestly generated proof parsed as $\overline\pi$ and constructed upon some adopted chain $\chain$ and let $b$ be any block in
 $\tilde\pi$. Then $\mu'$ is defined as follows:
 
+\aknote{the below is very close to being unreadable}
+\aknote{state that it is a  function $\pi,b$}
+\aknote{is parse() really needed?}
+\aknote{i am not sure i like the name, in what sense full implies the max?}
+
 \begin{equation*}
 \mu' = \max\{\mu: |\overline\pi[\mu]\{b:\}[1:]| \geq \max(m, (1 - \delta)2^{-\mu}|\overline\pi[\mu]\{b:\}[1:]\downchain|)\}
 \end{equation*}
@@ -161,6 +171,9 @@ Then
     preceeds $b$, and so we are done.
     \qed
 \end{proof}
+
+
+\aknote{maybe we need a definition of the ``compared level'' }
 
 \begin{lemma}
 Suppose the verifier evaluates $\tilde\pi_\mathcal{A} \geq \tilde\pi_B$ in a protocol interaction where $B$ is honest and assume during the comparison that the compared level of the honest party is $\mu_B$.
