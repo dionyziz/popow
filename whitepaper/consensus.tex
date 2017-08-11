@@ -69,6 +69,17 @@ $\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, if $|\chain'| > (1 -
 \delta)2^{-\mu}|\chain|$.
 \end{definition}
 
+\begin{lemma}\label{lem:localgood}
+Assume chain $\chain$ contains only honestly-generated blocks and has been
+adopted by an honest party in an execution with random network scheduling. Then
+for all levels $\mu$, for all constant $\delta > 0$, all continuous subchains
+$\chain' = \chain[i:j]$ with $|\chain'| \geq m$ are locally good,
+$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$.
+\end{lemma}
+\begin{proof}
+XXX
+\end{proof}
+
 \begin{definition}{(Chain superquality)}
 The $(\delta, m)$ superquality property
 $Q^\mu_{scq}$ of a chain $\chain$ pertaining to level $\mu$ with security
