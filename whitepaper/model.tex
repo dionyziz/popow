@@ -34,8 +34,14 @@ setting the predicates will be referring to an active evolving chain
 we should define them in the presence of a blockchain protocol.
 Our theoretical abstraction is based on  the ``backbone'' model of
 \cite{backbone} that formalizes the operation of the Bitcoin protocol.
+
+The backbone approach models proof-of-work discovery attempts by using a random
+oracle~\cite{RO}. The model uses previous formulations of secure multiparty
+computation, specifically Canetti's formulation of ``real world'' execution
+~\cite{uc0}~\cite{uc1}~\cite{uc2}.
+
 We introduce the Prover and the Verifier in
-the standard Backbone model as follows. The Prover will extend the functionality
+the Backbone model as follows. The Prover will extend the functionality
 of the miner node. The Verifier will be a completely new entity that can be spawned
 by the environment and process a NiPoPoW produced by the miner nodes running
 the Prover code. Detailed algorithms for the integration with the formal
