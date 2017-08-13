@@ -100,57 +100,42 @@ you just count the number of $\mu_\mathcal{A}$ blocks the adversary produced.}
     \qed
 \end{proof}
 
-% \begin{lemma}
-%     If the maximum level superchain belonging to the honest parties of at least
-%     $m$ blocks is of level $\mu$, then the adversary cannot produce a
-%     superchain of level better than $\mu + 1$ with at least $m$ blocks except
-%     with negligible probability.
-% \end{lemma}
-% \begin{proof}
-%     ???
-% \end{proof}
-%
-% Based on the above, observe that the adversarial proof cannot exceed the
-% superblock level of the honest proof by more than one, except with negligible
-% probability. Therefore, proofs that are of much inferior superblock level can
-% be rejected immediately. This allows us to assume that for two competing proofs
-% $\overline{\Pi}_\alpha$ and $\overline{\Pi}_\beta$ it holds that
-% $||\overline{\Pi}_A| - |\overline{\Pi}_B|| \leq 1$.
-%
-
 \begin{definition}{(Full level of honest proof)}
-Let $\tilde\pi$ be an honestly generated proof parsed as $\overline\pi$ and constructed upon some adopted chain $\chain$ and let $b$ be any block in
-$\tilde\pi$. Then $\mu'$ is defined as follows:
+Let $\pi$ be an honestly generated proof constructed upon some adopted chain
+$\chain$ and let $b \in \pi$.
+
+Then $\mu'$ is defined as follows:
 
 \aknote{the below is very close to being unreadable}
 \aknote{state that it is a  function $\pi,b$}
-\aknote{is parse() really needed?}
 \aknote{i am not sure i like the name, in what sense full implies the max?}
 
 \begin{equation*}
-\mu' = \max\{\mu: |\overline\pi[\mu]\{b:\}[1:]| \geq \max(m, (1 - \delta)2^{-\mu}|\overline\pi[\mu]\{b:\}[1:]\downchain|)\}
+\mu' = \max\{\mu: |\pi\{b:\}\upchain^\mu| \geq \max(m + 1, (1 -
+\delta)2^{-\mu}|\pi\{b:\}\upchain^\mu\downchain|)\}
 \end{equation*}
 
-We call $\mu'$ the \textit{full} level of proof $\tilde\pi$ with respect to
+We call $\mu'$ the \textit{full} level of proof $\pi$ with respect to
 block $b$ with security parameters $\delta$ and $m$.
 \end{definition}
 
 \begin{lemma}\label{lem:allblocks}
-Let $\overline\pi = \textsf{parse}(\tilde\pi)$ be the parsed proof of some
-honest proof $\tilde\pi$ generated with security parameters $\delta, m$. Let
-$\chain$ be the underlying chain, $b \in \chain$ be any block and $\mu'$ be the
-full level of the proof with respect to $b$ and the same security parameters.
+Let $\pi$ be some honest proof generated with security parameters $\delta, m$.
+Let $\chain$ be the underlying chain, $b \in \chain$ be any block and $\mu'$ be
+the full level of the proof with respect to $b$ and the same security
+parameters.
+
 Then
 \begin{equation*}
-\chain\{b:\}\upchain^{\mu'} = \overline\pi[\mu']\{b:\}
+\chain\{b:\}\upchain^{\mu'} = \pi\{b:\}\upchain^{\mu'}
 \end{equation*}
 \end{lemma}
 \begin{proof}
-    $\overline\pi[\mu']\{b:\} \subseteq \chain\{b:\}\upchain^{\mu'}$ is trivial.
+    $\pi\{b:\}\upchain^{\mu'} \subseteq \chain\{b:\}\upchain^{\mu'}$ is trivial.
 
     For the converse, we will show that for all $\mu^* > \mu'$, we have that in
-    the iteration of the Prove \texttt{for} loop with $\mu = \mu^*$, the block stored
-    in variable $B$ preceeds block $b$ in $\chain$.
+    the iteration of the Prove \texttt{for} loop with $\mu = \mu^*$, the block
+    stored in variable $B$ preceeds block $b$ in $\chain$.
 
     Suppose $\mu = \mu^*$ is the first \texttt{for} loop iteration during which the
     property is violated. Clearly this cannot be the first iteration, as there
@@ -158,18 +143,18 @@ Then
     induction hypothesis we see that during the iteration $\mu = \mu^* + 1$,
     block $B$ preceeded block $b$. But from the definition of $\mu'$ we know
     that $\mu'$ is the highest level for which
-    $|\overline\pi[\mu']\{b:\}[1:]|
+    $|\pi\{b:\}\upchain^{\mu'}[1:]|
     \geq \max(m, (1 -
-    \delta)2^{-\mu'}|\overline\pi[\mu']\{b:\}[1:]\downchain|)$.
+    \delta)2^{-\mu'}|\pi\{b:\}\upchain^{\mu'}[1:]\downchain|)$.
 
     Hence, this
     property cannot hold for $\mu^* > \mu'$ and therefore
-    $|\overline\pi_B[\mu_B^*]\{b:\}[1:]| < m$ or
-    $\lnot \textsf{local-good}_\delta(\overline\pi[\mu^*]\{b:\}[1:], \chain, \mu^*)$.
+    $|\pi_B\{b:\}\upchain^{\mu_B^*}[1:]| < m$ or $\lnot
+    \textsf{local-good}_\delta(\pi\{b:\}\upchain{\mu^*}[1:], \chain, \mu^*)$.
 
     In case \textsf{local-good} is violated, variable $B$ remains unmodified and
     the induction step holds. If \textsf{local-good} is not violated, then
-    $|\overline\pi[\mu^*]\{b:\}[1:]| < m$ and so $\overline\pi[\mu^*][-m]$
+    $|\pi\{b:\}\upchain^{\mu^*}[1:]| < m$ and so $\pi\upchain^{\mu^*}[-m]$
     preceeds $b$, and so we are done.
     \qed
 \end{proof}
@@ -178,10 +163,11 @@ Then
 \aknote{maybe we need a definition of the ``compared level'' }
 
 \begin{lemma}
-Suppose the verifier evaluates $\tilde\pi_\mathcal{A} \geq \tilde\pi_B$ in a protocol interaction where $B$ is honest and assume during the comparison that the compared level of the honest party is $\mu_B$.
-Let $b = \textsf{LCA}(\tilde\pi_\mathcal{A}, \tilde\pi_B)$ and
-let $\mu_B'$ be the full level of $\pi_B$ with respect to $b$.
-Then $\mu_B' \geq \mu_B$.
+Suppose the verifier evaluates $\pi_\mathcal{A} \geq \pi_B$ in a protocol
+interaction where $B$ is honest and assume during the comparison that the
+compared level of the honest party is $\mu_B$. Let $b =
+\textsf{LCA}(\pi_\mathcal{A}, \pi_B)$ and let $\mu_B'$ be the full
+level of $\pi_B$ with respect to $b$. Then $\mu_B' \geq \mu_B$.
 \end{lemma}
 \begin{proof}
     Because $\mu_B$ is the compared level of the honest party we have:
@@ -190,10 +176,10 @@ Then $\mu_B' \geq \mu_B$.
 
     We will prove the claim by contradiction. Suppose $\mu_B' < \mu_B$. Because
     by definition $\mu_B'$ is the maximum level such that
-    $|\overline\pi_B[\mu]\{b:\}[1:]| \geq \max(m, (1 -
-    \delta)2^{-\mu}|\overline\pi_B[\mu]\{b:\}[1:]\downchain|)$, therefore
+    $|\pi_B\{b:\}\upchain^\mu[1:]| \geq \max(m, (1 -
+    \delta)2^{-\mu}|\pi_B\{b:\}\upchain^\mu[1:]\downchain|)$, therefore
     $\mu_B$ does not satisfy this condition. But we know that
-    $|\overline\pi_B[\mu_B]\{b:\}[1:]| \geq m$ because $\mu_B$ was selected by
+    $|\pi_B\{b:\}\upchain^{\mu_B}[1:]| \geq m$ because $\mu_B$ was selected by
     the Verifier. So therefore,
 
     \begin{equation*}

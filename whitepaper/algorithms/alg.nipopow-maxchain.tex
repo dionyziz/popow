@@ -3,23 +3,21 @@
     $\geq$ operator to compare two proofs in the NIPoPoW protocol parameterized
     with security parameter $m$. Returns True if the underlying chain of player
     $A$ is deemed longer than the underlying chain of player $B$}
+
+    % XXX: \tilde\pi -> \pi
+    %      \overbar\pi[\mu] -> \tilde\pi\upchain^m
+    %
+    % XXX: Move NB into typicality
+
     \begin{algorithmic}[1]
-        \Function{{\sf best-arg}$_m$}{$\overline\pi, b$}
-            \Let{M}{\{\mu: |\overline\pi[\mu]| \geq m\}}
-            \If{$M \neq \emptyset$}
-                \Let{\mu}{\argmax_{\mu \in M}\{2^\mu |\overline\pi[\mu]\{b:\}|\}}
-            \Else
-                \Let{\mu}{0}
-            \EndIf
-            \Let{\alpha}{\overline\pi[\mu]\{b:\}}
-            \State\Return{$2^\mu|\alpha|$}
+        \Function{{\sf best-arg}$_m$}{$\pi, b$}
+            \Let{M}{\{\mu: |\pi\upchain^\mu\{b:\}| \geq m\} \cup \{0\}}
+            \State\Return{$\max_{\mu \in M}\{2^\mu |\pi\upchain^\mu\{b:\}|\}$}
         \EndFunction
-        \Operator{$\tilde\pi_A \geq_m \tilde\pi_B$}
-            \Let{\overline\pi_A}{\textsf{parse}(\tilde\pi_A)}
-            \Let{\overline\pi_B}{\textsf{parse}(\tilde\pi_B)}
-            \Let{b}{\textsf{LCA}(\tilde\pi_A, \tilde\pi_B)}
-            \State\Return{$\textsf{best-arg}_m(\overline\pi_A, b) \geq
-                           \textsf{best-arg}_m(\overline\pi_B, b)$}
+        \Operator{$\pi_A \geq_m \pi_B$}
+            \Let{b}{\textsf{LCA}(\pi_A, \pi_B)}
+            \State\Return{$\textsf{best-arg}_m(\pi_A, b) \geq
+                           \textsf{best-arg}_m(\pi_B, b)$}
         \EndOperator
     \vskip8pt
     \end{algorithmic}

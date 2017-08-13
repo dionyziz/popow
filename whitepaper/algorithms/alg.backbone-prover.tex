@@ -1,6 +1,7 @@
 \begin{figure}[t]
 \begin{algorithm}[H]
-    \caption{\label{alg.backbone-prover} Our generic honest Prover entity addition to the
+    \caption{\label{alg.backbone-prover} Our generic honest Prover entity
+        addition to the
         backbone model. It is augmented with a{ \em
         proof generating function} $\textsf{Prove}^Q(\cdot)$ parameterized by a
         predicate $Q$}
@@ -10,8 +11,8 @@
         \While{\textsc{True}}
             \Let{\tilde\chain}{\mathsf{maxvalid}( \chain, \mbox{any chain $\chain'$ found in  \textsc{Receive}()}) }
             \If{$\textsc{Input}()\mbox{ contains }\textsc{ReadProof}$}
-                \Let{\overline \Pi}{\textsf{Prove}^Q(\chain)}
-                \State\textsc{Diffuse}{$(\overline \Pi)$}
+                \Let{\pi}{\textsf{Prove}^Q(\chain)}
+                \State\textsc{Diffuse}{$(\pi)$}
             \Else
                 \State\textsc{Diffuse}{$(\bot)$}
             \EndIf

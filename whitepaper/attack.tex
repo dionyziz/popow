@@ -15,16 +15,16 @@ to double spend with non-negligible probability.
 In their construction, Kiayias et. al. \cite{KLS} create an interactive proof of
 proof-of-work by allowing a verifier to interactively communicate with two
 provers $A$ and $B$. The verifier queries the two provers for their claimed
-anchored superchains $\overline\pi_A[\mu]$ and $\overline\pi_B[\mu]$ of a
+anchored superchains $\pi_A\upchain^\mu$ and $\pi_B\upchain^\mu$ of a
 certain level $\mu$. The verifier starts querying at the highest possible level
 $\mu$ and successively descends until level $\mu$ is sufficiently low such that
-the lowest common ancestor block $b = LCA(\overline\pi_A[\mu],
-\overline\pi_B[\mu])$ of the two provers' $\mu$-superchains is $m$ blocks deep
+the lowest common ancestor block $b = LCA(\pi_A\upchain^\mu,
+\pi_B\upchain^\mu)$ of the two provers' $\mu$-superchains is $m$ blocks deep
 for at least one of the provers. More specifically, the querying stops at such
-$\mu$ when $max(|\overline\pi_A[\mu]\{b:\}|, |\overline\pi_B[\mu]\{b:\}|) \geq
+$\mu$ when $max(|\pi_A\upchain^\mu\{b:\}|, |\pi_B\upchain^\mu\{b:\}|) \geq
 m$ holds. Subsequently, the winner is designated as the prover with the most
 blocks after $b$ at that level. More precisely, the winner is $A$ if
-$|\overline\pi_A[\mu]\{b:\}| \geq |\overline\pi_B[\mu]\{b:\}|)$ and otherwise it
+$|\pi_A\upchain^\mu\{b:\}| \geq |\pi_B\upchain^\mu\{b:\}|)$ and otherwise it
 is $B$. Of course, the communication can be made efficient by only requesting
 blocks after the purported LCA.
 

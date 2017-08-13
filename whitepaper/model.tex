@@ -85,10 +85,10 @@ $(P, V)$ where $P$ is called the \textit{prover} and $V$ is called the
 \textit{verifier}. $P$ is a PPT algorithm that is spawned by a full node
 when they wish to produce a proof, accepts as input a full chain $\chain$ and
 produces a proof $\pi$ as its output. $V$ is a PPT algorithm which is spawned
-by the environment at some round, receives a vector of proofs $\bar{\pi}$ from
-both honest parties and the adversary and returns its decision $d \in \{T, F,
-\bot\}$ before the next round and terminates. The honest parties produce proofs
-for $V$ using $P$.
+by the environment at some round, receives a pair of proofs $(\pi_A, \pi_B)$
+from both an honest party and the adversary and returns its decision $d \in \{T,
+F, \bot\}$ before the next round and terminates. The honest parties produce
+proofs for $V$ using $P$.
 
 \subsection{Blockchain addressing}
 

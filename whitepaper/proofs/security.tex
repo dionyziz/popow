@@ -7,31 +7,30 @@
     and has the same value for all honest miners.  Assume the execution is
     typical. The verifier $V$ communicates with at least two provers,
     $\mathcal{A}$, the adversary, and $B$, an honest prover.  The verifier
-    receives the proofs $\tilde\pi_\mathcal{A}, \tilde\pi_B$ from the adversary
-    and the honest prover respectively and parses them into
-    $\overline\pi_\mathcal{A}$ and $\overline\pi_B$ respectively. Because $B$ is
-    honest, $\tilde\pi_B$ will be a proof constructed based on an underlying
-    blockchain $\chain_B$ which is the adopted blockchain of $B$ during round
-    $r_3$ at which $\tilde\pi_B$ was generated. Furthermore,
-    $\tilde\pi_\mathcal{A}$ will have been generated at some round $r_3' \leq
+    receives the proofs $\pi_\mathcal{A}, \pi_B$ from the adversary
+    and the honest prover respectively. Because $B$ is
+    honest, $\pi_B$ will be a proof constructed based on an underlying
+    blockchain $\chain_B$ (with $\pi_B \subseteq \chain_B$) which is the adopted blockchain of $B$ during round
+    $r_3$ at which $\pi_B$ was generated. Furthermore,
+    $\pi_\mathcal{A}$ will have been generated at some round $r_3' \leq
     r_3$.
 
     The verifier then outputs $\lnot Q(\chain_B)$, and so
     $\textsf{Verify}^Q_{m,k} = \lnot Q(\chain_B)$. Thus it is necessary that
-    $\tilde\pi_\mathcal{A} \geq \tilde\pi_B$, otherwise, because $Q$
+    $\pi_\mathcal{A} \geq \pi_B$, otherwise, because $Q$
     is suffix sensitive, $\textsf{Verify}^Q$ would have returned $Q(\chain_B)$.
-    We will now show that $\tilde\pi_\mathcal{A} \geq \tilde\pi_B$ is
+    We will now show that $\pi_\mathcal{A} \geq \pi_B$ is
     a negligible event.
 
-    Let $b = \textsf{LCA}(\tilde\pi_\mathcal{A}, \tilde\pi_B)$ and let $b^*$ be
+    Let $b = \textsf{LCA}(\pi_\mathcal{A}, \pi_B)$ and let $b^*$ be
     the most recent honestly generated block in $\chain_B$ preceeding $b$ (and note that $b^*$ necessarily exists because Genesis was honestly generated).
     let the levels of comparison decided by the verifier be $\mu_\mathcal{A}$
     and $\mu_B$ respectively.
 
-    Let $\mu_B'$ be the full level of proof $\tilde\pi_B$ with respect to block
+    Let $\mu_B'$ be the full level of proof $\pi_B$ with respect to block
     $b$. Call $\alpha_\mathcal{A} =
-    \overline\pi_\mathcal{A}[\mu_\mathcal{A}]\{b:\}$,
-    $\alpha'_B = \overline\pi_B[\mu_B']\{b:\}$.
+    \pi_\mathcal{A}\upchain^{\mu_\mathcal{A}}\{b:\}$,
+    $\alpha'_B = \pi_B\upchain^{\mu_B'}\{b:\}$.
 
     % There are
     % two ways in which $V$'s call to $\textsf{maxChain}$ can return true. Either
@@ -70,10 +69,10 @@
 
     Applying Lemma~\ref{lem:allblocks}
     to $\chain_B\{b:\}\upchain^{\mu_B'}$ we see that
-    $\chain_B\{b:\}\upchain^{\mu_B'} = \overline\pi_B[\mu_B']\{b:\}$ and so
+    $\chain_B\{b:\}\upchain^{\mu_B'} = \pi_B\upchain^{\mu_B'}\{b:\}$ and so
     indeed
-    $\overline\pi_B[\mu_B']\{b:\}[1:] \cap
-    \overline\pi_\mathcal{A}[\mu_\mathcal{A}]\{b:\}[1:] = \emptyset$.
+    $\pi_B\upchain^{\mu_B'}\{b:\}[1:] \cap
+    \pi_\mathcal{A}\upchain^{\mu_\mathcal{A}}\{b:\}[1:] = \emptyset$.
 
     \begin{figure}
         \caption{Two competing proofs at different levels.}
@@ -164,15 +163,15 @@
     \end{equation*}
 
     But this contradicts the fact that
-    $\tilde\pi_\mathcal{A} \geq \tilde\pi_A$, and so the claim is proven.
+    $\pi_\mathcal{A} \geq \pi_A$, and so the claim is proven.
 
-    Therefore we have proven that $2^{\mu_B'}|\overline\pi_B[\mu_B']| >
-    2^{\mu_\mathcal{A}}|\overline\pi_\mathcal{A}[\mu_\mathcal{A}]|$.
+    Therefore we have proven that $2^{\mu_B'}|\pi_B\upchain^{\mu_B'}| >
+    2^{\mu_\mathcal{A}}|\pi_\mathcal{A}^{\mu_\mathcal{A}}|$.
 
     From the definition of $\mu_B$, we know that
-    $2^{\mu_B}|\overline\pi_B[\mu_B]| \geq 2^{\mu_B'}|\overline\pi_B[\mu_B']|$,
-    and therefore we conclude that $2^{\mu_B}|\overline\pi_B[\mu_B]| >
-    2^{\mu_\mathcal{A}}|\overline\pi_\mathcal{A}[\mu_\mathcal{A}]|$, which
+    $2^{\mu_B}|\pi_B\upchain^{\mu_B}| \geq 2^{\mu_B'}|\pi_B\upchain^{\mu_B'}|$,
+    and therefore we conclude that $2^{\mu_B}|\pi_B\upchain^{\mu_B}| >
+    2^{\mu_\mathcal{A}}|\pi_\mathcal{A}\upchain^{\mu_\mathcal{A}}|$, which
     completes the proof.
     \qed
     % At the end of round $r_1$, $b'$ was diffused and hence all honest party
