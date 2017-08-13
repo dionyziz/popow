@@ -30,11 +30,11 @@ parameter $m$ is a security parameter pertaining to the prefix of the proof,
 which connects the Genesis block to the $k$-sized suffix.  The verifier
 receives several proofs by different provers in a collection of proofs
 $\mathcal{P}$. Iterating over these proofs, it extracts the best one by
-comparing these proofs. The comparison is done by calling the maxChain
-algorithm. All proofs are checked for validity before comparison, in particular
-that the first block of the suffix $\chi$ contains a pointer to the last block
-of the prefix $\tilde\pi$. The exact structure of these parts of the proofs will
-become clear momentarily when the prover algorithm is presented.
+comparing these proofs. The comparison is done by calling the $\geq_m$
+comparison algorithm. All proofs are checked for validity before comparison, in
+particular that the first block of the suffix $\chi$ contains a pointer to the
+last block of the prefix $\tilde\pi$. The exact structure of these parts of the
+proofs will become clear momentarily when the prover algorithm is presented.
 
 Note that the verifier evaluates the predicate $Q$ on a chain which has the
 suffix $\chi$ and a fake prefix consisting of the empty block $\epsilon$
@@ -100,7 +100,7 @@ for support.
     \label{fig.nipopow}
 \end{figure}
 
-Finally, the maxChain algorithm which performs the actual comparison of proofs
+Finally, the $\geq_m$ operator which performs the actual comparison of proofs
 is presented in Algorithm~\ref{alg.nipopow-maxchain}. It takes two proofs as
 parameters and returns true if the first proof is winning, otherwise it return
 false to indicate the second proof is winning. Initially the algorithm parses
