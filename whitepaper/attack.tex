@@ -64,11 +64,11 @@ r$ is the first round after $r$ during which any block is generated.
 % that only the adversary while the probability \cite{backbone}.
 It is clear
 that $\mathcal{A}$ will succeed in this attack with non-negligible probability
-(XXX: Why? Calculate exact probability)
+\dznote{Why? TODO: Calculate exact probability}
 and cause $B$ to abandon the $\mu$-superblock from their adoped chain.
 Therefore, there will be some $\delta$ such that the adversary will be able to
 cause such variance with non-negligible probability in $m$.
-(XXX: Why? Write out as theorem and prove)
+\dznote{Why? TODO: Write out as theorem and prove}
 
 \subsection{Attacking the interactive proofs protocol}
 
@@ -93,13 +93,13 @@ Observe now that $\mu$-superquality in $B$'s adopted chain is harmed the same as
 before, because $\mathcal{A}$ only works on their secret chain whenever they
 would remain idle in the previous attack. However, for sufficiently large $\mu$,
 the cases needed to suspend working on the secret chain will be small, and hence
-$\mathcal{A}$'s chain will grow with a sufficient rate (XXX: Make this more
-precise). $\mathcal{A}$'s chain $\mu$-superquality is going to be preserved
-(XXX: Why?). Therefore, with sufficient computing power (XXX: Make this more
-precise), $\mathcal{A}$ will be able to generate $m$ $\mu$-superblocks in their
-secret chain before the honest parties are able to produce $m$
-$\mu$-superblocks. Using these in her PoPoW, $\mathcal{A}$ will be able to win
-against the PoPoW produced by $B$.
+$\mathcal{A}$'s chain will grow with a sufficient rate \dznote{TODO: Make this
+more precise}. $\mathcal{A}$'s chain $\mu$-superquality is going to be preserved
+\dznote{TODO: Explain why?}. Therefore, with sufficient computing power
+\dznote{TODO: Make this more precise}, $\mathcal{A}$ will be able to generate
+$m$ $\mu$-superblocks in their secret chain before the honest parties are able
+to produce $m$ $\mu$-superblocks. Using these in her PoPoW, $\mathcal{A}$ will
+be able to win against the PoPoW produced by $B$.
 
 \textbf{Remark.} It is worth isolating the mistake in the security proof from
 the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
