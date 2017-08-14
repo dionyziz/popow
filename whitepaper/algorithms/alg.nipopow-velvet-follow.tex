@@ -7,13 +7,12 @@
             \While{$B \neq \textsf{Genesis}$}
                 \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[\textsf{blockid}(B)][\mu]$}
                     \Let{id}{B.\textsf{interlink}[\mu]}
-                    \Let{B}{\textsf{blockById}[id]}
                 \Else
                     \Comment{Invalid interlink}
                     \Let{id}{B.\textsf{interlink}[0]}
-                    \Let{B}{\textsf{blockById}[id]}
                 \EndIf
-                \State{\textsf{aux}.append($B$)}
+                \Let{B}{\textsf{blockById}[id]}
+                \Let{\textsf{aux}}{\textsf{aux}\cup B}
                 \If{$\textit{level}(B) = \mu$}
                     \State\Return{$B$, aux}
                 \EndIf
