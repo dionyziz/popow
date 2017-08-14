@@ -16,7 +16,7 @@ Drivechains~\cite{sztorc}& $O(1)$       &              & \\
   \end{tabular}
 \end{table}
 
-In the case of 
+In the case of
 }
 
 
@@ -26,23 +26,43 @@ In the case of
 
 \subsection{Multi-blockchain wallets.}
 \label{sec:multichain}
-One potential application of our technique is an efficient multi-cryptocurrency client.
-Consider for example a merchant that wishes to accept payments in any cryptocurrency, not just the most popular ones.
-A na\"ive approach would be for the merchant to simply install an SPV client for each known cryptocurrency. However, this approach would entail downloading the header chain for each cryptocurrency, and periodically (e.g., each day) syncing up by fetching any newly generated block headers.
-Another alternative would be to use an online service supporting multiple currencies, such as an exchange, although this introduces reliance on a third party. Similarly, existing multi-cryptocurrency apps, such as Jaxx and Coinomi rely on third party networks rather than peer-to-peer networks.
+One potential application of our technique is an efficient multi-cryptocurrency
+client. Consider for example a merchant that wishes to accept payments in any
+cryptocurrency, not just the most popular ones. A na\"ive approach would be for
+the merchant to simply install an SPV client for each known cryptocurrency.
+However, this approach would entail downloading the header chain for each
+cryptocurrency, and periodically (e.g., each day) syncing up by fetching any
+newly generated block headers. Another alternative would be to use an online
+service supporting multiple currencies, such as an exchange, although this
+introduces reliance on a third party. Similarly, existing multi-cryptocurrency
+apps, such as Jaxx and Coinomi rely on third party networks rather than
+peer-to-peer networks.
 
-\paragraph{A multi-blockchain wallet based on NIPoPoWs}
- The NIPoPoW-based client maintains a most recent $k$-stable block hash for each of its supported cryptocurrencies, initially the genesis block for each.
-  Each time a payment is received, the client connects to peers on the corresponding network and asks for a NIPoPoW proof relative to the most recently stored block hash. For cryptocurrencies where payments are received very frequently, the NIPoPoW-based client might download nearly every block header, just like an ordinary SPV client; however, for cryptocurrencies used infrequently, the NIPoPoW-based client would be able to skip over many of the blocks.
+\paragraph{A multi-blockchain wallet based on NIPoPoWs. }
+The NIPoPoW-based client maintains a most recent $k$-stable block hash for each
+of its supported cryptocurrencies, initially the genesis block for each. Each
+time a payment is received, the client connects to peers on the corresponding
+network and asks for a NIPoPoW proof relative to the most recently stored block
+hash. For cryptocurrencies where payments are received very frequently, the
+NIPoPoW-based client might download nearly every block header, just like an
+ordinary SPV client; however, for cryptocurrencies used infrequently, the
+NIPoPoW-based client would be able to skip over many of the blocks.
 
-\paragraph{Simulation}
- We developed a simulation to evaluate the potential resources savings resulting from the use of a NIPoPoW-based client.
- We model the arrival of payments in each cryptocurrency as a Poisson process, and assume that the market capitalization of a cryptocurrency is a proxy for usage, i.e. in our model most payments received are Bitcoin transactions, with transactions from the remaining constituting a long tail.
+\paragraph{Simulation.}
+We developed a simulation to evaluate the potential resources savings resulting
+from the use of a NIPoPoW-based client. We model the arrival of payments in
+each cryptocurrency as a Poisson process, and assume that the market
+capitalization of a cryptocurrency is a proxy for usage, i.e. in our model most
+payments received are Bitcoin transactions, with transactions from the
+remaining constituting a long tail.
 
- At the current time of writing, a total of 731 cryptocurrencies are listed on \url{https://coinmarketcap.com/}.
-This list includes many defunct cryptocurrencies that are no longer functioning at all.
-We narrow our focus to the 80 cryptocurrencies that have their own proof-of-work blockchains
- (i.e., no proof of stake) and that have a market cap of over USD \$100,000.
+At the current time of writing, a total of 731 cryptocurrencies are listed on
+coin market directories\footnote{\url{https://coinmarketcap.com/}}. This list
+includes many defunct cryptocurrencies that are no longer functioning at all.
+We narrow our focus to the 80 cryptocurrencies that have their own
+proof-of-work blockchains
+(i.e., no proof of stake) and that have a market cap of over USD \$100,000.
+
 In Table~\ref{tbl:currencies} we show aggregate statistics about these 80 cryptocurrencies, grouped according to the their proof-of-work puzzle.
 %(e.g., Litecoin uses the scrypt hash function, while Bitcoin uses the SHA-256 function). The ``Size today'' column reflects the current size of all the proof-of-work headers, while ``Growth rate'' reflects the additional proof-of-work headers generated each day.
 %Here we make the conservative assumption that the size of a block header is exactly 80 bytes, as it is in Bitcoin.
@@ -54,7 +74,7 @@ In Table~\ref{tbl:experiment} we show the resulting bandwidth costs from simulat
  For the na\"ive SPV client, the total bandwidth cost is dominated by the need to fetch the entire chain of block headers, which the NIPoPoW client does not need to do. The marginal cost for na\"ive SPV depends on the number of blocks generated each day, as well as the transaction inclusion proofs associated with each payment. The NIPoPoW based client provides the most savings when the number of transactions per day is smallest, reducing the necessary bandwidth per day (not including the initial sync up) by 90\%.
 
 \begin{table}
-  \caption{Cost of header chains for all active Proof-of-Work-based cryptocurrencies (collected from \url{Coinwarz.com})}
+  \caption{Cost of header chains for all active Proof-of-Work-based cryptocurrencies (collected from \url{coinwarz.com})}
   \label{tbl:currencies}
   \small
   \centering
