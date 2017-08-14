@@ -33,7 +33,7 @@ $\mathcal{P}$. Iterating over these proofs, it extracts the best one by
 comparing these proofs. The comparison is done by calling the $\geq_m$
 comparison algorithm. All proofs are checked for validity before comparison, in
 particular that the first block of the suffix $\chi$ contains a pointer to the
-last block of the prefix $\tilde\pi$. The exact structure of these parts of the
+last block of the prefix $\pi$. The exact structure of these parts of the
 proofs will become clear momentarily when the prover algorithm is presented.
 
 Note that the verifier evaluates the predicate $Q$ on a chain which has the
@@ -56,10 +56,10 @@ $m$ blocks.
 
 \import{./}{algorithms/alg.nipopow-prover.tex}
 
-The algorithm returns a pair $(\tilde\pi, \chi)$. In this pair, $\chi$ is the
-suffix of the blockchain containing the most recent $k$ blocks. $\tilde\pi$ is
+The algorithm returns a pair $(\pi, \chi)$. In this pair, $\chi$ is the
+suffix of the blockchain containing the most recent $k$ blocks. $\pi$ is
 a subchain of the underlying blockchain with the last $k$ blocks removed.
-Because the blocks are combined into $\tilde\pi$ with the set union operator,
+Because the blocks are combined into $\pi$ with the set union operator,
 the proof will contain each block once, even if that block exists in multiple
 superchain levels. When we take a $\mu$-superchain and are interested
 in its last $m$ blocks, we fill the same range of blocks with blocks from the
@@ -72,7 +72,7 @@ following: Assume the blockchain has at least $m$ blocks in total. Then when a
 superchain of level $\mu$ has less than $m$ blocks in total, these blocks will
 all be necessarily included into the proof by a lower-level superchain $\mu -
 i$ for some $i > 0$.  Therefore, it does not hurt to add them to the set
-$\tilde\pi$ earlier.
+$\pi$ earlier.
 
 % \begin{figure}[h]
 %     \caption{The first of a series of interactive proofs-of-proof-of-work for
