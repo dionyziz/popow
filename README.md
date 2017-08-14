@@ -26,10 +26,10 @@ Complexity](http://fc16.ifca.ai/bitcoin/papers/KLS16.pdf) at Financial Crypto
 
 # Non-interactive PoPoWs
 
-Non-interactive PoPoWs (NIPOPOWs) can be used as succinct proofs in [pegged
-sidechains](https://blockstream.com/sidechains.pdf). This provides secure
-non-interactive proofs between chains that can be challenged in the case an
-adversary produces an invalid proof.
+Non-interactive PoPoWs (NIPOPOWs) can be used as succinct proofs for multi-
+currency SPV clients, or in [pegged sidechains](https://blockstream.com/sidechains.pdf). 
+This provides secure non-interactive proofs between chains that can be challenged in 
+the case an adversary produces an invalid proof.
 
 # BIP
 
