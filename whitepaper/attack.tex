@@ -1,8 +1,7 @@
-\section{Attacking the proofs of proof-of-work construction}
+\section{An attack against proofs of proof-of-work}
 
-Interactive proofs of proof-of-work were explored in \cite{KLS}. In this
-section, we revisit their construction and its security. First, we describe
-their construction. Understanding their construction will be helpful in
+ In this
+section, we revisit the construction for interactive proofs of proof-of-work from \cite{KLS} and its security.  Understanding their construction will be helpful in
 eventually constructing non-interactive proofs of proof-of-work that are secure.
 Then, we show that a powerful attacker can break chain superquality with
 non-negligible probability and we construct a concrete attack based on it.
@@ -12,10 +11,14 @@ to double spend with non-negligible probability.
 
 \subsection{The interactive proofs of proof-of-work protocol}
 
-In their construction, Kiayias et. al. \cite{KLS} create an interactive proof of
-proof-of-work by allowing a verifier to interactively communicate with two
-provers $A$ and $B$. The verifier queries the two provers for their claimed
-anchored superchains $\pi_A\upchain^\mu$ and $\pi_B\upchain^\mu$ of a
+The interactive proof of
+proof-of-work of \cite{KLS} operates as follows. 
+The core of the verification process is distinguishing between 
+two candidate proofs $(\pi_A, \chi_A)$  and $(\pi_B, \chi_B)$. 
+In case  $\pi_A  = \pi_B$, the decision can be drawn immediately (without interaction) based
+on $\chi_A,\chi_B$. 
+Otherwise, the verifier queries the two provers for their claimed
+anchored superchains $\pi_A\upchain^\mu$ and $\pi_B\upchain^\mu$ at a
 certain level $\mu$. The verifier starts querying at the highest possible level
 $\mu$ and successively descends until level $\mu$ is sufficiently low such that
 the lowest common ancestor block $b = LCA(\pi_A\upchain^\mu,
@@ -25,13 +28,15 @@ $\mu$ when $max(|\pi_A\upchain^\mu\{b:\}|, |\pi_B\upchain^\mu\{b:\}|) \geq
 m$ holds. Subsequently, the winner is designated as the prover with the most
 blocks after $b$ at that level. More precisely, the winner is $A$ if
 $|\pi_A\upchain^\mu\{b:\}| \geq |\pi_B\upchain^\mu\{b:\}|)$ and otherwise it
-is $B$. Of course, the communication can be made efficient by only requesting
-blocks after the purported LCA.
+is $B$. The communication overhead is  reduced by only requesting
+blocks after the purported LCA. 
 
-\subsection{Attacking superquality}
+\subsection{Attacking chain superquality}
 
-If the adversary wishes to attack the superquality of an honestly adopted chain,
-a concrete attack to achieve this would work as follows. In expectation in a
+We present next a general attack against chain superquality
+that works against any blockchain protocol that incorporates
+the interlink data structure, cf. Section~\ref{sec:interlink}. 
+Observe that in expectation, in a
 completely honest setting with random network scheduling, the honestly adopted
 chain will be $\mu$-locally-good for sufficiently long subchains everywhere as
 proven in Lemma~\ref{lem:localgood}.
@@ -55,6 +60,43 @@ it; or one of the honest parties (potentially $B$) was able to mine a block
 which was subsequently adopted by $B$. In either case, the adversary continues
 with the strategy by inspecting $\chain[-1]$ and acting accordingly.
 
+
+\aknote{ Consider this alternative attack and analysis below: starting at the genesis block, 
+$\mathcal{A}$ mines continuously and
+in private blocks of level strictly less than $\mu$ (i.e., it discards blocks of level $\mu$ or higher). Whenever honest parties broadcast a block $b$, $\mathcal{A}$ operates as follows: 
+(i) if there is a private block $b'$ of chain height equal to $b$,  release that block
+in the network with rushing delivery (i.e., 
+having $b'$ delivered ahead of $b$ for all honet parties) and continue mining
+on top of the private block $b''$ that  in the private chain;
+(ii) otherwise, adopt $b$ and continue mining on top of $b$.
+
+Observe that the above attack matches the optimal chain quality 
+attacker of \cite{GKL}
+with relative power $2^{-\mu}\cdot t/n$  (we assume without loss of generality
+that $t$ is a multiple of $2^\mu$). 
+Using the chain quality theorem we have that honest parties will get at most 
+$(n- t 2^{-\mu+1}) / (n-t2^{-\mu}) + \delta' $ honest blocks in any of their chains
+for some suitable constant $\delta'$ and all the remaining blocks are 
+adversarial and hence of a super level less than $\mu$. 
+Of the honest blocks in an honest party's chain, 
+the expected rate of $\mu$-level superblocks 
+will be  $2^{-\mu} ((n- t 2^{-\mu+1}) / (n-t2^{-\mu})  + \delta') $. 
+Now in order to break chain superquality it suffices to break 
+$\mu$-local-goodness of the chain $\chain$ of an honest party, 
+which is violated as long as 
+$  2^{-\mu} ( (n-  t2^{-\mu+1} ) / (n-t2^{-\mu}) + \delta') \leq (1-\delta) 2^{-\mu}$
+XXX this needs some cleanup; but should work as long as adversary has suitably
+high hashing power. The corresponding backbone paragraph is outdated (it was
+left from the  pre-typical era) so i am looking into
+ fixing it as well XXX. 
+ 
+ What is important though from this attack is the following: 
+ the expected superchain growth  of level $\mu$ of an honest party's  chain will drop from 
+ the expected rate of $2^{-\mu}$ in the all honest case, 
+ to $\frac{n- t2^{-\mu+1}}{n-t2^{-\mu}} 2^{-\mu}$. 
+ This could be close to $1/3$ for level $\mu=1$, and in general 
+ close to $\frac{2^{\mu} - 1}{2^{\mu+1} - 1}$. 
+}
 Assume now that an honestly-generated $\mu$-superblock has been adopted by $B$
 at position $\chain_B[i]$ at some round $r$. Let us now examine the probability
 that $\chain_B[i]$ will remain a $\mu$-superblock in the long run. Suppose $r' >
@@ -70,7 +112,24 @@ Therefore, there will be some $\delta$ such that the adversary will be able to
 cause such variance with non-negligible probability in $m$.
 \dznote{Why? TODO: Write out as theorem and prove}
 
-\subsection{Attacking the interactive proofs protocol}
+\subsection{From chain superquality attacks to double-spending}
+
+\aknote{We next show how the superquality attacker can be turned 
+to a double spending attacker against a verifier that accepts 
+proofs with the sole criterion that a superchain of a certain level 
+has length $m$. 
+The attacker divides its mining power between two parallel processes. 
+In the first process it runs the chain superquality attack of the previous
+section for a specific superlevel $\mu$. In the second process,
+it operates as a standard Nakamoto double-spending
+attacker but its objective is to overcome the honest parties' chain
+at superchain level $\mu$ (in contrast, say,  to the standard 
+Nakamoto double spending attacker that operates on level $\mu=0$). 
+The rationale behind the above strategy is that the superchain growth 
+of honest parties' has been slowed down due to the superchain quality
+attack component, and thus the double spending attacker that targets
+level $\mu$ has an unanticipated advantage. 
+} 
 
 Extending the above attack, we now modify the superquality attacker into an
 attacker, $\mathcal{A}$ that can cause a double spending attack in the proof of
