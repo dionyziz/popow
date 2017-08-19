@@ -2,7 +2,7 @@
 
 We now prove that our construction produces succinct proofs.
 
-\begin{restatable}{theorem}{restateThmFewLevels}
+\begin{restatable}[Few levels]{theorem}{restateThmFewLevels}
     \label{thm.few-levels}
     The number of superblock levels which have at least $m$ blocks are at most
     $\log(|S|)$, where $S$ is the set of all blocks produced, with overwhelming
@@ -17,11 +17,16 @@ The above theorem establishes that the number of superchains is small. What
 remains to be shown is that few blocks will be included at each superchain
 level.
 
-\begin{restatable}{theorem}{restateThmLargeExpansion}
+\begin{restatable}[Large upchain expansion]{theorem}{restateThmLargeExpansion}
     \label{thm.large-expansion}
-    Given an honest $(\mu - 1)$-level superchain of at least $4m$ blocks,
-    the respective $\mu$-level
-    superchain which covers the same span of blocks has more than $m$ blocks,
+    Let $\chain$ be an honestly generated chain and let
+    $\chain' = \chain\upchain^{\mu - 1}[i:i + \ell]$ with $\ell \geq 4m$.
+    Then:
+
+    \begin{equation}
+      |\chain'\upchain^\mu| \geq m
+    \end{equation}
+
     with overwhelming probability in $m$.
 \end{restatable}
 
@@ -29,11 +34,15 @@ level.
 \import{./}{proofs/largeexpansion.tex}
 \fi
 
-\begin{restatable}{corollary}{restateThmSmallSupport}
+\begin{restatable}[Small downchain support]{corollary}{restateThmSmallSupport}
     \label{crly.small-support}
-    Given an honest $\mu$-level superchain with $m$ blocks, the respective
-    $(\mu - 1)$-level superchain spanning the same blocks has fewer than $4m$
-    blocks, with overwhelming probability in $m$.
+    Assume an honestly generated chain $\chain$ and let $\chain' = \chain\upchain^\mu[i:i + m]$. Then:
+
+    \begin{equation}
+      |\chain'\downchain\upchain^{\mu - 1}| \leq 4m
+    \end{equation}
+
+    with overwhelming probability in $m$.
 \end{restatable}
 
 \ifonecolumn
