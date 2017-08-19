@@ -66,3 +66,19 @@ Based on this, we can establish our theorem on succinctness:
 \else
 Full proofs of these facts are provided in Appendix~\ref{sec.proofs}.
 \fi
+
+\begin{remark}[Denial of Service Attacks]
+Clearly, it is possible for an adversary to produce large proofs that congest
+the network of a verifier with limited resources. These proofs can be incorrect,
+but the verifier will still attempt to verify them. Denial-of-service attacks
+that crash such a verifier are possible if the verifier only has logarithmic
+resources. Therefore, to avoid such attacks, the verifier must act as follows:
+Whenever a large proof is provided by a prover, the verifier terminates early
+with output $\bot$ regardless of which proof is better, indicating that they are
+unable to reach a conclusion.
+
+It is important to note that a verifier knowing ahead of time that a proof will
+be large cannot conclude that the prover providing it is malicious, as an attack
+on superquality of the blockchain could be taking place, requiring an honest
+prover to provide long proofs.
+\end{remark}
