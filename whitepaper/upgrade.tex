@@ -13,27 +13,39 @@ First of all, keep in mind that the interlink data structure will be useful to
 be included in the form of a Merkle tree of interlink pointers, as discussed in
 the next section on implementation optimizations.
 
-The most obvious way to upgrade a cryptocurrency to support our protocol is a hard fork: the block header could be modified to include our additional interlink structure, and the validation rules would be modified to require that new blocks (after a ``flag day'') contain a correctly-formed interlink hash.
+The most obvious way to upgrade a cryptocurrency to support our protocol is a
+hard fork: the block header could be modified to include our additional
+interlink structure, and the validation rules would be modified to require that
+new blocks (after a ``flag day'') contain a correctly-formed interlink hash.
 
-The safety of the hard fork approach is often debated: it is not ``forward compatible,'' in the sense that nodes failing to upgrade in time would not be able to process newly created blocks. Hard forks are also associated with ``schisms'': in one notable case, Ethereum applied a hard fork in order to reverse the effects of an exploited vulnerability; this decision was controversial, and dissenters splintered off into a new network, Ethereum Classic~\cite{daofork}. However, both Ethereum and Ethereum Classic have subsequently applied hard fork upgrades without incident. The Monero cryptocurrency has applied hard forks on a predictable schedule~\cite{monerohardforks}.
+The safety of the hard fork approach is often debated: it is not ``forward
+compatible,'' in the sense that nodes failing to upgrade in time would not be
+able to process newly created blocks. Hard forks are also associated with
+``schisms'': in one notable case, Ethereum applied a hard fork in order to
+reverse the effects of an exploited vulnerability; this decision was
+controversial, and dissenters splintered off into a new network, Ethereum
+Classic~\cite{daofork}. However, both Ethereum and Ethereum Classic have
+subsequently applied hard fork upgrades without incident. The Monero
+cryptocurrency has applied hard forks on a predictable
+schedule~\cite{monerohardforks}.
 
-  A soft fork construction in practice would require including the interlink data structure
-not in the block header, but in the data of the coinbase transaction.  Clearly
-it is enough to store a single hash of the whole interlink structure in the
-coinbase data. The only requirement for the PoPoWs to work is that the
-PoW commits to all the pointers within interlink so that the adversary cannot
-cause a chain reorganization except with negligible probability. That way, each
-superchain is really a chain which goes all the way back to genesis. If we take
-that route, then each PoPoW will be required to present not only the block
-header, but also a proof-of-inclusion path within the Merkle tree of
-transactions proving that the coinbase transaction is indeed part of the block.
-Once that is established, the coinbase data can be presented, and the verifier
-will thereby know that the hash of the interlink data structure is correct.
-Given the fact that in the current Bitcoin implementation there is a fixed
-limit for block sizes, we observe that including such proofs-of-inclusion will
-only increase the PoPoW sizes by a constant factor per block, allowing for the
-communication complexity to remain at $\Theta(polylog(|\chain|))$.
-
+A soft fork construction in practice would require including the interlink
+data structure not in the block header, but in the data of the coinbase
+transaction.  Clearly it is enough to store a single hash of the whole
+interlink structure in the coinbase data. The only requirement for the PoPoWs
+to work is that the PoW commits to all the pointers within interlink so that
+the adversary cannot cause a chain reorganization except with negligible
+probability. That way, each superchain is really a chain which goes all the
+way back to genesis. If we take that route, then each PoPoW will be required
+to present not only the block header, but also a proof-of-inclusion path
+within the Merkle tree of transactions proving that the coinbase transaction
+is indeed part of the block. Once that is established, the coinbase data can
+be presented, and the verifier will thereby know that the hash of the
+interlink data structure is correct. Given the fact that in the current
+Bitcoin implementation there is a fixed limit for block sizes, we observe that
+including such proofs-of-inclusion will only increase the PoPoW sizes by a
+constant factor per block, allowing for the communication complexity to remain
+at $\Theta(polylog(|\chain|))$.
 
 \subsection{Velvet Forks}
 We now describe a novel upgrade path that avoids the need for a fork at all.
@@ -142,4 +154,3 @@ invalid, it can be simply be ignored or only partially used.
 We note that the interlink format does not depend at all on the parameters $m$ and $k$.
 Therefore, regardless of the upgrade procedure, it is not necessary to reach consensus agreement on a particular choice of these parameters. Instead, the choice of $m$ and $k$ can be exposed as a user-configurable parameter to clients.
 % Clients would send a particular $m$ and $k$ as a .
-
