@@ -22,10 +22,10 @@ In the case of
 
 
 \section{Applications and Evaluation}
-\label{sec:applications}
+\label{sec.applications}
 
 \subsection{Multi-blockchain wallets.}
-\label{sec:multichain}
+\label{sec.multichain}
 One potential application of our technique is an efficient multi-cryptocurrency
 client. Consider for example a merchant that wishes to accept payments in any
 cryptocurrency, not just the most popular ones. A na\"ive approach would be for
@@ -63,19 +63,19 @@ We narrow our focus to the 80 cryptocurrencies that have their own
 proof-of-work blockchains
 (i.e., no proof of stake) and that have a market cap of over USD \$100,000.
 
-In Table~\ref{tbl:currencies} we show aggregate statistics about these 80 cryptocurrencies, grouped according to the their proof-of-work puzzle.
+In Table~\ref{tbl.currencies} we show aggregate statistics about these 80 cryptocurrencies, grouped according to the their proof-of-work puzzle.
 %(e.g., Litecoin uses the scrypt hash function, while Bitcoin uses the SHA-256 function). The ``Size today'' column reflects the current size of all the proof-of-work headers, while ``Growth rate'' reflects the additional proof-of-work headers generated each day.
 %Here we make the conservative assumption that the size of a block header is exactly 80 bytes, as it is in Bitcoin.
 Bitcoin's 10 minute block time is relatively slow; other cryptocurrencies typically use faster block times, e.g. 12 seconds for Ethereum and 2 minutes for Litecoin. Thus while the entire chain of proof-of-work puzzles in Bitcoin today only amounts to about 40 MB, taken together, the 80 cryptocurrencies comprise nearly 10 GB of proofs-of-work, and generate nearly 10 MB more each day.
 
  In our simulation we choose NIPoPoW parameters based as in the previous section, with $m=24$ and $k=6$.
-In Table~\ref{tbl:experiment} we show the resulting bandwidth costs from simulating a period of 60 days, with varying rates of payments received.
+In Table~\ref{tbl.experiment} we show the resulting bandwidth costs from simulating a period of 60 days, with varying rates of payments received.
 
  For the na\"ive SPV client, the total bandwidth cost is dominated by the need to fetch the entire chain of block headers, which the NIPoPoW client does not need to do. The marginal cost for na\"ive SPV depends on the number of blocks generated each day, as well as the transaction inclusion proofs associated with each payment. The NIPoPoW based client provides the most savings when the number of transactions per day is smallest, reducing the necessary bandwidth per day (not including the initial sync up) by 90\%.
 
 \begin{table}
   \caption{Cost of header chains for all active Proof-of-Work-based cryptocurrencies (collected from \url{coinwarz.com})}
-  \label{tbl:currencies}
+  \label{tbl.currencies}
   \small
   \centering
   \begin{tabular}{l|l|l|l}
@@ -102,7 +102,7 @@ In Table~\ref{tbl:experiment} we show the resulting bandwidth costs from simulat
 
 \begin{table}
   \caption{Simulated bandwidth of multi-blockchain clients after two months (Averaged over 10 trials each)}
-  \label{tbl:experiment}
+  \label{tbl.experiment}
   \small
   \centering
   \begin{tabular}{@{\hspace{0.1pt}}l|l@{\hspace{3pt}}l@{\hspace{3pt}}|l@{\hspace{3pt}}l@{\hspace{3pt}}|l@{\hspace{0.1pt}}}
@@ -117,7 +117,7 @@ In Table~\ref{tbl:experiment} we show the resulting bandwidth costs from simulat
   \end{table}
 
 \subsection{Certificate Transparency}
-\label{sec:catena}
+\label{sec.catena}
 In Catena~\cite{catena} the Bitcoin blockchain is used as an equivocation-resistant public log in which to publish commitments to SSL certificates. The Catena client prototype is based on the BitcoinJ SPV library, and therefore requires downloading the entire Bitcoin proof-of-work chain.
 Catena could therefore immediately be improved by using NIPoPoWs.
 First, we note that the Catena authors anticipate needing to launch a dedicated Header Relay Network~\cite{catena} to accommodate the extra bandwidth demands from new Catena clients. A variant based on NIPoPoWs could obviate this, since it eliminates the need to bootstrap new clients by transmitting the entire 40MB Bitcoin header chain.
@@ -125,7 +125,7 @@ Second, the steady state cost of operating a Catena client depends on how freque
 The  savings would increase further if Catena were implemented using any proof-of-work blockchain with more frequent blocks, such as Ethereum or Litecoin.
 
 \subsection{Sidechains}
-\label{sec:sidechains}
+\label{sec.sidechains}
 At the time of writing, it is widely known that Bitcoin faces significant scaling hurdles~\cite{onscaling}, but upgrading Bitcoin is notoriously difficult.
 A widely anticipated solution, first proposed by Back et al.~\cite{sidechains}, is to treat the Bitcoin blockchain as a host for ``sidechains,'' which are proof-of-work blockchains separate from Bitcoin, but that can be backed by Bitcoin deposits. Our NIPoPoW construction solves an open problem posed by Back et al., and thus enables this vision.
 
@@ -139,4 +139,4 @@ Building on this idea, the sidechains protocol can be seen as a pair of blockcha
 It is then straightforward to cross-chain applications, such as a virtual asset on the sidechain that is backed by a quantity of currency on the parent chain (i.e., a two-way peg).
 This is accomplished by defining two new transaction types: ``deposit'' transactions, which have the effect of locking coins on the parent chain and creating new assets on the side chain, as well as ``withdrawal'' transactions that have the opposite effect, unlocking coins on the parent chain and destroying coins on the sidechain. Deposit transactions are committed first on the parent chain, and then delivered to the sidechain using an SPV proof; vice versa for withdrawal transactions. Note that the parent chain would not need to know about most transactions on the sidechain except for the withdrawal transactions --- hence this provides a potential scalability solution if significant transaction volume can be delegated to sidechains.
 
-In the simplest case, the na\"ive SPV approach would work; each blockchain header of the parent chain would be submitted in a transaction payload to the sidechain (c.f. Back et al.~\cite{sidechains}, Section 3.2). However, similar to the scenario in Section~\ref{sec:multichain}, a NIPoPoW-based approach could offer significant performance gains when a single parent chain acts as host to a large number of sidechains.
+In the simplest case, the na\"ive SPV approach would work; each blockchain header of the parent chain would be submitted in a transaction payload to the sidechain (c.f. Back et al.~\cite{sidechains}, Section 3.2). However, similar to the scenario in Section~\ref{sec.multichain}, a NIPoPoW-based approach could offer significant performance gains when a single parent chain acts as host to a large number of sidechains.

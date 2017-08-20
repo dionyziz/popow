@@ -43,7 +43,7 @@ Executions are typical with overwhelming probability.
 
 \aknote{the lemma below, if really needed, should be folded into typicality}
 
-\begin{lemma}\label{lem:negbin}
+\begin{lemma}\label{lem.negbin}
     Let $S$ be a set of consecutive rounds such that $Z_S \geq k$ for some
     security parameter $k$. Then we have that $|S| \geq (1 -
     \epsilon)2^\mu\frac{k}{pqt}$ with overwhelming probability in $k$.
@@ -63,7 +63,7 @@ The following lemma is at the heart of the security proof that will follow.
 \aknote{It might be better if instead of $\chain'_\mathcal{A}$
 you just count the number of $\mu_\mathcal{A}$ blocks the adversary produced.}
 
-\begin{lemma}\label{lem:level-comparison}
+\begin{lemma}\label{lem.level-comparison}
     Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$
     and $\chain_B$ is
     a chain adopted by an honest party at round $r_2$ of a typical execution.
@@ -119,7 +119,7 @@ We call $\mu'$ the \textit{full} level of proof $\pi$ with respect to
 block $b$ with security parameters $\delta$ and $m$.
 \end{definition}
 
-\begin{lemma}\label{lem:allblocks}
+\begin{lemma}\label{lem.allblocks}
 Let $\pi$ be some honest proof generated with security parameters $\delta, m$.
 Let $\chain$ be the underlying chain, $b \in \chain$ be any block and $\mu'$ be
 the full level of the proof with respect to $b$ and the same security

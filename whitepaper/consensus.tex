@@ -1,7 +1,7 @@
-\section{Consensus layer support} \label{sec:consensus}
+\section{Consensus layer support} \label{sec.consensus}
 
 \subsection{The interlink pointers data structure}
-\label{sec:interlink}
+\label{sec.interlink}
 
 We will now start constructing a concrete blockchain proof protocol. Before
 we're able to define the prover and the verifier algorithms, we need to propose
@@ -70,7 +70,7 @@ $\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, if $|\chain'| > (1 -
 \delta)2^{-\mu}|\chain|$.
 \end{definition}
 
-\begin{lemma}[Local goodness]\label{lem:localgood}
+\begin{lemma}[Local goodness]\label{lem.localgood}
 Assume chain $\chain$ contains only honestly-generated blocks and has been
 adopted by an honest party in an execution with random network scheduling. Then
 for all levels $\mu$, for all constant $\delta > 0$, all continuous subchains
@@ -91,7 +91,7 @@ C\upchain^\mu[-m':]\downchain, \mu)$. That is, all suffixes that are
 sufficiently large are locally good.
 \end{definition}
 
-\begin{lemma}[Superquality]\label{lem:superquality}
+\begin{lemma}[Superquality]\label{lem.superquality}
 For all levels $\mu$, for all constant $\delta > 0$, a chain
 $\chain$ containing only honestly-generated blocks adopted by an honest party in
 an execution with random network scheduling has $(\delta, m)$-superquality at level
@@ -127,7 +127,7 @@ if $|\chain^*\upchain^{\mu'}| = k_1$, then $|\chain^*\upchain^{\mu}| \geq (1 -
 Note also that for $\delta < 0.5$, multilevel quality implies that
 $|\chain^*\upchain^{\mu}| \geq 1$.
 
-\begin{lemma}[Multilevel quality]\label{lem:multilevel}
+\begin{lemma}[Multilevel quality]\label{lem.multilevel}
 For all levels $\mu$, for all constant $0 < \delta \leq 0.5$, a chain $\chain$
 containing only honestly-generated blocks adopted by an honest party in an
 execution with random scheduling has $(\delta, k_1)$ multilevel quality at level
@@ -137,7 +137,7 @@ $\mu$ with overwhelming probability in $k_1$.
 \dznote{TODO}
 \end{proof}
 
-\begin{definition}[Good superchain]\label{lem:good}
+\begin{definition}[Good superchain]\label{lem.good}
 A $\mu$-superchain $\chain'$ is said to be \textit{good}, written
 $\textnormal{good}_{\delta, k_1}(\chain, \chain', \mu)$, with respect to an
 underlying chain $\chain = \chain'\downchain$ if it has both superquality and multilevel quality with the same parameters $(\delta, m)$.
@@ -151,6 +151,6 @@ an execution with random scheduling is $(\delta, m)$-good at level
 $\mu$ with overwhelming probability in $m$.
 \end{corollary}
 \begin{proof}
-This is a direct consequence of Lemma~\ref{lem:superquality} and
-Lemma~\ref{lem:multilevel}.
+This is a direct consequence of Lemma~\ref{lem.superquality} and
+Lemma~\ref{lem.multilevel}.
 \end{proof}
