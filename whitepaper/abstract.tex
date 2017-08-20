@@ -1,44 +1,18 @@
-% \begin{abstract}
-Blockchain protocols such as bitcoin provide decentralized consensus
-mechanisms based on proof-of-work (PoW).
-%
-In this work we introduce and instantiate a new primitive for blockchain protocols called Noninteractive-Proofs-of-Proof-of-Work (NIPoPoWs) which can be adapted into existing cryptocurrencies to support more efficient clients.
-Unlike a traditional blockchain client which must verify the entire
-linearly-growing chain of PoWs, clients based on NIPoPoWs require resources
-only logarithmic in the length of the blockchain.
-
-%This proof is linear in size in
-%the case of both a full node or an SPV. Using lite proofs-of-proof-of-work,
-%these proofs can become sublinear, but require interactivity. We modify PoPoWs
-%to produce non-interactive proofs. We describe how exactly these proofs can be
-%constructed.
-NIPoPoWs solve two important open questions for PoW based consensus
-protocols. Specifically the problem
-of constructing efficient transaction verification clients, sometimes called
-``simple payment verification'' or SPV, and the problem of constructing
-efficient sidechain proofs.
-%
-%Sidechains is a mechanism that enables
-% experimenting with different consensus rules while avoid hard forks.
-%Secure implementation to transfer a coin between sidechains, a transaction must include a
-%proof that proof-of-work has been performed. t
-%
-We provide a formal model for NIPoPoWs. We prove our proofs are secure in our
-model via a cryptographic reduction argument and show that they are succinct in size. We provide
-simulations and experimental data to measure concrete communication efficiency
-and security.
-Finally, we provide two ways that our NIPoPoWs can be adopted by
-existing blockchain protocols, first via a soft fork, that enables the
-adoption of the NIPoPoW related data structures
-as part of the underlying consensus mechanism,
-and second via a new update mechanism
-that we term a ``velvet fork'' and enables to harness some of
-the performance benefits of NIPoPoWs even with a minority upgrade. The
-velvet fork scheme is of independent interest to enable consensus layer
-upgrades without requiring an agreement by miner majority.
-
-%This construction provides a solution to the
-%previously open problem of building secure and efficient sidechains. Our
-%construction is of general interest and can be applied to any PoW-based
-%cryptocurrency.
-% \end{abstract}
+Blockchain protocols such as bitcoin provide decentralized consensus mechanisms
+based on proof-of-work (PoW). In this work we introduce and instantiate a new
+primitive for blockchain protocols called Noninteractive-Proofs-of-Proof-of-Work
+(NIPoPoWs) which can be adapted into existing proof-of-work-based
+cryptocurrencies. Unlike a traditional blockchain client which must verify the
+entire linearly-growing chain of PoWs, clients based on NIPoPoWs require
+resources only logarithmic in the length of the blockchain. NIPoPoWs solve two
+important open questions for PoW based consensus protocols. Specifically the
+problem of constructing efficient transaction verification clients, sometimes
+called ``simple payment verification'' or SPV, and the problem of constructing
+efficient sidechain proofs. We provide a formal model for NIPoPoWs. We prove our
+construction is secure in the backbone model and show that the communication is
+succinct in size. We provide simulations and experimental data to measure
+concrete communication efficiency and security. Finally, we provide two ways
+that our NIPoPoWs can be adopted by existing blockchain protocols, first via a
+soft fork, and second via a new update mechanism that we term a ``velvet fork''
+and enables to harness some of the performance benefits of NIPoPoWs even with a
+minority upgrade.
