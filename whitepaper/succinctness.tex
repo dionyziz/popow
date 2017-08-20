@@ -2,6 +2,8 @@
 
 We now prove that our construction produces succinct proofs.
 
+\dznote{In the optimistic case where the adversary plays honestly...}
+
 \begin{restatable}[Number of levels]{theorem}{restateThmFewLevels}
     \label{thm.few-levels}
     The number of superblock levels which have at least $m$ blocks are at most
@@ -76,6 +78,9 @@ resources. Therefore, to avoid such attacks, the verifier must act as follows:
 Whenever a large proof is provided by a prover, the verifier terminates early
 with output $\bot$ regardless of which proof is better, indicating that they are
 unable to reach a conclusion.
+
+\dznote{Note that this will require relaxing the security with making the
+verifier to output $\bot$...}
 
 It is important to note that a verifier knowing ahead of time that a proof will
 be large cannot conclude that the prover providing it is malicious, as an attack
