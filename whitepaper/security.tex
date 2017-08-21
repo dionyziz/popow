@@ -101,23 +101,20 @@ you just count the number of $\mu_\mathcal{A}$ blocks the adversary produced.}
     \qed
 \end{proof}
 
-\begin{definition}{(Full level of honest proof)}
+\begin{definition}[Adequate level of honest proof]
 Let $\pi$ be an honestly generated proof constructed upon some adopted chain
 $\chain$ and let $b \in \pi$.
 
 Then $\mu'$ is defined as follows:
-
-\aknote{the below is very close to being unreadable}
-\aknote{state that it is a  function $\pi,b$}
-\aknote{i am not sure i like the name, in what sense full implies the max?}
 
 \begin{equation*}
 \mu' = \max\{\mu: |\pi\{b:\}\upchain^\mu| \geq \max(m + 1, (1 -
 \delta)2^{-\mu}|\pi\{b:\}\upchain^\mu\downchain|)\}
 \end{equation*}
 
-We call $\mu'$ the \textit{full} level of proof $\pi$ with respect to
-block $b$ with security parameters $\delta$ and $m$.
+We call $\mu'$ the \textit{adequate} level of proof $\pi$ with respect to
+block $b$ with security parameters $\delta$ and $m$. Note that the adequate
+level of a proof is a function of both the proof $\pi$ and the chosen block $b$.
 \end{definition}
 
 \begin{lemma}\label{lem.allblocks}
