@@ -21,42 +21,40 @@ We now extend the definition of a \textit{typical execution} from the backbone
 setting\cite{backbone}.
 
 \begin{definition}{(Typical execution)}
-    An execution of the protocol is $(\epsilon, \eta)$-\textit{typical} if, for
-    all $\mu$ it holds that for any set $S$ of consecutive rounds with $|S| \geq
-    2^\mu \eta\kappa$, the following hold:
+    An execution of the protocol is $(\epsilon, \eta)$-\textit{typical} if:
+
+    \textnormal{\bf Block counts don't deviate.}
+    For all $\mu \geq 0$ it holds that for any set $S$ of consecutive rounds
+    with $|S| \geq 2^\mu \eta\kappa$, the following hold:
 
     \begin{itemize}
         \item $(1 - \epsilon)E[X^\mu(S)] < X^\mu(S) < (1 + \epsilon)E[X^\mu(S)]$ and $(1 - \epsilon)E[Y^\mu(S)] < Y^\mu(s)$.
         \item $Z^\mu(S) < (1 + \epsilon)E[Z^\mu(S)]$.
     \end{itemize}
 
-    Furthermore, we require that the execution is typical according to the
-    backbone definition.
+    \textnormal{\bf Round count doesn't deviate.}
+    Let $S$ be a set of consecutive rounds such that $Z^\mu(S)
+    \geq k$ for some security parameter $k$. Then we have that $|S| \geq (1 -
+    \epsilon)2^\mu\frac{k}{pqt}$ with overwhelming probability in $k$.
+
+    \textnormal{\bf Chain regularity.}
+    No insertions, no copies, and no predictions \cite{backbone} have occurred.
 \end{definition}
 
 \begin{theorem}
-Executions are typical with overwhelming probability.
+Executions are $(\epsilon, \eta)$-typical with overwhelming
+probability in $\kappa$.
 \end{theorem}
 \begin{proof}
-\dznote{TODO}
-\qed
-\end{proof}
+    \dznote{Proof sketch for block counts and regularity}
 
-\aknote{the lemma below, if really needed, should be folded into typicality}
-
-\begin{lemma}\label{lem.negbin}
-    Let $S$ be a set of consecutive rounds such that $Z_S \geq k$ for some
-    security parameter $k$. Then we have that $|S| \geq (1 -
-    \epsilon)2^\mu\frac{k}{pqt}$ with overwhelming probability in $k$.
-\end{lemma}
-\begin{proof}
-    First, observe that $Z_{ijk}^\mu \sim \textsf{Bern}(2^{-\mu}p)$ and these are
-    jointly independent. Therefore $Z_S^\mu \sim \textsf{Bin}(tq|S|, 2^{-\mu}p)$ and
-    $|S| \sim \textsf{NB}(Z_S, 2^{-\mu}p)$. So $\mathbb{E}(|S|) =
+    \textbf{Chain regularity.}
+    First, observe that $Z_{ijk}^\mu \sim \textsf{Bern}(2^{-\mu}p)$ and these
+    are jointly independent. Therefore $Z_S^\mu \sim \textsf{Bin}(tq|S|,
+    2^{-\mu}p)$ and $|S| \sim \textsf{NB}(Z_S, 2^{-\mu}p)$. So $\mathbb{E}(|S|) =
     2^\mu\frac{Z_S}{pqt}$. Applying a tail bound to the negative binomial
     distribution, we obtain that $\Pr[|S| < (1 - \epsilon)\mathbb{E}(|S|)] \in
-    \Omega(\epsilon^2 m)$.
-    \qed
+    \Omega(\epsilon^2 m)$. \qed
 \end{proof}
 
 The following lemma is at the heart of the security proof that will follow.
