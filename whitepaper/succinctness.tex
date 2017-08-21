@@ -2,7 +2,30 @@
 
 We now prove that our construction produces succinct proofs.
 
-\dznote{In the optimistic case where the adversary plays honestly...}
+Observe that full succinctness in the standard honest majority model is
+impossible to prove for our construction. To see why, recall that an adversary
+with sufficiently large mining power can significantly harm superquality as
+described in Subsection~\ref{subsec.superquality-attack}. By causing this harm
+in superquality of a sufficiently low level $\mu$, for example $\mu = 3$, the
+adversary can cause the honest prover to digress in their proofs from high-level
+superchains down to low-level superchains, causing a linear proof to be
+produced. For instance, if superquality is harmed at $\mu = 3$, the prover will
+need to digress down to level $\mu = 2$ and include the whole $2$-superchain,
+which, in expectation, will be of size $|\chain|/2$.
+
+Having established security in the general case of the standard honest majority
+model, we therefore concentrate our succinctness claims to the particular case
+where there is no adversary. This case, called the ``optimistic succinctness''
+case following the lead of \cite{KLS}, models the system as follows. First, the
+adversary has no mining power. In other words, we set $t = 0$. This establishes
+that all honestly adopted chains contain only honestly generated blocks. Second,
+the adversary is unable to perform adversarial network scheduling. Instead,
+network scheduling is random. What this means is that messages diffused by
+honest parties are reordered in a random permutation before they are delivered
+to other honest parties, but the adversary has no saying as to this order. And
+last, the adversary is unable to produce any proofs; that is, all proofs
+consumed by the verifier are honestly-generated. We will now explore why proofs
+produced in these circumstances are succinct.
 
 \begin{restatable}[Number of levels]{theorem}{restateThmFewLevels}
     \label{thm.few-levels}
