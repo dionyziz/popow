@@ -120,7 +120,7 @@ level of a proof is a function of both the proof $\pi$ and the chosen block $b$.
 \begin{lemma}\label{lem.allblocks}
 Let $\pi$ be some honest proof generated with security parameters $\delta, m$.
 Let $\chain$ be the underlying chain, $b \in \chain$ be any block and $\mu'$ be
-the full level of the proof with respect to $b$ and the same security
+the adequate level of the proof with respect to $b$ and the same security
 parameters.
 
 Then
@@ -164,7 +164,7 @@ Then
 Suppose the verifier evaluates $\pi_\mathcal{A} \geq \pi_B$ in a protocol
 interaction where $B$ is honest and assume during the comparison that the
 compared level of the honest party is $\mu_B$. Let $b =
-\textsf{LCA}(\pi_\mathcal{A}, \pi_B)$ and let $\mu_B'$ be the full
+\textsf{LCA}(\pi_\mathcal{A}, \pi_B)$ and let $\mu_B'$ be the adequate
 level of $\pi_B$ with respect to $b$. Then $\mu_B' \geq \mu_B$.
 \end{lemma}
 \begin{proof}
