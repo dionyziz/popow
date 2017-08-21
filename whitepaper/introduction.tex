@@ -1,9 +1,9 @@
 \section{Introduction}
 
 Cryptocurrencies such as Bitcoin~\cite{bitcoin}\cite{bitcoinsoftware} and
-Ethereum~\cite{ethereum} have seen tremendous success in recent years. These are
+Ethereum~\cite{ethereum} are
 peer-to-peer networks that maintain a globally consistent transaction ledger,
-using a new consensus protocol based on proof-of-work (PoW)
+using a consensus protocol based on proof-of-work (PoW)
 puzzles~\cite{pow}~\cite{hashcash}. Worker nodes called ``miners'' expend
 computational work in order to reach agreement on the state of the network.
 Clients on the network, such as mobile phone apps, must verify these
@@ -16,6 +16,8 @@ existing cryptocurrencies to support more efficient clients. A traditional
 blockchain client must verify the entire chain of proofs-of-work, which grows
 linearly over time. On the contrary, clients based on NIPoPoWs require resources
 only logarithmic in the length of the blockchain.
+
+\subsection{Motivation}
 
 There are three trends that motivate the need for more efficient clients,
 specifically clients that can verify transactions without having to process the
