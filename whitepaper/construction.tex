@@ -19,7 +19,7 @@ $\chain[-k:] = \chain'[-k:]$ we have that $Q(\chain) = Q(\chain')$.
 \end{definition}
 
 Suffix-sensitive predicates allow proving that a recent transaction occurred in
-the longest chain and in a block burried under at most $k + 1$ blocks. Because
+the longest chain and in a block buried under at most $k + 1$ blocks. Because
 the predicates we are interested in are stable, they must also pertain to
 properties that are independent of the last $k$ blocks. Therefore, combining the
 two, the predicate can only describe something that is visible at the exact
@@ -29,7 +29,7 @@ blockchains like Bitcoin. However, they make sense for blockchains such as
 Ethereum which maintain state \cite{vitalik} that is propagated and committed to
 in every block. The existence of a stable monotonic state bit flip, for example
 the creation of an indestructible smart contract, can therefore be described
-using such predicates. 
+using such predicates.
 
 \subsection{Construction}
 
@@ -39,11 +39,11 @@ and the prover afterwards. The generic form of the verifier will work with any
 practical suffix proof protocol (we make this more exact below). Therefore, it
 makes sense to describe the generic verifier first before we talk about the
 specific instantiation of our protocol. The generic verifier is given access to
-call a proof comparison operator $\leq_m$ which is protocol-specific. We will
+call a proof comparison operator $\leq_m$ which is protocol-specific. We
 therefore begin the description of our protocol by first illustrating the
-generic verifier. Next, we will describe the prover specific to our protocol.
-Finally, we will show the instantiation of the $\leq_m$ operator, which plugs
-into the generic verifier to make a concrete verifier for our protocol.
+generic verifier. Next, we describe the prover specific to our protocol.
+Finally, we show the instantiation of the $\leq_m$ operator, which plugs into
+the generic verifier to make a concrete verifier for our protocol.
 
 \subsubsection{The generic verifier}
 
