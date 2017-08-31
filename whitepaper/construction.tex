@@ -8,20 +8,28 @@ of predicates by augmenting the construction.
 
 Among the predicates which are stable, we now limit ourselves to the class of
 predicates which are functions of only the chain suffix $\chain[-k - 1:]$. We
-call these predicates \textit{suffix sensitive}. As we will illustrate, these
-predicates are significantly easier to prove, but at the same time allow us to
-use the construction as a scaffold for the more generic case.
+call these predicates $(k+1)$-\textit{suffix sensitive}. As we will illustrate,
+these predicates are significantly easier to prove, but at the same time allow
+us to use the construction as a scaffold for the more generic case.
+
+\begin{definition}[Suffix sensitivity]
+A chain predicate $Q$ is called $k$-\textnormal{suffix sensitive} if for all
+chains $\chain, \chain'$ with $|\chain| \geq k$ and $|\chain'| \geq k$ such that
+$\chain[-k:] = \chain'[-k:]$ we have that $Q(\chain) = Q(\chain')$.
+\end{definition}
 
 Suffix-sensitive predicates allow proving that a recent transaction occurred in
 the longest chain and in a block burried under at most $k + 1$ blocks. Because
 the predicates we are interested in are stable, they must also pertain to
 properties that are independent of the last $k$ blocks. Therefore, combining the
 two, the predicate can only describe something that is visible at the exact
-block $\chain[-k-1]$. While this may seem contrived for blockchains like
-Bitcoin, there are blockchains such as Ethereum which maintain state that is
-propagated and committed to in every block. The existence of a stable monotonic
-state bit flip, for example the creation of an indestructible smart contract,
-can therefore be described using such predicates.
+block $\chain[-k-1]$ and that will also remain true as the chain grows in
+perpetuity (due to monotonicity). These predicates may seem contrived for
+blockchains like Bitcoin. However, they make sense for blockchains such as
+Ethereum which maintain state \cite{vitalik} that is propagated and committed to
+in every block. The existence of a stable monotonic state bit flip, for example
+the creation of an indestructible smart contract, can therefore be described
+using such predicates. 
 
 \subsection{Construction}
 
