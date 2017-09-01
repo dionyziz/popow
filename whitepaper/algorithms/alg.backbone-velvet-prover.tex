@@ -4,12 +4,12 @@
         allows for a velvet fork.}
     \begin{algorithmic}[1]
      \Statex
-        \Let\chain{[\textsf{Genesis}]}
+        \Let\chain{[\textsf{Gen}]}
         \Let{\textsf{realLink}}{\{\}}
         \Let{\textsf{blockById}}{\{\}}
-        \Let{\textsf{genesisId}}{\textsf{blockid}(\textsf{Genesis})}
-        \Let{\textsf{blockById}[\textsf{genesisId}]}{\textsf{Genesis}}
-        \Let{\textsf{realLink}[\textsf{genesisId}]}{[\textsf{Genesis}]}
+        \Let{\textsf{genId}}{\textsf{id}(\textsf{Gen})}
+        \Let{\textsf{blockById}[\textsf{genId}]}{\textsf{Gen}}
+        \Let{\textsf{realLink}[\textsf{genId}]}{[\textsf{Gen}]}
         \While{\textsc{True}}
             \Let{\tilde\chain}{\mathsf{maxvalid}( \chain, \mbox{any chain $\chain'$ found in  \textsc{Receive}()}) }
             \Let{\textsf{new}}{[]}
