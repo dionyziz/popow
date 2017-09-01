@@ -132,6 +132,22 @@ The rationale behind the above strategy is that the superchain growth
 of honest parties' has been slowed down due to the superchain quality
 attack component, and thus the double spending attacker that targets
 level $\mu$ has an unanticipated advantage.
+
+In a simplified model, consider an attacker that produces 
+blocks with probability $p<1/2$ while honest parties following the protocol
+produce blocks with probability $1-p$. 
+Whenever the honest parties produce a block that belongs to level $\mu$
+(an event that happens with probability $(1-p)2^{-\mu}$, the 
+attacker attempts to mine two blocks of level less than $\mu$ and 
+use them to remove the $\mu$-level superblock in the chain of the
+honest parties; this happens with probability $(1-2^{-\mu})^2p^2$. 
+
+From this we can observe that the $\mu$-level superchain  
+ of the honest parties will grow with a slightly smaller rate:
+instead of $2^{-\mu} (1-p)$ that is the case when the adversary
+simply mines a private blockchain, it is now $2^{-\mu} (1-p) (1 - (1-2^{-\mu})^2p^2)$.
+At the same time  the $\mu$-level superchain of the adversary will grow with rate 
+$2p^2 2^{-\mu} + 2 p(1-p)2^{-\mu}(1-2^{-\mu}) $. 
 }
 
 Extending the above attack, we now modify the superquality attacker into an
