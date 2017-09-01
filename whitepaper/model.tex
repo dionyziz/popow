@@ -100,13 +100,13 @@ Blockchains, or \textit{chains}, are finite sequences of blocks such that they
 obey the \textit{blockchain property} that for every block in the chain there
 exists a pointer to its previous block in the chain. A chain $\chain$ is
 \textit{anchored} if its first block is the designated \textit{Genesis} block, a
-known reference string.
+known reference string. We denote the genesis block as $Gen$.
 
 For chain addressing we use the Python range notation of brackets $[~]$. A
 positive number in a bracket indicates the indexed block in the chain, starting
-from zero. For example, if $\chain$ is anchored, then $\chain[0]$ indicates the
-genesis block. A negative number indicates a block indexed from the end.  For
-example $\chain[-1]$ indicates the tip of the chain. A range of two numbers
+from zero. For example, if $\chain$ is anchored, then $\chain[0] = Gen$. A
+negative number indicates a block indexed from the end.  For example
+$\chain[-1]$ indicates the tip of the chain. A range of two numbers
 $\chain[i:j]$ indicates a subarray starting on index $i$ (inclusive) and ending
 on index j (exclusive), which can be negative. Omitting one of the range indices
 takes it to the beginning or end of the chain respectively. So, for example
