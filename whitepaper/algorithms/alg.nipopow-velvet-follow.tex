@@ -4,8 +4,8 @@
     \begin{algorithmic}[1]
         \Function{\sf followUp}{$B$, $\mu$, realLink, blockById}
             \Let{\textsf{aux}}{[B]}
-            \While{$B \neq \textsf{Genesis}$}
-                \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[\textsf{blockid}(B)][\mu]$}
+            \While{$B \neq \textsf{Gen}$}
+                \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[\textsf{id}(B)][\mu]$}
                     \Let{id}{B.\textsf{interlink}[\mu]}
                 \Else
                     \Comment{Invalid interlink}
