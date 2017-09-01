@@ -33,15 +33,14 @@ of the level below.
 The \textit{interlink} data structure is proposed to be included in each block,
 replacing the existing pointer to the previous block with a list of pointers to
 a small number of previous blocks. For each superblock level $\mu$, this data
-structure contains a pointer to the most recent preceding block of level
-$\mu$. The algorithm for this construction is shown in
-Algorithm~\ref{alg.nipopow-interlink} and is borrowed from \cite{KLS}. By
-convention, we assume that the Genesis block is of infinite level and hence a
-pointer to it is included in every block at the first available index within
-the interlink data structure. For more information about the interlink data
-structure, see \cite{KLS}. The interlink data structure turns the blockchain
-into a skiplist-like data structure. Observe that the number of pointers that
-need to be included per block is approximately $\log(\chain)$.
+structure contains a pointer to the most recent preceding block of level $\mu$.
+The algorithm for this construction is shown in
+Algorithm~\ref{alg.nipopow-interlink} and is borrowed from \cite{KLS}. Genesis
+is of infinite level and hence a pointer to it is included in every block at the
+first available index within the interlink data structure. The interlink data
+structure turns the blockchain into a skiplist-like data structure. Observe that
+the number of pointers that need to be included per block, in expectation, is
+$\log(\chain)$.
 
 The updateInterlink algorithm accepts a block $B'$, which already has an
 interlink data structure defined on it. The function then evaluates the
