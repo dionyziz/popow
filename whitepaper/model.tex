@@ -2,14 +2,15 @@
 \label{sec.model}
 
 We define our problem in the setting of a blockchain client which is completely
-stateless beyond the knowledge of the Genesis block. Without loss of
-generality, this single reference block could be any stable checkpoint block,
-either hard-coded in the client or obtained through a previous interaction with
-the network. However, importantly, the client does not maintain a blockchain.
-The challenge is, then, to build a client that is able to communicate with the
-network and, without downloading the whole chain headers, is convinced in a
-secure manner that a transaction has taken place. We term such a client a
-\textit{verifier} and we term \textit{provers} the full nodes it connects to.
+stateless beyond the knowledge of a common reference string, the Genesis block.
+Without loss of generality, this single reference block could be any stable
+checkpoint block, either hard-coded in the client or obtained through a previous
+interaction with the network. However, importantly, the client does not maintain
+a blockchain. The challenge is, then, to build a client that is able to
+communicate with the network and, without downloading the whole chain headers,
+is convinced in a secure manner that a transaction has taken place. We term such
+a client a \textit{verifier} and we term \textit{provers} the full nodes it
+connects to.
 
 The intuition behind these proofs is quite simple: Let $T$ be the mining target
 for the network. Then because block ids are generated uniformly at random, half
