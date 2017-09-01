@@ -101,7 +101,7 @@ underlying chain associated with the proof. Because the predicate is
 suffix-sensitive, its value does not depend on the prefix, and so to evaluate
 the predicate on the underlying blockchain it suffices to evaluate it on any
 sequence with the same suffix, namely $\tilde\chi$. More concretely, from the
-definition of suffix sensitivity, we have that $Q(\chain) = Q(\tilde\chi)$.
+definition of suffix sensitivity, we have that $Q(\chain) = Q(\tilde\pi\tilde\chi) = Q(\tilde\chi)$.
 
 This generic form of the verifier will work for any protocol for suffix proofs,
 as long as the underlying operator $\leq_m$ is defined in a manner that is
