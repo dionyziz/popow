@@ -138,13 +138,14 @@ explain this further in section \ref{sec.consensus}. Note also that, while we
 spell out the transaction vector $x$, this in practice contains only the root of
 the Merkle tree of the transactions \cite{princetonbook}.
 
-While the id of a block must always be less than the mining target $T$ to
-satisfy the proof-of-work condition\cite{antonopoulosbook}, some blocks will
-achieve a lower id. If the block id is less than $\frac{T}{2^\mu}$ we say that
-the block is of level $\mu$. Clearly all blocks are blocks of level $0$. We term
-blocks that have a level above 0 \textit{superblocks} of their respective level.
-The level of a block is given as $\mu = \left \lfloor \log(T) -
-\log(\sf{blockid}(B)) \right \rfloor$ and denoted $\textit{level}(B)$.
+The id of a block must always be less than or equal to the mining target $T$ to
+satisfy the proof-of-work\cite{antonopoulosbook} condition: $id \leq T$.
+However, some blocks will achieve a lower id. If $id \leq \frac{T}{2^\mu}$ we
+say that the block is of level $\mu$. Clearly all blocks are blocks of level
+$0$. We term blocks that have a level above 0 \textit{superblocks} of their
+respective level. The level of a block is given as $\mu = \left \lfloor \log(T) -
+\log(\sf{id}(B)) \right \rfloor$ and denoted $\textit{level}(B)$. By convention,
+we set the id of Genesis to be $0$ and hence it has $\mu = \infty$.
 
 In this paper, we will extend blocks to contain multiple pointers to previous
 blocks. Hence, certain blocks can be omitted from a chain, obtaining a subchain.
