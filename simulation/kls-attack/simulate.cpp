@@ -24,9 +24,9 @@ const int m = 10; // minimum number of blocks for valid superchain
 const int MU = 5; // level of attack
 
 // Simulation constants
-const int NUM_ROUNDS = 1000;
-const int MONTE_CARLO_ROUNDS = 1;
-const bool OUTPUT_GRAPH = true;
+const int NUM_ROUNDS = 10000;
+const int MONTE_CARLO_ROUNDS = 100;
+const bool OUTPUT_GRAPH = false;
 
 template<typename T>
 void concat(vector<T>& target, const vector<T>& source) {
@@ -351,7 +351,7 @@ int main() {
     cout
         << "== Simulation Parameters =="
         << endl
-        << "Monte Carlo rounds: " << MONTE_CARLO_ROUNDS
+        << "Number of simulations: " << MONTE_CARLO_ROUNDS
         << endl
         << "Backbone rounds per Monte Carlo round: " << NUM_ROUNDS
         << endl
@@ -368,7 +368,7 @@ int main() {
 
     srand(time(NULL));
 
-    for (size_t repeat = 0; repeat < MONTE_CARLO_ROUNDS; ++repeat) {
+    for (size_t repeat = 1; repeat <= MONTE_CARLO_ROUNDS; ++repeat) {
         Block* genesis = new Block(NULL, 0, 0);
         gc.add(genesis);
         Adversary adversary = Adversary(genesis, t * q);
@@ -465,16 +465,22 @@ int main() {
         }
 
         gc.cleanup();
+        cout
+            << setprecision(6)
+            << "== Monte Carlo Simulation Statistics =="
+            << endl
+            << "Simulation #" << repeat << endl
+            << "Pr[adv chain longer] = "
+            << float(count_adversary_chain_longer) / repeat
+            << endl
+            << "Pr[adv superchain longer] = "
+            << float(count_adversary_superchain_longer) / repeat
+            << endl;
     }
     cout
-        << setprecision(6)
-        << "== Monte Carlo Simulation Statistics =="
-        << endl
-        << "Pr[adv chain longer] = "
-        << float(count_adversary_chain_longer) / MONTE_CARLO_ROUNDS
-        << endl
-        << "Pr[adv superchain longer] = "
-        << float(count_adversary_superchain_longer) / MONTE_CARLO_ROUNDS
+        << "Finished running "
+        << MONTE_CARLO_ROUNDS
+        << " simulations"
         << endl;
 
     return 0;
