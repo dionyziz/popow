@@ -22,7 +22,7 @@ $\mu$, namely blocks with id less than $T 2^{-\mu}$.
 
 \subsection{Backbone algorithms}
 
-\dznote{Rewrite this section more extensively}
+% \dznote{Rewrite this section more extensively}
 
 We assume the verifier will always connect to at least one honest prover. We
 now move on to formally define these entities in terms of a mathematical model
@@ -42,7 +42,9 @@ Our theoretical abstraction is based on  the ``backbone'' model of
 The backbone approach models proof-of-work discovery attempts by using a random
 oracle~\cite{RO}. The model uses previous formulations of secure multiparty
 computation, specifically Canetti's formulation of ``real world'' execution
-~\cite{uc0}~\cite{uc1}~\cite{uc2}.
+~\cite{uc0}~\cite{uc1}~\cite{uc2}. For following the full formal security
+analyses, we kindly invite our reader to familiarize themselves with the
+backbone model of GKL\cite{backbone} and the respective quantities.
 
 We introduce the Prover and the Verifier in
 the Backbone model as follows. The Prover will extend the functionality
