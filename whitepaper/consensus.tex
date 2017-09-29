@@ -77,8 +77,13 @@ $\chain' = \chain[i:j]$ with $|\chain'| \geq m$ are locally good,
 $\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, with overwhelming
 probability in $m$.
 \end{lemma}
-\begin{proof}
-\dznote{TODO}
+\begin{proof} \textbf{(Sketch)}
+Observing that for each honestly generated block the probability of being a
+$\mu$-superblock for any level $\mu$ follows an independent Bernoulli
+distribution, we can apply a Chernoff bound to show that the number of
+superblocks within a chain will be close to its expectation, which is what
+is required for local goodness.
+% \dznote{Articular the exact Chernoff bound here}
 \qed
 \end{proof}
 
@@ -134,8 +139,9 @@ containing only honestly-generated blocks adopted by an honest party in an
 execution with random scheduling has $(\delta, k_1)$ multilevel quality at level
 $\mu$ with overwhelming probability in $k_1$.
 \end{lemma}
-\begin{proof}
-\dznote{TODO}
+\begin{proof}\textbf{(Sketch)}
+This proof is identical to the one of Lemma~\ref{lem.localgood}.
+% \dznote{TODO: Write the exact proof for this}
 \qed
 \end{proof}
 
