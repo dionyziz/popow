@@ -41,14 +41,18 @@ setting\cite{backbone}.
     No insertions, no copies, and no predictions \cite{backbone} have occurred.
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}[Typicality]\label{thm.typicality}
 Executions are $(\epsilon, \eta)$-typical with overwhelming
 probability in $\kappa$.
 \end{theorem}
 \begin{proof}
-    \dznote{Proof sketch for block counts and regularity}
+    % \dznote{Copy proof sketch for block counts and regularity}
 
-    \textbf{Chain regularity.}
+    \textbf{Block counts and regularity. }
+    For the blocks count and regularity, we refer the reader to \cite{backbone}
+    for the full proof.
+
+    \textbf{Round count. }
     First, observe that $Z_{ijk}^\mu \sim \textsf{Bern}(2^{-\mu}p)$ and these
     are jointly independent. Therefore $Z_S^\mu \sim \textsf{Bin}(tq|S|,
     2^{-\mu}p)$ and $|S| \sim \textsf{NB}(Z_S, 2^{-\mu}p)$. So $\mathbb{E}(|S|) =
@@ -59,8 +63,8 @@ probability in $\kappa$.
 
 The following lemma is at the heart of the security proof that will follow.
 
-\aknote{It might be better if instead of $\chain'_\mathcal{A}$
-you just count the number of $\mu_\mathcal{A}$ blocks the adversary produced.}
+% \aknote{It might be better if instead of $\chain'_\mathcal{A}$
+% you just count the number of $\mu_\mathcal{A}$ blocks the adversary produced.}
 
 \begin{lemma}\label{lem.level-comparison}
     Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$
@@ -80,7 +84,7 @@ you just count the number of $\mu_\mathcal{A}$ blocks the adversary produced.}
 \end{lemma}
 \begin{proof}
     From $|\chain'_\mathcal{A}| \geq k$ we know that $Z_S \geq k$. Applying
-    Lemma~\ref{lem:negbin}, we conclude that $|S| \geq (1 -
+    Theorem~\ref{thm.typicality}, we conclude that $|S| \geq (1 -
     \epsilon')2^{\mu_A}\frac{1}{pqt}|\chain'_\mathcal{A}|$.
 
     Applying the chain growth theorem \cite{backbone} we obtain that $|\chain_B^S|
@@ -156,7 +160,7 @@ Then
 \end{proof}
 
 
-\aknote{maybe we need a definition of the ``compared level'' }
+% \aknote{maybe we need a definition of the ``compared level'' }
 
 \begin{lemma}
 Suppose the verifier evaluates $\pi_\mathcal{A} \geq \pi_B$ in a protocol
