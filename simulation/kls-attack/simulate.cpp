@@ -176,8 +176,11 @@ protected:
         Block* ret = prev_tip;
 
         for (auto block: receive) {
-            if ((block->height > prev_tip->height) ||
-                (block->height == prev_tip->height && block->adversarial)) {
+            if (block->height > prev_tip->height) {
+                if (ret->height == block->height && ret->adversarial) {
+                    // adversarial network scheduling
+                    continue;
+                }
                 // cout
                 //     << "Adopting new blockchain of height "
                 //     << block->height
