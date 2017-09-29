@@ -58,18 +58,25 @@ protocol that satisfies a natural security definition, i.e. where attacks
 succeed with only negligible probability. Our work is the first to answer the
 open problem posed by Back et al.
 
+These examples illustrate that our solution is a key component for two important
+pillars needed for next-generation blockchains: \textit{interoperability} and
+\textit{scalability}.
+
 \subsection{Our contributions}
 
 In summary, we make the following contributions in this paper.
 
 Our main technical contribution is the introduction of a new cryptographic
-primitive called Non-Interactive Proofs of Proof of Work (NIPoPoW). We present a
+primitive called Non-Interactive Proofs of Proof of Work (NIPoPoW).
+
+We present a
 formal model and a provably secure instantiation of NIPoPoWs in the model of
 \cite{backbone}. Our contribution builds on previous work by Kiayias et al. who
 posed interactive proofs of proof-of-work \cite{KLS}, which, in turn, are based
 on previous discussion of such concepts in the bitcoin forums \cite{highway}.
 We show that the construction of \cite{KLS} does not really solve the PoPoW
 problem because it is insecure and we illustrate this with a concrete attack.
+We prove that the attack can be realized with overwhelming probability.
 We then prove that our construction is in fact a secure solution to the problem.
 Furthermore, our solution has the additional property of being non-interactive,
 as the previous construction could be forced into interaction by an adversarial
