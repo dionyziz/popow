@@ -24,8 +24,9 @@ network), at least one of which is assumed to be honest. The KLS protocol is
 interactive; the verifier may need to interact with the provers over a number
 of rounds logarithmic in the length of the proof-of-work chain.
 Our protocol is inspired by KLS, but improves on it in several ways. First, our
-protocol has provable security in contrast to their construction for which we
-describe a concrete attack. Second, our protocol is non-interactive, completing
+protocol is  provably secure in contrast to that construction for which we
+describe a concrete attack that works for a high level, albeit still below $50\%$, 
+of adversarial power. Second, our protocol is non-interactive, completing
 in one communication round regardless of adversarial prover's behavior. Last, we
 also provide concrete implementation recommendations including security
 parameter values, proof size estimates in bytes, specific optimizations to
