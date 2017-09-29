@@ -1,17 +1,23 @@
 \section{An attack against proofs of proof-of-work}
 
 In this section, we revisit the construction for interactive proofs of
-proof-of-work from \cite{KLS} and its security.  Understanding their
-construction will be helpful in eventually constructing non-interactive proofs
-of proof-of-work that are secure. We recommend that the interested reader skims
+proof-of-work from \cite{KLS} and its security.  Their 
+construction is the starting point and  basis for our
+non-interactive proofs of proof-of-work. We show that the construction 
+is susceptible to  a double-spending attack even in the case it controls
+ a minority of the parties (hashing power). 
+We recommend that the interested reader skims
 through the KLS~\cite{KLS} work to fully understand the scheme and the 
 attacks that follow.
 
-We show that a powerful attacker can break chain superquality with
+We first show that a powerful attacker can break chain superquality with
 non-negligible probability and we construct a concrete attack based on it.
-Finally, we show that their protocol is actually insecure by constructing a
+Even though maintaining chain superquality is not in the original security model, 
+we show how the property affects the security  of the underlying proofs
+by presenting a
 concrete attack against their scheme that allows an adversary to double spend
-with non-negligible probability.
+with non-negligible probability assuming sufficient hashing power (that is
+still below $50\%$).
 
 \subsection{The interactive proofs of proof-of-work protocol}
 
