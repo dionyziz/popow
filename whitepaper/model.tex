@@ -20,7 +20,50 @@ neighbor counterparts, the verifier is convinced that the proof-of-work of the
 omitted blocks also took place. The same logic can be applied to any level
 $\mu$, namely blocks with id less than $T 2^{-\mu}$.
 
-\subsection{Backbone algorithms}
+Before we present our construction in detail, we lay out the mathematical model
+in which we will be working in this section.
+
+\subsection{Overview of the backbone model}
+
+In order to make the analysis mathematically precise, we adopt the backbone
+model of GKL~\cite{GKL} which formally captures the notion of an evolving
+blockchain. This subsection provides an introduction to that model.
+
+The backbone model is parameterized by the parameters $\kappa, n, t, p, q$. The
+meaning of these parameters will become clear shortly.
+
+Backbone models the blockchain as an execution of a single Interactive Turing
+Machine (ITM), the \textit{environment}, which is responsible for coordinating
+the game. There are two more ITM specifications: The honest party  and the
+adversary. The environment is responsible for spawning them and scheduling them
+for execution.
+
+Two parameters of the protocol are $n$, the total number of parties, and $t$ the
+number of adversarial parties. Therefore, $n - t$ is the number of honest
+parties. At the beginning of the game, the environment spawns $n - t$ honest
+parties which are termed $\Pi_1, \Pi_2, \cdots, \Pi_{n - t}$ and exactly one
+adversary $\mathcal{A}$. The environment then generates a common reference
+string, the \textit{Genesis} block, which is provided to all of these players by
+invoking a certain initialization subroutine.
+
+The execution of the game happens in discrete \textit{rounds} which are used to
+model synchronous communication between the various players. The environment
+runs a main loop and maintains the current round count. Each iteration of this
+loop constitutes one round. At the beginning of each round, a \textit{round
+execution subroutine} defined by $\Pi_1$ is invoked. When $\Pi_1$'s subroutine
+is completed, the subroutine is invoked for $\Pi_2$ and so on until $\Pi_{n -
+t}$ finishes executing their subroutine. In each of these executions, the player
+$\Pi_i$ being invoked is not aware of their index $i$, but can maintain local
+state which persists across rounds. At the end of each round, the round
+execution subroutine of the adversary is executed. The adversary can also
+maintain local state across rounds. The maintenance of local state is formally
+modelled using Interactive Turing Machines. The fact that each honest party is
+unaware of its own index \dznote{XXX finish this section}.
+
+The environment also spawns a random oracle functionality $\mathcal{H}$ which
+produces truly random responses in the range $\{0, 1\}^\kappa$ to queries.
+
+\subsection{New algorithms in the backbone model}
 
 % \dznote{Rewrite this section more extensively}
 
