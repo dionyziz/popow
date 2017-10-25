@@ -1,0 +1,38 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.nipowpow-verifier-infix}The \textsf{verify} algorithm
+    for the NIPoPoW infix protocol}
+    \begin{algorithmic}[1]
+        \Function{\sf ancestors}{$B, \textsf{blockById}$}
+            \If{$B = \text{Gen}$}
+                \State\Return{$\{B\}$}
+            \EndIf
+            \Let{\chain}{\emptyset}
+            \For{$B' \in B.\textsf{interlink}$}
+                \Let{\chain}{\chain \cup \textsf{ancestors}(B)}
+                  \Comment{Collect all ancestors into a blockDAG}
+            \EndFor
+            \State\Return{$\chain$}
+        \EndFunction
+        \Function{\sf verify$^Q_{m,k}$}{$\mathcal{P}$}
+            \Let{\tilde\pi}{(\text{Gen})}
+              \Comment{Trivial anchored blockchain}
+            \Let{\textsf{blockById}}{\emptyset}
+              \Comment{Initialize empty hashmap}
+            \For{$(\pi, \chi) \in \mathcal{P}$}
+                  \Comment{Examine each proof $(\pi, \chi)$ in $\mathcal{P}$}
+                \For{$B \in \pi$}
+                    \Let{\textsf{blockById}[B.\textsf{id}]}{B}
+                \EndFor
+                \If{$\mathsf{validChain}(\pi \chi)$
+                and $|\chi| = k$
+                and $\pi \geq_m \tilde\pi$}
+                    \Let{\tilde\pi}{\pi}
+                    \Let{\tilde\chi}{\chi}
+                      \Comment{Update current best}
+                \EndIf
+            \EndFor
+            \State\Return{$Q(\textsf{ancestors}(\tilde\pi[-1]))$}
+        \EndFunction
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
