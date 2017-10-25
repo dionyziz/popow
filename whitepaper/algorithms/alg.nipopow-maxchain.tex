@@ -10,7 +10,8 @@
             \State\Return{$\max_{\mu \in M}\{2^\mu |\pi\upchain^\mu\{b:\}|\}$}
         \EndFunction
         \Operator{$\pi_A \geq_m \pi_B$}
-            \Let{b}{\textsf{LCA}(\pi_A, \pi_B)}
+            \Let{b}{(\pi_\mathcal{A} \cap \pi_B)[-1]}
+              \Comment LCA
             \State\Return{$\textsf{best-arg}_m(\pi_A, b) \geq
                            \textsf{best-arg}_m(\pi_B, b)$}
         \EndOperator
