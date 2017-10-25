@@ -1,19 +1,27 @@
 \section{Future work}
 
 Our security proof was constructed in the Backbone \cite{backbone} setting in
-which the block difficulty is treated as a constant. 
-It is easy to extend our construction to the variable difficulty setting. 
-The only difference is that chains (and proofs) 
-would have to be compared according to the total difficulty they possess, i.e., 
-blocks at superlevel $\mu$ will by $\mu$ times more difficult
-than $0$-level blocks. We conjecture
-that this construction can be proven secure using a similar argumentation
-as the one presented. The model in
+which the block difficulty is treated as a constant.  It is easy to extend our
+construction to the variable difficulty setting.  The only difference is that
+chains (and proofs)  would have to be compared according to the total difficulty
+they possess, i.e.,  blocks at superlevel $\mu$ will by $\mu$ times more
+difficult than $0$-level blocks. We conjecture that this construction can be
+proven secure using a similar argumentation as the one presented. The model in
 \cite{backbone2} can be used as a basis and   we leave the full analysis  for
 future work.
 
-We worked with a construction that allows a certain class of chain predicates
-to be proved: In particular, stable predicates which are functions only of the
- suffix of the chain or depend on a small segment within the chain. However, slightly more general
-predicates can also be proved succinctly. We leave the complete characeterization
-of succinctly provable predicates for future work.
+We worked with a construction that allows a certain class of chain predicates to
+be proved: In particular, stable predicates which are functions only of the
+suffix of the chain or depend on a small segment within the chain. However,
+slightly more general predicates can also be proved succinctly. We leave the
+complete characeterization of succinctly provable predicates for future work.
+
+We have constructed Proofs-of-Proofs-of-Work. An open question remains whether
+the same problem of Proof-of-Proofs is solvable in Proof-of-Stake settings, a
+Proof-of-Proof-of-Stake (PoPoS) protocol. It is unknown whether this problem can
+be solved interactively or non-interactively.
+
+Finally, while our construction hints at a direction of sidechains, no formalism
+exists that allows us to reason about whether NIPoPoW protocols are appropriate
+as sidechain solutions. A proper security definition for the desirable
+properties of sidechains would allow this evaluation to take place.
