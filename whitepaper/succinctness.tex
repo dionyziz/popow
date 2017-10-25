@@ -92,17 +92,85 @@ Based on this, we can establish our theorem on succinctness:
 Full proofs of these facts are provided in Appendix~\ref{sec.proofs}.
 \fi
 
-\begin{remark}[Denial of Service Attacks]
+\subsection{Certificates of Badness}
+To recap what we have achieved, note that we have proved security in the general
+case, but succinctness only in the optimistic case where there is no adversary
+present and network scheduling is random.
+
 Examine the non-optimistic case where the adversary is allowed to provide
 proofs, yet, as in the optimistic case, they have no mining power or adversarial
 scheduling capabilities. It is then still possible for that adversary to produce
-large incorrect proofs that use up  the resources of a verifier with logarithmic
-time. Therefore, if such attacks are of concern, the verifier can relax the
-security guarantees to achieve succinctness in this model as follows: Whenever a
-large proof is provided by a prover, the verifier terminates early with output
-$\bot$ regardless of which proof is better, indicating that they are unable to
-reach a conclusion. It is important to note that a verifier knowing ahead of
-time that a proof will be large cannot conclude that the prover providing it is
-malicious, as an attack on superquality of the blockchain could be taking place,
-requiring an honest prover to provide long proofs.
-\end{remark}
+large incorrect proofs that use up the resources of a verifier with logarithmic
+time. It is important to note that a verifier knowing ahead of time that a proof
+will be large cannot conclude that the prover providing it is malicious, as an
+attack on superquality of the blockchain could be taking place, requiring an
+honest prover to provide long proofs.
+
+To avoid the above undesired scenario, we now offer a generalization of our
+above construction which maintains the same security. However, succinctness is
+improved in that the protocol remains succinct in the optimistic case where the
+adversary has no mining power, network scheduling is random, yet the adversary
+\textit{is able} to produce proofs.
+
+Our extended construction will allow the verifier to stop processing input
+early, in a streaming fashion, thereby only requiring logarithmic communication
+complexity even when an adversary is pushing a lot of data. To achieve this, we
+observe that the honest proofs only need to be large if there is a violation of
+\textit{goodness} of the blockchain. However, goodness is not harmed when the
+chain is not under attack by the adversarial computational power or network.
+
+Having made this observation, we now require the prover to produce a
+\textit{certificate of badness} in case there is a violation of
+\textit{goodness} in the blockchain.
+
+% XXX move this definition to superquality section
+\begin{definition}[Badness]
+A chain $\chain$ is called \textit{bad} if there is some level $\mu$
+such that for some chain $\chain' \subseteq \chain\upchain^\mu$ with $|\chain'| \geq
+m$, it holds that $\lnot good_{\delta,m}(\chain, \chain', \mu)$.
+\end{definition}
+
+\begin{definition}[Badness certification]
+A certificate of badness protocol is a proof protocol $(P, V)$ consisting of an
+honest prover $P$ and an honest verifier $V$ with the following properties:
+
+\begin{itemize}
+  \item \textbf{Correctness.} Given a bad honestly adopted chain $\chain$, the
+  honest prover $P(\chain)$ produces a certificate of badness $s$ such that
+  $V(s)$ outputs 1;
+  \item \textbf{Security.} For any adversary $\mathcal{A}$ with no mining power
+  in an environment of random network scheduling, if the adversary produces
+  some certificate of badness $s$, then $V(s)$ outputs 1 with only negligible
+  probability;
+  \item \textbf{Succinctness.} For any adversary $\mathcal{A}$ with no mining
+  power in an environment of random network scheduling, if the adversary
+  produces some certificate of badness $s$, then $V$ returns after reading only
+  the first $O(polylog(|\chain|))$ bits of the input, where $\chain$ is the
+  maximum honestly adopted blockchain.
+\end{itemize}
+\end{definition}
+
+The prover for our certificates of badness protocol is shown in
+Algorithms~\ref{alg.badness}. The prover looks for two adjacent levels $\mu$ and
+$\mu - 1$ which violate the goodness property with sufficient error
+$(1 - \delta)\rho$ so that it can be possible for them to contribute to an error
+of more than $(1 - \delta)$ across non-adjacent superblock levels.
+
+In order to make its decision, the verifier examines the provided chain of level
+$\mu - 1$ and counts the number of $\mu$-superblocks and $\mu - 1$ superblocks
+to see if the claimed error is attained.
+
+\import{./}{algorithms/alg.badness.tex}
+
+\begin{theorem}
+Algorithm~\ref{alg.badness} is a correct, secure and succinct certificate of
+badness protocol.
+\end{theorem}
+\begin{proof}
+
+  \textbf{Correctness.} XXX
+
+  \textbf{Security.} XXX
+
+  \textbf{Succinctess.} XXX
+\end{proof}

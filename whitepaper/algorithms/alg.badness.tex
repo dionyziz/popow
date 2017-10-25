@@ -1,0 +1,26 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.badness}The \textsf{badness} prover
+    which generates a succinct certificate of badness}
+    \begin{algorithmic}[1]
+        \Function{\sf badness$_{m,\delta}$}{$\chain$}
+            \Let{M}{\{\mu: |\chain\upchain^\mu| \geq m\} \setminus \{0\}}
+            \Let{\rho}{1/\max(M)}
+            \For{$\mu \in M$}
+                \For{$B \in \chain\upchain^\mu$}
+                    \Let{\chain'}{\chain\upchain^\mu\{B:\}[:m]}
+                    \If{$|\chain'| = m$}
+                        \Comment{Sliding m-sized window}
+                        \Let{\chain^*}{\chain\downchain\upchain^{\mu - 1}}
+                        \If{$2|\chain'| < (1 - \delta)^\rho|\chain^*|$}
+                            \State\Return{$\chain^*$}
+                            \Comment{Chain is bad}
+                        \EndIf
+                    \EndIf
+                \EndFor
+            \EndFor
+            \State\Return{$\bot$}
+            \Comment{Chain is good}
+        \EndFunction
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
