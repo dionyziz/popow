@@ -49,7 +49,7 @@ $\chain' \subseteq \chain: P_T(\chain') \land P_F(\chain')$. Note that $\chain'$
 is a blockset and may not necessarily be a blockchain.
 \end{definition}
 
-We require that all suffix-sensitive predicates can never be both satisfied and
+We require that all infix-sensitive predicates can never be both satisfied and
 unsatisfied simultaneously. This can be enforced by the honest parties through
 their application-layer verification function, $\mathcal{V}$ which is
 purposefully left undefined by the backbone protocol and we will also leave
@@ -65,6 +65,7 @@ P(\chain')$ where $P$ is one of $P_T$ or $P_F$.
 The manner to construct these proofs is shown in
 Algorithm~\ref{alg.nipopow-infix-prover}. The infix prover accepts two
 parameters: The chain $\chain$ which is the full blockchain and $\chain'$ which
+% XXX: blockset - not subchain here
 is a subchain of the blockchain whose blocks are of interest for the predicate
 in question. This prover simply calls the previous suffix prover to produce a
 proof as usual. Then, having the prefix $\pi$ and suffix $\chi$ of the suffix
@@ -139,7 +140,7 @@ ancestors of the best blockchain tip is passed to the predicate.
 
 \subsection{Security}
 \begin{theorem}
-The infix NIPoPoW construction is secure for all suffix-sensitive stable
+The infix NIPoPoW construction is secure for all infix-sensitive stable
 predicates $Q$, except with negligible probability in $\kappa$.
 \end{theorem}
 \begin{proof}
