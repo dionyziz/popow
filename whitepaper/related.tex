@@ -17,7 +17,7 @@ As an alternative to downloading all block headers at first startup, the SPV cli
 \paragraph{Proofs of proof-of-work.}
 Kiayias et al. (KLS)~\cite{KLS} proposed a variation of the SPV protocol that
 avoids the need to transmit the entire chain of proof-of-work. Instead, in
-their scheme only a sublinear-sized sample of the proofs-of-work are sent, i.e.
+their scheme, only a sublinear-sized sample of the proofs-of-work are sent, i.e.
 a ``proof of proof-of-work'' or PoPoW. They define security in a setting with a
 verifier (modeling the client) and multiple provers (modeling peers in the
 network), at least one of which is assumed to be honest. The KLS protocol is
@@ -25,7 +25,7 @@ interactive; the verifier may need to interact with the provers over a number
 of rounds logarithmic in the length of the proof-of-work chain.
 Our protocol is inspired by KLS, but improves on it in several ways. First, our
 protocol is  provably secure in contrast to that construction for which we
-describe a concrete attack that works for a high level, albeit still below $50\%$, 
+describe a concrete attack that works for a high level, albeit still below $50\%$,
 of adversarial power. Second, our protocol is non-interactive, completing
 in one communication round regardless of adversarial prover's behavior. Last, we
 also provide concrete implementation recommendations including security
