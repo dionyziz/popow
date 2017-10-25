@@ -8,7 +8,7 @@
             \EndIf
             \Let{\chain}{\emptyset}
             \For{$B' \in B.\textsf{interlink}$}
-                \Let{\chain}{\chain \cup \textsf{ancestors}(B)}
+                \Let{\chain}{\chain \cup \textsf{ancestors}(B')}
                   \Comment{Collect all ancestors into a blockDAG}
             \EndFor
             \State\Return{$\chain$}
