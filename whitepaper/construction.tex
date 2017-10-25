@@ -170,17 +170,29 @@ for support.
 
 \subsubsection{The concrete verifier}
 
-Finally, the $\geq_m$ operator which performs the actual comparison of proofs
-is presented in Algorithm~\ref{alg.nipopow-maxchain}. It takes two proofs as
-parameters and returns true if the first proof is winning, otherwise it return
-false to indicate the second proof is winning. Initially the algorithm parses
-the sets of blocks into chains by arranging them in topological order. It
-rejects proofs that are not valid chains. It then computes the lowest common
-ancestor block $b$ between the two proofs by calling the LCA function. Finally,
-it finds the highest superblock level in which at least one of the proofs has
-at least $m$ blocks. If the other one doesn't, then the one who does wins.
-Otherwise, the one with most blocks wins. The number of blocks is counted using
-the findInChain function, which returns the index of a block within the
-respective superchain.
+Finally, the $\geq_m$ operator which performs the actual comparison of proofs is
+presented in Algorithm~\ref{alg.nipopow-maxchain}. It takes two proofs $\pi_A$
+and $\pi_B$ as parameters and returns true if the first proof is winning,
+otherwise it return false to indicate the second proof is winning. The
+comparison operator computes the lowest common ancestor block $b$ between the
+two proofs as $(\pi_{A} \cap \pi_B)[-1]$. As parties $A$ and $B$ agree that the
+blockchain is the same up to block $b$, arguments will then be taken for the
+diverging chains after block $b$. The best possible argument from each player's
+proof is extracted by calling the $\text{best-arg}_m$ function. We call the
+willingness of the verifier to allow each prover to be evaluated based on their
+best argument the \textit{principle of charity}. To find the best argument of a
+proof $\pi$ given an LCA block $b$, $\text{best-arg}_m$ first collects all the
+$\mu$ indices which point to superblock levels that contain valid arguments
+after block $b$. Argument validity requires that there are at least $m$
+$\mu$-superblocks following block $b$, which is captured by the comparison
+$|\pi\upchain^\mu\{b:\}| \geq m$. $0$ is always considered a valid level,
+regardless of how many blocks are present there. These level indices are
+collected into a set $M$. For each of these levels, the score of their
+respective argument is evaluated by weighting the number of blocks by the
+exponent of the level as $2^\mu|\pi\upchain^\mu\{b:\}|$. The highest possible
+score across all levels is then returned. Once the score of the best argument of
+both players $A$ and $B$ is known, they are then directly compared and the
+winner is returned. Note that an advantage is given to the adversary in case of
+a tie by using the $\geq$ operator which favours player $A$.
 
 \import{./}{algorithms/alg.nipopow-maxchain.tex}
