@@ -133,7 +133,7 @@ In the following, we explain sidechains in an incremental fashion, by first prov
 
 As a more complicated example, BTCRelay is an Ethereum \cite{ethereum} smart  that acts as an SPV client for the Bitcoin blockchain.
 Users submit Ethereum transactions containing Bitcoin block headers and transaction inclusion Merkle tree proofs, which the BTCRelay contracts validates and stores. This allows Ethereum smart contracts to condition their behavior based on events in the Bitcoin blockchain.
-If Bitcoin were upgraded to support NIPoPoWs as described in Section~\ref{sec.forks}, then the BTCRelay functionality could be provided at less cost.
+If Bitcoin were upgraded to support NIPoPoWs as described in Section~\ref{sec:forks}, then the BTCRelay functionality could be provided at less cost.
 
 Building on this idea, the sidechains protocol can be seen as a pair of blockchains, the sidechain and the parentchain, that each act as an SPV client of each other.
 It is then straightforward to cross-chain applications, such as a virtual asset on the sidechain that is backed by a quantity of currency on the parent chain (i.e., a two-way peg).
