@@ -1,0 +1,11 @@
+\begin{proof}
+    Assume a typical execution as defined in \cite{backbone} and let $\chain_1$
+    be the chain of some honest player $P_1$ at round $r_1$. Assume that the
+    chain predicate $Q(\chain)$ is $k$-stable for $P_1$ at round $r_1$, i.e.
+    $Q(\chain[:-k]) \neq \bot$.  The chain of any honest player $P_2$ will be
+    at least as long from the next round on and from common prefix we have that
+    $\chain_1[:-k] \preccurlyeq \chain_2$. Therefore the predicate will be
+    $k$-stable, have the same truth value, and have the same switching position
+    for all honest parties.
+    \Qed
+\end{proof}
