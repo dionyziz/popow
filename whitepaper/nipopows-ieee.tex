@@ -1,0 +1,23 @@
+\documentclass[conference]{IEEEtran}
+\newif\iftwocolumn
+\twocolumntrue
+\newif\ifonecolumn
+
+\usepackage{preamble}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\import{./}{title-ieee.tex}
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\begin{IEEEkeywords}
+bitcoin, blockchain, proof-of-work, succinct, sidechains
+\end{IEEEkeywords}
+
+\input{nipopows-body}
+\import{./}{references.tex}
+\end{document}

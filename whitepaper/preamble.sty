@@ -1,6 +1,12 @@
 \ProvidesPackage{preamble}
 
 \usepackage[english]{babel}
+
+\usepackage{cite}
+% \usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+
 \usepackage{amsmath}
 % \let\proof\relax
 % \let\endproof\relax
@@ -9,6 +15,7 @@
 \iftwocolumn
 \usepackage{amsthm}
 \fi
+\usepackage{hyperref}
 \usepackage{mathtools}
 \usepackage{lmodern}
 \usepackage{listings}
@@ -21,7 +28,7 @@
 \usepackage{thm-restate}
 
 \iftwocolumn
-\g@addto@macro{\UrlBreaks}{\UrlOrds}
+% \g@addto@macro{\UrlBreaks}{\UrlOrds}
 \else
 \usepackage{geometry}
 \geometry{
@@ -48,6 +55,13 @@
 \def\chain{\mathcal{C}}
 \let\rest\lceil
 \let\suffix\rceil
+
+\newcommand{\Qed}{
+    \iftwocolumn
+    \else
+        \Qed
+    \fi
+}
 
 \algblockdefx[Operator]{Operator}{EndOperator}
 [1]{\textbf{operator #1}}
@@ -106,8 +120,15 @@
 %pagestyle{plain}
 
 \iftwocolumn
+    \newtheorem{theorem}{Theorem}[section]
+    \newtheorem{corollary}{Corollary}[theorem]
+    \newtheorem{lemma}[theorem]{Lemma}
+
     \theoremstyle{remark}
     \newtheorem*{remark}{Remark}
+
+    \theoremstyle{definition}
+    \newtheorem{definition}{Definition}[section]
 \fi
 
 %bibliography style set to splncs

@@ -84,7 +84,7 @@ distribution, we can apply a Chernoff bound to show that the number of
 superblocks within a chain will be close to its expectation, which is what
 is required for local goodness.
 % \dznote{Articular the exact Chernoff bound here}
-\qed
+\Qed
 \end{proof}
 
 \begin{definition}[Chain superquality]
@@ -118,7 +118,7 @@ $|\chain^*\downchain|$ we obtain that:
 \Pr[|\chain^*\downchain| \leq (1 - \delta)2^{-\mu}|\chain^*\downchain] \leq
 \exp(-\delta^2 2^{-\mu-1}|\chain^*|)
 \end{equation*}
-\qed
+\Qed
 \end{proof}
 
 \begin{definition}[Multilevel quality]
@@ -142,7 +142,7 @@ $\mu$ with overwhelming probability in $k_1$.
 \begin{proof}\textbf{(Sketch)}
 This proof is identical to the one of Lemma~\ref{lem.localgood}.
 % \dznote{TODO: Write the exact proof for this}
-\qed
+\Qed
 \end{proof}
 
 \begin{definition}[Good superchain]\label{lem.good}
@@ -160,5 +160,5 @@ $\mu$ with overwhelming probability in $m$.
 \end{corollary}
 \begin{proof}
 This is a direct consequence of Lemma~\ref{lem.superquality} and
-Lemma~\ref{lem.multilevel}. \qed
+Lemma~\ref{lem.multilevel}. \Qed
 \end{proof}

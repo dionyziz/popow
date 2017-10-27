@@ -58,7 +58,7 @@ probability in $\kappa$.
     2^{-\mu}p)$ and $|S| \sim \textsf{NB}(Z_S, 2^{-\mu}p)$. So $\mathbb{E}(|S|) =
     2^\mu\frac{Z_S}{pqt}$. Applying a tail bound to the negative binomial
     distribution, we obtain that $\Pr[|S| < (1 - \epsilon)\mathbb{E}(|S|)] \in
-    \Omega(\epsilon^2 m)$. \qed
+    \Omega(\epsilon^2 m)$. \Qed
 \end{proof}
 
 The following lemma is at the heart of the security proof that will follow.
@@ -100,7 +100,7 @@ The following lemma is at the heart of the security proof that will follow.
     \frac{pqt}{(1 - \delta)(1 -
     \epsilon')(1 - \epsilon)f}2^{\mu_B}|\chain_B^S\upchain^{\mu_B}|
     \end{equation*}
-    \qed
+    \Qed
 \end{proof}
 
 \begin{definition}[Adequate level of honest proof]
@@ -156,7 +156,7 @@ Then
     the induction step holds. If \textsf{local-good} is not violated, then
     $|\pi\{b:\}\upchain^{\mu^*}[1:]| < m$ and so $\pi\upchain^{\mu^*}[-m]$
     preceeds $b$, and so we are done.
-    \qed
+    \Qed
 \end{proof}
 
 
@@ -199,7 +199,7 @@ level of $\pi_B$ with respect to $b$. Then $\mu_B' \geq \mu_B$.
     \end{equation*}
 
     But the last two equations contradict, hence the claim holds.
-    \qed
+    \Qed
 \end{proof}
 
 \begin{restatable}{theorem}{restateThmSecurity}
