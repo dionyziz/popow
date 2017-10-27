@@ -79,7 +79,7 @@ In Table~\ref{tbl.experiment} we show the resulting bandwidth costs from simulat
   \small
   \centering
   \begin{tabular}{l|l|l|l}
-    {\bf Hash} & {\bf \# Instances} & {\bf Size today} & {\bf Growth rate}  \\
+    {\bf Hash} & {\bf Coins} & {\bf Size today} & {\bf Growth rate}  \\
     \hline
     Scrypt  & 44  & 4.3 GB  & 5.5 MB / day \  \\
     SHA-256  & 15  & 1.4 GB  & 937.0 kB / day \  \\
@@ -105,14 +105,20 @@ In Table~\ref{tbl.experiment} we show the resulting bandwidth costs from simulat
   \label{tbl.experiment}
   \small
   \centering
-  \begin{tabular}{@{\hspace{0.1pt}}l|l@{\hspace{3pt}}l@{\hspace{3pt}}|l@{\hspace{3pt}}l@{\hspace{3pt}}|l@{\hspace{0.1pt}}}
-               & \multicolumn{2}{c|}{\bf Naive SPV} & \multicolumn{2}{c|}{\bf NIPoPoW} \\
-      {\bf Tx/day} & {\bf Total} & {\bf (Per day)} & {\bf Total} & {\bf (Per day)} & {\bf Savings} \\
+  \begin{tabular}
+    {
+      l@{\hspace{1pt}}|
+      l@{\hspace{1pt}}l@{\hspace{1pt}}|
+      l@{\hspace{1pt}}l@{\hspace{1pt}}|
+      l@{\hspace{0.1pt}}}
+
+      \multicolumn{1}{l|}{\bf Daily} & \multicolumn{2}{c|}{\bf Naive SPV} & \multicolumn{2}{c|}{\bf NIPoPoW} \\
+      {\bf tx} & {\bf Total} & {\bf (Daily)} & {\bf Total} & {\bf (Daily)} & {\bf Savings} \\
     \hline
-    100   &  5.5 GB & (5.5 MB)   & 31.7 MB & (507.4 kB)   & 0.99 (0.91) \\
-    500   &  5.5 GB & (5.7 MB)   & 68.2 MB & (1.1 MB)     & 0.99 (0.81) \\
-    1000  &  5.5 GB & (6.0 MB)   & 99.1 MB & (1.6 MB)     & 0.98 (0.73) \\
-    3000  &  5.6 GB & (7.0 MB)   & 192.5 MB& (3.1 MB)     & 0.97 (0.56) \\
+    100   &  5.5 GB & (5.5 MB)   & 31.7 MB & (507 kB)   & 99\% (91\%) \\
+    500   &  5.5 GB & (5.7 MB)   & 68.2 MB & (1.1 MB)     & 99\% (81\%) \\
+    1000  &  5.5 GB & (6.0 MB)   & 99.1 MB & (1.6 MB)     & 98\% (73\%) \\
+    3000  &  5.6 GB & (7.0 MB)   & 192 MB& (3.1 MB)     & 97\% (56\%) \\
     \end{tabular}
   \end{table}
 
