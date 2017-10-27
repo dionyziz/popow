@@ -41,32 +41,21 @@ setting\cite{backbone}.
     No insertions, no copies, and no predictions \cite{backbone} have occurred.
 \end{definition}
 
-\begin{theorem}[Typicality]\label{thm.typicality}
+\begin{restatable}[Typicality]{theorem}{restateThmTypicality}
+\label{thm.typicality}
 Executions are $(\epsilon, \eta)$-typical with overwhelming
 probability in $\kappa$.
-\end{theorem}
-\begin{proof}
-    % \dznote{Copy proof sketch for block counts and regularity}
-
-    \textbf{Block counts and regularity. }
-    For the blocks count and regularity, we refer the reader to \cite{backbone}
-    for the full proof.
-
-    \textbf{Round count. }
-    First, observe that $Z_{ijk}^\mu \sim \textsf{Bern}(2^{-\mu}p)$ and these
-    are jointly independent. Therefore $Z_S^\mu \sim \textsf{Bin}(tq|S|,
-    2^{-\mu}p)$ and $|S| \sim \textsf{NB}(Z_S, 2^{-\mu}p)$. So $\mathbb{E}(|S|) =
-    2^\mu\frac{Z_S}{pqt}$. Applying a tail bound to the negative binomial
-    distribution, we obtain that $\Pr[|S| < (1 - \epsilon)\mathbb{E}(|S|)] \in
-    \Omega(\epsilon^2 m)$. \Qed
-\end{proof}
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/typicality.tex}
+\fi
 
 The following lemma is at the heart of the security proof that will follow.
 
 % \aknote{It might be better if instead of $\chain'_\mathcal{A}$
 % you just count the number of $\mu_\mathcal{A}$ blocks the adversary produced.}
 
-\begin{lemma}\label{lem.level-comparison}
+\begin{restatable}{lemma}{restateThmLevelComparison}\label{lem.level-comparison}
     Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$
     and $\chain_B$ is
     a chain adopted by an honest party at round $r_2$ of a typical execution.
@@ -81,27 +70,10 @@ The following lemma is at the heart of the security proof that will follow.
     \begin{equation*}
     2^{\mu_\mathcal{A}}|\chain'_\mathcal{A}| < \frac{1}{3}2^{\mu_B}|\chain_B^S\upchain^{\mu_B}|
     \end{equation*}
-\end{lemma}
-\begin{proof}
-    From $|\chain'_\mathcal{A}| \geq k$ we know that $Z_S \geq k$. Applying
-    Theorem~\ref{thm.typicality}, we conclude that $|S| \geq (1 -
-    \epsilon')2^{\mu_A}\frac{1}{pqt}|\chain'_\mathcal{A}|$.
-
-    Applying the chain growth theorem \cite{backbone} we obtain that $|\chain_B^S|
-    \geq (1 - \epsilon)f|S|$. But from the goodness of $\chain_B^S\upchain^{\mu_B}$, we
-    know that $|\chain_B^S\upchain^{\mu_B}| \geq (1 -
-    \delta)2^{-\mu_B}|\chain_B^S|$. Therefore $|\chain_B^S\upchain^{\mu_B}| \geq
-    2^{-\mu_B}(1 - \delta)(1 - \epsilon)f(1 -
-    \epsilon')2^{\mu_\mathcal{A}}\frac{1}{pqt}|\chain'_\mathcal{A}|$ and so:
-
-    \begin{equation*}
-    2^{\mu_\mathcal{A}}|\chain'_\mathcal{A}|
-    <
-    \frac{pqt}{(1 - \delta)(1 -
-    \epsilon')(1 - \epsilon)f}2^{\mu_B}|\chain_B^S\upchain^{\mu_B}|
-    \end{equation*}
-    \Qed
-\end{proof}
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/levelcomparison.tex}
+\fi
 
 \begin{definition}[Adequate level of honest proof]
 Let $\pi$ be an honestly generated proof constructed upon some adopted chain
@@ -119,88 +91,31 @@ block $b$ with security parameters $\delta$ and $m$. Note that the adequate
 level of a proof is a function of both the proof $\pi$ and the chosen block $b$.
 \end{definition}
 
-\begin{lemma}\label{lem.allblocks}
+\begin{restatable}{lemma}{restateThmAllBlocks}\label{lem.allblocks}
 Let $\pi$ be some honest proof generated with security parameters $\delta, m$.
 Let $\chain$ be the underlying chain, $b \in \chain$ be any block and $\mu'$ be
 the adequate level of the proof with respect to $b$ and the same security
 parameters.
 
-Then
-\begin{equation*}
-\chain\{b:\}\upchain^{\mu'} = \pi\{b:\}\upchain^{\mu'}
-\end{equation*}
-\end{lemma}
-\begin{proof}
-    $\pi\{b:\}\upchain^{\mu'} \subseteq \chain\{b:\}\upchain^{\mu'}$ is trivial.
-
-    For the converse, we will show that for all $\mu^* > \mu'$, we have that in
-    the iteration of the Prove \texttt{for} loop with $\mu = \mu^*$, the block
-    stored in variable $B$ preceeds block $b$ in $\chain$.
-
-    Suppose $\mu = \mu^*$ is the first \texttt{for} loop iteration during which the
-    property is violated. Clearly this cannot be the first iteration, as there
-    $B = \chain[0]$ and Genesis preceeds all blocks, including itself. By the
-    induction hypothesis we see that during the iteration $\mu = \mu^* + 1$,
-    block $B$ preceeded block $b$. But from the definition of $\mu'$ we know
-    that $\mu'$ is the highest level for which
-    $|\pi\{b:\}\upchain^{\mu'}[1:]|
-    \geq \max(m, (1 -
-    \delta)2^{-\mu'}|\pi\{b:\}\upchain^{\mu'}[1:]\downchain|)$.
-
-    Hence, this
-    property cannot hold for $\mu^* > \mu'$ and therefore
-    $|\pi_B\{b:\}\upchain^{\mu_B^*}[1:]| < m$ or $\lnot
-    \textsf{local-good}_\delta(\pi\{b:\}\upchain{\mu^*}[1:], \chain, \mu^*)$.
-
-    In case \textsf{local-good} is violated, variable $B$ remains unmodified and
-    the induction step holds. If \textsf{local-good} is not violated, then
-    $|\pi\{b:\}\upchain^{\mu^*}[1:]| < m$ and so $\pi\upchain^{\mu^*}[-m]$
-    preceeds $b$, and so we are done.
-    \Qed
-\end{proof}
+Then $\chain\{b:\}\upchain^{\mu'} = \pi\{b:\}\upchain^{\mu'}$.
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/allblocks.tex}
+\fi
 
 
 % \aknote{maybe we need a definition of the ``compared level'' }
 
-\begin{lemma}
+\begin{restatable}{restateThmLevelAdequacy}{lemma}
 Suppose the verifier evaluates $\pi_\mathcal{A} \geq \pi_B$ in a protocol
 interaction where $B$ is honest and assume during the comparison that the
 compared level of the honest party is $\mu_B$. Let $b =
 \textsf{LCA}(\pi_\mathcal{A}, \pi_B)$ and let $\mu_B'$ be the adequate
 level of $\pi_B$ with respect to $b$. Then $\mu_B' \geq \mu_B$.
-\end{lemma}
-\begin{proof}
-    Because $\mu_B$ is the compared level of the honest party we have:
-
-    $2^{\mu_B}|\chain\{b:\}\upchain^{\mu_B}| > 2^{\mu_B}|\chain\{b:\}|$
-
-    We will prove the claim by contradiction. Suppose $\mu_B' < \mu_B$. Because
-    by definition $\mu_B'$ is the maximum level such that
-    $|\pi_B\{b:\}\upchain^\mu[1:]| \geq \max(m, (1 -
-    \delta)2^{-\mu}|\pi_B\{b:\}\upchain^\mu[1:]\downchain|)$, therefore
-    $\mu_B$ does not satisfy this condition. But we know that
-    $|\pi_B\{b:\}\upchain^{\mu_B}[1:]| \geq m$ because $\mu_B$ was selected by
-    the Verifier. So therefore,
-
-    \begin{equation*}
-    2^{\mu_B}|\chain_B\{b:\}\upchain^{\mu_B}| < (1 - \delta)|\chain\{b:\}|
-    \end{equation*}
-
-    By the fact that $\mu_B'$ satisfies goodness, we have that:
-
-    \begin{equation*}
-    2^{\mu_B'}|\chain_B\{b:\}\upchain^{\mu_B'} > (1 - \delta)|\chain\{b:\}|
-    \end{equation*}
-
-    From the last two equations, we obtain that:
-
-    \begin{equation*}
-    (1 - \delta)|\chain\{b:\}| > 2^{\mu_B'}|\chain\{b:\}\upchain^{\mu_B'}|
-    \end{equation*}
-
-    But the last two equations contradict, hence the claim holds.
-    \Qed
-\end{proof}
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/leveladequacy.tex}
+\fi
 
 \begin{restatable}{theorem}{restateThmSecurity}
     \label{thm.security}
@@ -211,8 +126,6 @@ level of $\pi_B$ with respect to $b$. Then $\mu_B' \geq \mu_B$.
 
 \ifonecolumn
 \import{./}{proofs/security.tex}
-\else
-Full proofs are included in Appendix~\ref{sec.proofs}.
 \fi
 
 \begin{remark}[Variance attacks]
