@@ -82,7 +82,7 @@ Based on this, we can establish our theorem on succinctness:
 \else
 \fi
 
-\textbf{Badness.}
+\textbf{Certificates of badness.}
 To recap what we have achieved, note that we have proved security in the general
 case, but succinctness only in the optimistic case where there is no adversary
 present and network scheduling is random.
@@ -122,16 +122,16 @@ whether there is a lack of goodness in the underlying chain. The certificate can
 only be produced when there is a lack of goodness.
 
 The certificates of badness can be produced simply. First, the honest verifier
-finds the maximum level $\text{max}-\mu$ at which there are at least $m$
-$\text{max}-\mu$-superblocks and includes it in the certificate. Then, because
+finds the maximum level $\text{max-}\mu$ at which there are at least $m$
+$\text{max-}\mu$-superblocks and includes it in the certificate. Then, because
 there is a violation of goodness there must exist two levels $\mu < \mu'$ such
 that $2^\mu|\chain\upchain^\mu| > (1 + \delta)2^{\mu'}|\chain\upchain^{\mu'}|$
 in some part $\chain$ of the honestly adopted chain. But $\mu' - \mu \leq
-\text{max}-\mu$. Therefore, there must exist two adjacent levels $\mu_1 < \mu_2$
+\text{max-}\mu$. Therefore, there must exist two adjacent levels $\mu_1 < \mu_2$
 which break goodness but with error parameter
-$(1 - \delta)^{1/{\text{max}-\mu}}$. In particular, it will hold that
+$(1 - \delta)^{1/{\text{max-}\mu}}$. In particular, it will hold that
 $2^{\mu_1}|\chain\upchain^{\mu_1}| >
- (1 - \delta)^{1/{\text{max}-\mu}}2^{\mu_2}|\chain\upchain^{\mu_2}|$. This
+ (1 + \delta)^{1/{\text{max-}\mu}}2^{\mu_2}|\chain\upchain^{\mu_2}|$. This
 condition is direct for the prover to find and trivial for the verifier to
 check and completes the construction.
 
