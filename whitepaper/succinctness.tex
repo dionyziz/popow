@@ -80,10 +80,9 @@ Based on this, we can establish our theorem on succinctness:
 \ifonecolumn
 \import{./}{proofs/succinctness.tex}
 \else
-Full proofs of these facts are provided in Appendix~\ref{sec.proofs}.
 \fi
 
-\subsection{Certificates of Badness}
+\textbf{Badness.}
 To recap what we have achieved, note that we have proved security in the general
 case, but succinctness only in the optimistic case where there is no adversary
 present and network scheduling is random.
@@ -112,56 +111,77 @@ chain is not under attack by the adversarial computational power or network.
 
 Having made this observation, we now require the prover to produce a
 \textit{certificate of badness} in case there is a violation of
-\textit{goodness} in the blockchain.
+\textit{goodness} in the blockchain. This certificate will always be logarithmic
+in size and must be sent prior to the rest of the proof by the prover to the
+verifier. Because the certificate will be logarithmic in size even in the case
+of an adversarial attack on the chain, the honest verifier can stop processing
+the certificate after a logarithmic time bound. If the certificate is claimed to
+be longer, the honest verifier can reject early by deciding that the prover is
+adversarial. By looking at the certificate, the honest verifier can determine
+whether there is a lack of goodness in the underlying chain. The certificate can
+only be produced when there is a lack of goodness.
+
+The certificates of badness can be produced simply. First, the honest verifier
+finds the maximum level $\text{max}-\mu$ at which there are at least $m$
+$\text{max}-\mu$-superblocks and includes it in the certificate. Then, because
+there is a violation of goodness there must exist two levels $\mu < \mu'$ such
+that $2^\mu|\chain\upchain^\mu| > (1 + \delta)2^{\mu'}|\chain\upchain^{\mu'}|$
+in some part $\chain$ of the honestly adopted chain. But $\mu' - \mu \leq
+\text{max}-\mu$. Therefore, there must exist two adjacent levels $\mu_1 < \mu_2$
+which break goodness but with error parameter
+$(1 - \delta)^{1/{\text{max}-\mu}}$. In particular, it will hold that
+$2^{\mu_1}|\chain\upchain^{\mu_1}| >
+ (1 - \delta)^{1/{\text{max}-\mu}}2^{\mu_2}|\chain\upchain^{\mu_2}|$. This
+condition is direct for the prover to find and trivial for the verifier to
+check and completes the construction.
 
 % XXX move this definition to superquality section
-\begin{definition}[Badness]
-A chain $\chain$ is called \textit{bad} if there is some level $\mu$
-such that for some chain $\chain' \subseteq \chain\upchain^\mu$ with $|\chain'| \geq
-m$, it holds that $\lnot good_{\delta,m}(\chain, \chain', \mu)$.
-\end{definition}
-
-\begin{definition}[Badness certification]
-A certificate of badness protocol is a proof protocol $(P, V)$ consisting of an
-honest prover $P$ and an honest verifier $V$ with the following properties:
-
-\begin{itemize}
-  \item \textbf{Correctness.} Given a bad honestly adopted chain $\chain$, the
-  honest prover $P(\chain)$ produces a certificate of badness $s$ such that
-  $V(s)$ outputs 1;
-  \item \textbf{Security.} For any adversary $\mathcal{A}$ with no mining power
-  in an environment of random network scheduling, if the adversary produces
-  some certificate of badness $s$, then $V(s)$ outputs 1 with only negligible
-  probability;
-  \item \textbf{Succinctness.} For any adversary $\mathcal{A}$ with no mining
-  power in an environment of random network scheduling, if the adversary
-  produces some certificate of badness $s$, then $V$ returns after reading only
-  the first $O(polylog(|\chain|))$ bits of the input, where $\chain$ is the
-  maximum honestly adopted blockchain.
-\end{itemize}
-\end{definition}
-
-The prover for our certificates of badness protocol is shown in
-Algorithms~\ref{alg.badness}. The prover looks for two adjacent levels $\mu$ and
-$\mu - 1$ which violate the goodness property with sufficient error
-$(1 - \delta)\rho$ so that it can be possible for them to contribute to an error
-of more than $(1 - \delta)$ across non-adjacent superblock levels.
-
-In order to make its decision, the verifier examines the provided chain of level
-$\mu - 1$ and counts the number of $\mu$-superblocks and $\mu - 1$ superblocks
-to see if the claimed error is attained.
-
-\import{./}{algorithms/alg.badness.tex}
-
-\begin{theorem}
-Algorithm~\ref{alg.badness} is a correct, secure and succinct certificate of
-badness protocol.
-\end{theorem}
-\begin{proof}
-
-  \textbf{Correctness.} XXX
-
-  \textbf{Security.} XXX
-
-  \textbf{Succinctess.} XXX
-\end{proof}
+% \begin{definition}[Badness]
+% A chain $\chain$ is called \textit{bad} if there is some level $\mu$
+% such that for some chain $\chain' \subseteq \chain\upchain^\mu$ with $|\chain'| \geq
+% m$, it holds that $\lnot good_{\delta,m}(\chain, \chain', \mu)$.
+% \end{definition}
+%
+% \begin{definition}[Badness certification]
+% A certificate of badness protocol is a proof protocol $(P, V)$ consisting of an
+% honest prover $P$ and an honest verifier $V$ with the following properties:
+%
+% \begin{itemize}
+%   \item \textbf{Correctness.} Given a bad honestly adopted chain $\chain$, the
+%   honest prover $P(\chain)$ produces a certificate of badness $s$ such that
+%   $V(s)$ outputs 1;
+%   \item \textbf{Security.} For any adversary $\mathcal{A}$ with no mining power
+%   in an environment of random network scheduling, if the adversary produces
+%   some certificate of badness $s$, then $V(s)$ outputs 1 with only negligible
+%   probability;
+%   \item \textbf{Succinctness.} For any adversary $\mathcal{A}$ with no mining
+%   power in an environment of random network scheduling, if the adversary
+%   produces some certificate of badness $s$, then $V$ returns after reading only
+%   the first $O(polylog(|\chain|))$ bits of the input, where $\chain$ is the
+%   maximum honestly adopted blockchain.
+% \end{itemize}
+% \end{definition}
+%
+% The prover for our certificates of badness protocol is shown in
+% Algorithms~\ref{alg.badness}. The prover looks for two adjacent levels $\mu$ and
+% $\mu - 1$ which violate the goodness property with sufficient error
+% $(1 - \delta)\rho$ so that it can be possible for them to contribute to an error
+% of more than $(1 - \delta)$ across non-adjacent superblock levels.
+%
+% In order to make its decision, the verifier examines the provided chain of level
+% $\mu - 1$ and counts the number of $\mu$-superblocks and $\mu - 1$ superblocks
+% to see if the claimed error is attained.
+%
+% \import{./}{algorithms/alg.badness.tex}
+% \begin{theorem}
+% Algorithm~\ref{alg.badness} is a correct, secure and succinct certificate of
+% badness protocol.
+% \end{theorem}
+% \begin{proof}
+%
+%   \textbf{Correctness.} XXX
+%
+%   \textbf{Security.} XXX
+%
+%   \textbf{Succinctess.} XXX
+% \end{proof}
