@@ -5,14 +5,13 @@ primitive for blockchain protocols called Noninteractive-Proofs-of-Proof-of-Work
 cryptocurrencies. Unlike a traditional blockchain client which must verify the
 entire linearly-growing chain of PoWs, clients based on NIPoPoWs require
 resources only logarithmic in the length of the blockchain. NIPoPoWs solve two
-important open questions for PoW based consensus protocols. Specifically the
-problem of constructing efficient transaction verification clients, sometimes
-called ``simple payment verification'' or SPV, and the problem of constructing
-efficient sidechain proofs. We provide a formal model for NIPoPoWs. We prove our
-construction is secure in the backbone model and show that the communication is
-succinct in size. We provide simulations and experimental data to measure
-concrete communication efficiency and security. Finally, we provide two ways
-that our NIPoPoWs can be adopted by existing blockchain protocols, first via a
-soft fork, and second via a new update mechanism that we term a ``velvet fork''
-and enables to harness some of the performance benefits of NIPoPoWs even with a
-minority upgrade.
+important open questions for PoW based consensus protocols: The problem of
+constructing efficient transaction verification (SPV) clients and the problem
+of constructing efficient sidechain proofs. We provide a formal model for
+NIPoPoWs. We prove our construction is secure in the backbone model and show
+that communication is succinct in size. We provide simulations and
+experimental data to measure concrete communication efficiency and security.
+Finally, we provide two ways that our NIPoPoWs can be adopted by existing
+blockchain protocols, first via a soft fork, and second via a new update
+mechanism that we term a ``velvet fork'' and enables to harness some of the
+performance benefits of NIPoPoWs even with a minority upgrade.
