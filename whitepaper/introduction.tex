@@ -24,15 +24,13 @@ whole blockchain. First, while Bitcoin remains by far the largest and most
 widely used cryptocurrency, the ecosystem has become significantly more diverse.
 Today there are hundreds of competitors, commonly called ``altcoins'', and
 Bitcoin's dominance in the market is at an all time low
-~\cite{marketcap}.\footnote{There are numerous problems with using  market
-capitalization as a measure of economic size, such as defining what it means to
-quantify the quantity ``in circulation''; further quantifying this is outside
-the scope of our paper.} We envision that our protocol will form the basis of an
-efficient multi-blockchain client, which could efficiently support payments
-using hundreds of separate cryptocurrencies. This requires optimizing the
-``SPV client'' described in the original Bitcoin paper~\cite{bitcoin} which,
-while quite efficient, requires processing an amount of data growing linearly
-with the size of the chain $|\chain|$.
+~\cite{marketcap}.\footnote{Understanding that there are problems with using
+market cap as a measure of economic size.} We envision that our protocol will
+form the basis of an efficient multi-blockchain client, which could efficiently
+support payments using hundreds of separate cryptocurrencies. This requires
+optimizing the ``SPV client'' described in the original Bitcoin
+paper~\cite{bitcoin} which, while quite efficient, requires processing an amount
+of data growing linearly with the size of the chain $|\chain|$.
 
 Second, cryptocurrencies are increasingly used as components of larger systems
 (the cryptocurrency system is typically called a ``blockchain'' when its
