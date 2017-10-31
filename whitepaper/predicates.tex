@@ -12,23 +12,13 @@ between them.
 \begin{definition}{(Monotonicity)}
     A chain predicate $Q(\chain)$ is $\textit{monotonic}$ if for all chains
     $\chain$ and for all blocks $B$ we have that:
-%\begin{equation*}
-    $    Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B) $.
-%\end{equation*}
+    $Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B)$.
 
-{(Predicate switching position)}
-    A chain predicate $Q(\chain) \neq \bot$ has a switching position $i \in
-    \mathbb{N}$ in the chain $\chain$ defined as the minimum $i$ such that:
-%    \begin{equation*}
- $       Q(\chain[:i]) \neq \bot$.
-%    \end{equation*}
-
- {(Predicate stability)}
+ {(Stability)}
     Parameterized by $k \in \mathbb{N}$ and a chain $\chain$, a chain predicate
-    $Q$ has $\textit{stability}$ if its switching position $i$ satisfies $i <
-    |\chain| - k$.
+    $Q$ has $\textit{stability}$ if its value only depends on $\chain[:-k]$.
 
-{(Predicate persistence)}
+{(Persistence)}
     Parameterized by $k \in \mathbb{N}$ and a chain $\chain$, a chain predicate
     $Q$ has $\textit{persistence}$ if the following is true: When in a certain
     round the predicate is $k$-stable in some honest party's chain, then
