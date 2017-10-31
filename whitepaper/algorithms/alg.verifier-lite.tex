@@ -6,10 +6,9 @@
             \Let{\tilde\pi}{(\text{Gen})}
               \Comment{Trivial anchored blockchain}
             \For{$(\pi, \chi) \in \mathcal{P}$}
-              \Comment{Examine each proof $(\pi, \chi)$ in $\mathcal{P}$}
-                \If{$\mathsf{validChain}(\pi \chi)$
-                and $|\chi| = k$
-                and $\pi \geq_m \tilde\pi$}
+                \If{$\mathsf{validChain}(\pi \chi)
+                    \land |\chi| = k
+                    \land \pi \geq_m \tilde\pi$}
                     \Let{\tilde\pi}{\pi}
                     \Let{\tilde\chi}{\chi}
                       \Comment{Update current best}
