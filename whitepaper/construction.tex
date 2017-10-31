@@ -6,11 +6,9 @@ be done in two steps: First, we will build a construction which is limited to
 a class of predicates that is easy to prove. Later, we will extend this class
 of predicates by augmenting the construction.
 
-Among the predicates which are stable, we now limit ourselves to the class of
-predicates which are functions of only the chain suffix $\chain[-k - 1:]$. We
-call these predicates $(k+1)$-\textit{suffix sensitive}. As we will illustrate,
-these predicates are significantly easier to prove, but at the same time allow
-us to use the construction as a scaffold for the more generic case.
+Among the predicates which are stable, we now limit ourselves \textit{suffix
+sensitive} predicates. These predicates are easier to prove, but at the same
+time allow us to use the construction as a scaffold for the more generic case.
 
 \begin{definition}[Suffix sensitivity]
 A chain predicate $Q$ is called $k$-\textnormal{suffix sensitive} if for all
@@ -18,134 +16,99 @@ chains $\chain, \chain'$ with $|\chain| \geq k$ and $|\chain'| \geq k$ such that
 $\chain[-k:] = \chain'[-k:]$ we have that $Q(\chain) = Q(\chain')$.
 \end{definition}
 
-Given this suffix-sensitivity definition, we deduce that for each
-suffix-sensitive predicate $Q$ there must exist a ``short version'' predicate
-$\tilde{Q}$ which can deduce the value of $Q(\chain)$ by only examining the
-suffix of the chain, that is $Q(\chain) = \tilde{Q}(\chain[-k:])$.
+Given the suffix-sensitivity definition, we deduce that for a suffix-sensitive
+predicate $Q$ there must be a quick way of deducing the value of $Q(\chain)$ by
+only examining the $k$-suffix of the chain.
 
 Suffix-sensitive predicates allow proving that a recent transaction occurred in
-the longest chain and in a block buried under at most $k$ blocks. Because
-the predicates we are interested in are stable, they must also pertain to
-properties that are independent of the last $k$ blocks. Therefore, combining the
-two, the predicate can only describe something that is visible at the exact
-block $\chain[-k-1]$ and that will also remain true as the chain grows in
-perpetuity (due to monotonicity). These predicates may seem contrived for
-blockchains like Bitcoin. However, they make sense for blockchains such as
-Ethereum which maintain state \cite{vitalik} that is propagated and committed to
-in every block. The existence of a stable monotonic state bit flip, for example
-the creation of an indestructible smart contract, can therefore be described
-using such predicates.
+the longest chain and in a block buried under at most $k$ blocks. Because the
+predicates we are interested in are stable, they must also pertain to properties
+that are independent of the last $k$ blocks. Therefore, combining the two, the
+predicate can only describe something that is visible at the exact block
+$\chain[-k-1]$ and that will remain true as the chain grows in perpetuity (due
+to monotonicity). These predicates make sense for blockchains such as Ethereum
+which maintain state \cite{vitalik} that is propagated and committed to in every
+block. One example is the existence of a particular Ethereum account.
 
 \subsection{Construction}
 
-We will now describe the details of the NIPoPoW construction by presenting a
-specific prover and verifier. We present a generic form of the verifier first
-and the prover afterwards. The generic form of the verifier will work with any
-practical suffix proof protocol (we make this more exact below). Therefore, it
-makes sense to describe the generic verifier first before we talk about the
+We present a generic form of the verifier first and the prover afterwards. The
+generic form of the verifier works with any practical suffix proof protocol.
+Therefore, we describe the generic verifier first before we talk about the
 specific instantiation of our protocol. The generic verifier is given access to
-call a proof comparison operator $\leq_m$ which is protocol-specific. We
-therefore begin the description of our protocol by first illustrating the
-generic verifier. Next, we describe the prover specific to our protocol.
-Finally, we show the instantiation of the $\leq_m$ operator, which plugs into
-the generic verifier to make a concrete verifier for our protocol.
+call a protocol-specific proof comparison operator $\leq_m$. We begin the
+description of our protocol by first illustrating the generic verifier. Next, we
+describe the prover specific to our protocol. Finally, we show the instantiation
+of the $\leq_m$ operator, which plugs into the generic verifier to make a
+concrete verifier for our protocol.
 
-\subsubsection{The generic verifier}
-
+\textbf{The generic verifier.}
 The \textsf{Verify} function of our NIPoPoW construction is described in
 Algorithm~\ref{alg.nipopow-verifier}. The verifier algorithm is parameterized by
-a chain predicate $Q$ and security parameters $k$ and $m$. The parameter $k$
+a chain predicate $Q$ and security parameters $k, m$. $k$
 pertains to the amount of proof-of-work needed to bury a block so that it is
-believed to remain stable; in bitcoin's case, we often set $k = 6$. The
-parameter $m$ is a security parameter pertaining to the prefix of the proof,
-which connects the Genesis block to the $k$-sized suffix.  The verifier receives
-several proofs by different provers in a collection of proofs $\mathcal{P}$, at
-least one of which must be generated by an honest prover. Iterating over these
-proofs, it extracts the best one by comparing these proofs.
+believed to remain stable (e.g. $k = 6$). $m$ is a security
+parameter pertaining to the prefix of the proof, which connects the Genesis
+block to the $k$-sized suffix. The verifier receives several proofs by
+different provers in a collection of proofs $\mathcal{P}$. Iterating over these
+proofs, it extracts the best.
 
-Each of these proofs is a chain. For honest provers, these
-chains are subchains of the currently adopted chain. The proofs consist of two
-parts, $\pi$ and $\chi$, such that $\pi \chi$ is a valid chain. $\chi$ is called
-the proof suffix, for which we require that $|\chi| = k$, while $\pi$ is called
-the proof prefix. For honest provers, $\chi$ will be the last $k$ blocks of
-their adopted chain, while $\pi$ will consist of a selected subset of blocks
-from the rest of their chain preceding $\chi$. The exact method of choice of
-this subset will become clear when we describe the concrete prover in the next
-section.
+Each proof is a chain. For honest provers, these are subchains of the  adopted
+chain. Proofs consist of two parts, $\pi$ and $\chi$. $\pi \chi$ must be a valid
+chain. $\chi$ is the proof suffix; $\pi$ is the prefix. We require $|\chi| = k$.
+For honest provers, $\chi$ is the last $k$ blocks of the adopted chain, while
+$\pi$ consists of a selected subset of blocks from the rest of their chain
+preceding $\chi$. The method of choice of this subset will become clear soon.
 
-The verifier compares the various proofs provided to it by calling the $\geq_m$
-comparison operator, which is defined by the protocol. We will get to the
-operator's definition after we have examined the prover algorithm. All proofs
-are checked for validity before comparison by checking that $|\chi| = k$ and
-subsequently using the \textit{validChain} function. This function simply checks
-that $\pi\chi$ is an anchored blockchain by ensuring that the first block in the
-proof is the common reference string (Genesis) and that each block in the proof
-contains a pointer to the previous block within the proof.
+The verifier compares the proofs provided to it by calling the $\geq_m$
+operator, defined by the protocol. We will get to the operator's definition
+shortly. Proofs are checked for validity before comparison by ensuring $|\chi| =
+k$ and calling \textit{validChain} which checks if $\pi\chi$ is an anchored
+blockchain.
 
 \import{./}{algorithms/alg.verifier-lite.tex}
 
-At each loop iteration, the verifier compares the next candidate proof prefix
-$\pi$ against the currently best known proof prefix $\tilde\pi$ by calling $\pi
-\geq_m \tilde\pi$. If the candidate prefix is better than the currently best
-known proof prefix, then the currently known best prefix is updated by setting
-$\tilde\pi \leftarrow \pi$. When the best known prefix is updated, the suffix
-$\tilde\chi$ associated with the best known prefix is also updated to match the
-suffix $\chi$ of the candidate proof by setting $\tilde\chi \leftarrow \chi$.
-While $\tilde\chi$ is needed for the final predicate evaluation, it is not used
-as part of any comparison, as it has the same size $k$ for all proofs. The best
-known proof prefix is initially set to $(Gen)$, the trivial anchored chain
-containing only the genesis block. Any well-formed proof compares favourably
-against the trivial chain.
+The verifier loops through all candidate proofs $\pi$ and extracts the best one
+$\tilde\pi$ using the $\geq_m$ operator for comparisons. $\tilde\chi$ is set to
+be the suffix associated with the best known prefix. While $\tilde\chi$ is
+needed for the final predicate evaluation, it is not used as part of any
+comparison, as it has the same size $k$ for all proofs.
 
 After the end of the for loop, the verifier will have determined the best proof
 $(\tilde\pi, \tilde\chi)$. We will later prove that this proof will necessarily
 belong to an honest prover with overwhelming probability. Since the proof has
 been generated by an honest prover, it is associated with an underlying honestly
-adopted chain $\chain$. The verifier then evaluates the predicate $Q$ on the
-underlying chain associated with the proof by invoking $\tilde{Q}$.
+adopted chain $\chain$. The verifier then extracts the value of the predicate
+$Q$ on the underlying chain.
 
-This generic form of the verifier will work for any protocol for suffix proofs,
-as long as the underlying operator $\leq_m$ is defined in a manner that is
-transitive and returns the same result if invoked multiple times with the same
-inputs with overwhelming probability.
-
-\subsubsection{The concrete prover}
-
+\textbf{The concrete prover.}
 The NIPoPoW honest prover construction is shown in
 Algorithm~\ref{alg.nipopow-prover}. The honest prover is supplied with an
 honestly adopted chain $\chain$ and security parameters $m, k, \delta$ and
-returns a proof $\pi\chi$, which is a chain. The proof consists of a suffix
-$\chi$ and a prefix $\pi$. The suffix $\chi$ is simply the last $k$ blocks of
-$\chain$. The prefix $\pi$ is constructed by selecting various blocks and adding
-them to $\pi$. which consists of a number of blocks for every level $\mu$. At
-the highest possible level at which at least $m$ blocks, all these blocks are
-presented. Then, inductively, for every superchain of level $\mu$ that is
-included in the proof, the suffix of length $m$ is taken. Then the underlying
-superchain of level $\mu - 1$ covering the same span as that suffix is also
-included, until level $0$ is reached. This underlying superchain will have $2m$
-blocks in expectation and always at least $m$ blocks.
+returns proof $\pi\chi$, which is a chain. The suffix $\chi$ is the last $k$
+blocks of $\chain$. The prefix $\pi$ is constructed by selecting various blocks
+from $\chain[:-k]$ and adding them to $\pi$, which consists of a number of
+blocks for every level $\mu$. At the highest possible level at which at least
+$m$ blocks, all these blocks are presented. Then, inductively, for every
+superchain of level $\mu$ that is included in the proof, the suffix of length
+$m$ is taken. Then the underlying superchain of level $\mu - 1$ spanning the
+same blocks as that suffix is also included, until level $0$ is reached. This
+underlying superchain will have $2m$ blocks in expectation and always at least
+$m$ blocks.
 
 \import{./}{algorithms/alg.nipopow-prover.tex}
 
-The algorithm returns a chain $\pi\chi$. In this chain, $\chi$ is the suffix of
-the blockchain containing the most recent $k$ blocks. $\pi$ is a subchain of the
-underlying blockchain with the last $k$ blocks removed, $\chain[:-k]$. In each
-iteration of the for loop, blocks of level $\mu$ are considered, starting from
-the top-most level $|\chain[-k].\textsf{interlink}|$ and descending down to
-level $0$.
-
-When we take a
-$\mu$-superchain and are interested in its last $m$ blocks, we fill the same
-range of blocks with blocks from the superchain of level $\mu - 1$ below. All
-the blocks of level $\mu$ which are within this last $m$ blocks range will also
-be superblocks of level $\mu - 1$ and so we do not want to keep them in the
-proof structure twice.  Note furthermore that no check is necessary to make sure
-the top-most level has at least $m$ blocks, even though the verifier requires
-this. The reason is the following: Assume the blockchain has at least $m$ blocks
-in total. Then when a superchain of level $\mu$ has less than $m$ blocks in
-total, these blocks will all be necessarily included into the proof by a
-lower-level superchain $\mu - i$ for some $i > 0$. Therefore, it does not hurt
-to add them to the set $\pi$ earlier.
+When we take a $\mu$-superchain and are interested in its last $m$ blocks, we
+fill the same range of blocks with blocks from the superchain of level $\mu - 1$
+below. All the $\mu$-superblocks which are within this $m$ blocks range
+will also be $(\mu-1)$-superblocks and so we do not want to keep them
+in the proof twice. Note that no check is necessary to
+make sure the top-most level has at least $m$ blocks, even though the verifier
+requires this. The reason is the following: Assume the blockchain has at least
+$m$ blocks in total. Then when a superchain of level $\mu$ has less than $m$
+blocks in total, these blocks will all be necessarily included into the proof by
+a lower-level superchain $\mu - i$ for some $i > 0$. Therefore, it does not hurt
+to add them to $\pi$ earlier.
 
 Figure~\ref{fig.nipopow} contains an example proof constructed for parameters
 $m = k = 3$. The top superchain level which contains at least $m$ blocks is
@@ -156,8 +119,7 @@ for support.
 
 \begin{figure}[h]
     \caption{
-    Non-interactive proof-of-work prefix $\pi$ for $m = 3$ on a chain good
-    everywhere.
+    NIPoPoW prefix $\pi$ for $m = 3$ on a good chain.
     }
     \centering
     \iftwocolumn
@@ -168,31 +130,28 @@ for support.
     \label{fig.nipopow}
 \end{figure}
 
-\subsubsection{The concrete verifier}
-
-Finally, the $\geq_m$ operator which performs the actual comparison of proofs is
-presented in Algorithm~\ref{alg.nipopow-maxchain}. It takes two proofs $\pi_A$
-and $\pi_B$ as parameters and returns true if the first proof is winning,
-otherwise it return false to indicate the second proof is winning. The
-comparison operator computes the lowest common ancestor block $b$ between the
-two proofs as $(\pi_{A} \cap \pi_B)[-1]$. As parties $A$ and $B$ agree that the
-blockchain is the same up to block $b$, arguments will then be taken for the
-diverging chains after block $b$. The best possible argument from each player's
-proof is extracted by calling the $\text{best-arg}_m$ function. We call the
-willingness of the verifier to allow each prover to be evaluated based on their
-best argument the \textit{principle of charity}. To find the best argument of a
-proof $\pi$ given an LCA block $b$, $\text{best-arg}_m$ first collects all the
-$\mu$ indices which point to superblock levels that contain valid arguments
-after block $b$. Argument validity requires that there are at least $m$
-$\mu$-superblocks following block $b$, which is captured by the comparison
-$|\pi\upchain^\mu\{b:\}| \geq m$. $0$ is always considered a valid level,
-regardless of how many blocks are present there. These level indices are
-collected into a set $M$. For each of these levels, the score of their
-respective argument is evaluated by weighting the number of blocks by the
-exponent of the level as $2^\mu|\pi\upchain^\mu\{b:\}|$. The highest possible
-score across all levels is then returned. Once the score of the best argument of
-both players $A$ and $B$ is known, they are then directly compared and the
-winner is returned. Note that an advantage is given to the adversary in case of
-a tie by using the $\geq$ operator which favours player $A$.
+\textbf{The concrete verifier.} The $\geq_m$ operator which performs the
+comparison of proofs is presented in Algorithm~\ref{alg.nipopow-maxchain}. It
+takes proofs $\pi_A$ and $\pi_B$ and returns true if the first proof is winning,
+or false if the second is winning. It first computes the LCA $b$ between the
+proofs. As parties $A$ and $B$ agree that the blockchain is the same up to block
+$b$, arguments will then be taken for the diverging chains after $b$. The best
+possible argument from each player's proof is extracted by calling the
+$\text{best-arg}_m$ function.
+% We call the
+% willingness of the verifier to allow each prover to be evaluated based on their
+% best argument the \textit{principle of charity}.
+To find the best argument of a proof $\pi$ given $b$, $\text{best-arg}_m$
+collects all the $\mu$ indices which point to superblock levels that contain
+valid arguments after block $b$. Argument validity requires that there are at
+least $m$ $\mu$-superblocks following block $b$, which is captured by the
+comparison $|\pi\upchain^\mu\{b:\}| \geq m$. $0$ is always considered a valid
+level, regardless of how many blocks are present there. These level indices are
+collected into set $M$. For each of these levels, the score of their respective
+argument is evaluated by weighting the number of blocks by the level as
+$2^\mu|\pi\upchain^\mu\{b:\}|$. The highest possible score across all levels is
+returned. Once the score of the best argument of both $A$ and $B$ is known, they
+are directly compared and the winner returned.  An advantage is given to the
+adversary in case of a tie by using the $\geq$ operator favouring $A$.
 
 \import{./}{algorithms/alg.nipopow-maxchain.tex}
