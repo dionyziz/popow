@@ -105,10 +105,37 @@ probability.
 \restateThmPredicatePersistence*
 \import{./}{proofs/predicatepersistence.tex}
 
-\restateThmLocalGood*
+\begin{restatable}[Local goodness]{lemma}{restateThmLocalGood}
+\label{lem.localgood}
+Assume chain $\chain$ contains only honestly-generated blocks and has been
+adopted by an honest party in an execution with random network scheduling. Then
+for all levels $\mu$, for all constant $\delta > 0$, all continuous subchains
+$\chain' = \chain[i:j]$ with $|\chain'| \geq m$ are locally good,
+$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, with overwhelming
+probability in $m$.
+\end{restatable}
 \import{./}{proofs/localgood.tex}
 
-\restateThmSuperquality*
+\begin{lemma}[Multilevel quality]\label{lem.multilevel}
+For all levels $\mu$, for all constant $0 < \delta \leq 0.5$, a chain $\chain$
+containing only honestly-generated blocks adopted by an honest party in an
+execution with random scheduling has $(\delta, k_1)$ multilevel quality at level
+$\mu$ with overwhelming probability in $k_1$.
+\end{lemma}
+\begin{proof}\textbf{(Sketch)}
+This proof is identical to the one of Lemma~\ref{lem.localgood}.
+\Qed
+\end{proof}
+
+\begin{restatable}[Superquality]{lemma}{restateThmSuperquality}
+\label{lem.superquality}
+For all levels $\mu$, for all constant $\delta > 0$, a chain
+$\chain$ containing only honestly-generated blocks adopted by an honest party in
+an execution with random network scheduling has $(\delta, m)$-superquality at level
+$\mu$ with overwhelming probability in $m$.
+\end{restatable}
+\import{./}{proofs/superquality.tex}
+
 \import{./}{proofs/superquality.tex}
 
 \restateThmAttack*

@@ -60,19 +60,6 @@ $\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, if $|\chain'| > (1 -
 \delta)2^{-\mu}|\chain|$.
 \end{definition}
 
-\begin{restatable}[Local goodness]{lemma}{restateThmLocalGood}
-\label{lem.localgood}
-Assume chain $\chain$ contains only honestly-generated blocks and has been
-adopted by an honest party in an execution with random network scheduling. Then
-for all levels $\mu$, for all constant $\delta > 0$, all continuous subchains
-$\chain' = \chain[i:j]$ with $|\chain'| \geq m$ are locally good,
-$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, with overwhelming
-probability in $m$.
-\end{restatable}
-\ifonecolumn
-\import{./}{proofs/localgood.tex}
-\fi
-
 \begin{definition}[Chain superquality]
 The $(\delta, m)$ superquality property
 $Q^\mu_{scq}$ of a chain $\chain$ pertaining to level $\mu$ with security
@@ -81,17 +68,6 @@ $m' \geq m$, it holds that $\textsf{local-good}_{\delta}(C\upchain^\mu[-m':],
 C\upchain^\mu[-m':]\downchain, \mu)$. That is, all suffixes that are
 sufficiently large are locally good.
 \end{definition}
-
-\begin{restatable}[Superquality]{lemma}{restateThmSuperquality}
-\label{lem.superquality}
-For all levels $\mu$, for all constant $\delta > 0$, a chain
-$\chain$ containing only honestly-generated blocks adopted by an honest party in
-an execution with random network scheduling has $(\delta, m)$-superquality at level
-$\mu$ with overwhelming probability in $m$.
-\end{restatable}
-\ifonecolumn
-\import{./}{proofs/superquality.tex}
-\fi
 
 \begin{definition}[Multilevel quality]
 A $\mu$-superchain $\chain'$ is said to have \textit{multilevel quality}, written
@@ -105,25 +81,15 @@ if $|\chain^*\upchain^{\mu'}| = k_1$, then $|\chain^*\upchain^{\mu}| \geq (1 -
 Note also that for $\delta < 0.5$, multilevel quality implies that
 $|\chain^*\upchain^{\mu}| \geq 1$.
 
-\begin{lemma}[Multilevel quality]\label{lem.multilevel}
-For all levels $\mu$, for all constant $0 < \delta \leq 0.5$, a chain $\chain$
-containing only honestly-generated blocks adopted by an honest party in an
-execution with random scheduling has $(\delta, k_1)$ multilevel quality at level
-$\mu$ with overwhelming probability in $k_1$.
-\end{lemma}
-\ifonecolumn
-\begin{proof}\textbf{(Sketch)}
-This proof is identical to the one of Lemma~\ref{lem.localgood}.
-% \dznote{TODO: Write the exact proof for this}
-\Qed
-\end{proof}
-\fi
-
 \begin{definition}[Good superchain]\label{lem.good}
 A $\mu$-superchain $\chain'$ is said to be \textit{good}, written
 $\textnormal{good}_{\delta, k_1}(\chain, \chain', \mu)$, with respect to an
 underlying chain $\chain = \chain'\downchain$ if it has both superquality and multilevel quality with the same parameters $(\delta, m)$.
 \end{definition}
+
+The above good statistical properties are attained with overwhelming probability
+by all chains that are generated in optimistic environments, i.e. if no
+adversary tries to violate them.
 
 \begin{corollary}[Optimistic superchain distribution]
 \label{crly.superchain-distribution}
