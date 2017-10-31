@@ -1,7 +1,6 @@
 \subsection{Desired properties}
 
-We now define two desired properties of a non-interactive proof protocol, in
-particular \textit{succinctness} and \textit{security}.
+We now define two desired properties of a non-interactive proof protocol, \textit{succinctness} and \textit{security}.
 
 \begin{definition}{(Security)}
 A \textit{blockchain proof protocol} is \textit{secure} if for all environments
@@ -16,16 +15,10 @@ size $|\pi|$ across all honest provers for a given round $r$ is
 $O(polylog(r))$.
 \end{definition}
 
-Based on these definitions, it is easy to see that it is trivial to construct a
-secure but not succinct protocol: The prover provides the chain $\chain$ itself
-as a proof and the verifier simply compares the proofs received by length:
-Since the longest proof is literally the longest chain, the protocol is
-trivially secure but not succinct. The challenge we will solve over the next
-sections is to provide a non-interactive protocol which at the same time
-achieves security and succinctness over a large class of predicates.
-
-% we now provide the model for a stateless typical
-% bitcoin SPV node in Algorithm~\ref{alg.verifier-full}. This verifier is
-% trivially secure, but not succinct.
-
-% \import{./}{algorithms/alg.verifier-full.tex}
+Based on these definitions, it is trivial to construct a secure but not succinct
+protocol: The prover provides the chain $\chain$ itself as a proof and the
+verifier simply compares the proofs received by length: Since the longest proof
+is literally the longest chain, the protocol is trivially secure but not
+succinct. The challenge we will solve over the next sections is to provide a
+non-interactive protocol which at the same time achieves security and
+succinctness over a large class of predicates.
