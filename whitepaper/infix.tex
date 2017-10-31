@@ -140,32 +140,13 @@ $\textsf{ancestors}$ method. In the final predicate evaluation, the set of
 ancestors of the best blockchain tip is passed to the predicate.
 
 \subsection{Security}
-\begin{theorem}
+\begin{restatable}{theorem}{restateThmInfixSecurity}
 The infix NIPoPoW construction is secure for all infix-sensitive stable
 predicates $Q$, except with negligible probability in $\kappa$.
-\end{theorem}
-\begin{proof}
-Assume a typical execution. To prove the security of the construction, it
-suffices to show that if all honest verifiers agree on the value of $Q(\chain)$,
-then the verifier will output the same value. Assume that all verifiers agree on
-the value $v$.
-
-By Theorem~\ref{thm.security} and because the evaluation of $\tilde\pi$ is
-identical in the suffix-sensitive and in the infix-sensitive case, we deduce
-that $b = \tilde\pi[-1]$ will be an honestly adopted block. Furthermore, due to
-the Common Prefix property of backbone, $b$ will belong to all honest parties'
-chains and in the same position, as it is buried under $|\tilde\chi| = k$
-blocks.
-
-By assumption, at least one honest party $B$ has provided an honest NIPoPoW
-$\pi_B$. Let the chain adopted by that honest party during the round in which
-the NIPoPoW was produced be $\chain$. Because the predicate $Q$ is infix-sensitive
-and stable, this means that $\exists \chain' \subseteq \chain[:-k]:
-P_v(\chain')$. Due to $B$ being honest, $\chain' \subseteq \pi_B$. Let
-$S = \textsf{ancestors}(b)$ be the ancestors evaluated by the verifier. Clearly
-$\chain' \subseteq S$ and therefore $Q(S) = Q(\chain') = v$.
-\Qed
-\end{proof}
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/infixsecurity.tex}
+\fi
 
 \subsection{Succinctness}
 As long as the number of blocks on which the predicate depends is
