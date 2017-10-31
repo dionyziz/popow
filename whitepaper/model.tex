@@ -12,243 +12,126 @@ is convinced in a secure manner that a transaction has taken place. We term such
 a client a \textit{verifier} and we term \textit{provers} the full nodes it
 connects to.
 
-The intuition behind these proofs is quite simple: Let $T$ be the mining target
-for the network. Then because block ids are generated uniformly at random, half
-of the blocks will have an id less than $T / 2$. By having the prover present to
-the verifier just these blocks which capture more proof-of-work than their
-neighbor counterparts, the verifier is convinced that the proof-of-work of the
-omitted blocks also took place. The same logic can be applied to any level
-$\mu$, namely blocks with id less than $T 2^{-\mu}$.
-
-Before we present our construction in detail, we lay out the mathematical model
-in which we will be working in this section.
-
-\subsection{Overview of the backbone model}
-
-In order to make the analysis mathematically precise, we adopt the backbone
-model of GKL~\cite{GKL} which formally captures the notion of an evolving
-blockchain. This subsection provides an introduction to that model.
-
-The backbone model is parameterized by the parameters $\kappa, n, t, p, q$. The
-meaning of these parameters will become clear shortly.
-
-Backbone models the blockchain as an execution of a single Interactive Turing
-Machine (ITM), the \textit{environment}, which is responsible for coordinating
-the game. There are two more ITM specifications: The honest party  and the
-adversary. The environment is responsible for spawning them and scheduling them
-for execution.
-
-Two parameters of the protocol are $n$, the total number of parties, and $t$ the
-number of adversarial parties. Therefore, $n - t$ is the number of honest
-parties. At the beginning of the game, the environment spawns $n - t$ honest
-parties which are termed $\Pi_1, \Pi_2, \cdots, \Pi_{n - t}$ and exactly one
-adversary $\mathcal{A}$. The environment then generates a common reference
-string, the \textit{Genesis} block, which is provided to all of these players by
-invoking a certain initialization subroutine.
-
-The execution of the game happens in discrete \textit{rounds} which are used to
-model synchronous communication between the various players. The environment
-runs a main loop and maintains the current round count. Each iteration of this
-loop constitutes one round. At the beginning of each round, a \textit{round
-execution subroutine} defined by $\Pi_1$ is invoked. When $\Pi_1$'s subroutine
-is completed, the subroutine is invoked for $\Pi_2$ and so on until $\Pi_{n -
-t}$ finishes executing their subroutine. In each of these executions, the player
-$\Pi_i$ being invoked is not aware of their index $i$, but can maintain local
-state which persists across rounds. At the end of each round, the round
-execution subroutine of the adversary is executed. The adversary can also
-maintain local state across rounds. The maintenance of local state is formally
-modelled using Interactive Turing Machines. The fact that each honest party is
-unaware of its own index \dznote{XXX finish this section}.
-
-The environment also spawns a random oracle functionality $\mathcal{H}$ which
-produces truly random responses in the range $\{0, 1\}^\kappa$ to queries.
+The provers maintain a complete blockchain and can be thought of as full nodes.
+The verifier connects to multiple provers, some of which may be malicious, but
+at least one of which is honest. All of the provers provide a proof and the
+verifier extracts the one he thinks corresponds to the honest (longest)
+blockchain. We follow the obvious model for constructing these proofs. For the
+reader interested in the model formalisms, we include a section on ``Backbone''
+in the Appendix. The intuition behind these proofs is quite simple: Let $T$ be
+the mining target for the network. Then because block ids are generated
+uniformly at random, half of the blocks will have an id less than $T / 2$. By
+having the prover present to the verifier just these blocks which capture more
+proof-of-work than their neighbour counterparts, the verifier is convinced that
+the proof-of-work of the omitted blocks also took place. The same logic can be
+applied to any level $\mu$, namely blocks with id less than $T 2^{-\mu}$.
 
 \subsection{New algorithms in the backbone model}
 
-% \dznote{Rewrite this section more extensively}
+For a given predicate on the chain (e.g. ``the transaction took place''), the
+prover computes the proof string and transmits it to the verifier. The verifier
+accepts or rejects the string. Given that in our setting the predicates will be
+referring to an active evolving chain we should define them in the presence of a
+blockchain protocol.
 
-We assume the verifier will always connect to at least one honest prover. We
-now move on to formally define these entities in terms of a mathematical model
-which can be used for our analysis.
+The honest entities on the blockchain network are of 3 kinds: (1) miners, who
+try to mine new blocks on top of the longest known blockchain and broadcast them
+as soon as they are discovered; (2) full nodes, which maintain the longest
+blockchain without mining and also act as the provers in the network; (3)
+verifiers or stateless clients, which connect to provers and ask for proofs in
+regards to which blockchain is the largest. The verifiers attempt to determine
+the value of a predicate on these chains.
 
-In order to study the syntax and properties of NIPoPoWs
-we abstract their operation in a way that is akin to non-interactive
-zero-knowledge proofs (NIZK) \cite{BFM88}. In such protocols, a prover
-shares some context with a verifier (called the common reference string).
-For a given predicate, the prover computes the proof string and transmits it
-to the verifier. The verifier accepts or rejects the string. Given that in our
-setting the predicates will be referring to an active evolving chain
-we should define them in the presence of a blockchain protocol.
-Our theoretical abstraction is based on  the ``backbone'' model of
-\cite{backbone} that formalizes the operation of the Bitcoin protocol.
-
-The backbone approach models proof-of-work discovery attempts by using a random
-oracle~\cite{RO}. The model uses previous formulations of secure multiparty
-computation, specifically Canetti's formulation of ``real world'' execution
-~\cite{uc0}~\cite{uc1}~\cite{uc2}. For following the full formal security
-analyses, we kindly invite our reader to familiarize themselves with the
-backbone model of GKL\cite{backbone} and the respective quantities.
-
-We introduce the Prover and the Verifier in
-the Backbone model as follows. The Prover will extend the functionality
-of the miner node. The Verifier will be a completely new entity that can be spawned
-by the environment and process a NiPoPoW produced by the miner nodes running
-the Prover code.
-
-% Detailed algorithms for the integration with the formal
-% environment provided by the backbone paper are provided in
-% Appendix~\ref{sec.appendix-backbone}.
-
+We model proof-of-work discovery attempts by using a random oracle~\cite{RO}.
+The network is synchronized into rounds, which correspond to moments in time.
 The predicates of interest in our context are predicates on the active
 blockchain. Some of the predicates are more suitable for succinct proofs than
-others. We focus our attention in what we call \textit{reliable} predicates;
-that is, predicates which are monotonic and stable notions that we define below.
+others. We focus our attention in what we call \textit{reliable} predicates.
 These predicates have the exceptional property that all honest miners share
 their view of them in a way that is updated in a predictable manner, with a
 truth-value that persists as the blockchain grows.  Furthermore, we are
 interested in \textit{succinct} predicates, predicates which can be proven using
 a succinct protocol, a protocol which requires proofs that are short in terms of
-the total blockchain size. Finally, we formalize the notion of non-interactivity.
+the total blockchain size.
 
-The honest entities that live on the blockchain network are of three kinds:
-First, miners, who try to mine new blocks on top of the longest known blockchain
-and broadcast their blocks as soon as they are discovered. Second, full nodes,
-which maintain the longest blockchain but without mining. Full nodes also act as
-the provers in the network, producing proofs by calling a Prove function which
-we leave undefined for now, as it is part of the proof protocol. And third,
-verifiers or stateless clients, which connect to provers and ask for proofs in
-regards to which blockchain is the largest. The verifiers attempt to determine the value of a predicate on these chains.
+A non-interactive proof of proof-of-work protocol is a game between a prover and
+a verifier parameterized by predicate $Q$ which the prover tries to convince the
+verifier for. The predicate $Q$ is a function of a chain $\chain$, which the
+prover claims to be the longest chain. When asked to do so by the environment,
+several provers generate proofs claiming potentially different truth values for
+the predicate $Q$ based on their claimed local longest chains. The verifier
+receives these proofs and accepts one of the proofs, determining the truth value
+of the predicate. Some of the proofs could be adversarial.
 
-A non-interactive proof of proof-of-work protocol is a game between a prover
-and a verifier parameterized by predicate $Q$ which the prover tries to
-convince the verifier for. The predicate $Q$ is a function of a chain $\chain$,
-which the prover claims to be the longest chain.
-
-When asked to do so by the environment, two provers generate proofs $\pi_A$,
-$\pi_B$ claiming potentially different truth values for the predicate $Q$ based
-on their claimed local longest chains. The verifier receives these proofs and
-accepts one of the two proofs, determining the truth value of the predicate. In
-this setting, one of the two proofs could be adversarial, as defined in the
-security section.
-
-We define a \textit{blockchain proof protocol} for a predicate $Q$ as a pair
-$(P, V)$ where $P$ is called the \textit{prover} and $V$ is called the
-\textit{verifier}. $P$ is a PPT algorithm that is spawned by a full node
-when they wish to produce a proof, accepts as input a full chain $\chain$ and
-produces a proof $\pi$ as its output. $V$ is a PPT algorithm which is spawned
-by the environment at some round, receives a pair of proofs $(\pi_A, \pi_B)$
-from both an honest party and the adversary and returns its decision $d \in \{T,
-F, \bot\}$ before the next round and terminates. The honest parties produce
-proofs for $V$ using $P$.
+Define a \textit{blockchain proof protocol} for a predicate $Q$ as a pair $(P,
+V)$ where $P$ is the \textit{prover} and $V$ is the \textit{verifier}. $P$ is a
+PPT algorithm that is spawned by a full node when they wish to produce a proof,
+accepts as input a full chain $\chain$ and produces a proof $\pi$ as its output.
+$V$ is a PPT algorithm which is spawned by the environment at some round,
+receives a pair of proofs $(\pi_A, \pi_B)$ from both an honest party and the
+adversary and returns its decision $d \in \{T, F, \bot\}$ before the next round
+and terminates. The honest parties produce proofs for $V$ using $P$.
 
 \subsection{Blockchain addressing}
+Blockchains are finite block sequences obeying the \textit{blockchain property}
+that for every block in the chain there exists a pointer to its previous block.
+A chain is \textit{anchored} if its first block is \textit{Genesis}, denoted
+$Gen$.
 
-Blockchains, or \textit{chains}, are finite sequences of blocks such that they
-obey the \textit{blockchain property} that for every block in the chain there
-exists a pointer to its previous block in the chain. A chain $\chain$ is
-\textit{anchored} if its first block is the designated \textit{Genesis} block, a
-known reference string. We denote the genesis block as $Gen$.
+For chain addressing we use Python brackets $\chain[\cdot]$. A zero-based
+positive number in a bracket indicates the indexed block in the chain. A
+negative index indicates a block from the end. A range $\chain[i:j]$ is a
+subarray starting from $i$ (inclusive) to j (exclusive).
 
-For chain addressing we use the Python range notation of brackets $[~]$. A
-positive number in a bracket indicates the indexed block in the chain, starting
-from zero. For example, if $\chain$ is anchored, then $\chain[0] = Gen$. A
-negative number indicates a block indexed from the end.  For example
-$\chain[-1]$ indicates the tip of the chain. A range of two numbers
-$\chain[i:j]$ indicates a subarray starting on index $i$ (inclusive) and ending
-on index j (exclusive), which can be negative. Omitting one of the range indices
-takes it to the beginning or end of the chain respectively. So, for example
-$\chain[1:]$ indicates a chain with the first block omitted and $\chain[:-k]$
-indicates a chain with the last $k$ blocks omitted, the ``stable'' part of the
-chain according to \cite{backbone}.
+Given chains $\chain_1, \chain_2$ and blocks $A, Z$ we concatenate them as
+$\chain_1 \chain_2$ or $\chain_1 A$. $\chain_2[0]$ must point to $\chain_1[-1]$
+and $A$ must point to $\chain_1[-1]$. We denote $\chain\{A:Z\}$ the subarray of
+the chain from $A$ (inclusive) to $Z$ (exclusive). We can omit blocks or indices
+from the range to take the chain to the beginning or end.
 
-Given two chains $\chain_1$ and $\chain_2$ we write $\chain_1 \chain_2$ to
-indicate the concatenation of these two chains into a new chain. Then the
-$\chain_2[0]$ must point back to $\chain_1[-1]$. Similarly with a block $B$ we
-write $\chain_1 B$ to indicate the concatenation of block $B$ to the tip of
-$\chain_1$, implying that block $B$ points back to $\chain_1[-1]$ to preserve
-the blockchain property.
+\textbf{Helper functions.} The \textit{id} function returns the id of a block
+given its data. This is done by applying the hash functions $H$ and $G$:
+$\textsf{id} = H(ctr, G(x, \textsf{interlink}))$. Here, $ctr$ is the nonce, $x$
+is the Merkle tree root of the transactions \cite{princetonbook}. However, note
+that block $B$ maintains an \textit{interlink} data structure instead of a
+previous block pointer. We will explain this further in section
+\ref{sec.consensus}. \textit{depth} is a function which, given a block, returns
+its distance from the Genesis block.
 
-We will also use block-based addressing with the range notation of curly braces $\{~\}$.
-Given a chain $\chain$ and two blocks $A, Z$ which are in $\chain$, we denote
-$\chain\{A:Z\}$ the subarray of the chain starting from block $A$ (inclusive)
-and ending in block $Z$ (exclusive). Again we can omit blocks from the range to
-take the chain to the beginning or end respectively. Hence, for example,
-$\chain\{A:\}$ indicates that the subarray of the chain from block $A$ and until
-the end of the chain is to be taken.
-
-Some helper functions need to be defined. The \textit{id} function
-calculates the id of a block given its data. This is done by applying the
-hashfunctions $H$ and $G$ in a manner similar to \cite{backbone}: $\textsf{id} =
-H(ctr, G(s, x, \textsf{interlink}))$. However, note that block $B$ maintains an
-\textit{interlink} data structure instead of a previous block pointer. We will
-explain this further in section \ref{sec.consensus}. Note also that, while we
-spell out the transaction vector $x$, this in practice contains only the root of
-the Merkle tree of the transactions \cite{princetonbook}.
-
-The id of a block must always be less than or equal to the mining target $T$ to
-satisfy the proof-of-work\cite{antonopoulosbook} condition: $id \leq T$.
-However, some blocks will achieve a lower id. If $id \leq \frac{T}{2^\mu}$ we
-say that the block is of level $\mu$. Clearly all blocks are blocks of level
-$0$. We term blocks that have a level above 0 \textit{superblocks} of their
-respective level. The level of a block is given as $\mu = \left \lfloor \log(T) -
-\log(\sf{id}(B)) \right \rfloor$ and denoted $\textit{level}(B)$. By convention,
-we set the id of Genesis to be $0$ and hence it has $\mu = \infty$.
+Valid blocks satisfy proof-of-work\cite{antonopoulosbook}: $id \leq T$, where
+$T$ is the mining target. Some blocks will achieve a lower id. If $id \leq
+\frac{T}{2^\mu}$ we say that the block is of level $\mu$. All blocks are
+level $0$. Blocks with level $\mu$ are $\mu$-\textit{superblocks}.
+% The level of a block is given as
+% $\mu = \left \lfloor \log(T) - \log(\sf{id}(B)) \right \rfloor$ and denoted
+% $\textit{level}(B)$.
+By convention, for $Gen$ we set $id = 0$ and $\mu = \infty$.
 
 In this paper, we will extend blocks to contain multiple pointers to previous
-blocks. Hence, certain blocks can be omitted from a chain, obtaining a subchain.
-However, the subchain must still maintain the blockchain property that each
-block must contain a pointer to its previous block in the sequence (except for
-the first block in the sequence). Subarrays of chains obtained by addressing
-with $[~]$ or $\{~\}$ are, naturally, subchains, as the only omit blocks from
-the beginning or the end of a chain. It will also become apparent that it is
-useful to omit certain blocks from the middle of a chain, while maintaining the
-blockchain property.
+blocks. Certain blocks can be omitted from a chain, obtaining a subchain. as
+long as the blockchain property that each block must contain a pointer to its
+previous block in the sequence is maintained.
 
-While chains are sequences and not sets, we will use some set notation for
-convenience. The notation $B \in \chain$ will be used to indicate that a block
-$B$ is part of a chain $\chain$, while $B \not\in \chain$ will be used to
-indicate that it isn't. We will use $\emptyset$ to denote the empty blockchain.
-Finally, given a chain $\chain$ and two subchains $\chain_1$ and $\chain_2$ of
-it, we will write $\chain_1 \subseteq \chain_2$ to indicate that $\chain_1$ is a
-(potentially improper) subchain of $\chain_2$, i.e. that for all blocks $B$ of
-$\chain_1$, we have that $B \in \chain_2$, while $\chain_1 \not\subseteq
-\chain_2$ will be used to indicate that it isn't. Because both $\chain_1
-\subseteq \chain$ and $\chain_2 \subseteq \chain$, we can define $\chain_1 \cup
-\chain_2$ to mean the chain obtained by sorting the blocks contained in both
-$\chain_1$ and $\chain_2$ into a sequence, provided that we can ensure the
-blockchain property is maintained. Hence, for example, if blocks $(B_1, B_2,
-B_3)$ form a blockchain $\chain$ such that $B_2$ points to $B_1$ and $B_3$
-points to $B_2$, but also $B_3$ points to $B_1$, then letting $\chain_1 = (B_1,
-B_3)$ and $\chain_2 = (B_2)$, we note that both $\chain_1$ and $\chain_2$ are
-blockchains and that $\chain_1 \cup \chain_2$ is a blockchain. Additionally,
-take two anchored chains $\chain_1$ and $\chain_2$, and note that $\chain_1$ and
-$\chain_2$ belong to the same blocktree but can potentially have forked. Then we
-use the notation $\chain_1 \cap \chain_2$ to mean the anchored chain $\{B: B \in
-\chain_1 \land B \in \chain_2\}$ provided it satisfies the blockchain property.
-We also define the lowest common ancestor of these chains $\textsf{LCA}(\chain_1,
-\chain_2) = (\chain_1 \cap \chain_2)[-1]$. We will also freely use set builder
-notation $\{B \in \chain: p(B)\}$ to obtain a subchain $\chain'$ from a chain
-$\chain$ by filtering with a block predicate $p(B)$, provided the blockchain
-property is maintained. Note that in all these cases, because we are talking
-about blockchains and not blocktrees, any set of blocks has a unique order
-obtained by topologically sorting the blocks based on the order indicated by the
-underlying chain and so can be put into a unique sequence. For two chains
-$\chain_1$ and $\chain_2$, if $\chain_1[0] = \chain_2[0]$ and $\chain_1[-1] =
-\chain_2[-1]$, we will say that the two chains \textit{span} the same range of
-blocks.
+Blockchains are sequences, but we use some set notation. $B \in \chain,
+\emptyset, \chain_1 \subseteq \chain_2$ have the obvious meaning. $\chain_1 \cup
+\chain_2$ is the chain obtained by sorting the blocks contained in both
+$\chain_1$ and $\chain_2$ into a sequence. $\chain_1 \cap \chain_2$ is the chain
+$\{B: B \in \chain_1 \land B \in \chain_2\}$. In both, the blockchain property
+must be maintained. The lowest common ancestor is $\textsf{LCA}(\chain_1,
+\chain_2) = (\chain_1 \cap \chain_2)[-1]$. We will freely use set builder
+notation $\{B \in \chain: p(B)\}$. In all cases, because we are talking about
+blockchains and not blocktrees, any set of blocks has a unique order obtained by
+topologically sorting the blocks. If $\chain_1[0] = \chain_2[0]$ and
+$\chain_1[-1] = \chain_2[-1]$, we say the chains \textit{span} the same
+block range.
 
-Given a chain $\chain$ and a level $\mu$, we define the \textit{upchain
-operator} $\chain\upchain^\mu$ to mean the chain $\{B \in \chain: level(B) \geq
-\mu\}$. We will call such a chain that contains only $\mu$-superblocks a
-$\mu$\textit{-superchain}. Given a chain $\chain'$ and a chain $\chain$ such
-that $\chain' \subseteq \chain$, we define the \textit{downchain operator}
-$\chain'\downchain^\chain$ as the chain $\chain[\chain'[0]:\chain'[-1]]$ and we
-will call $\chain$ the \textit{underlying chain} of $\chain'$. If the underlying
-chain is implied by context, for example, if the chain $\chain'$ was obtained by
-applying the upchain operator on a known underlying chain $\chain$, we will
-simply write $\chain'\downchain$. Note as well that the $\chain\upchain$
-operator is absolute, in the sense that $(\chain\upchain^\mu)^{\mu + i} =
-\chain\upchain^{\mu + i}$.
-
-If a set of consecutive rounds $S$ is given, we define $\chain^S = \{B \in
+Given $\chain$ and level $\mu$, the \textit{upchain}
+$\chain\upchain^\mu$ is $\{B \in \chain: level(B) \geq \mu\}$. A chain
+containing only $\mu$-superblocks is a $\mu$\textit{-superchain}. Given chains
+$\chain' \subseteq \chain$, the \textit{downchain}
+$\chain'\downchain^\chain$ is $\chain[\chain'[0]:\chain'[-1]]$. $\chain$ is the
+\textit{underlying chain} of $\chain'$. The underlying chain is often implied by
+context, so we will simply write $\chain'\downchain$. The $\chain\upchain$
+operator is absolute: $(\chain\upchain^\mu)^{\mu + i} = \chain\upchain^{\mu +
+i}$. Given a set of consecutive rounds $S$, we define $\chain^S = \{B \in
 \chain: B \text{ was generated during } S\}$.
