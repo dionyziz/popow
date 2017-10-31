@@ -2,17 +2,14 @@
 
 Not all predicates can be proved. In this section we characterize the class of
 blockchain predicates that will be of interest to us for constructing proofs.
-A useful property of predicates in our context is \textit{monotonicity}. Based
-on predicate monotonicity, we show that a predicate has \textit{liveness} and
-\textit{persistence}. Formalizing the security of our  blockchain proofs  will
-be preconditioned on such blockchain predicates. Given that we are in a
-decentralized setting it can be the case that for certain sensible blockchain
-predicate, there will be honest nodes that have not reached a conclusion about
-its value. For this reason we  allow our predicates to have an undefined value
-$\bot$ before they take on a truth value of $0$ or $1$. We define a number of
-predicate properties and prove a simple but useful relation between them.
+Given that we are in a decentralized setting it can be the case that for certain
+sensible blockchain predicate, there will be honest nodes that have not reached
+a conclusion about its value. For this reason we allow our predicates to have an
+undefined value $\bot$ before they take on a truth value of $0$ or $1$. We
+define a number of predicate properties and prove a simple but useful relation
+between them.
 
-\begin{definition}{(Predicate monotonicity)}
+\begin{definition}{(Monotonicity)}
     A chain predicate $Q(\chain)$ is $\textit{monotonic}$ if for all chains
     $\chain$ and for all blocks $B$ we have that:
 %\begin{equation*}
@@ -38,15 +35,6 @@ predicate properties and prove a simple but useful relation between them.
     whenever it is $k$-stable in any honest party's chain, the truth value of
     the predicate is the same. Furthermore, the change of truth value from
     $\bot$ to its final truth value happened at the same blockchain depth.
-
-\ignore{%%%%%
-{(Predicate liveness)}
-    Parameterized by $u, k \in \mathbb{N}$ (the ``wait time'' and ``depth''
-    parameters respectively) and a chain $\chain$, a chain predicate
-    $Q$ has $\textit{liveness}$ if it is $k$-stable for one honest party
-    in a certain round, then it will also be $k$-stable for all honest parties
-    after $u$ rounds.
-}%%%%
 \end{definition}
 
 \begin{restatable}[Predicate persistence]{theorem}{restateThmPredicatePersistence}
