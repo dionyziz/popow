@@ -32,15 +32,16 @@ $m$. The attack is an extension of the stochastic processes described in
 \cite{bitcoin} and \cite{rosenfeld}.
 
 The experiment works as follows: $m$ is fixed and some adversarial computational
-power percentage $q$ of the total network computational power is chosen. $k$ is
+power percentage $q$ of the total network computational power is chosen; $k$ is
 chosen based on $q$ according to Nakamoto \cite{bitcoin}. The number of blocks
 $y$ during which parallel mining will occur is also fixed. The experiment begins
 with the adversary and honest parties sharing a common blockchain which ends in
 block $B$. After $B$ is mined, the adversary starts mining in secret and in
-parallel with the honest parties on his own private fork on top of $B$. She
+parallel with the honest parties on her own private fork on top of $B$. She
 ignores the honest chain, so that the two chains remain disjoint after $B$. As
 soon as $y$ blocks have been mined in total, the adversary attempts a double
-spend by creating two conflicting transactions which are committed to an honest
+spend via a NiPoPoW 
+by creating two conflicting transactions which are committed to an honest
 block and an adversarial block respectively on top of each current chain.
 Finally, the adversary mines $k$ blocks on top of the double spending
 transaction within her private chain. After these $k$ blocks have been mined,
