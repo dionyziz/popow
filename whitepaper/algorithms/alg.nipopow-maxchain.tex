@@ -7,7 +7,7 @@
     \begin{algorithmic}[1]
         \Function{{\sf best-arg}$_m$}{$\pi, b$}
             \Let{M}{\{\mu: |\pi\upchain^\mu\{b:\}| \geq m\} \cup \{0\}}
-            \State\Return{$\max_{\mu \in M}\{2^\mu |\pi\upchain^\mu\{b:\}|\}$}
+            \State\Return{$\max_{\mu \in M}\{2^\mu  \cdot |\pi\upchain^\mu\{b:\}|\}$}
         \EndFunction
         \Operator{$\pi_A \geq_m \pi_B$}
             \Let{b}{(\pi_\mathcal{A} \cap \pi_B)[-1]}
