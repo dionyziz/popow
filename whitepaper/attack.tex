@@ -15,6 +15,7 @@ scheme that allows an adversary to double spend with non-negligible probability.
 This attack works under the assumption that the adversary has sufficient hashing
 power, which is still below $50\%$.
 
+\noindent
 \textbf{The interactive proofs of proof-of-work protocol.}
 The interactive proof of proof-of-work of \cite{KLS} works as follows. The
 verifier distinguishes between two candidate proofs $(\pi_A, \chi_A)$ and
@@ -32,6 +33,7 @@ winner is $A$ if $|\pi_A\upchain^\mu\{b:\}| \geq |\pi_B\upchain^\mu\{b:\}|)$ and
 otherwise it is $B$. The communication overhead is reduced by only requesting
 blocks after the purported LCA.
 
+\noindent
 \textbf{Attacking chain superquality.}
 \label{subsec.superquality-attack}
 Let us now construct an adversary to break this property at level $\mu$. Suppose
@@ -62,7 +64,8 @@ Therefore, there will be some $\delta$ such that the adversary will be able to
 cause such variance with non-negligible probability in $m$. This suffices to
 show that superquality is harmed by this attack.
 
-\textbf{From chain superquality attacks to double-spending. }
+\noindent
+\textbf{A double-spending attack. }
 Extending the above attack, we modify the superquality attacker into an
 attacker that can cause a double spending attack in the proof of
 proof-of-work construction. As before, $\mathcal{A}$ targets the proofs
