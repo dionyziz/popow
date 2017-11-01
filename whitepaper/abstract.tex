@@ -8,9 +8,12 @@ resources only logarithmic in the length of the blockchain. NIPoPoWs solve two
 important open questions for PoW based consensus protocols: The problem of
 constructing efficient transaction verification (SPV) clients and the problem
 of constructing efficient sidechain proofs. We provide a formal model for
-NIPoPoWs. We prove our construction is secure in the backbone model and show
-that communication is succinct in size. We provide simulations and
+NIPoPoWs. We prove our construction is secure  and establish its succinctness in a well defined model setting as well as 
+ we provide simulations and
 experimental data to measure concrete communication efficiency and security.
+We also  present an attack against the only 
+previously known (interactive) PoPoW protocol 
+that showcases the difficulty of designing such protocols. 
 Finally, we provide two ways that our NIPoPoWs can be adopted by existing
 blockchain protocols, first via a soft fork, and second via a new update
 mechanism that we term a ``velvet fork'' and enables to harness some of the
