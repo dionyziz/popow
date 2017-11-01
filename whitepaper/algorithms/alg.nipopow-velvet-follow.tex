@@ -1,6 +1,6 @@
 \begin{algorithm}[H]
-    \caption{\label{alg.nipopow-velvet-follow}The followUp function which
-    produces the necessary blocks to connect two superblocks in velvet forks.}
+    \caption{\label{alg.nipopow-velvet-follow}followUp
+    produces the blocks to connect two superblocks in velvet forks.}
     \begin{algorithmic}[1]
         \Function{\sf followUp}{$B$, $\mu$, realLink, blockById}
             \Let{\textsf{aux}}{[B]}
@@ -12,7 +12,7 @@
                     \Let{id}{B.\textsf{interlink}[0]}
                 \EndIf
                 \Let{B}{\textsf{blockById}[id]}
-                \Let{\textsf{aux}}{\textsf{aux}\cup B}
+                \Let{\textsf{aux}}{\textsf{aux}\cup \{B\}}
                 \If{$\textit{level}(B) = \mu$}
                     \State\Return{$B$, aux}
                 \EndIf
