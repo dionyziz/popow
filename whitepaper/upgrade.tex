@@ -1,127 +1,104 @@
 \section{Gradual Deployment Paths}
 
 \label{sec.forks}
-Our construction requires an upgrade to the cryptocurrency consensus layer.
-We envision that new cryptocurrencies will adopt our construction in order to support efficient light clients.
-
-However, existing cryptocurrencies could also benefit by adopting our construction as an upgrade.
-In this section we outline several possible upgrade paths. We also contribute a novel upgrade approach, called a ``velvet fork,'' which allows for gradual deployment without harming unupgraded nodes or miners at all.
+Our construction requires an upgrade to the consensus layer. We envision that
+new cryptocurrencies will adopt our construction in order to support efficient
+light clients. However, existing cryptocurrencies could also benefit by adopting
+our construction as an upgrade. In this section we outline several possible
+upgrade paths. We also contribute a novel upgrade approach, a ``velvet fork,''
+which allows for gradual deployment without harming unupgraded miners.
 
 \subsection{Hard Forks and Soft Forks}
 
-First of all, keep in mind that the interlink data structure will be useful to
-be included in the form of a Merkle tree of interlink pointers, as discussed in
-the next section on implementation optimizations.
+The obvious way to upgrade a cryptocurrency to support our protocol is a hard
+fork: the block header is modified to include the interlink structure, and the
+validation rules modified to require that new blocks (after a ``flag day'')
+contain a correctly-formed interlink hash.
 
-The most obvious way to upgrade a cryptocurrency to support our protocol is a
-hard fork: the block header could be modified to include our additional
-interlink structure, and the validation rules would be modified to require that
-new blocks (after a ``flag day'') contain a correctly-formed interlink hash.
-
-The safety of the hard fork approach is often debated: it is not ``forward
-compatible,'' in the sense that nodes failing to upgrade in time would not be
-able to process newly created blocks. Hard forks are also associated with
-``schisms'': in one notable case, Ethereum applied a hard fork in order to
-reverse the effects of an exploited vulnerability; this decision was
-controversial, and dissenters splintered off into a new network, Ethereum
-Classic~\cite{daofork}. However, both Ethereum and Ethereum Classic have
-subsequently applied hard fork upgrades without incident. The Monero
-cryptocurrency has applied hard forks on a predictable
-schedule~\cite{monerohardforks}.
-
-A soft fork construction in practice would require including the interlink
-data structure not in the block header, but in the data of the coinbase
-transaction.  Clearly it is enough to store a single hash of the whole
-interlink structure in the coinbase data. The only requirement for the PoPoWs
-to work is that the PoW commits to all the pointers within interlink so that
-the adversary cannot cause a chain reorganization except with negligible
-probability. That way, each superchain is really a chain which goes all the
-way back to genesis. If we take that route, then each PoPoW will be required
-to present not only the block header, but also a proof-of-inclusion path
-within the Merkle tree of transactions proving that the coinbase transaction
-is indeed part of the block. Once that is established, the coinbase data can
-be presented, and the verifier will thereby know that the hash of the
-interlink data structure is correct. Given the fact that in the current
-Bitcoin implementation there is a fixed limit for block sizes, we observe that
-including such proofs-of-inclusion will only increase the PoPoW sizes by a
-constant factor per block, allowing for the communication complexity to remain
-at $\Theta(polylog(|\chain|))$.
+Hard forks are not ``forward compatible,'' and are best avoided. A soft fork
+construction requires including the interlink data structure not in the block
+header, but in the coinbase transaction. It is enough to only store a hash of
+the interlink structure. The only requirement for the PoPoWs to work is that the
+PoW commits to all the pointers within interlink so that the adversary cannot
+cause a chain reorg. If we take that route, then each PoPoW will be required to
+present not only the block header, but also a proof-of-inclusion path within the
+Merkle tree of transactions proving that the coinbase transaction is indeed part
+of the block. Once that is established, the coinbase data can be presented, and
+the verifier will thereby know that the hash of the interlink data structure is
+correct. Given that in Bitcoin implementation there is a block size limit,
+observe that including such proofs-of-inclusion will only increase the PoPoW
+sizes by a constant factor per block, allowing for the communication complexity
+to remain polylogarithmic.
 
 \subsection{Velvet Forks}
-We now describe a novel upgrade path that avoids the need for a fork at all.
-The key idea is that clients can make use of our scheme, even if only some blocks in the blockchain include the interlink structure.
-Given that intuitively these
+We now describe a novel upgrade path that avoids the need for a fork at all. The
+key idea is that clients can make use of our scheme, even if only some blocks in
+the blockchain include the interlink structure. Given that intuitively these
 changes constitute rule modifications to the consensus layer, we call this
 technique a \textit{velvet fork}.
 
-The way to achieve this is by requiring upgraded miners to include the
-interlink data structure in the form of a new Merkle tree root hash in their
-coinbase data, similar to a soft fork. An unupgraded miner will as usual ignore
-this data as comments. However, we further require the upgraded miners to
-accept all previously accepted blocks, regardless of whether they have included
-the interlink data structure or not. In fact, even if the interlink data
-structure is included and contains invalid data, we require the upgraded miners
-to accept their containing blocks. Malformed interlink data could be simply of
-the wrong format, for example pointers of particular level appearing in the wrong
-position in the Merkle tree, or the pointers could be pointing to superblocks
-of incorrect levels.  Furthermore, the pointers could be pointing to
-superblocks of the correct level, but not to the most recent block. By
-requiring upgraded miners to accept all such blocks, we do not modify the set
-of accepted blocks: Upgraded and unupgraded miners accept the exact same set of
-blocks. Therefore, the upgrade is simply a ``recommendation'' for miners and
-not an actual change in the consensus rules. Hence, while a hard fork makes new
-upgraded blocks invalid to unupgraded clients and a soft fork makes new
-unupgraded blocks invalid to upgraded clients, the velvet fork has the effect
-that blocks produced by either upgraded or unupgraded clients are valid for
-either. Hence, the blockchain is never forked. Only the codebase is upgraded,
-and the existing data on the blockchain is interpreted differently.
+We require upgraded miners to include the interlink data structure in the form
+of a new Merkle tree root hash in their coinbase data, similar to a soft fork.
+An unupgraded miner will ignore this data as comments. We further require the
+upgraded miners to accept all previously accepted blocks, regardless of whether
+they have included the interlink data structure or not. Even if the interlink
+data structure is included and contains invalid data, we require the upgraded
+miners to accept their containing blocks. Malformed interlink data could be
+simply of the wrong format, or the pointers could be pointing to superblocks of
+incorrect levels. Furthermore, the pointers could be pointing to superblocks of
+the correct level, but not to the most recent block. By requiring upgraded
+miners to accept all such blocks, we do not modify the set of accepted blocks.
+Therefore, the upgrade is simply a ``recommendation'' for miners and not an
+actual change in the consensus rules. The velvet fork has the effect that blocks
+produced by either upgraded or unupgraded clients are valid for either. Hence,
+the blockchain is never forked. Only the codebase is upgraded, and the  data on
+the blockchain is interpreted differently.
 
 The reason this can work is because provers and verifiers of our protocol can
 check the validity of the claims of miners who make false interlink chain
 claims. An upgraded prover can check whether a block contains correct interlink
 data and use it. If a block does not contain correct interlink data, the prover
-can opt not to use those pointers at all in their proofs. As the Verifier
-verifies all claims of the prover, adversarial miners cannot cause harm by
-including invalid interlink data. The only thing that the Verifier cannot
-verify in terms of interlink claims is whether the claimed superblock of a
-given level is in fact the most recent previous superblock of that level.
-However, an adversarial prover cannot make use of that to construct winning
-proofs, as they are only able to present shorter chains in that case. The
-honest prover can simply ignore such pointers as if they were not included at
-all.
+can opt not to use those pointers in their proofs. The Verifier verifies all
+claims of the prover, so adversarial miners cannot cause harm by including
+invalid data. The one thing the Verifier cannot verify in terms of interlink
+claims is whether the claimed superblock of a given level is the most recent
+previous superblock of that level. However, an adversarial prover cannot make
+use of that to construct winning proofs, as they are only able to present
+shorter chains in that case.
+% The
+% honest prover can simply ignore such pointers as if they were not included at
+% all.
 
-The velvet prover works as usual, but additionally maintains a
-\textit{realLink} data structure as part of its full node, which stores the
-correct interlink for each block.  Whenever a new winning chain is received
-from the network, the prover checks it for blocks that it hasn't seen before.
-For those blocks, it maintains its own realLink data structure which it updates
-accordingly to make sure it is correct regardless of what the interlink data
-structure of the received block claims.
+The velvet prover works as usual, but additionally maintains a \textit{realLink}
+data structure, which stores the \textit{correct} interlink for each block.
+Whenever a new winning chain is received from the network, the prover checks it
+for blocks that it hasn't seen before. For those blocks, it maintains its own
+realLink data structure which it updates accordingly to make sure it is correct
+regardless of what the interlink data structure of the received block claims.
 
-The velvet constructInnerChain % ' shown in Algorithm~\ref{alg.nipopow-velvet-innerchain}
-is implemented identically as
-before, except that instead of following the interlink pointer blindly it now
-calls the helper function called \textit{followUp}. The followUp algorithm is
-shown in Algorithm~\ref{alg.nipopow-velvet-follow}. It
+The velvet $\chain\upchain$ operator
+% ' shown in Algorithm~\ref{alg.nipopow-velvet-innerchain}
+is implemented identically as before, except that instead of following the
+interlink pointer blindly it now calls the helper function called
+\textit{followUp}, shown in Algorithm~\ref{alg.nipopow-velvet-follow}. It
 accepts a block $B$ and a level $\mu$ and creates a connection from $B$ back to
-the most recent preceding level-$\mu$ block. It does this by following the
-interlink pointer if it is available and correct. Otherwise, it follows the
+the most recent preceding level-$\mu$ block, by following the
+interlink pointer if it is correct. Otherwise, it follows the
 previd link which is available in unupgraded blocks, and tries to follow the
 interlink pointer again from there. Finally, the velvet prover % shown in
 % Algorithm~\ref{alg.nipopow-velvet-prover}
-simply calls the velvet
-constructInnerChain % '
-function and includes the auxiliary connecting nodes
+simply applies the velvet
+$\chain\upchain$ % '
+operator and includes the auxiliary connecting nodes
 within the final proof. No changes in the verifier are needed.
 
 % \import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
 \import{./}{algorithms/alg.nipopow-velvet-follow.tex}
 % \import{./}{algorithms/alg.nipopow-velvet-prover.tex}
 
-It is straight-forward to see that velvet NIPoPoWs preserve security. But
-observe that if a constant minority of miners has upgraded their nodes to add
-NIPoPoW support, then succinctness is also preserved, as there is only a
-constant factor penalty as proven in the following theorem.
+Velvet NIPoPoWs preserve security. Additionally, if a constant minority of
+miners has upgraded their nodes, then succinctness is also preserved, as there
+is only a constant factor penalty as proven in the following theorem.
 
 \begin{restatable}{theorem}{restateThmVelvetSuccinctness}
     Velvet non-interactive proofs-of-proof-of-work on honest chains by honest
@@ -134,23 +111,23 @@ constant factor penalty as proven in the following theorem.
 \fi
 
 The reason we were able to upgrade using a velvet fork was because the changes
-we made were helpful but verifiable by those looking at the chain. Note that we
-would not have been able to pull off this upgrade without modifications to the
-consensus layer in the sense that the interlink data structure could not have
-been maintained somewhere independently of the blockchain: It is critical that
-the proof-of-work commits to the interlink data structure. However,
-interestingly, the interlink data structure does not even need to be part of
-the coinbase transaction and could even be produced and included in regular
-transactions by users (such as OP\_RETURN transactions). In that manner, the
-miners can be completely oblivious to it, while users and provers make use of
-the feature. The way to realize this would be to ask users to regularly create
+we made were helpful but verifiable by those looking at the chain. We would not
+have been able to pull off this upgrade without modifications to the consensus
+layer in the sense that the interlink data structure could not have been
+maintained somewhere independently of the blockchain: It is critical that the
+proof-of-work commits to the interlink data structure. Interestingly, the
+interlink data structure does not need to be part of coinbase and can be
+produced and included in regular transactions by users (such as OP\_RETURN
+transactions). Thus, the miners can be completely oblivious to it, while users
+and provers make use of the feature. Interested users regularly create
 transactions containing the most recent interlink pointers so that they are
 included in the next block. If the transaction makes it to the next block, it
 can be used by the prover who keeps track of these. Otherwise, if it becomes
 part of a subsequent block, in which case some of the pointers it contains are
-invalid, it can be simply be ignored or only partially used.
+invalid, it can be ignored or only partially used.
 
-\paragraph{Supporting clients with different beliefs.}
-We note that the interlink format does not depend at all on the parameters $m$ and $k$.
-Therefore, regardless of the upgrade procedure, it is not necessary to reach consensus agreement on a particular choice of these parameters. Instead, the choice of $m$ and $k$ can be exposed as a user-configurable parameter to clients.
+\textbf{Supporting clients with different beliefs.}
+The interlink format does not depend on parameters $m, k$. Therefore, it is not
+necessary to agree on a particular value of these parameters. Instead, the
+choice of $m$ and $k$ can be a user-configurable parameter to clients.
 % Clients would send a particular $m$ and $k$ as a .
