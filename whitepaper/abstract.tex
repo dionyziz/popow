@@ -1,20 +1,19 @@
 Blockchain protocols such as bitcoin provide decentralized consensus mechanisms
-based on proof-of-work (PoW). In this work we introduce and instantiate a new
-primitive for blockchain protocols called Noninteractive-Proofs-of-Proof-of-Work
-(NIPoPoWs) which can be adapted into existing proof-of-work-based
-cryptocurrencies. Unlike a traditional blockchain client which must verify the
-entire linearly-growing chain of PoWs, clients based on NIPoPoWs require
-resources only logarithmic in the length of the blockchain. NIPoPoWs solve two
-important open questions for PoW based consensus protocols: The problem of
-constructing efficient transaction verification (SPV) clients and the problem
-of constructing efficient sidechain proofs. We provide a formal model for
-NIPoPoWs. We prove our construction is secure  and establish its succinctness in a well defined model setting as well as 
- we provide simulations and
-experimental data to measure concrete communication efficiency and security.
-We also  present an attack against the only 
-previously known (interactive) PoPoW protocol 
-that showcases the difficulty of designing such protocols. 
-Finally, we provide two ways that our NIPoPoWs can be adopted by existing
-blockchain protocols, first via a soft fork, and second via a new update
-mechanism that we term a ``velvet fork'' and enables to harness some of the
-performance benefits of NIPoPoWs even with a minority upgrade.
+based on proof-of-work. In this work we introduce and instantiate a new
+primitive for blockchain protocols called
+Non-Interactive-Proofs-of-Proof-of-Work (NIPoPoWs) which can be adapted into
+existing PoW-based cryptocurrencies. Unlike a traditional blockchain client
+which must verify the entire linearly-growing chain of PoWs, clients based on
+NIPoPoWs require resources only logarithmic in the length of the blockchain.
+NIPoPoWs solve two important open questions for PoW based consensus protocols:
+The problem of constructing efficient transaction verification (SPV) clients and
+the problem of constructing efficient sidechain proofs. We provide a formal
+model for NIPoPoWs. We prove our construction is secure and establish its
+succinctness in a well defined model setting. We provide simulations and
+experimental data to measure concrete communication efficiency and security. We
+also present an attack against the only previously known (interactive) PoPoW
+protocol that showcases the difficulty of designing such protocols. Finally, we
+provide two ways that our NIPoPoWs can be adopted by existing blockchain
+protocols, first via a soft fork, and second via a new update mechanism that we
+term a ``velvet fork'' and enables to harness some of the performance benefits
+of NIPoPoWs even with a minority upgrade.
