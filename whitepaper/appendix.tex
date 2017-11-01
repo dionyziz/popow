@@ -49,20 +49,23 @@ Algorithm~\ref{alg.backbone-velvet-prover}.
 % security.
 
 We now proceed to calculate the attack probabilities precisely and in formal
-detail. We simplify the above attack to ease the formal probabilistic analysis.
-The attack is parameterized by two parameters $r$ and $\mu$ which are picked by
-the adversary. $\mu$ will be the superblock level at which the adversary will
-attempt to produce a proof longer than the honest proof. The modified attack
-works precisely as follows: Without loss of generality, we fix block $b$ to be
-the Genesis block. The adversary always mines on the secret chain which forks
-off from genesis, unless a \textit{superblock generation event} occurs. If a
-superblock generation event occurs, then the adversary pauses mining on the
-secret chain and attempts a \textit{block suppression attack} on the honest
-chain. The adversary devotes exactly $r$ rounds to this suppression attack and
-then resumes mining on their secret chain. Our goal is to show that, despite
-this simplification (of fixing $r$) which is harmful to the adversary, the
-probability of a successful attack is non-negligible for certain (reasonable)
-values of the protocol parameters.
+detail.
+% \footnote{We wish to thank Giorgos Panagiotakos, Peter Ga\u{z}i and Nikos
+% Leonardos for their insights and feedback here.}.
+We simplify the above attack
+to ease the formal probabilistic analysis. The attack is parameterized by two
+parameters $r$ and $\mu$ which are picked by the adversary. $\mu$ will be the
+superblock level at which the adversary will attempt to produce a proof longer
+than the honest proof. The modified attack works precisely as follows: Without
+loss of generality, we fix block $b$ to be the Genesis block. The adversary
+always mines on the secret chain which forks off from genesis, unless a
+\textit{superblock generation event} occurs. If a superblock generation event
+occurs, then the adversary pauses mining on the secret chain and attempts a
+\textit{block suppression attack} on the honest chain. The adversary devotes
+exactly $r$ rounds to this suppression attack and then resumes mining on their
+secret chain. Our goal is to show that, despite this simplification (of fixing
+$r$) which is harmful to the adversary, the probability of a successful attack
+is non-negligible for certain (reasonable) values of the protocol parameters.
 
 A superblock generation event is detected by the adversary by monitoring the
 network. Whenever an honest party diffuses an honestly-generated

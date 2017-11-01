@@ -15,9 +15,9 @@ connects to.
 The provers maintain a complete blockchain and can be thought of as full nodes.
 The verifier connects to multiple provers, some of which may be malicious, but
 at least one of which is honest. All of the provers provide a proof and the
-verifier has to decide based on the feedback received what is the 
-correct value of the predicate in question.  
-% AK:  I think this is not necessary now. 
+verifier has to decide based on the feedback received what is the
+correct value of the predicate in question.
+% AK:  I think this is not necessary now.
 %The general intuition behind building such proofs is quite simple: Let $T$ be
 %the mining target for the network. Then because block ids are generated
 %uniformly at random, half of the blocks will have an id less than $T / 2$. By
@@ -30,8 +30,8 @@ correct value of the predicate in question.
 
 The prover-verifier interaction is as follows: for a given predicate on the chain (e.g. ``the transaction took place''), the
 prover computes the proof string and transmits it to the verifier. The verifier
-accepts or rejects the string. 
-Note that in the interactive case the prover and verifier may engage in more than one round of message passing. 
+accepts or rejects the string.
+Note that in the interactive case the prover and verifier may engage in more than one round of message passing.
 
 The entities on the blockchain network are of 3 kinds: (1) miners, who
 try to mine new blocks on top of the longest known blockchain and broadcast them
@@ -40,7 +40,7 @@ is constant and thus the ``longest chain rule'' sufficiently describes honst min
 blockchain without mining and also act as the provers in the network; (3)
 verifiers or stateless clients, which connect to provers and ask for proofs in
 regards to which blockchain is the largest. The verifiers attempt to determine
-the value of a predicate on these chains.  
+the value of a predicate on these chains.
 
 We model proof-of-work discovery attempts by using a random oracle~\cite{RO} as
 in \cite{backbone}.
@@ -51,13 +51,13 @@ others. We focus our attention in what we call \textit{reliable} predicates.
 These predicates have the exceptional property that all honest miners share
 their view of them in a way that is updated in a predictable manner, with a
 truth-value that persists as the blockchain grows (an example of an unreliable
-predicate is e.g., the least significant bit of the hash of last block).  
+predicate is e.g., the least significant bit of the hash of last block).
 % Furthermore, we are
 %interested in \textit{succinct} predicates, predicates which may be proven using
 %a succinct protocol, a protocol which requires proofs that are short in terms of
-%the total blockchain size 
+%the total blockchain size
 
-In our setting, for a given predicate $Q$, 
+In our setting, for a given predicate $Q$,
 several  provers (including adversarial ones)
 will generate proofs claiming potentially different truth values for
 $Q$ based on their claimed local longest chains. The verifier
@@ -67,7 +67,7 @@ accepts as input a full chain $\chain$ and produces a proof $\pi$ as its output.
 $V$ is a PPT algorithm which is spawned at some round,
 receives a pair of proofs $(\pi_A, \pi_B)$ from both an honest party and the
 adversary and returns its decision $d \in \{T, F, \bot\}$ before the next round
-and terminates. The honest miners produce proofs for $V$ using $P$, while the adversary produces proofs following some arbitrary strategy. Before we introduce the security properties for blockchain proof protocols we introduce some necessary notation for blockchains. 
+and terminates. The honest miners produce proofs for $V$ using $P$, while the adversary produces proofs following some arbitrary strategy. Before we introduce the security properties for blockchain proof protocols we introduce some necessary notation for blockchains.
 
 %\subsection{Blockchain addressing}
 \noindent {\bf Blockchain addressing.}
@@ -90,7 +90,7 @@ from the range to take the chain to the beginning or end.
 \noindent \textbf{Helper functions for blockchains.} The \textit{id} function returns the id of a block
 given its data. This is done by applying the hash functions $H$ and $G$:
 $\textsf{id} = H(ctr, G(x, \textsf{interlink}))$. Here, $ctr$ is the nonce, $x$
-is the Merkle tree root of the transactions.% \cite{princetonbook} 
+is the Merkle tree root of the transactions.% \cite{princetonbook}
 However, note
 that block $B$ maintains an \textit{interlink} data structure instead of a
 previous block pointer. We will explain this further in section
@@ -118,7 +118,7 @@ $\chain_1$ and $\chain_2$ into a sequence (this may be not always defined).
 $\chain_1 \cap \chain_2$ is the chain
 $\{B: B \in \chain_1 \land B \in \chain_2\}$. In both cases, the blockchain property
 must be maintained. The lowest common ancestor is $\textsf{LCA}(\chain_1,
-\chain_2) = (\chain_1 \cap \chain_2)[-1]$. %We will freely use set builder notation $\{B \in \chain: p(B)\}$. 
+\chain_2) = (\chain_1 \cap \chain_2)[-1]$. %We will freely use set builder notation $\{B \in \chain: p(B)\}$.
 %In all cases, because we are talking about
 %blockchains and not blocktrees, any set of blocks has a unique order obtained by
 %topologically sorting the blocks.
