@@ -31,7 +31,7 @@
 %
 % \import{./}{algorithms/alg.backbone-velvet-prover.tex}
 
-\section{Attack probabilities}
+\subsection{Attack probabilities}
 % \textbf{Remark.} It is worth isolating the mistake in the security proof from
 % the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
 % player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block, was honestly
@@ -102,7 +102,7 @@ probability.
 \import{./}{proofs/attack.tex}
 \fi
 
-\section{Interlink optimizations}
+\subsection{Interlink optimizations}
 We now discuss the manner in which the interlink data structure is hashed for
 coinbase inclusion. A Merkle tree is used to hash the interlink data structure
 into a single hash \cite{KLS}. NIPoPoWs form a chain of various levels
@@ -142,7 +142,7 @@ transmitting the proof. In fact, no block ids need to be transmitted. From these
 observations, we estimate our scheme's proof sizes for various parameterizations
 of $m$ in Table~\ref{table.size}.
 
-\section{Proof of security}
+\subsection{Proof of security}
 Assume there are $t$ adversarial parties and $n$ total parties, each with $q$
 proof-of-work random oracle queries per round. We will call a query to the
 random oracle $\mu$-\textit{successful} if the random oracle returns a value $h$
@@ -256,7 +256,7 @@ level of $\pi_B$ with respect to $b$. Then $\mu_B' \geq \mu_B$.
 \restateThmSecurity*
 \import{./}{proofs/security.tex}
 
-\section{Full proofs}
+\subsection{Full proofs}
 \label{sec.proofs}
 
 % \restateThmPredicatePersistence*
