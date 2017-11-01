@@ -3,13 +3,12 @@
 
 \medskip
 \noindent {\bf Desired properties.}
-We now define two desired properties of a non-interactive blockchain proof protocol, \textit{succinctness} and \textit{security}. For clarity, the properties are described in the execution model of \cite{backbone} and can be easily ported to a more refined model e.g., \cite{PSS}. 
+We now define two desired properties of a non-interactive blockchain proof protocol, \textit{succinctness} and \textit{security}. For clarity, the properties are described in the execution model of \cite{backbone} and can be easily ported to a more refined model e.g., \cite{PSS}.
 
 \begin{definition}{(Security)}
 A \textit{blockchain proof protocol} is \textit{secure} if for all environments
 and for all PPT adversaries $\mathcal{A}$ the output of $V$ on round $r$ is the
-same as the evaluation of $Q(\chain)$ on all honest parties' chains $\chain$ as
-long as $Q(\chain)$ is the same for all honest parties after round $r$.
+same as the evaluation of $Q(\chain)$ on some honest parties' chains $\chain$.
 \end{definition}
 
 \begin{definition}{(Succinctness)}
