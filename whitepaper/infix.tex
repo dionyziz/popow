@@ -26,14 +26,14 @@ written in the form
 $$
 Q_{\ell,d,k}(\chain) =
 \begin{cases}
-  \text{undefined, if } |\chain| < \ell \text{, otherwise:}\\
+  \text{undefined, if } |\chain[:-k]| < \ell \text{, otherwise:}\\
   \text{true, if }
-    \exists \chain' \subseteq \chain[:-k]: |\chain'| \leq d \land P(\chain')\\
+    \exists \chain' \subseteq \chain[:-k]: |\chain'| \leq d \land D(\chain')\\
   \text{false, otherwise}
 \end{cases}
 $$
 
-Where $P$ is an arbitrary predicate. Note that $\chain'$ is a blockset and may
+Where $D$ is an arbitrary predicate. Note that $\chain'$ is a blockset and may
 not necessarily be a blockchain.
 \end{definition}
 
@@ -43,7 +43,7 @@ evaluated by a short evaluation. In particular, here, because of the form of
 infix-sensitive predicates, to evaluate $Q(\chain)$ it suffices to pass to $Q$
 any short blockset $\chain'' \subseteq \chain$ such that there is a $\chain'
 \subseteq \chain''$ which satisfies the condition that $|\chain'| \leq k \land
-P(\chain')$. The $|\chain| < \ell$ portion can be determined by examining the
+P(\chain')$. The $|\chain[:-k]| < \ell$ portion can be determined by examining the
 block number.
 
 The construction of these proofs is shown in
@@ -108,8 +108,7 @@ hashmap. Using it, \textsf{ancestors} uses simple graph search to extract the
 set of ancestors of a block present. In the final predicate evaluation, the set
 of ancestors of the best blockchain tip is passed to the predicate. The
 ancestors are included to avoid an adversary who presents an honest chain but
-skips the blocks of interest. The verifier must also check that $|\chain| >
-\ell$.
+skips the blocks of interest.
 
 \subsection{Security}
 \begin{restatable}{theorem}{restateThmInfixSecurity}

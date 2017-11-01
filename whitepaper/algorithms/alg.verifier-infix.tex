@@ -13,7 +13,7 @@
       %      \EndFor
       %      \State\Return{$\chain$}
       %  \EndFunction
-        \Function{\sf verify-infx$^Q_{m,k}$}{$\mathcal{P}$}
+        \Function{\sf verify-infx$^D_{\ell,m,k}$}{$\mathcal{P}$}
             \Let{\textsf{blockById}}{\emptyset}
               \Comment{Initialize empty hashmap}
             \For{$(\pi, \chi) \in \mathcal{P}$}
@@ -22,7 +22,11 @@
                 \EndFor
             \EndFor
             \Let{\tilde\pi}{\text{best }\pi\in\mathcal{P}\text{ according to suffix verifier}}
-            \State\Return{$Q(\textsf{ancestors}(\tilde\pi[-1], \textsf{blockById}))$}
+            \If{$|\chain[:-k]| < \ell$}
+                \State\Return{\text{undefined}}
+            \EndIf
+            \State\Return{$D(\textsf{ancestors}(\tilde\pi[-1],
+            \textsf{blockById}))$}
         \EndFunction
     \vskip8pt
     \end{algorithmic}
