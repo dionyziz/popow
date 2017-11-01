@@ -1,57 +1,56 @@
-\section{Applications and Evaluation}
+\section{Applications \& Evaluation}
 \label{sec.applications}
 
-\subsection{Multi-blockchain wallets.}
+\textbf{Multi-blockchain wallets.}
 \label{sec.multichain}
-One potential application of our technique is an efficient multi-cryptocurrency
-client. Consider for example a merchant that wishes to accept payments in any
-cryptocurrency, not just the most popular ones. A na\"ive approach would be for
-the merchant to simply install an SPV client for each known cryptocurrency.
-However, this approach would entail downloading the header chain for each
-cryptocurrency, and periodically (e.g., each day) syncing up by fetching any
-newly generated block headers. Another alternative would be to use an online
-service supporting multiple currencies, such as an exchange, although this
-introduces reliance on a third party. Similarly, existing multi-cryptocurrency
-apps, such as Jaxx and Coinomi rely on third party networks rather than
-peer-to-peer networks.
+One application of our technique is an efficient multi-cryptocurrency client.
+Consider a merchant that wishes to accept payments in any cryptocurrency, not
+just the popular ones. A na\"ive approach would be for her to  install an SPV
+client for each known cryptocurrency. This approach would entail downloading the
+header chain for each cryptocurrency, and periodically syncing up by fetching
+any newly generated block headers. Another alternative would be to use an online
+service supporting multiple currencies, although this introduces reliance on a
+third party (existing multi-cryptocurrency apps, such as Jaxx and Coinomi rely
+on third party networks).
 
-\textbf{A multi-blockchain wallet based on NIPoPoWs.}
 The NIPoPoW-based client maintains a most recent $k$-stable block hash for each
 of its supported cryptocurrencies, initially the genesis block for each. Each
 time a payment is received, the client connects to peers on the corresponding
 network and asks for a NIPoPoW proof relative to the most recently stored block
 hash. For cryptocurrencies where payments are received very frequently, the
 NIPoPoW-based client might download nearly every block header, just like an
-ordinary SPV client; however, for cryptocurrencies used infrequently, the
-NIPoPoW-based client would be able to skip over many of the blocks.
+ordinary SPV client; for cryptocurrencies used infrequently, the
+NIPoPoW-based client can skip over most blocks.
 
 \textbf{Simulation.}
-We developed a simulation to evaluate the potential resources savings resulting
-from the use of a NIPoPoW-based client. We model the arrival of payments in
-each cryptocurrency as a Poisson process, and assume that the market
-capitalization of a cryptocurrency is a proxy for usage, i.e. in our model most
-payments received are Bitcoin transactions, with transactions from the
-remaining constituting a long tail.
+We developed a simulation to evaluate the resources savings resulting from the
+use of a NIPoPoW-based client. We model the arrival of payments in each
+cryptocurrency as a Poisson process and assume that the market cap of a
+cryptocurrency is a proxy for usage, i.e. in our model most payments received
+are Bitcoin transactions, with transactions from the remaining constituting a
+long tail. At the time of writing, a total of 731 cryptocurrencies are listed on
+coin market directories\footnote{\url{https://coinmarketcap.com/}}. We narrow
+our focus to the 80 cryptocurrencies that have their own PoW blockchains (i.e.,
+no PoS) with a market cap of over USD \$100,000.
 
-At the current time of writing, a total of 731 cryptocurrencies are listed on
-coin market directories\footnote{\url{https://coinmarketcap.com/}}. This list
-includes many defunct cryptocurrencies that are no longer functioning at all.
-We narrow our focus to the 80 cryptocurrencies that have their own
-proof-of-work blockchains
-(i.e., no proof of stake) and that have a market cap of over USD \$100,000.
+In Table~\ref{tbl.currencies} we show aggregate statistics about these 80
+cryptocurrencies, grouped according to the their PoW puzzle. While the entire
+chain in Bitcoin only amounts to 40 MB, taken together, the 80 cryptocurrencies
+comprise 10 GB of proofs-of-work, and generate 10 MB more each day. In
+Table~\ref{tbl.experiment} we show the resulting bandwidth costs from simulating
+a period of 60 days with $m=24, k=6$, with varying rates of payments received.
 
-In Table~\ref{tbl.currencies} we show aggregate statistics about these 80 cryptocurrencies, grouped according to the their proof-of-work puzzle.
-%(e.g., Litecoin uses the scrypt hash function, while Bitcoin uses the SHA-256 function). The ``Size today'' column reflects the current size of all the proof-of-work headers, while ``Growth rate'' reflects the additional proof-of-work headers generated each day.
-%Here we make the conservative assumption that the size of a block header is exactly 80 bytes, as it is in Bitcoin.
-Bitcoin's 10 minute block time is relatively slow; other cryptocurrencies typically use faster block times, e.g. 12 seconds for Ethereum and 2 minutes for Litecoin. Thus while the entire chain of proof-of-work puzzles in Bitcoin today only amounts to about 40 MB, taken together, the 80 cryptocurrencies comprise nearly 10 GB of proofs-of-work, and generate nearly 10 MB more each day.
-
- In our simulation we choose NIPoPoW parameters based as in the previous section, with $m=24$ and $k=6$.
-In Table~\ref{tbl.experiment} we show the resulting bandwidth costs from simulating a period of 60 days, with varying rates of payments received.
-
- For the na\"ive SPV client, the total bandwidth cost is dominated by the need to fetch the entire chain of block headers, which the NIPoPoW client does not need to do. The marginal cost for na\"ive SPV depends on the number of blocks generated each day, as well as the transaction inclusion proofs associated with each payment. The NIPoPoW based client provides the most savings when the number of transactions per day is smallest, reducing the necessary bandwidth per day (not including the initial sync up) by 90\%.
+For the na\"ive SPV client, the total bandwidth cost is dominated by fetching
+the entire chain of headers, which the NIPoPoW client does not do. The marginal
+cost for na\"ive SPV depends on the number of blocks generated each day, as well
+as the transaction inclusion proofs associated with each payment. The NIPoPoW
+based client provides the most savings when the number of transactions per day
+is smallest, reducing the necessary bandwidth per day (not including the initial
+sync up) by 90\%.
 
 \begin{table}
-  \caption{Cost of header chains for all active Proof-of-Work-based cryptocurrencies (collected from \url{coinwarz.com})}
+  \caption{Cost of header chains for all active PoW-based cryptocoins
+           (collected from \url{coinwarz.com})}
   \label{tbl.currencies}
   \small
   \centering
@@ -66,16 +65,16 @@ In Table~\ref{tbl.experiment} we show the resulting bandwidth costs from simulat
     EtHash  & 2  & 588.6 MB  & 921.6 kB / day \  \\
     Groestl  & 2  & 300.3 MB  & 184.2 kB / day \  \\
     NeoScrypt  & 2  & 310.6 MB  & 153.6 kB / day \  \\
-    Equihash  & 2  & 17.7 MB  & 92.2 kB / day \  \\
-    Keccak  & 1  & 161.1 MB  & 115.2 kB / day \  \\
-    X13  & 1  & 30.0 MB  & 57.6 kB / day \  \\
-    Lyra2REv2  & 1  & 57.4 MB  & 46.1 kB / day \  \\
+    Others  & 5  & 266.2 MB  & 311.1 kB / day \  \\
+    % "Others" above is the sum of these:
+    % Equihash  & 2  & 17.7 MB  & 92.2 kB / day \  \\
+    % Keccak  & 1  & 161.1 MB  & 115.2 kB / day \  \\
+    % X13  & 1  & 30.0 MB  & 57.6 kB / day \  \\
+    % Lyra2REv2  & 1  & 57.4 MB  & 46.1 kB / day \  \\
     \hline
     Total  & 80   &  8.5 GB  & 9.2 MB  / day  \\
   \end{tabular}
 \end{table}
-
-
 
 \begin{table}
   \caption{Simulated bandwidth of multi-blockchain clients after two months (Averaged over 10 trials each)}
@@ -99,20 +98,54 @@ In Table~\ref{tbl.experiment} we show the resulting bandwidth costs from simulat
     \end{tabular}
   \end{table}
 
-\subsection{Certificate Transparency}
+\textbf{Certificate Transparency. }
 \label{sec.catena}
-In Catena~\cite{catena} the Bitcoin blockchain is used as an equivocation-resistant public log in which to publish commitments to SSL certificates. The Catena client prototype is based on the BitcoinJ SPV library, and therefore requires downloading the entire Bitcoin proof-of-work chain.
-Catena could therefore immediately be improved by using NIPoPoWs.
-First, we note that the Catena authors anticipate needing to launch a dedicated Header Relay Network~\cite{catena} to accommodate the extra bandwidth demands from new Catena clients. A variant based on NIPoPoWs could obviate this, since it eliminates the need to bootstrap new clients by transmitting the entire 40MB Bitcoin header chain.
-Second, the steady state cost of operating a Catena client depends on how frequently certificate digests are published. For example, one usage scenario cited by Catena~\cite{catena} is Keybase, a service which publishes certificate digests every 6 hours. During a 6 hour period, Bitcoin would generate 6 kilobytes of headers, whereas a NIPoPoW proof covering the same range would require less than half this size.
-The  savings would increase further if Catena were implemented using any proof-of-work blockchain with more frequent blocks, such as Ethereum or Litecoin.
+In Catena~\cite{catena} the Bitcoin blockchain is used as an
+equivocation-resistant public log in which to publish SSL certificate
+commitments. The client is based on the BitcoinJ library, and therefore requires
+downloading the entire chain. Catena could therefore immediately be improved
+using NIPoPoWs. The Catena authors anticipate needing to launch a dedicated
+Header Relay Network~\cite{catena} to accommodate the extra bandwidth demands
+from new Catena clients. A variant based on NIPoPoWs could obviate this, since
+it eliminates the need to bootstrap new clients by transmitting the entire 40MB
+header chain. Second, the steady state cost of operating a Catena client depends
+on how frequently certificate digests are published. For example, one usage
+scenario cited by Catena~\cite{catena} is Keybase, a service which publishes
+certificate digests every 6 hours. During a 6 hour period, Bitcoin would
+generate 6 kilobytes of headers, whereas a NIPoPoW proof covering the same range
+would require less than half this size. The savings would increase further if
+Catena were implemented using any PoW blockchain with more frequent blocks.
 
-\subsection{Sidechains}
+\textbf{Sidechains.}
 \label{sec.sidechains}
-At the time of writing, it is widely known that Bitcoin faces significant scaling hurdles~\cite{onscaling}, but upgrading Bitcoin is notoriously difficult.
-A widely anticipated solution, first proposed by Back et al.~\cite{sidechains}, is to treat the Bitcoin blockchain as a host for ``sidechains,'' which are proof-of-work blockchains separate from Bitcoin, but that can be backed by Bitcoin deposits. Our efficient NIPoPoW construction solves an open problem posed by Back et al., and thus enables this vision.
+It is widely known that Bitcoin faces significant scaling
+hurdles~\cite{onscaling}, but upgrading Bitcoin is notoriously difficult. A
+widely anticipated solution is to treat the Bitcoin blockchain as a host for
+``sidechains,'' which are proof-of-work blockchains separate from Bitcoin, but
+that can be backed by Bitcoin deposits. Our efficient NIPoPoW construction
+solves an open problem posed by Back et al., and thus enables this vision.
 
-The main idea behind sidechains is to implement an SPV verifier for one blockchain (the ``sidechain'') as a smart contract within another blockchain (the ``host chain''). In fact, an (inefficient) implementation of this idea, called BTCRelay~\cite{ethereum}, is already running in the Ethereum blockchain. BTCRelay is an Ethereum smart contract that allows users to submit Bitcoin proofs-of-work, which the smart contract validates and stores. This allows Ethereum smart contracts to condition their behavior based on transactions in the Bitcoin blockchain.
- The downside of this approach, however, is that every blockheader in the Bitcoin blockchain must be stored. At the time of writing, the cost to place data in the Ethereum blockchain is approximately 7 cents per kilobyte. If Bitcoin were upgraded with the interlink data structure described in Section~\ref{sec.forks}, then the BTCRelay functionality could be provided at less cost.
+The idea behind sidechains is to implement an SPV verifier for one blockchain
+(the ``sidechain'') as a smart contract within another blockchain (the ``host
+chain''). An (inefficient) implementation of this idea, called
+BTCRelay~\cite{ethereum}, is already running on Ethereum. It is an Ethereum
+smart contract allowing users to submit Bitcoin PoW, which it validates and
+stores. This allows Ethereum smart contracts to condition their behavior based
+on Bitcoin transactions. The downside is that every Bitcoin header must be
+stored. Currently the cost of Ethereum blockchain storage 7 cents per kB. If
+Bitcoin were upgraded with the interlink data structure, the BTCRelay
+functionality could be provided cheaply.
 
-The most anticipated use of sidechains is to implement a virtual asset on the sidechain that is backed by a quantity of currency on the host chain (i.e., a two-way peg)~\cite{sidechains}. This can be accomplished by defining two new transaction types: ``deposit'' transactions, which have the effect of locking coins on the host chain and creating new assets on the side chain, as well as ``withdrawal'' transactions that have the opposite effect, unlocking coins on the host chain and destroying coins on the sidechain. Deposit transactions are committed first on the host chain, and then delivered to the sidechain using an SPV proof; vice versa for withdrawal transactions. In order to confirm that a transaction is included, we would use NiPoPoW for an infix predicate --- the predicate would claim that a transaction occurs at a particular height. In case the host chain receives a fraudulent NiPoPoW withdrawal proof from an attacker, the host chain must wait for a period of time, during which honest parties may submit a better proof. Succinctness (see Section~\ref{sec.succinctness}) is especially important when using NiPoPoWs for sidechains, since the NiPoPoW proofs must be included in the host chain and thus replicated across all the network nodes.
+The anticipated use of sidechains is to implement a virtual asset on the
+sidechain backed by currency on the host chain (a two-way
+peg)~\cite{sidechains}. This is accomplished by defining two new transaction
+types: ``deposit'' transactions lock coins on the host chain and create new
+assets on the side chain; ``withdrawal'' transactions do the opposite. Deposit
+transactions committed on the host chain are delivered to the sidechain using an
+SPV proof; vice versa for withdrawal transactions. To confirm transaction
+inclusion, NiPoPoW can be used with an infix predicate --- the predicate claims
+that a transaction occurs at a particular height. Lest the host chain receives a
+fraudulent NiPoPoW withdrawal, the host chain must wait for a period of time
+during which honest parties may submit a better proof. Succinctness is important
+for sidechains, since the proofs must be included in the host chain and are thus
+costly.
