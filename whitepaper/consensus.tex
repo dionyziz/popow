@@ -75,6 +75,10 @@ C\upchain^\mu[-m':]\downchain, \mu)$. That is, all suffixes that are
 sufficiently large are locally good.
 \end{definition}
 
+While superchain quality guarantees that a superchain has a sufficient number
+of blocks w.r.t. the level 0 chain, we will also need to be able to compare 
+it with other superchains. For this reason we introduce multilevel quality. 
+
 \begin{definition}[Multilevel quality]
 A $\mu$-superchain $\chain'$ is said to have \textit{multilevel quality}, written
 $\textnormal{multi-good}_{\delta, k_1}(\chain, \chain', \mu)$ with respect to an
@@ -87,19 +91,21 @@ if $|\chain^*\upchain^{\mu'}| = k_1$, then $|\chain^*\upchain^{\mu}| \geq (1 -
 % For $\delta < 0.5$, multilevel quality implies that
 % $|\chain^*\upchain^{\mu}| \geq 1$.
 
+Putting the above together we conclude with the notion of a {\em good} superchain. 
+
 \begin{definition}[Good superchain]\label{lem.good}
 A $\mu$-superchain $\chain'$ is said to be \textit{good}, written
 $\textnormal{good}_{\delta, k_1}(\chain, \chain', \mu)$, with respect to an
-underlying chain $\chain = \chain'\downchain$ if it has both superquality and multilevel quality with the same parameters $(\delta, m)$.
+underlying chain $\chain = \chain'\downchain$ if it has both superquality and multilevel quality with parameters $(\delta, m)$.
 \end{definition}
 
-The above good statistical properties are attained with overwhelming probability
+It is not hard to see that the above good statistical properties are attained with overwhelming probability
 by all chains that are generated in optimistic environments, i.e. if no
 adversary tries to violate them.
 
 \begin{lemma}[Optimistic superchain distribution]
 \label{lem.superchain-distribution}
-For all levels $\mu$, for all constant $0 < \delta < 0.5$, a chain
+For a level $\mu$, and $0 < \delta < 0.5$, a chain
 $\chain$ containing only honestly-generated blocks adopted by an honest party in
 an execution with random scheduling is $(\delta, m)$-good at level
 $\mu$ with overwhelming probability in $m$.
