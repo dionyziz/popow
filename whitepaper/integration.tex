@@ -1,26 +1,3 @@
-\ignore{
-\subsection{Comparison with alternatives.}
-
-In Table
-
-\begin{table}
-  \caption{Comparison of Sidechains Techniques ($B$ blocks in between transactions)}
-  \begin{tabular}{l|l|l|l}
-    {\bf Technique}  & {\bf Cost}       & {\bf Rounds}    & {\bf Trust Model} \\
-    \hline
-    Our technique    & $O(m polylog B)$ &              & \\
-    PoPoW~\cite{kls} & $O(m polylog B)$ &              & \\
-    Plain SPV        &   $O(B)$         & & \\
-Drivechains~\cite{sztorc}& $O(1)$       &              & \\
-    Federated        &     $O(1)$       &              & Centralized \\
-  \end{tabular}
-\end{table}
-
-In the case of
-}
-
-
-
 \section{Applications and Evaluation}
 \label{sec.applications}
 
@@ -38,7 +15,7 @@ introduces reliance on a third party. Similarly, existing multi-cryptocurrency
 apps, such as Jaxx and Coinomi rely on third party networks rather than
 peer-to-peer networks.
 
-\paragraph{A multi-blockchain wallet based on NIPoPoWs. }
+\textbf{A multi-blockchain wallet based on NIPoPoWs.}
 The NIPoPoW-based client maintains a most recent $k$-stable block hash for each
 of its supported cryptocurrencies, initially the genesis block for each. Each
 time a payment is received, the client connects to peers on the corresponding
@@ -48,7 +25,7 @@ NIPoPoW-based client might download nearly every block header, just like an
 ordinary SPV client; however, for cryptocurrencies used infrequently, the
 NIPoPoW-based client would be able to skip over many of the blocks.
 
-\paragraph{Simulation.}
+\textbf{Simulation.}
 We developed a simulation to evaluate the potential resources savings resulting
 from the use of a NIPoPoW-based client. We model the arrival of payments in
 each cryptocurrency as a Poisson process, and assume that the market
@@ -136,6 +113,6 @@ At the time of writing, it is widely known that Bitcoin faces significant scalin
 A widely anticipated solution, first proposed by Back et al.~\cite{sidechains}, is to treat the Bitcoin blockchain as a host for ``sidechains,'' which are proof-of-work blockchains separate from Bitcoin, but that can be backed by Bitcoin deposits. Our efficient NIPoPoW construction solves an open problem posed by Back et al., and thus enables this vision.
 
 The main idea behind sidechains is to implement an SPV verifier for one blockchain (the ``sidechain'') as a smart contract within another blockchain (the ``host chain''). In fact, an (inefficient) implementation of this idea, called BTCRelay~\cite{ethereum}, is already running in the Ethereum blockchain. BTCRelay is an Ethereum smart contract that allows users to submit Bitcoin proofs-of-work, which the smart contract validates and stores. This allows Ethereum smart contracts to condition their behavior based on transactions in the Bitcoin blockchain.
- The downside of this approach, however, is that every blockheader in the Bitcoin blockchain must be stored. At the time of writing, the cost to place data in the Ethereum blockchain is approximately 7 cents per kilobyte. If Bitcoin were upgraded with the interlink data structure described in Section~\ref{sec.forks}, then the BTCRelay functionality could be provided at less cost. 
+ The downside of this approach, however, is that every blockheader in the Bitcoin blockchain must be stored. At the time of writing, the cost to place data in the Ethereum blockchain is approximately 7 cents per kilobyte. If Bitcoin were upgraded with the interlink data structure described in Section~\ref{sec.forks}, then the BTCRelay functionality could be provided at less cost.
 
-The most anticipated use of sidechains is to implement a virtual asset on the sidechain that is backed by a quantity of currency on the host chain (i.e., a two-way peg)~\cite{sidechains}. This can be accomplished by defining two new transaction types: ``deposit'' transactions, which have the effect of locking coins on the host chain and creating new assets on the side chain, as well as ``withdrawal'' transactions that have the opposite effect, unlocking coins on the host chain and destroying coins on the sidechain. Deposit transactions are committed first on the host chain, and then delivered to the sidechain using an SPV proof; vice versa for withdrawal transactions. In order to confirm that a transaction is included, we would use NiPoPoW for an infix predicate --- the predicate would claim that a transaction occurs at a particular height. In case the host chain receives a fraudulent NiPoPoW withdrawal proof from an attacker, the host chain must wait for a period of time, during which honest parties may submit a better proof. Succinctness (see Section~\ref{sec.succinctness}) is especially important when using NiPoPoWs for sidechains, since the NiPoPoW proofs must be included in the host chain and thus replicated across all the network nodes. 
+The most anticipated use of sidechains is to implement a virtual asset on the sidechain that is backed by a quantity of currency on the host chain (i.e., a two-way peg)~\cite{sidechains}. This can be accomplished by defining two new transaction types: ``deposit'' transactions, which have the effect of locking coins on the host chain and creating new assets on the side chain, as well as ``withdrawal'' transactions that have the opposite effect, unlocking coins on the host chain and destroying coins on the sidechain. Deposit transactions are committed first on the host chain, and then delivered to the sidechain using an SPV proof; vice versa for withdrawal transactions. In order to confirm that a transaction is included, we would use NiPoPoW for an infix predicate --- the predicate would claim that a transaction occurs at a particular height. In case the host chain receives a fraudulent NiPoPoW withdrawal proof from an attacker, the host chain must wait for a period of time, during which honest parties may submit a better proof. Succinctness (see Section~\ref{sec.succinctness}) is especially important when using NiPoPoWs for sidechains, since the NiPoPoW proofs must be included in the host chain and thus replicated across all the network nodes.
