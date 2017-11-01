@@ -1,18 +1,18 @@
 \begin{algorithm}[H]
-    \caption{\label{alg.nipowpow-verifier-infix}The \textsf{verify} algorithm
+    \caption{\label{alg.nipopow-verifier-infix}The \textsf{verify} algorithm
     for the NIPoPoW infix protocol}
     \begin{algorithmic}[1]
-        \Function{\sf ancestors}{$B, \textsf{blockById}$}
-            \If{$B = \text{Gen}$}
-                \State\Return{$\{B\}$}
-            \EndIf
-            \Let{\chain}{\emptyset}
-            \For{$B' \in B.\textsf{interlink}$}
-                \Let{\chain}{\chain \cup \textsf{ancestors}(B')}
-                  \Comment{Collect into DAG}
-            \EndFor
-            \State\Return{$\chain$}
-        \EndFunction
+      %  \Function{\sf ancestors}{$B, \textsf{blockById}$}
+      %      \If{$B = \text{Gen}$}
+      %          \State\Return{$\{B\}$}
+      %      \EndIf
+      %      \Let{\chain}{\emptyset}
+      %      \For{$B' \in B.\textsf{interlink}$}
+      %          \Let{\chain}{\chain \cup \textsf{ancestors}(B')}
+      %            \Comment{Collect into DAG}
+      %      \EndFor
+      %      \State\Return{$\chain$}
+      %  \EndFunction
         \Function{\sf verify-infx$^Q_{m,k}$}{$\mathcal{P}$}
             \Let{\textsf{blockById}}{\emptyset}
               \Comment{Initialize empty hashmap}
@@ -22,7 +22,7 @@
                 \EndFor
             \EndFor
             \Let{\tilde\pi}{\text{best }\pi\in\mathcal{P}\text{ according to suffix verifier}}
-            \State\Return{$Q(\textsf{ancestors}(\tilde\pi[-1]))$}
+            \State\Return{$Q(\textsf{ancestors}(\tilde\pi[-1], \textsf{blockById}))$}
         \EndFunction
     \vskip8pt
     \end{algorithmic}
