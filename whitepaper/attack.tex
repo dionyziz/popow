@@ -1,40 +1,40 @@
 \section{An attack against the PoPoW of \cite{KLS}}
 
 In this section, we revisit the construction for interactive proofs of
-proof-of-work from \cite{KLS} and its security.  Their construction is the
-starting point for our non-interactive PoPoW. We show that the
+proof-of-work from \cite{KLS} and its security.  Their construction is also the
+starting point for our non-interactive PoPoW. We show that their
 construction is susceptible to  a double-spending attack even in the case the
 adversary controls a minority of the hashing power.
 
-We first show that a powerful attacker can break chain superquality with
-non-negligible probability and we construct a concrete attack based on this.
-Maintaining chain superquality is not in the original security model. However,
-we show how the property affects the security of the underlying proofs. We do
-this by presenting a concrete attack against their scheme that allows an
-adversary to double spend with non-negligible probability. This attack works
-under the assumption that the adversary has sufficient hashing power, still
+We proceed in two steps, we first show that a powerful attacker can break chain superquality with
+non-negligible probability and then we construct a concrete double spending 
+attack based on this observation.
+Note that maintaining   chain superquality was  not in the original security model,  however,
+we show how the property affects the security of the underlying blockchain proofs. Our  concrete attack works
+under the assumption that the adversary has sufficient hashing power, but still
 below $50\%$.
 
 \noindent
 \textbf{The interactive proofs of proof-of-work protocol.}
-The interactive PoPoW of \cite{KLS} works as follows. The verifier distinguishes
+The interactive PoPoW of \cite{KLS} works as follows. The main algorithm of the verifier aims at distinguishing 
 between two candidate proofs $(\pi_A, \chi_A)$ and $(\pi_B, \chi_B)$. If $\pi_A =
 \pi_B$, the decision is drawn immediately without interaction based on
 $\chi_A,\chi_B$. Otherwise, the verifier queries the provers for their claimed
 anchored superchains $\pi_A\upchain^\mu, \pi_B\upchain^\mu$ at some level $\mu$.
 The verifier starts querying at the highest possible level $\mu$ and descends
 until level $\mu$ is sufficiently low such that $b = LCA(\pi_A\upchain^\mu,
-\pi_B\upchain^\mu)$ is $m$ blocks from the tip for one of the provers. That is,
+\pi_B\upchain^\mu)$ is $m$ blocks from the tip of the chain for one of the proofs.
+That is,
 the querying stops at such $\mu$ when $max(|\pi_A\upchain^\mu\{b:\}|,
 |\pi_B\upchain^\mu\{b:\}|) \geq m$. The winner is designated as the prover with
-the most blocks after $b$ at that level; i.e., $A$ if $|\pi_A\upchain^\mu\{b:\}|
-\geq |\pi_B\upchain^\mu\{b:\}|)$, and $B$ otherwise. The communication overhead
+the most blocks after $b$ at that level; i.e., $A$, if $|\pi_A\upchain^\mu\{b:\}|
+\geq |\pi_B\upchain^\mu\{b:\}|$, and $B$ otherwise. The communication overhead
 is reduced by only requesting blocks after the purported LCA.
 
 \noindent
 \textbf{Attacking chain superquality.}
 \label{subsec.superquality-attack}
-We construct an adversary $\mathcal{A}$ to break this property at level $\mu$.
+We construct an adversary $\mathcal{A}$ that breaks this property at level $\mu$.
 % Suppose $\mathcal{A}$ controls a portion $t/n$ of the hashing power.
 $\mathcal{A}$ works as follows. Assume she wants to attack the honest party $B$
 in order to have him adopt chain $\chain_B$ which has a bad distribution of
@@ -47,7 +47,7 @@ an adversarial block $b$ on top of $\chain_B[-2]$. If successful,  she attempts
 to mine another block $b'$ on top of $b$. If successful again, she broadcasts
 $b$ and $b'$. The adversarial mining continues until $B$ adopts a new chain,
 which can be due to two reasons: Either the adversary successfully mined $b, b'$
-on top of $\chain_B[-2]$ and $B$ adopt them; or one of the honest parties mined
+on top of $\chain_B[-2]$ and $B$ adopts them; or one of the honest parties mined
 a block which was adopted by $B$. In either case, the adversary continues with
 the strategy by inspecting $\chain[-1]$ and acting accordingly.
 
@@ -56,10 +56,10 @@ position $\chain_B[i]$ at round $r$. We now examine the probability that
 $\chain_B[i]$ will remain a $\mu$-superblock in the long run. Suppose $r' > r$
 is the first round after $r$ during which a block is generated. $\mathcal{A}$
 will succeed in this attack with non-negligible probability and cause $B$ to
-abandon the $\mu$-superblock from their adopted chain. Therefore, there will
+abandon the $\mu$-superblock from their adopted chain. Therefore, there  
 exists $\delta$ such that the adversary will be able to cause $\delta$-variance
 with non-negligible probability in $m$. This suffices to show that superquality
-is harmed.
+is violated.
 
 \noindent
 \textbf{A double-spending attack. }
@@ -84,7 +84,7 @@ occurring will be small. Therefore, the adversary's superchain quality will be
 larger than the honest parties' superchain quality (which will be harmed by the
 adversary) and therefore, even though the adversary's $0$-chain will be shorter
 than the honest parties' $0$-chain, the adversary's $\mu$-superchain will be
-longer than the honest parties' $\mu$-superchain. The formal calculation of the
-probability of this attack succeeding is in the Appendix. However, we note here
-that, for appropriate choice of system parameters, the attack can be made to
+longer than the honest parties' $\mu$-superchain and thus will be favored by the
+verifier! The formal calculation of the
+probability of this attack succeeding is in the Appendix. We note that  actually, for appropriate choice of system parameters, the attack can be made to
 succeed with overwhelming probability.
