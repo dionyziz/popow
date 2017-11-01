@@ -1,17 +1,14 @@
 \subsection{Security}
 
+Proving the security of the scheme requires building an involved technical
+argument. It is included in the Appendix.
+
 \begin{restatable}{theorem}{restateThmSecurity}
     \label{thm.security}
     The non-interactive proofs-of-proof-of-work construction for $k$-stable
     suffix-sensitive predicates is secure with overwhelming probability in
     $\kappa$.
 \end{restatable}
-
-\ifonecolumn
-\import{./}{proofs/security.tex}
-\else
-Proving the security of the scheme requires building an involved technical
-argument. The full argument is included in the Appendix.
 
 Because of the centrality of this theorem to our construction's importance, we
 will here give a high-level overview of the proof. Suppose an adversary produces
@@ -49,7 +46,6 @@ random variable for the length of the honest argument. By taking the
 expectations of the above random variables and applying a Chernoff bound, we see
 that the actual values will be close to their means with overwhelming
 probability, completing the proof.
-\fi
 
 \begin{remark}[Variance attacks]
 \label{rmk.variance}
