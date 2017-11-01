@@ -79,18 +79,17 @@ regardless of what the interlink data structure of the received block claims.
 The velvet $\chain\upchain$ operator
 % ' shown in Algorithm~\ref{alg.nipopow-velvet-innerchain}
 is implemented identically as before, except that instead of following the
-interlink pointer blindly it now calls the helper function called
-\textit{followUp}, shown in Algorithm~\ref{alg.nipopow-velvet-follow}. It
-accepts a block $B$ and a level $\mu$ and creates a connection from $B$ back to
-the most recent preceding level-$\mu$ block, by following the
-interlink pointer if it is correct. Otherwise, it follows the
-previd link which is available in unupgraded blocks, and tries to follow the
-interlink pointer again from there. Finally, the velvet prover % shown in
+interlink pointer blindly it now calls the helper function \textit{followUp},
+shown in Algorithm~\ref{alg.nipopow-velvet-follow}. It accepts block $B$ and
+level $\mu$ and creates a connection from $B$ back to the most recent preceding
+$\mu$-superblock, by following the interlink pointer if it is correct.
+Otherwise, it follows the previd link which is available in all blocks, and
+tries to follow the interlink pointer again from there. Finally, the velvet
+prover
+% shown in
 % Algorithm~\ref{alg.nipopow-velvet-prover}
-simply applies the velvet
-$\chain\upchain$ % '
-operator and includes the auxiliary connecting nodes
-within the final proof. No changes in the verifier are needed.
+simply applies the velvet $\chain\upchain$ operator and includes the auxiliary
+connecting nodes within the final proof. No changes in the verifier are needed.
 
 % \import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
 \import{./}{algorithms/alg.nipopow-velvet-follow.tex}
