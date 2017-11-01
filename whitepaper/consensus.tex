@@ -1,13 +1,13 @@
 \section{Consensus layer support} \label{sec.consensus}
 
-\subsection{The interlink pointers data structure}
+%\subsection{The interlink pointers data structure}
 \label{sec.interlink}
 
-We will now start constructing a concrete blockchain proof protocol. Before
-we're able to define the prover and the verifier algorithms, we need to propose
-certain modifications to the consensus layer.
-
-Observe that in expectation, half of the blocks will be of level $1$, $1/4$
+\noindent {\bf The interlink pointers data structure.} 
+In order to construct our protocols, as in \cite{KLS}, we take advantage  
+of a data structure that will be stored in the header of a block. 
+Observe that in a blockchain protocol execution 
+it is expected half of the blocks will be of level $1$, $1/4$
 of the blocks will be of level $2$, $1/8$ will be of level $3$ and $1/2^\mu$
 blocks will be of level $\mu$. In expectation, the number of superblock levels
 of a chain $\chain$ will be $\log(\chain)$. Figure~\ref{fig.hierarchy}
@@ -36,7 +36,7 @@ borrowed from \cite{KLS}. Genesis is of infinite level and hence a pointer to it
 is included in every block at the first available index within the interlink
 data structure. The interlink data structure turns the blockchain into a
 skiplist-like data structure.  The number of pointers that need to be included
-per block is in expectation $\log(\chain)$.
+per block is in expectation $\log(|\chain|)$.
 
 The updateInterlink algorithm accepts a block $B'$, which already has an
 interlink data structure defined on it. The function evaluates the
@@ -48,9 +48,15 @@ point to the block $B'$.
 % \import{./}{algorithms/alg.nipopow-helper.tex}
 \import{./}{algorithms/alg.nipopow-interlink.tex}
 
-\subsection{Superchain quality}
-
-We now describe the distribution of superblocks within a blockchain.
+\noindent 
+{\bf Superchain quality.} In order to argue formally about the security 
+properties of blockchains that are equipped with the interlink 
+data structure we will introduce a new concept of chain quality,
+inspired by the definition of this property in \cite{backbone}, 
+called {\em superchain quality.} 
+We first define a notion of ``goodness'' that bound the deviation
+of superblocks of a certain level from their expected mean. Using
+this we then define superchain quality. 
 
 \begin{definition}[Locally good superchain]
 A superchain $\chain'$ of level
@@ -60,7 +66,7 @@ $\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, if $|\chain'| > (1 -
 \delta)2^{-\mu}|\chain|$.
 \end{definition}
 
-\begin{definition}[Chain superquality]
+\begin{definition}[Superchain quality]
 The $(\delta, m)$ superquality property
 $Q^\mu_{scq}$ of a chain $\chain$ pertaining to level $\mu$ with security
 parameters $\delta \in \mathbb{R}$ and $m \in \mathbb{N}$ states that for all
