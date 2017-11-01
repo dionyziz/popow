@@ -95,15 +95,17 @@ prover
 % shown in
 % Algorithm~\ref{alg.nipopow-velvet-prover}
 simply applies the velvet $\chain\upchain$ operator and includes the auxiliary
-connecting nodes within the final proof. No changes in the verifier are needed; note that in the case of infix proofs though XXX
-
+connecting nodes within the final proof. No changes in the verifier are needed; note that  in the case of infix proofs the $\mathrm{index}$ of the block is used by the verifier; if this information is not provided by the underlying blockchain headers, the index should be included in the interlink structure. 
+ 
 % \import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
 \import{./}{algorithms/alg.nipopow-velvet-follow.tex}
 % \import{./}{algorithms/alg.nipopow-velvet-prover.tex}
 
 Velvet NIPoPoWs preserve security. Additionally, if a constant minority of
-miners has upgraded their nodes, then succinctness is also preserved, as there
-is only a constant factor penalty as proven in the following theorem.
+miners has upgraded their nodes, then succinctness is also preserved
+as shown below. 
+%as there
+%is only a constant factor penalty as proven in the following theorem.
 
 \begin{restatable}{theorem}{restateThmVelvetSuccinctness}
     \label{thm.velvet-succinctness}
