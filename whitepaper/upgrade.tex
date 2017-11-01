@@ -10,13 +10,13 @@ which allows for gradual deployment without harming unupgraded miners.
 
 \subsection{Hard Forks and Soft Forks}
 
-The obvious way to upgrade a cryptocurrency to support our protocol is a hard
-fork: the block header is modified to include the interlink structure, and the
+The obvious way to upgrade a cryptocoin to support our protocol is a hard fork:
+the block header is modified to include the interlink structure, and the
 validation rules modified to require that new blocks (after a ``flag day'')
 contain a correctly-formed interlink hash.
 
 Hard forks are not ``forward compatible,'' and are best avoided. A soft fork
-construction requires including the interlink data structure not in the block
+construction requires including the interlink not in the block
 header, but in the coinbase transaction. It is enough to only store a hash of
 the interlink structure. The only requirement for the PoPoWs to work is that the
 PoW commits to all the pointers within interlink so that the adversary cannot
@@ -125,8 +125,8 @@ can be used by the prover who keeps track of these. Otherwise, if it becomes
 part of a subsequent block, in which case some of the pointers it contains are
 invalid, it can be ignored or only partially used.
 
-\textbf{Supporting clients with different beliefs.}
-The interlink format does not depend on parameters $m, k$. Therefore, it is not
-necessary to agree on a particular value of these parameters. Instead, the
-choice of $m$ and $k$ can be a user-configurable parameter to clients.
+% \textbf{Supporting clients with different beliefs.}
+% The interlink format does not depend on parameters $m, k$. Therefore, it is not
+% necessary to agree on a particular value of these parameters. Instead, the
+% choice of $m$ and $k$ can be a user-configurable parameter to clients.
 % Clients would send a particular $m$ and $k$ as a .
