@@ -45,63 +45,55 @@ suffix. This gives an estimation on the proof size: The proof will contain $m
 levels and $2m$ $0$-blocks.
 
 Organizing interlink into a Merkle tree of $\log(|\chain|)$ items, a
-proof-of-inclusion is provided in $\log \log(|\chain|)$ space, noting that the
-$0$-level pointer need not be included in this Merkle tree, but the genesis
-block needs to be. The root of the tree can be proved to have been included in
-the block header in $\log(|\overline x|)$ using the standard Merkle tree of
-transactions. This makes the proof size require $\log(|\overline x|) +
-\log\log(|\chain|)$ hashes per block for a total of $m (\log(|\chain|) -
-\log(m))(\log(|\overline x|) + \log\log(|\chain|))$ hashes. In addition, $m
-(\log(|\chain|) - \log(m))$ block headers and coinbase transactions are needed.
-Concretely, given that currently $|\chain| = 464,185$, we have that
-$\log(|\chain|) = 18$ and $\log\log(|\chain|) = 5$. Typically, $|\overline x| =
-2000$ in the current bitcoin setting, which makes $\log(|\overline x|) = 11$.
-For the $k$-suffix, only $k$ block headers need to be included. We set $k = 6$
-and see that block headers are $80$ and hashes are $32$ bytes. However, block
-headers do not need to include the previous block header hash for the
-$k$-suffix, as each previous block header hash can be calculated by the
-Verifier, limiting header sizes to $48$ bytes for the $k$ last blocks. The
-$k$-suffix does not require the presentation of the coinbase transaction data.
-These are also true for the $2m$ blocks in $\{B \in \pi: \text{level}(B) = 0\}$.
-For the proof prefix $\pi$, the coinbase transaction hash need not be included:
-It can be evaluated by the Verifier when building the tree during the
-proof-of-inclusion. Similarly, the root of the pointers tree can be omitted from
-the coinbase transaction data when transmitting the proof. Additionally, the
-leaf of the pointers tree can also be omitted, as it can be obtained by the
-Verifier by hashing the previous block. In fact, no block ids need to be
-transmitted at all, as they can all be built from the Verifier starting from the
-knowledge of Genesis.
-
-From these observations, we estimate our scheme's proof sizes  for various
+proof-of-inclusion is provided in $\log \log(|\chain|)$ space; $0$-level
+pointers need not be included in this Merkle tree, but the genesis block does.
+The root of the tree can be proved to have been included in the block header in
+$\log(|\overline x|)$ using the standard Merkle tree of transactions. This makes
+the proof size require $\log(|\overline x|) + \log\log(|\chain|)$ hashes per
+block for a total of $m (\log(|\chain|) - \log(m))(\log(|\overline x|) +
+\log\log(|\chain|))$ hashes. In addition, $m (\log(|\chain|) - \log(m))$ block
+headers and coinbase transactions are needed. Concretely, given that currently
+$|\chain| = 464,185$, we have that $\log(|\chain|) = 18$ and $\log\log(|\chain|) =
+5$. Currently in bitcoin, $|\overline x| = 2000$, which makes $\log(|\overline
+x|) = 11$. For the $k$-suffix, only $k$ block headers need to be included. We
+set $k = 6$ and see that block headers are $80$ bytes and hashes are $32$ bytes.
+Block headers do not need to include the previous block id for the $k$-suffix,
+as each previous block id can be calculated by the Verifier, limiting header
+sizes to $48$ bytes for the last $k$ blocks. The $k$-suffix does not require
+coinbase data. These are also true for the $2m$ $0$-blocks in $\pi$. For the
+proof prefix $\pi$, the coinbase block id need not be included: It can be
+evaluated by the Verifier. The root of the pointers tree can also be omitted
+from the coinbase transaction when transmitting the proof. Additionally, the
+leaf of the pointers tree can also be omitted, as the Verifier knows the
+previous block id. In fact, no block ids need to be transmitted at all. From
+these observations, we estimate our scheme's proof sizes for various
 parameterizations of $m$ in Table~\ref{table.size}.
 
 \subsection{Choosing Secure Parameters}
-In order to determine concrete values for the security parameter $m$, we now
+To determine concrete values for security parameter $m$, we
 turn our attention to a particular adversarial strategy of interest and analyze
-its probability of success under specific conditions. It is important to keep
-in mind that this adversarial strategy is only one possible strategy and an
-advanced adversary can perform more sophisticated attacks. However, the fact
-that this attack is reasonable and possible to simulate allows us to extract
-specific values for $m$.
-The attack is an extension of the stochastic processes originally described in
-\cite{bitcoin} and further explored in \cite{rosenfeld}.
+its probability of success under specific conditions. This adversarial strategy
+is only one possible strategy; an advanced adversary can perform more
+sophisticated attacks. However, the fact that this attack is reasonable and
+possible to simulate allows us to extract specific values for $m$. The attack is
+an extension of the stochastic processes originally described in \cite{bitcoin}
+and further explored in \cite{rosenfeld}.
 
-The experiment works as follows: Initially, the value $m$ is fixed and some
-adversarial computational power percentage $q$ over the total network
-computational power is chosen. $k$ is chosen based on $q$ according to Nakamoto
-\cite{bitcoin}. The number of blocks $y$ during which parallel mining will
-occur is also fixed. Then the experiment begins with the adversary and the
-honest parties sharing a common blockchain which ends in block $B$. As soon as
-$B$ is mined, the adversary starts mining in secret and in parallel with the
-honest parties on his own private fork on top of $B$. She ignores the honest
-chain and does not publish her private fork, so that the two chains remain
-disjoint after $B$. As soon as $y$ blocks have been mined in total, the
-adversary attempts a double spend by creating two conflicting transactions
-which are committed to an honest block and an adversarial block respectively on
-top of each current chain. Finally, the adversary mines $k$ blocks on top of
-the double spending transaction within her private chain. As soon as these $k$
-blocks have been mined, she publishes her private chain in an attempt to
-overcome the honest chain.
+The experiment works as follows: Initially, $m$ is fixed and some adversarial
+computational power percentage $q$ over the total network computational power is
+chosen. $k$ is chosen based on $q$ according to Nakamoto \cite{bitcoin}. The
+number of blocks $y$ during which parallel mining will occur is also fixed. Then
+the experiment begins with the adversary and the honest parties sharing a common
+blockchain which ends in block $B$. As soon as $B$ is mined, the adversary
+starts mining in secret and in parallel with the honest parties on his own
+private fork on top of $B$. She ignores the honest chain and does not publish
+her private fork, so that the two chains remain disjoint after $B$. As soon as
+$y$ blocks have been mined in total, the adversary attempts a double spend by
+creating two conflicting transactions which are committed to an honest block and
+an adversarial block respectively on top of each current chain. Finally, the
+adversary mines $k$ blocks on top of the double spending transaction within her
+private chain. As soon as these $k$ blocks have been mined, she publishes her
+private chain in an attempt to overcome the honest chain.
 
 Based on the above experiment, we measure the probability of success of the
 adversary. We experiment
