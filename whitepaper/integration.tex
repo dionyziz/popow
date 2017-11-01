@@ -1,37 +1,35 @@
 \section{Applications \& Evaluation}
 \label{sec.applications}
 
+\noindent
 \textbf{Multi-blockchain wallets.}
 \label{sec.multichain}
-One application of our technique is an efficient multi-cryptocurrency client.
-Consider a merchant that wishes to accept payments in any cryptocurrency, not
-just the popular ones. A na\"ive approach would be for her to  install an SPV
-client for each known cryptocurrency. This approach would entail downloading the
-header chain for each cryptocurrency, and periodically syncing up by fetching
-any newly generated block headers. Another alternative would be to use an online
-service supporting multiple currencies, although this introduces reliance on a
-third party (existing multi-cryptocurrency apps, such as Jaxx and Coinomi rely
-on third party networks).
+An application of our technique is an efficient multi-cryptocoin client.
+Consider a merchant who wishes to accept payments in any cryptocoin, not just
+the popular ones. She could install an SPV client for each known cryptocoin.
+This approach would entail downloading the header chain for each cryptocoin, and
+periodically syncing up by fetching any newly generated block headers. An
+alternative would be to use an online service supporting multiple currencies,
+but this introduces reliance on a third party (e.g. Jaxx and Coinomi rely on
+third party networks).
 
-The NIPoPoW-based client maintains a most recent $k$-stable block hash for each
-of its supported cryptocurrencies, initially the genesis block for each. Each
-time a payment is received, the client connects to peers on the corresponding
-network and asks for a NIPoPoW proof relative to the most recently stored block
-hash. For cryptocurrencies where payments are received very frequently, the
-NIPoPoW-based client might download nearly every block header, just like an
-ordinary SPV client; for cryptocurrencies used infrequently, the
-NIPoPoW-based client can skip over most blocks.
+A NIPoPoW-based client maintains a most recent $k$-stable block hash for each of
+its supported cryptocoins. Each time a payment is received, the client connects
+to peers on the corresponding network and asks for a NIPoPoW proof relative to
+the most recently stored block hash. For popular cryptocoins, the NIPoPoW-based
+client downloads nearly every block header, like an ordinary SPV client; for
+cryptocoins used infrequently, the NIPoPoW-based client can skip over most
+blocks.
 
+\noindent
 \textbf{Simulation.}
-We developed a simulation to evaluate the resources savings resulting from the
-use of a NIPoPoW-based client. We model the arrival of payments in each
-cryptocurrency as a Poisson process and assume that the market cap of a
-cryptocurrency is a proxy for usage, i.e. in our model most payments received
-are Bitcoin transactions, with transactions from the remaining constituting a
-long tail. At the time of writing, a total of 731 cryptocurrencies are listed on
-coin market directories\footnote{\url{https://coinmarketcap.com/}}. We narrow
-our focus to the 80 cryptocurrencies that have their own PoW blockchains (i.e.,
-no PoS) with a market cap of over USD \$100,000.
+We simulated the resources savings resulting from the use of a NIPoPoW-based
+client. We model the arrival of payments in each cryptocoin as a Poisson process
+and assume that the market cap of a cryptocoin is a proxy for usage. Currently,
+a total of 731 cryptocurrencies are listed on coin market
+directories\footnote{\url{https://coinmarketcap.com/}}. We narrow our focus to
+the 80 cryptocurrencies that have their own PoW blockchains (i.e., no PoS) with
+a market cap of over USD \$100,000.
 
 In Table~\ref{tbl.currencies} we show aggregate statistics about these 80
 cryptocurrencies, grouped according to the their PoW puzzle. While the entire
@@ -98,6 +96,7 @@ sync up) by 90\%.
     \end{tabular}
   \end{table}
 
+\noindent
 \textbf{Certificate Transparency. }
 \label{sec.catena}
 In Catena~\cite{catena} the Bitcoin blockchain is used as an
@@ -116,6 +115,7 @@ generate 6 kilobytes of headers, whereas a NIPoPoW proof covering the same range
 would require less than half this size. The savings would increase further if
 Catena were implemented using any PoW blockchain with more frequent blocks.
 
+\noindent
 \textbf{Sidechains.}
 \label{sec.sidechains}
 It is widely known that Bitcoin faces significant scaling
