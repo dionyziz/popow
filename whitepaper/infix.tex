@@ -120,7 +120,12 @@ of ancestors of the best blockchain tip is passed to the predicate. The
 ancestors are included to avoid an adversary who presents an honest chain but
 skips the blocks of interest.
 
-\subsection{Security}
+%\subsection{Security}
+
+\medskip
+
+\noindent {\bf Security.} The security theorem follows easily along
+the same lines of the security argument for suffix proofs. We state it below. 
 \begin{restatable}{theorem}{restateThmInfixSecurity}
 The infix NIPoPoW construction is secure for all infix-sensitive stable
 predicates $Q$, except with negligible probability in $\kappa$.
@@ -131,7 +136,8 @@ The proof is included in the Appendix.
 \import{./}{proofs/infixsecurity.tex}
 \fi
 
-\subsection{Succinctness}
+%\subsection{Succinctness}
+\noindent {\bf Succinctness.} 
 As long as the number of blocks on which the predicate depends is
 polylogarithmic ($< d$) with respect to the chain length, our proofs remain
 succinct. Specifically, the proof size for the suffix has exactly the same size.
