@@ -20,26 +20,26 @@ only logarithmic in the length of the blockchain.
 \textbf{Motivation.}
 There are three trends that motivate the need for more efficient clients,
 specifically clients that can verify transactions without having to process the
-whole blockchain. First, while Bitcoin remains by far the largest and most
-widely used cryptocurrency, the ecosystem has become significantly more diverse.
-Today there are hundreds of competitors, commonly called ``altcoins'', and
-Bitcoin's dominance in the market is at an all time low
-~\cite{marketcap}.\footnote{Using
-market capitalization as a measure of economic size is debatable but it still indicates the direction of the evolving landscape of cryptocurrencies towards multiple offerings.} We envision that our protocol will
-form the basis of an efficient multi-blockchain client, which could efficiently
-support payments using hundreds of separate cryptocurrencies. This requires
-optimizing the ``SPV client'' described in the original Bitcoin
-paper~\cite{bitcoin} which, while quite efficient, requires processing an amount
-of data growing linearly with the size of the chain $|\chain|$.
+whole blockchain. First, while Bitcoin remains by far the largest
+cryptocurrency, the ecosystem has become significantly more diverse. There are
+hundreds of competitors, called ``altcoins'', and Bitcoin's dominance in the
+market is at an all time low ~\cite{marketcap}.\footnote{Using market cap as a
+measure of economic size is debatable but still indicates the direction of the
+evolving landscape.} We envision our protocol will form the basis of an
+efficient multi-blockchain client, which could efficiently support payments
+using hundreds of separate cryptocurrencies. This requires optimizing the ``SPV
+client'' described in the original Bitcoin paper~\cite{bitcoin} which, while
+quite efficient, requires processing an amount of data growing linearly with the
+size of the chain $|\chain|$.
 
 Second, cryptocurrencies are increasingly used as components of larger systems
 (the cryptocurrency system is typically called a ``blockchain'' when its
 currency feature is not salient). As one example, a recent system called
-Catena~\cite{catena} uses the bitcoin blockchain as an authenticated log; the
-browser embeds a Bitcoin client that uses the blockchain to validate HTTPS
-certificates. The bandwidth costs that are tolerable for a dedicated Bitcoin
-wallet are likely unacceptable in such embedded contexts. Our techniques can
-directly reduce the cost of Catena and similar systems.
+Catena~\cite{catena} uses the blockchain as an authenticated log; the browser
+embeds a Bitcoin client to validate HTTPS certificates. The bandwidth costs that
+are tolerable for a dedicated Bitcoin wallet are likely unacceptable in such
+embedded contexts. Our techniques can directly reduce the cost of Catena and
+similar systems.
 
 Finally, there has been significant interest in the development of
 ``cross-chain'' applications, i.e. logical transactions that span multiple
@@ -58,7 +58,7 @@ incomplete, as it does not provide a protocol that satisfies a natural security
 definition, i.e. where attacks succeed with only negligible probability, even
 though several attempts were made~\cite{pos,compactspv}. Our work is the
 first to answer the open problem posed by Back et al. Sidechains can also be
-used as a mechanism to off-load some of the workload incurred  by the bitcoin
+used as a mechanism to off-load some of the workload incurred by the bitcoin
 network by moving coins to dedicated sidechains, which can later be moved back.
 
 These examples illustrate that our solution is a key component for two important
@@ -67,7 +67,7 @@ pillars needed for next-generation blockchains: \textit{interoperability} and
 
 \noindent
 \textbf{Our contributions.}
-In summary, we make the following contributions in this paper.
+In summary, we make the following contributions.
 Our main technical contribution is the introduction and instantiation
 of a new cryptographic
 primitive called Non-Interactive Proofs of Proof of Work (NIPoPoW).
@@ -75,7 +75,7 @@ primitive called Non-Interactive Proofs of Proof of Work (NIPoPoW).
 We present a formal model and a provably secure instantiation of NIPoPoWs in the
 backbone model \cite{backbone}. Our contribution builds on previous work  of \cite{KLS} who posed {\em interactive} proofs of proof-of-work, which, in turn,
 are based on previous discussion of such concepts in the bitcoin forums
-\cite{highway}. We in fact show an explicit attack against the construction of \cite{KLS} that showcases  the difficulty of designing such protocols. It follows
+\cite{highway}. We in fact show an explicit attack against the construction of \cite{KLS} that showcases the difficulty of designing such protocols. It follows
 that our construction is the first secure proof-of-proof-of-work.
 Furthermore, our solution has the additional property of being non-interactive,
 as the previous construction could be forced into interaction by an adversarial
@@ -94,14 +94,13 @@ from the bitcoin blockchain, we quantify the actual savings of NIPoPoWs over the
 previous known techniques of constructing efficient SPV verifiers.
 
 We describe two practical deployment paths for our NIPoPoWs that existing
-cryptocurrencies can adopt to support our efficient clients. Specifically, we
-first outline how NiPoPoW's can be deployed using either a ``soft fork'' or a
-``hard fork'' upgrade procedure, both of which have been successfully used by
-existing cryptocurrencies~\cite{sok}. We then present a less disruptive update
-mechanism that we term a ``velvet fork'' and which may be of independent
-interest. In a velvet fork update the clients that have ``forked'' from the
-original implementation continue to be fully compatible with un-updated clients.
-It follows that, in a velvet fork, the blockchain system can remain supported by
-a diverse software codebase indefinitely, while it can still enjoy, at least in
+cryptocurrencies can adopt: First using either a ``soft fork'' or a ``hard
+fork'' upgrade procedure, both of which have been successfully used by existing
+cryptocurrencies~\cite{sok}. Second, using a less disruptive update mechanism
+that we term a ``velvet fork'' and which may be of independent interest. In a
+velvet fork update the clients that have ``forked'' from the original
+implementation continue to be fully compatible with un-updated clients. It
+follows that, in a velvet fork, the blockchain system can remain supported by a
+diverse software codebase indefinitely, while it can still enjoy, at least in
 proportion, some of the (efficiency in our case) benefits of the update without
 any of the security downsides.
