@@ -125,24 +125,18 @@ solves an open problem posed by Back et al., and thus enables this vision.
 The idea behind sidechains is to implement an SPV verifier for one blockchain
 (the ``sidechain'') as a smart contract within another blockchain (the ``host
 chain''). An (inefficient) implementation of this idea, called
-BTCRelay~\cite{ethereum}, is already running on Ethereum. It is an Ethereum
-smart contract allowing users to submit Bitcoin PoW, which it validates and
+BTCRelay~\cite{ethereum}, is already running on Ethereum. It comprises a
+smart contract that allows users to submit Bitcoin block headers, which it validates and
 stores. This allows Ethereum smart contracts to condition their behavior based
-on Bitcoin transactions. The downside is that every Bitcoin header must be
-stored. Currently the cost of Ethereum blockchain storage 7 cents per kB. If
+on committed Bitcoin transactions. The downside is that every Bitcoin header must be
+stored, which is expensive due to the cost of Ethereum blockchain storage (7 cents per kB). If
 Bitcoin were upgraded with the interlink data structure, the BTCRelay
-functionality could be provided cheaply.
+functionality could be provided inexpensively.
 
-The anticipated use of sidechains is to implement a virtual asset on the
+The most anticipated use of sidechains is to implement a virtual asset on the
 sidechain backed by currency on the host chain (a two-way
 peg)~\cite{sidechains}. This is accomplished by defining two new transaction
 types: ``deposit'' transactions lock coins on the host chain and create new
 assets on the side chain; ``withdrawal'' transactions do the opposite. Deposit
 transactions committed on the host chain are delivered to the sidechain using an
-SPV proof; vice versa for withdrawal transactions. To confirm transaction
-inclusion, NiPoPoW can be used with an infix predicate --- the predicate claims
-that a transaction occurs at a particular height. Lest the host chain receives a
-fraudulent NiPoPoW withdrawal, the host chain must wait for a period of time
-during which honest parties may submit a better proof. Succinctness is important
-for sidechains, since the proofs must be included in the host chain and are thus
-costly.
+SPV proof; vice versa for withdrawal transactions. Whereas in the multi-blockchain wallet application the client queries each of its peers (one of which is assumed to be honest), in this setting peers must listen for event notifications when a ``withdrawal'' transaction is commited, and if they have a better NiPoPoW proof that invalidates this claim, they must submit it as a transaction within some time bound. The smart contract should collect a security deposit from the withdrawer that can be used to compensate peers for provided such invalidation claims. Succinctness is thus especially important for sidechains, since the size of the largest proof determines the acceptable security deposit amount.
