@@ -6,18 +6,15 @@
 \label{sec.multichain}
 An application of our technique is an efficient multi-cryptocoin client.
 Consider a merchant who wishes to accept payments in any cryptocoin, not just
-the popular ones. She could install an SPV client for each known cryptocoin.
+the popular ones. The na\"ive approach would be to install an SPV client for each known cryptocoin.
 This approach would entail downloading the header chain for each cryptocoin, and
 periodically syncing up by fetching any newly generated block headers. An
 alternative would be to use an online service supporting multiple currencies,
 but this introduces reliance on a third party (e.g. Jaxx and Coinomi rely on
 third party networks).
 
-A NIPoPoW-based client maintains a most recent $k$-stable block hash for each of
-its supported cryptocoins. Each time a payment is received, the client connects
-to peers on the corresponding network and asks for a NIPoPoW proof relative to
-the most recently stored block hash. For popular cryptocoins, the NIPoPoW-based
-client downloads nearly every block header, like an ordinary SPV client; for
+A NIPoPoW-based client would not download the entire header chain, but would intead only receive NiPoPoW proofs each time a payment is received. When a peer informs the client about a payment, they include a block index $\ell$ and NiPoPoW proof of transaction inclusion. The peer must then query \emph{all} of their connected peers, requesting any better better proof for the same predicate. After waiting a short time period for a response, the client runs the \texttt{verify-infix} routine on all received proofs, and accepts the transaction if the output is \emph{true}. Although initially such proofs must be relative genesis, the client may store the most recently-known ($k$-stable) blockhash for each cryptocoin, such that future payments can include NiPoPoW proofs relative to that. Thus for popluar cryptocoins, the NIPoPoW-based
+client downloads nearly every block header, like an ordinary SPV client; but for
 cryptocoins used infrequently, the NIPoPoW-based client can skip over most
 blocks.
 
@@ -128,24 +125,18 @@ solves an open problem posed by Back et al., and thus enables this vision.
 The idea behind sidechains is to implement an SPV verifier for one blockchain
 (the ``sidechain'') as a smart contract within another blockchain (the ``host
 chain''). An (inefficient) implementation of this idea, called
-BTCRelay~\cite{ethereum}, is already running on Ethereum. It is an Ethereum
-smart contract allowing users to submit Bitcoin PoW, which it validates and
+BTCRelay~\cite{ethereum}, is already running on Ethereum. It comprises a
+smart contract that allows users to submit Bitcoin block headers, which it validates and
 stores. This allows Ethereum smart contracts to condition their behavior based
-on Bitcoin transactions. The downside is that every Bitcoin header must be
-stored. Currently the cost of Ethereum blockchain storage 7 cents per kB. If
+on committed Bitcoin transactions. The downside is that every Bitcoin header must be
+stored, which is expensive due to the cost of Ethereum blockchain storage (7 cents per kB). If
 Bitcoin were upgraded with the interlink data structure, the BTCRelay
-functionality could be provided cheaply.
+functionality could be provided inexpensively.
 
-The anticipated use of sidechains is to implement a virtual asset on the
+The most anticipated use of sidechains is to implement a virtual asset on the
 sidechain backed by currency on the host chain (a two-way
 peg)~\cite{sidechains}. This is accomplished by defining two new transaction
 types: ``deposit'' transactions lock coins on the host chain and create new
 assets on the side chain; ``withdrawal'' transactions do the opposite. Deposit
 transactions committed on the host chain are delivered to the sidechain using an
-SPV proof; vice versa for withdrawal transactions. To confirm transaction
-inclusion, NiPoPoW can be used with an infix predicate --- the predicate claims
-that a transaction occurs at a particular height. Lest the host chain receives a
-fraudulent NiPoPoW withdrawal, the host chain must wait for a period of time
-during which honest parties may submit a better proof. Succinctness is important
-for sidechains, since the proofs must be included in the host chain and are thus
-costly.
+SPV proof; vice versa for withdrawal transactions. Whereas in the multi-blockchain wallet application the client queries each of its peers (one of which is assumed to be honest), in this setting peers must listen for event notifications when a ``withdrawal'' transaction is commited, and if they have a better NiPoPoW proof that invalidates this claim, they must submit it as a transaction within some time bound. The smart contract should collect a security deposit from the withdrawer that can be used to compensate peers for provided such invalidation claims. Succinctness is thus especially important for sidechains, since the size of the largest proof determines the acceptable security deposit amount.
