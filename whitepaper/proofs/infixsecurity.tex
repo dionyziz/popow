@@ -1,22 +1,17 @@
 \begin{proof}
-Assume a typical execution. To prove the security of the construction, it
-suffices to show that if all honest verifiers agree on the value of $Q(\chain)$,
-then the verifier will output the same value. Assume that all verifiers agree on
-the value $v$.
-
-By Theorem~\ref{thm.security} and because the evaluation of $\tilde\pi$ is
-identical in the suffix-sensitive and in the infix-sensitive case, we deduce
+Assume a typical execution. It suffices to show that the verifier will output
+the same value $Q(\chain)$ as some honest prover. Assume honest prover $B$ has
+adopted a chain $\chain$ with $Q(\chain) = v$ and has provided proof
+$\pi_B$. By Theorem~\ref{thm.security} and because the evaluation of $\tilde\pi$
+is identical in the suffix-sensitive and in the infix-sensitive case, we deduce
 that $b = \tilde\pi[-1]$ will be an honestly adopted block. Furthermore, due to
-the Common Prefix property of backbone, $b$ will belong to all honest parties'
-chains and in the same position, as it is buried under $|\tilde\chi| = k$
-blocks.
+the Common Prefix property~ \cite{backbone}, $b$ will belong to all honest
+parties' chains and in the same position, as it is buried under $|\tilde\chi| =
+k$ blocks.
 
-By assumption, at least one honest party $B$ has provided an honest NIPoPoW
-$\pi_B$. Let the chain adopted by that honest party during the round in which
-the NIPoPoW was produced be $\chain$. Because the predicate $Q$ is infix-sensitive
-and stable, this means that $\exists \chain' \subseteq \chain[:-k]:
-P_v(\chain')$. Due to $B$ being honest, $\chain' \subseteq \pi_B$. Let
-$S = \textsf{ancestors}(b)$ be the ancestors evaluated by the verifier. Clearly
-$\chain' \subseteq S$ and therefore $Q(S) = Q(\chain') = v$.
+Because $Q$ is infix-sensitive and stable, $\exists \chain' \subseteq
+\chain[:-k]: P_v(\chain')$. But $\chain' \subseteq \pi_B$. Let $S =
+\textsf{ancestors}(b)$ be the ancestors evaluated by the verifier. $\chain'
+\subseteq S$, therefore $Q(S) = Q(\chain') = v$.
 \Qed
 \end{proof}

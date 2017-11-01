@@ -49,7 +49,6 @@ for each migration round there are $r - 1$ non-decision rounds that follow.
 We will analyze the honest and adversarial superchain lengths with respect to
 $\omega$, which roughly corresponds to time (because note that $\omega \geq
 s/r$, and so $\omega$ is proportional to the number of rounds).
-
 Let us calculate the probability $p_{SB}$ (``superblock probability'') that a
 decision round ends up being a migration round. Ignoring the negligible event
 that there will be random oracle collisions, we have that $p_{SB} = (n -
@@ -82,7 +81,6 @@ negligible in $\omega$ (because we know that with overwhelming probability $x >
 (1 - \delta)(1 - p_{SB})\omega$).
 
 It remains to calculate the behavior of the honest superchain.
-
 Suppose that a migration round occurs during which at least one superblock $B$
 is diffused. We will now calculate the probability $p_{sup}$ that the adversary
 is able to suppress that block after $r$ rounds by performing the suppression
@@ -163,7 +161,6 @@ $E[|\alpha_B\upchain^\mu|] = E[|\chain_1|] + E[|\chain_2|]$.
 Finally, it remains to show that there exist values $p, n, t, q, r, \mu, \delta$
 such that a $E[|\alpha_\mathcal{A}\upchain^\mu|] \geq (1 +
 \delta)E[|\alpha_B\upchain^\mu|]$.
-
 Using the values $p = 10^{-5}, q = 1, n =
 1000, t = 489, \mu = 25, r = 200$, we observe that the honest majority
 assumption is preserved. Replacing these values into the expectations formulae

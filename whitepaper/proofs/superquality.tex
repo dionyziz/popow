@@ -7,11 +7,8 @@ random variables with expectation $E(X_B) = 2^{-\mu}|\chain^*\downchain|$. Let
 $X = \sum_{B \in \chain^*\downchain}{X_B}$. Then $X$ follows a Binomial
 distribution with parameters $(m', 2^{-\mu})$ and note that $|\chain^*| = X$.
 Then $\mathbb{E}(|\chain^*\downchain|) = 2^{-\mu}|\chain^*|$. Applying a Chernoff bound on
-$|\chain^*\downchain|$ we obtain that:
-
-\begin{equation*}
-\Pr[|\chain^*\downchain| \leq (1 - \delta)2^{-\mu}|\chain^*\downchain] \leq
-\exp(-\delta^2 2^{-\mu-1}|\chain^*|)
-\end{equation*}
+$|\chain^*\downchain|$ we obtain
+$\Pr[|\chain^*\downchain| \leq (1 - \delta)2^{-\mu}|\chain^*\downchain] \leq
+\exp(-\delta^2 2^{-\mu-1}|\chain^*|)$.
 \Qed
 \end{proof}

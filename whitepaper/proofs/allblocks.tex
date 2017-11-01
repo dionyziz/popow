@@ -1,15 +1,14 @@
 \begin{proof}
     $\pi\{b:\}\upchain^{\mu'} \subseteq \chain\{b:\}\upchain^{\mu'}$ is trivial.
-
-    For the converse, we will show that for all $\mu^* > \mu'$, we have that in
+    For the converse, we show that for all $\mu^* > \mu'$, we have that in
     the iteration of the Prove \texttt{for} loop with $\mu = \mu^*$, the block
-    stored in variable $B$ preceeds block $b$ in $\chain$.
+    stored in variable $B$ precedes $b$ in $\chain$.
 
-    Suppose $\mu = \mu^*$ is the first \texttt{for} loop iteration during which the
-    property is violated. Clearly this cannot be the first iteration, as there
-    $B = \chain[0]$ and Genesis preceeds all blocks, including itself. By the
+    Suppose $\mu = \mu^*$ is the first \texttt{for} iteration during which the
+    property is violated. This cannot be the first iteration, as there
+    $B = \chain[0]$ and Genesis precedes all blocks. By
     induction hypothesis we see that during the iteration $\mu = \mu^* + 1$,
-    block $B$ preceeded block $b$. But from the definition of $\mu'$ we know
+    $B$ preceded $b$. From the definition of $\mu'$ we know
     that $\mu'$ is the highest level for which
     $|\pi\{b:\}\upchain^{\mu'}[1:]|
     \geq \max(m, (1 -
@@ -23,6 +22,6 @@
     In case \textsf{local-good} is violated, variable $B$ remains unmodified and
     the induction step holds. If \textsf{local-good} is not violated, then
     $|\pi\{b:\}\upchain^{\mu^*}[1:]| < m$ and so $\pi\upchain^{\mu^*}[-m]$
-    preceeds $b$, and so we are done.
+    precedes $b$.
     \Qed
 \end{proof}
