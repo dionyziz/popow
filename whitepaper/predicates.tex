@@ -18,27 +18,27 @@ between them.
     $\chain$ and for all blocks $B$ we have that:
     $Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B)$.
 
-\noindent 
+\noindent
  {(Stability)}
     Parameterized by $k \in \mathbb{N}$, a chain predicate
     $Q$ has $\textit{stability}$ if its value only depends on $\chain[:-k]$.
 
-\noindent 
-{(Persistence)}
-    Parameterized by $k \in \mathbb{N}$, a chain predicate
-    $Q$ has $\textit{persistence}$ if the following is true: When in a certain
-    round the predicate is $k$-stable in some honest party's chain, then
-    whenever it is $k$-stable in any honest party's chain, the truth value of
-    the predicate is the same. Furthermore, the change of truth value from
-    $\bot$ to its  truth value happened at the same blockchain depth.
+% \noindent
+% {(Persistence)}
+%     Parameterized by $k \in \mathbb{N}$, a chain predicate
+%     $Q$ has $\textit{persistence}$ if the following is true: When in a certain
+%     round the predicate is $k$-stable in some honest party's chain, then
+%     whenever it is $k$-stable in any honest party's chain, the truth value of
+%     the predicate is the same. Furthermore, the change of truth value from
+%     $\bot$ to its  truth value happened at the same blockchain depth.
 \end{definition}
-
-\begin{restatable}[Predicate persistence]{theorem}{restateThmPredicatePersistence}
-    If a chain predicate is monotonic, then it satisfies persistence with
-    parameter $k = 2\eta \kappa f$ with overwhelming probability.
-\end{restatable}
-\ifonecolumn
-    \import{./}{proofs/predicatepersistence.tex}
-\else
-    Full proofs are provided in the appendix.
-\fi
+%
+% \begin{restatable}[Predicate persistence]{theorem}{restateThmPredicatePersistence}
+%     If a chain predicate is monotonic, then it satisfies persistence with
+%     parameter $k = 2\eta \kappa f$ with overwhelming probability.
+% \end{restatable}
+% \ifonecolumn
+%     \import{./}{proofs/predicatepersistence.tex}
+% \else
+%     Full proofs are provided in the appendix.
+% \fi
