@@ -2,80 +2,78 @@
 \label{sec.model}
 
 We define our problem in the setting of a blockchain client which is completely
-stateless beyond the knowledge of a common reference string, the Genesis block.
+stateless beyond the knowledge of a common reference string, the genesis block.
 Without loss of generality, this single reference block could be any stable
 checkpoint block, either hard-coded in the client or obtained through a previous
 interaction with the network. However, importantly, the client does not maintain
 a blockchain. The challenge is, then, to build a client that is able to
 communicate with the network and, without downloading the whole chain headers,
-is convinced in a secure manner that a transaction has taken place. We term such
+is convinced in a secure manner about a certain predicate on the ``main chain'', e.g., whether a specific a transaction has been confirmed. We term such
 a client a \textit{verifier} and we term \textit{provers} the full nodes it
 connects to.
-
+%
 The provers maintain a complete blockchain and can be thought of as full nodes.
 The verifier connects to multiple provers, some of which may be malicious, but
 at least one of which is honest. All of the provers provide a proof and the
-verifier extracts the one he thinks corresponds to the honest (longest)
-blockchain. We follow the obvious model for constructing these proofs. For the
-reader interested in the model formalisms, we include a section on ``Backbone''
-in the Appendix. The intuition behind these proofs is quite simple: Let $T$ be
-the mining target for the network. Then because block ids are generated
-uniformly at random, half of the blocks will have an id less than $T / 2$. By
-having the prover present to the verifier just these blocks which capture more
-proof-of-work than their neighbour counterparts, the verifier is convinced that
-the proof-of-work of the omitted blocks also took place. The same logic can be
-applied to any level $\mu$, namely blocks with id less than $T 2^{-\mu}$.
+verifier has to decide based on the feedback received what is the 
+correct value of the predicate in question.  
+% AK:  I think this is not necessary now. 
+%The general intuition behind building such proofs is quite simple: Let $T$ be
+%the mining target for the network. Then because block ids are generated
+%uniformly at random, half of the blocks will have an id less than $T / 2$. By
+%having the prover present to the verifier just these blocks which capture more
+%proof-of-work than their neighbour counterparts, the verifier is convinced that
+%the proof-of-work of the omitted blocks also took place. The same logic can be
+%applied to any level $\mu$, namely blocks with id less than $T 2^{-\mu}$.
 
-\subsection{New algorithms in the backbone model}
+%\subsection{New algorithms in the backbone model}
 
-For a given predicate on the chain (e.g. ``the transaction took place''), the
+The prover-verifier interaction is as follows: for a given predicate on the chain (e.g. ``the transaction took place''), the
 prover computes the proof string and transmits it to the verifier. The verifier
-accepts or rejects the string. Given that in our setting the predicates will be
-referring to an active evolving chain we should define them in the presence of a
-blockchain protocol.
+accepts or rejects the string. 
+Note that in the interactive case the prover and verifier may engage in more than one round of message passing. 
 
-The honest entities on the blockchain network are of 3 kinds: (1) miners, who
+The entities on the blockchain network are of 3 kinds: (1) miners, who
 try to mine new blocks on top of the longest known blockchain and broadcast them
-as soon as they are discovered; (2) full nodes, which maintain the longest
+as soon as they are discovered (For simplicity we assume that difficulty
+is constant and thus the ``longest chain rule'' sufficiently describes honst miner behavior); (2) full nodes, which maintain the longest
 blockchain without mining and also act as the provers in the network; (3)
 verifiers or stateless clients, which connect to provers and ask for proofs in
 regards to which blockchain is the largest. The verifiers attempt to determine
-the value of a predicate on these chains.
+the value of a predicate on these chains.  
 
-We model proof-of-work discovery attempts by using a random oracle~\cite{RO}.
+We model proof-of-work discovery attempts by using a random oracle~\cite{RO} as
+in \cite{backbone}.
 The network is synchronized into rounds, which correspond to moments in time.
 The predicates of interest in our context are predicates on the active
 blockchain. Some of the predicates are more suitable for succinct proofs than
 others. We focus our attention in what we call \textit{reliable} predicates.
 These predicates have the exceptional property that all honest miners share
 their view of them in a way that is updated in a predictable manner, with a
-truth-value that persists as the blockchain grows.  Furthermore, we are
-interested in \textit{succinct} predicates, predicates which can be proven using
-a succinct protocol, a protocol which requires proofs that are short in terms of
-the total blockchain size.
+truth-value that persists as the blockchain grows (an example of an unreliable
+predicate is e.g., the least significant bit of the hash of last block).  
+% Furthermore, we are
+%interested in \textit{succinct} predicates, predicates which may be proven using
+%a succinct protocol, a protocol which requires proofs that are short in terms of
+%the total blockchain size 
 
-A non-interactive proof of proof-of-work protocol is a game between a prover and
-a verifier parameterized by predicate $Q$ which the prover tries to convince the
-verifier for. The predicate $Q$ is a function of a chain $\chain$, which the
-prover claims to be the longest chain. When asked to do so by the environment,
-several provers generate proofs claiming potentially different truth values for
-the predicate $Q$ based on their claimed local longest chains. The verifier
-receives these proofs and accepts one of the proofs, determining the truth value
-of the predicate. Some of the proofs could be adversarial.
-
-Define a \textit{blockchain proof protocol} for a predicate $Q$ as a pair $(P,
-V)$ where $P$ is the \textit{prover} and $V$ is the \textit{verifier}. $P$ is a
-PPT algorithm that is spawned by a full node when they wish to produce a proof,
+In our setting, for a given predicate $Q$, 
+several  provers (including adversarial ones)
+will generate proofs claiming potentially different truth values for
+$Q$ based on their claimed local longest chains. The verifier
+receives these proofs and accepts one of them proofs, determining the truth value
+of the predicate.  We denote a  \textit{blockchain proof protocol} for a predicate $Q$ as a pair $(P, V)$ where $P$ is the \textit{prover} and $V$ is the \textit{verifier}. $P$ is a PPT algorithm that is spawned by a full node when they wish to produce a proof,
 accepts as input a full chain $\chain$ and produces a proof $\pi$ as its output.
-$V$ is a PPT algorithm which is spawned by the environment at some round,
+$V$ is a PPT algorithm which is spawned at some round,
 receives a pair of proofs $(\pi_A, \pi_B)$ from both an honest party and the
 adversary and returns its decision $d \in \{T, F, \bot\}$ before the next round
-and terminates. The honest parties produce proofs for $V$ using $P$.
+and terminates. The honest miners produce proofs for $V$ using $P$, while the adversary produces proofs following some arbitrary strategy. Before we introduce the security properties for blockchain proof protocols we introduce some necessary notation for blockchains. 
 
-\subsection{Blockchain addressing}
+%\subsection{Blockchain addressing}
+\noindent {\bf Blockchain addressing.}
 Blockchains are finite block sequences obeying the \textit{blockchain property}
 that for every block in the chain there exists a pointer to its previous block.
-A chain is \textit{anchored} if its first block is \textit{Genesis}, denoted
+A chain is \textit{anchored} if its first block is \textit{genesis}, denoted
 $Gen$.
 
 For chain addressing we use Python brackets $\chain[\cdot]$. A zero-based
@@ -89,16 +87,17 @@ and $A$ must point to $\chain_1[-1]$. We denote $\chain\{A:Z\}$ the subarray of
 the chain from $A$ (inclusive) to $Z$ (exclusive). We can omit blocks or indices
 from the range to take the chain to the beginning or end.
 
-\textbf{Helper functions.} The \textit{id} function returns the id of a block
+\noindent \textbf{Helper functions for blockchains.} The \textit{id} function returns the id of a block
 given its data. This is done by applying the hash functions $H$ and $G$:
 $\textsf{id} = H(ctr, G(x, \textsf{interlink}))$. Here, $ctr$ is the nonce, $x$
-is the Merkle tree root of the transactions \cite{princetonbook}. However, note
+is the Merkle tree root of the transactions.% \cite{princetonbook} 
+However, note
 that block $B$ maintains an \textit{interlink} data structure instead of a
 previous block pointer. We will explain this further in section
 \ref{sec.consensus}. \textit{depth} is a function which, given a block, returns
-its distance from the Genesis block.
+its distance from the genesis block.
 
-Valid blocks satisfy proof-of-work\cite{antonopoulosbook}: $id \leq T$, where
+Valid blocks satisfy the proof-of-work condition: $id \leq T$, where
 $T$ is the mining target. Some blocks will achieve a lower id. If $id \leq
 \frac{T}{2^\mu}$ we say that the block is of level $\mu$. All blocks are
 level $0$. Blocks with level $\mu$ are $\mu$-\textit{superblocks}.
@@ -112,16 +111,18 @@ blocks. Certain blocks can be omitted from a chain, obtaining a subchain. as
 long as the blockchain property that each block must contain a pointer to its
 previous block in the sequence is maintained.
 
-Blockchains are sequences, but we use some set notation. $B \in \chain,
+Blockchains are sequences, but it is still more convenient to use set notation for some operation. Specifically, $B \in \chain,
 \emptyset, \chain_1 \subseteq \chain_2$ have the obvious meaning. $\chain_1 \cup
 \chain_2$ is the chain obtained by sorting the blocks contained in both
-$\chain_1$ and $\chain_2$ into a sequence. $\chain_1 \cap \chain_2$ is the chain
-$\{B: B \in \chain_1 \land B \in \chain_2\}$. In both, the blockchain property
+$\chain_1$ and $\chain_2$ into a sequence (this may be not always defined).
+$\chain_1 \cap \chain_2$ is the chain
+$\{B: B \in \chain_1 \land B \in \chain_2\}$. In both cases, the blockchain property
 must be maintained. The lowest common ancestor is $\textsf{LCA}(\chain_1,
-\chain_2) = (\chain_1 \cap \chain_2)[-1]$. We will freely use set builder
-notation $\{B \in \chain: p(B)\}$. In all cases, because we are talking about
-blockchains and not blocktrees, any set of blocks has a unique order obtained by
-topologically sorting the blocks. If $\chain_1[0] = \chain_2[0]$ and
+\chain_2) = (\chain_1 \cap \chain_2)[-1]$. %We will freely use set builder notation $\{B \in \chain: p(B)\}$. 
+%In all cases, because we are talking about
+%blockchains and not blocktrees, any set of blocks has a unique order obtained by
+%topologically sorting the blocks.
+If $\chain_1[0] = \chain_2[0]$ and
 $\chain_1[-1] = \chain_2[-1]$, we say the chains \textit{span} the same
 block range.
 
@@ -129,7 +130,7 @@ Given $\chain$ and level $\mu$, the \textit{upchain}
 $\chain\upchain^\mu$ is $\{B \in \chain: level(B) \geq \mu\}$. A chain
 containing only $\mu$-superblocks is a $\mu$\textit{-superchain}. Given chains
 $\chain' \subseteq \chain$, the \textit{downchain}
-$\chain'\downchain^\chain$ is $\chain[\chain'[0]:\chain'[-1]]$. $\chain$ is the
+$\chain'\downchain\!^\chain$ is $\chain[\chain'[0]:\chain'[-1]]$. $\chain$ is the
 \textit{underlying chain} of $\chain'$. The underlying chain is often implied by
 context, so we will simply write $\chain'\downchain$. The $\chain\upchain$
 operator is absolute: $(\chain\upchain^\mu)^{\mu + i} = \chain\upchain^{\mu +
