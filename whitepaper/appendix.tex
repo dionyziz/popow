@@ -84,21 +84,120 @@ probability.
 \import{./}{proofs/attack.tex}
 \fi
 
-% \textbf{Remark.} It is worth isolating the mistake in the security proof from
-% the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
-% player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block, was honestly
-% generated and suppose that the superchain comparison happens at level $\mu$.
-% Their proof then argues that there will have been more honestly- than
-% adversarially-generated $\mu$-superblocks after block $b$. Nevertheless, we
-% observe that the mere fact that there have been more honestly- than
-% adversarially-generated $\mu$-superblocks after $b$ does not imply that
-% $|\overline\pi_\mathcal{A}[\mu]\{b:\}| \leq |\overline\pi_B[\mu]\{b:\}|$. The
-% reason is that some of these superblocks could belong to blocktree forks that
-% have been abandoned by $B$. Thus, the security conclusion does not follow.
-% Regardless, their basic argument and construction is what we will use as a basis
-% for constructing a system that is both provably secure and succinct under the
-% same assumptions, albeit requiring a more complicated proof structure to obtain
-% security.
+\section{Proof of security}
+Assume there are $t$ adversarial parties and $n$ total parties, each with $q$
+proof-of-work random oracle queries per round. We will call a query to the
+random oracle $\mu$-\textit{successful} if the random oracle returns a value $h$
+such that $h \leq 2^{-\mu}T$.
+
+In order to prove our construction secure, we define the boolean random
+variables $X_r^\mu$, $Y_r^\mu$ and $Z_r^\mu$. For each round $r$ and for each
+query index $j$ and for each $k$ adversarial party index (out of $t$), define
+these random variables as follows. If at round $i$ an honest party obtains a
+PoW with $id < 2^{-\mu}T$, then $X_r^\mu = 1$, otherwise $X_r^\mu = 0$. If at
+round $r$ exactly one honest party obtains a PoW with $id < 2^{-\mu}T$, then
+$Y_r^\mu = 1$, otherwise $Y_r^\mu = 0$. Regarding the adversary, if at round $r$
+the $j$-th query of the $k$-th corrupted party is $\mu$-successful, then
+$Z^\mu_{ijk} = 1$, otherwise $Z^\mu_{ijk} = 0$. Further define $Z^\mu_r =
+\sum_{k=1}^t \sum_{j=1}^q Z^\mu_{ijk}$. For a set of rounds $S$, let $X^\mu(S) =
+\sum_{r \in S} X_r$ and similarly define $Y^\mu(S), Z^\mu(S)$.
+
+We now define a \textit{typical execution}.
+
+\begin{definition}{(Typical execution)}
+    An execution of the protocol is $(\epsilon, \eta)$-\textit{typical} if:
+
+    \textnormal{\bf Block counts don't deviate.}
+    For all $\mu \geq 0$ and any set $S$ of consecutive rounds
+    with $|S| \geq 2^\mu \eta\kappa$, we have:
+
+    \begin{itemize}
+        \item $(1 - \epsilon)E[X^\mu(S)] < X^\mu(S) < (1 + \epsilon)E[X^\mu(S)]$ and $(1 - \epsilon)E[Y^\mu(S)] < Y^\mu(s)$.
+        \item $Z^\mu(S) < (1 + \epsilon)E[Z^\mu(S)]$.
+    \end{itemize}
+
+    \textnormal{\bf Round count doesn't deviate.}
+    Let $S$ be a set of consecutive rounds such that $Z^\mu(S)
+    \geq k$ for some security parameter $k$. Then we have that $|S| \geq (1 -
+    \epsilon)2^\mu\frac{k}{pqt}$ with overwhelming probability in $k$.
+
+    \textnormal{\bf Chain regularity.}
+    No insertions, no copies, and no predictions \cite{backbone} have occurred.
+\end{definition}
+
+\begin{restatable}[Typicality]{theorem}{restateThmTypicality}
+\label{thm.typicality}
+Executions are $(\epsilon, \eta)$-typical with overwhelming
+probability in $\kappa$.
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/typicality.tex}
+\fi
+
+The following lemma is at the heart of the security proof that will follow.
+
+\begin{restatable}{lemma}{restateThmLevelComparison}\label{lem.level-comparison}
+    Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$
+    and $\chain_B$ is
+    a chain adopted by an honest party at round $r_2$ of a typical execution.
+    Let $\chain_B^S = \{b \in
+    \chain_B: b \textnormal{ was generated during } S\}$. Let $\mu_\mathcal{A},
+    \mu_B \in \mathbb{N}$. Suppose $\chain_B^S\upchain^{\mu_B}$ is good.
+    Suppose $\chain'_\mathcal{A}$ is a $\mu_\mathcal{A}$-superchain containing
+    only adversarially generated blocks generated during $S$ and suppose that
+    $|\chain'_\mathcal{A}| \geq k$.
+    Then:
+
+    \begin{equation*}
+    2^{\mu_\mathcal{A}}|\chain'_\mathcal{A}| < \frac{1}{3}2^{\mu_B}|\chain_B^S\upchain^{\mu_B}|
+    \end{equation*}
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/levelcomparison.tex}
+\fi
+
+\begin{definition}[Adequate level of honest proof]
+Let $\pi$ be an honestly generated proof constructed upon some adopted chain
+$\chain$ and let $b \in \pi$.
+
+Then $\mu'$ is defined as follows:
+
+\begin{equation*}
+\mu' = \max\{\mu: |\pi\{b:\}\upchain^\mu| \geq \max(m + 1, (1 -
+\delta)2^{-\mu}|\pi\{b:\}\upchain^\mu\downchain|)\}
+\end{equation*}
+
+We call $\mu'$ the \textit{adequate} level of proof $\pi$ with respect to
+block $b$ with security parameters $\delta$ and $m$. Note that the adequate
+level of a proof is a function of both the proof $\pi$ and the chosen block $b$.
+\end{definition}
+
+\begin{restatable}{lemma}{restateThmAllBlocks}\label{lem.allblocks}
+Let $\pi$ be some honest proof generated with security parameters $\delta, m$.
+Let $\chain$ be the underlying chain, $b \in \chain$ be any block and $\mu'$ be
+the adequate level of the proof with respect to $b$ and the same security
+parameters.
+
+Then $\chain\{b:\}\upchain^{\mu'} = \pi\{b:\}\upchain^{\mu'}$.
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/allblocks.tex}
+\fi
+
+\begin{restatable}{restateThmLevelAdequacy}{lemma}
+Suppose the verifier evaluates $\pi_\mathcal{A} \geq \pi_B$ in a protocol
+interaction where $B$ is honest and assume during the comparison that the
+compared level of the honest party is $\mu_B$. Let $b =
+\textsf{LCA}(\pi_\mathcal{A}, \pi_B)$ and let $\mu_B'$ be the adequate
+level of $\pi_B$ with respect to $b$. Then $\mu_B' \geq \mu_B$.
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/leveladequacy.tex}
+\fi
+
+\restateThmSecurity*
+\import{./}{proofs/security.tex}
+
 \section{Full proofs}
 \label{sec.proofs}
 
@@ -149,9 +248,6 @@ $\mu$ with overwhelming probability in $m$.
 
 \restateThmAllBlocks*
 \import{./}{proofs/allblocks.tex}
-
-\restateThmSecurity*
-\import{./}{proofs/security.tex}
 
 \restateThmFewLevels*
 \import{./}{proofs/fewlevels.tex}
