@@ -1,7 +1,8 @@
-\subsection{Security}
+%\subsection{Security}
 
+\noindent {\bf Security.} 
 Proving the security of the scheme requires building an involved technical
-argument. It is included in the Appendix.
+argument. It is included in the Appendix. Specifically we prove the following. 
 
 \begin{restatable}{theorem}{restateThmSecurity}
     \label{thm.security}
@@ -31,13 +32,13 @@ the honest proof have been generated at some round $r_3$. Then take the sequence
 of consecutive rounds $S = (r_1, \cdots, r_3)$. Because the verifier requires at
 least $m$ blocks from each of the provers, the adversary must have $m$
 $\mu_\mathcal{A}$-superblocks in $\pi_\mathcal{A}\{b:\}$ which are not in
-$\pi_B\{b:\}$. Therefore, using a negative binomial argument, we see that $|S|$
+$\pi_B\{b:\}$. Therefore, using a negative binomial tail bound argument, we see that $|S|$
 must be long; intuitively, it takes a long time to produce a lot of blocks
 $|\pi_\mathcal{A}\{b:\}|$. Given that $|S|$ is long and that the honest parties
 have more mining power, they must have been able to produce a longer
 $\pi_B\{b:\}$ argument (of course, this comparison will have the superchain
 lengths weighted by $2^{\mu_\mathcal{A}}, 2^{\mu_B}$ respectively). To prove
-this, we use a binomial argument; intuitively, given a long time $|S|$, a lot of
+this, we use a binomial tail bound argument; intuitively, given a long time $|S|$, a lot of
 $\mu_B$-superblocks $|\pi_B\{b:\}|$ will have been honestly produced.
 
 We therefore have a fixed value for the length of the adversarial argument, a
@@ -57,7 +58,12 @@ the sense that expectations remain the same, the probability of an adversarial
 attack becomes approximately proportional to the adversary power if the
 adversary follows a suitable strategy (for a description of such a strategy,
 see the parameterization section). With higher values of $m$, the probability of
-an adversarial attack drops exponentially, even though they maintain constant
-computational power, and hence satisfy a strong notion of security. This is due
-to the application of the Chernoff bound.
+an adversarial attack drops exponentially in $m$, even though they maintain constant
+computational power, and hence satisfy a strong notion of security. 
+\end{remark}
+
+\begin{remark}
+Intuitively, the attack of Section~\ref{sec:attack} is neutralized, because 
+our prover takes ``goodness'' of blockchains into account and the verifier
+does not compare proofs strictly at the same level. 
 \end{remark}
