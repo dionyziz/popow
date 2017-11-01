@@ -3,10 +3,10 @@
 %\subsection{The interlink pointers data structure}
 \label{sec.interlink}
 
-\noindent {\bf The interlink pointers data structure.} 
-In order to construct our protocols, as in \cite{KLS}, we take advantage  
-of a data structure that will be stored in the header of a block. 
-Observe that in a blockchain protocol execution 
+\noindent {\bf The interlink pointers data structure.}
+In order to construct our protocols, as in \cite{KLS}, we take advantage
+of a data structure that will be stored in the header of a block.
+Observe that in a blockchain protocol execution
 it is expected half of the blocks will be of level $1$, $1/4$
 of the blocks will be of level $2$, $1/8$ will be of level $3$ and $1/2^\mu$
 blocks will be of level $\mu$. In expectation, the number of superblock levels
@@ -48,15 +48,15 @@ point to the block $B'$.
 % \import{./}{algorithms/alg.nipopow-helper.tex}
 \import{./}{algorithms/alg.nipopow-interlink.tex}
 
-\noindent 
-{\bf Superchain quality.} In order to argue formally about the security 
-properties of blockchains that are equipped with the interlink 
+\noindent
+{\bf Superchain quality.} In order to argue formally about the security
+properties of blockchains that are equipped with the interlink
 data structure we will introduce a new concept of chain quality,
-inspired by the definition of this property in \cite{backbone}, 
-called {\em superchain quality.} 
+inspired by the definition of this property in \cite{backbone},
+called {\em superchain quality.}
 We first define a notion of ``goodness'' that bound the deviation
 of superblocks of a certain level from their expected mean. Using
-this we then define superchain quality. 
+this we then define superchain quality.
 
 \begin{definition}[Locally good superchain]
 A superchain $\chain'$ of level

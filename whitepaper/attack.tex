@@ -1,95 +1,90 @@
-\section{An attack against proofs of proof-of-work}
+\section{An attack against PoPoW}
 
 In this section, we revisit the construction for interactive proofs of
 proof-of-work from \cite{KLS} and its security.  Their construction is the
-starting point for our non-interactive proofs of proof-of-work. We show that the
+starting point for our non-interactive PoPoW. We show that the
 construction is susceptible to  a double-spending attack even in the case the
 adversary controls a minority of the hashing power.
 
 We first show that a powerful attacker can break chain superquality with
-non-negligible probability and we construct a concrete attack based on this
-observation. Maintaining chain superquality is not in the original
-security model. However, we show how the property affects the security of the
-underlying proofs. We do this by presenting a concrete attack against their
-scheme that allows an adversary to double spend with non-negligible probability.
-This attack works under the assumption that the adversary has sufficient hashing
-power, which is still below $50\%$.
+non-negligible probability and we construct a concrete attack based on this.
+Maintaining chain superquality is not in the original security model. However,
+we show how the property affects the security of the underlying proofs. We do
+this by presenting a concrete attack against their scheme that allows an
+adversary to double spend with non-negligible probability. This attack works
+under the assumption that the adversary has sufficient hashing power, still
+below $50\%$.
 
 \noindent
 \textbf{The interactive proofs of proof-of-work protocol.}
-The interactive proof of proof-of-work of \cite{KLS} works as follows. The
-verifier distinguishes between two candidate proofs $(\pi_A, \chi_A)$ and
-$(\pi_B, \chi_B)$. If $\pi_A = \pi_B$, the decision can be drawn immediately
-(without interaction) based on $\chi_A,\chi_B$. Otherwise, the verifier queries
-the two provers for their claimed anchored superchains $\pi_A\upchain^\mu$ and
-$\pi_B\upchain^\mu$ at a certain level $\mu$. The verifier starts querying at
-the highest possible level $\mu$ and successively descends until level $\mu$ is
-sufficiently low such that block $b = LCA(\pi_A\upchain^\mu, \pi_B\upchain^\mu)$
-is $m$ blocks deep for at least one of the provers. More specifically, the
-querying stops at such $\mu$ when $max(|\pi_A\upchain^\mu\{b:\}|,
-|\pi_B\upchain^\mu\{b:\}|) \geq m$. Subsequently, the winner is designated as
-the prover with the most blocks after $b$ at that level. More precisely, the
-winner is $A$ if $|\pi_A\upchain^\mu\{b:\}| \geq |\pi_B\upchain^\mu\{b:\}|)$ and
-otherwise it is $B$. The communication overhead is reduced by only requesting
-blocks after the purported LCA.
+The interactive PoPoW of \cite{KLS} works as follows. The verifier distinguishes
+between two candidate proofs $(\pi_A, \chi_A)$ and $(\pi_B, \chi_B)$. If $\pi_A =
+\pi_B$, the decision is drawn immediately without interaction based on
+$\chi_A,\chi_B$. Otherwise, the verifier queries the provers for their claimed
+anchored superchains $\pi_A\upchain^\mu, \pi_B\upchain^\mu$ at some level $\mu$.
+The verifier starts querying at the highest possible level $\mu$ and descends
+until level $\mu$ is sufficiently low such that $b = LCA(\pi_A\upchain^\mu,
+\pi_B\upchain^\mu)$ is $m$ blocks from the tip for one of the provers. That is,
+the querying stops at such $\mu$ when $max(|\pi_A\upchain^\mu\{b:\}|,
+|\pi_B\upchain^\mu\{b:\}|) \geq m$. The winner is designated as the prover with
+the most blocks after $b$ at that level; i.e., $A$ if $|\pi_A\upchain^\mu\{b:\}|
+\geq |\pi_B\upchain^\mu\{b:\}|)$, and $B$ otherwise. The communication overhead
+is reduced by only requesting blocks after the purported LCA.
 
 \noindent
 \textbf{Attacking chain superquality.}
 \label{subsec.superquality-attack}
-Let us now construct an adversary to break this property at level $\mu$. Suppose
-the adversary $\mathcal{A}$ controls a portion $t/n$ of the hashing power.
+We construct an adversary $\mathcal{A}$ to break this property at level $\mu$.
+% Suppose $\mathcal{A}$ controls a portion $t/n$ of the hashing power.
 $\mathcal{A}$ works as follows. Assume she wants to attack the honest party $B$
-in order to have him adopt a chain $\chain_B$ which has a bad distribution of
+in order to have him adopt chain $\chain_B$ which has a bad distribution of
 superblocks, i.e. such that local goodness is violated in some sufficiently long
 subchain. She continuously determines the current chain $\chain_B$ adopted by
 $B$. The adversary starts playing after $|\chain_B| \geq 2$. If
 $\textit{level}(\chain_B[-1]) < \mu$, then $\mathcal{A}$ remains idle. However,
 if $\textit{level}(\chain_B[-1]) \geq \mu$, then $\mathcal{A}$ attempts to mine
-an adversarial block $b$ on top of $\chain_B[-2]$. If she is successful, then
-she attempts to mine another block $b'$ on top of $b$. If she is successful, she
-broadcasts both $b, b'$. The adversarial mining continues until party $B$ adopts
-a new chain, which can be due to two reasons: Either the adversary managed to
-successfully mine $b, b'$ on top of $\chain_B[-2]$ and succeeded in having $B$
-adopt it; or one of the honest parties was able to mine a block which was
-subsequently adopted by $B$. In either case, the adversary continues with the
-strategy by inspecting $\chain[-1]$ and acting accordingly.
+an adversarial block $b$ on top of $\chain_B[-2]$. If successful,  she attempts
+to mine another block $b'$ on top of $b$. If successful again, she broadcasts
+$b$ and $b'$. The adversarial mining continues until $B$ adopts a new chain,
+which can be due to two reasons: Either the adversary successfully mined $b, b'$
+on top of $\chain_B[-2]$ and $B$ adopt them; or one of the honest parties mined
+a block which was adopted by $B$. In either case, the adversary continues with
+the strategy by inspecting $\chain[-1]$ and acting accordingly.
 
-Assume now that an honestly-generated $\mu$-superblock has been adopted by $B$
-at position $\chain_B[i]$ at some round $r$. Let us now examine the probability
-that $\chain_B[i]$ will remain a $\mu$-superblock in the long run. Suppose $r' >
-r$ is the first round after $r$ during which any block is generated. It is clear
-that $\mathcal{A}$ will succeed in this attack with non-negligible probability
-and cause $B$ to abandon the $\mu$-superblock from their adopted chain.
-Therefore, there will be some $\delta$ such that the adversary will be able to
-cause such variance with non-negligible probability in $m$. This suffices to
-show that superquality is harmed by this attack.
+Assume now that an honestly-generated $\mu$-superblock was adopted by $B$ at
+position $\chain_B[i]$ at round $r$. We now examine the probability that
+$\chain_B[i]$ will remain a $\mu$-superblock in the long run. Suppose $r' > r$
+is the first round after $r$ during which a block is generated. $\mathcal{A}$
+will succeed in this attack with non-negligible probability and cause $B$ to
+abandon the $\mu$-superblock from their adopted chain. Therefore, there will
+exists $\delta$ such that the adversary will be able to cause $\delta$-variance
+with non-negligible probability in $m$. This suffices to show that superquality
+is harmed.
 
 \noindent
 \textbf{A double-spending attack. }
-Extending the above attack, we modify the superquality attacker into an
-attacker that can cause a double spending attack in the proof of
-proof-of-work construction. As before, $\mathcal{A}$ targets the proofs
-generated by the honest party $B$ by violating $\mu$-superquality in $B$'s
-adopted chain. $\mathcal{A}$ begins by remaining idle until a certain chosen
-block $b$. After block $b$ is produced, $\mathcal{A}$ starts mining a secret
-chain which forks off from $b$ akin to a selfish mining attacker~\cite{selfish}.
-The adversary performs a normal spending transaction on the honestly adopted
-blockchain and has it confirmed in the block immediately following block $b$.
-She also produces a double spending transaction which she secretly confirms in
-her secret chain in the block immediately following $b$.
+Extending the above attack, we modify the superquality attacker into an attacker
+that causes a double spending attack in the PoPoW construction. As before,
+$\mathcal{A}$ targets the proofs generated by honest party $B$ by violating
+$\mu$-superquality in $B$'s adopted chain. $\mathcal{A}$ begins by remaining
+idle until a certain chosen block $b$. After block $b$ is produced,
+$\mathcal{A}$ starts mining a secret chain which forks off from $b$ akin to a
+selfish mining attacker~\cite{selfish}. The adversary performs a normal spending
+transaction on the honestly adopted blockchain and has it confirmed in the block
+immediately following block $b$. She also produces a double spending transaction
+which she secretly confirms in her secret chain in the block immediately
+following $b$.
 
-$\mathcal{A}$ keeps extending their own secret chain as usual. However, whenever
-a $\mu$-superblock is adopted by $B$, she temporarily pauses mining in
-her secret chain and devotes her mining power to harm the $\mu$-superquality
-of $B$'s adopted chain. Intuitively, for large enough $\mu$, the time spent
-trying to harm superquality will be limited, because the probability of a
-$\mu$-superblock occurring will be small. Therefore, the adversary's superchain
-quality will be larger than the honest parties' superchain quality (which will
-be harmed by the adversary) and therefore, even though the adversary's
-0-level blockchain will be shorter than the honest parties' 0-level blockchain,
-the adversary's $\mu$-superchain will be longer than the honest parties'
-$\mu$-superchain.
-
-The formal calculation of the probability of this attack succeeding is in the
-Appendix. However, we note here that, for appropriate choice of system
-parameters, the attack can be made to succeed with overwhelming probability.
+$\mathcal{A}$ keeps extending her own secret chain as usual. However, whenever a
+$\mu$-superblock is adopted by $B$, she temporarily pauses mining in her secret
+chain and devotes her mining power to harm the $\mu$-superquality of $B$'s
+adopted chain. Intuitively, for large enough $\mu$, the time spent trying to
+harm superquality will be limited, because the probability of a $\mu$-superblock
+occurring will be small. Therefore, the adversary's superchain quality will be
+larger than the honest parties' superchain quality (which will be harmed by the
+adversary) and therefore, even though the adversary's $0$-chain will be shorter
+than the honest parties' $0$-chain, the adversary's $\mu$-superchain will be
+longer than the honest parties' $\mu$-superchain. The formal calculation of the
+probability of this attack succeeding is in the Appendix. However, we note here
+that, for appropriate choice of system parameters, the attack can be made to
+succeed with overwhelming probability.
