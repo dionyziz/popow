@@ -1,13 +1,13 @@
 \section{Blockchain suffix proofs}
 
-We provide a concrete NIPoPoW construction which allows proving certain
-predicates $Q$ of the chain $\chain$. The construction is done in steps: First,
-we build a construction which is limited to a class of predicates easy to prove.
-Later, we extend this class of predicates by augmenting the construction.
-
-Among the predicates which are stable, we now limit ourselves \textit{suffix
+We now provide a concrete NIPoPoW construction which allows proving certain
+predicates $Q$ of the chain $\chain$.  
+Among the predicates which are stable, in this section, we will limit ourselves to \textit{suffix
 sensitive} predicates. These predicates are easier to prove, but at the same
-time allow us to use the construction as a scaffold for the more generic case.
+time allow us to use the construction as a scaffold for the more general setting to
+be presented  in Section~\ref{sec:infix}.
+%
+
 
 \begin{definition}[Suffix sensitivity]
 A chain predicate $Q$ is called $k$-\textnormal{suffix sensitive} if for all
@@ -19,15 +19,14 @@ Given the suffix-sensitivity definition, we deduce that for a suffix-sensitive
 predicate $Q$ there must be a quick way of deducing the value of $Q(\chain)$ by
 only examining the $k$-suffix of the chain.
 
-Suffix-sensitive predicates allow proving that a recent transaction occurred in
-the longest chain and in a block buried under at most $k$ blocks. Because the
-predicates we are interested in are stable, they must also pertain to properties
-that are independent of the last $k$ blocks. Therefore, combining the two, the
-predicate can only describe something that is visible at the exact block
+Beyond acting as a building block for our more involved construction of  Section~\ref{sec:infix}, 
+suffix-sensitive predicates are still useful in practice. Such 
+predicates can describe an event that is visible at the exact block
 $\chain[-k-1]$ and that will remain true as the chain grows in perpetuity (due
 to monotonicity). These predicates make sense for blockchains such as Ethereum
 which maintain state \cite{vitalik} that is propagated and committed to in every
-block. One example is the existence of a particular Ethereum account.
+block. One example of such predicate is the existence of a particular Ethereum 
+account.
 
 \subsection{Construction}
 
