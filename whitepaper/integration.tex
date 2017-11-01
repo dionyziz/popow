@@ -6,18 +6,15 @@
 \label{sec.multichain}
 An application of our technique is an efficient multi-cryptocoin client.
 Consider a merchant who wishes to accept payments in any cryptocoin, not just
-the popular ones. She could install an SPV client for each known cryptocoin.
+the popular ones. The na\"ive approach would be to install an SPV client for each known cryptocoin.
 This approach would entail downloading the header chain for each cryptocoin, and
 periodically syncing up by fetching any newly generated block headers. An
 alternative would be to use an online service supporting multiple currencies,
 but this introduces reliance on a third party (e.g. Jaxx and Coinomi rely on
 third party networks).
 
-A NIPoPoW-based client maintains a most recent $k$-stable block hash for each of
-its supported cryptocoins. Each time a payment is received, the client connects
-to peers on the corresponding network and asks for a NIPoPoW proof relative to
-the most recently stored block hash. For popular cryptocoins, the NIPoPoW-based
-client downloads nearly every block header, like an ordinary SPV client; for
+A NIPoPoW-based client would not download the entire header chain, but would intead only receive NiPoPoW proofs each time a payment is received. When a peer informs the client about a payment, they include a block index $\ell$ and NiPoPoW proof of transaction inclusion. The peer must then query \emph{all} of their connected peers, requesting any better better proof for the same predicate. After waiting a short time period for a response, the client runs the \texttt{verify-infix} routine on all received proofs, and accepts the transaction if the output is \emph{true}. Although initially such proofs must be relative genesis, the client may store the most recently-known ($k$-stable) blockhash for each cryptocoin, such that future payments can include NiPoPoW proofs relative to that. Thus for popluar cryptocoins, the NIPoPoW-based
+client downloads nearly every block header, like an ordinary SPV client; but for
 cryptocoins used infrequently, the NIPoPoW-based client can skip over most
 blocks.
 
