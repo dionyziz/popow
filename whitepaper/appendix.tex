@@ -99,6 +99,46 @@ probability.
 \import{./}{proofs/attack.tex}
 \fi
 
+\section{Interlink optimizations}
+We now discuss the manner in which the interlink data structure is hashed for
+coinbase inclusion. A Merkle tree is used to hash the interlink data structure
+into a single hash \cite{KLS}. NIPoPoWs form a chain of various levels
+which can omit blocks. For each block in the proof,
+only a single pointer needs to be presented to convince the Verifier. Near
+genesis, the pointers needed correspond to high levels; near
+the tip, the pointers to low levels. In the construction of
+the proof, the highest superchain with at least $m$ blocks is included, and
+assume it is of level $\mu$. The level $\mu - 1$ superchain is fully
+included and has an expected number of $2m$ blocks. Since all
+$\mu$-superblocks are also $(\mu - 1)$-superblocks, they only need to be
+counted once, for $\mu - 1$. Among the expected $2m$ $(\mu - 1)$-superblocks,
+the last $m$ will be supported by level $\mu - 2$. As before, since $(\mu -
+1)$-superblocks are $(\mu - 2)$-superblocks, in expectation only $m$
+$(\mu-1)$-superblocks are counted. The argument continues inductively, until
+$2m$ $0$-blocks are included in expectation immediately before the $\chi$
+suffix. This gives an estimation on the proof size: a total of $m
+(\log(|\chain|) - \log(m))$ blocks in expectation, $m$ at each of the $\mu - 1$
+levels and $2m$ $0$-blocks.
+
+Organizing interlink into a Merkle tree of $\log(|\chain|)$ items, a
+proof-of-inclusion is provided in $\log \log(|\chain|)$ space; $0$-level
+pointers need not be included in it, but the genesis block does. The root of the
+tree can be proved to have been included in the block header in $\log(|\overline
+x|)$ using the standard Merkle tree of transactions. This makes the proof size
+require $\log(|\overline x|) + \log\log(|\chain|)$ hashes per block for a total
+of $m (\log(|\chain|) - \log(m))(\log(|\overline x|) + \log\log(|\chain|))$
+hashes. In addition, $m (\log(|\chain|) - \log(m))$ headers and coinbase
+transactions are needed. Concretely, given that currently in bitcoin $|\chain| =
+464,185$ and $|\overline x| = 2000$, we have $\log(|\chain|) = 18,
+\log\log(|\chain|) = 5, \log(|\overline x|) = 11$. For the $k$-suffix, only $k$
+headers are needed. We set $k = 6$ and see that headers are $80$ bytes and
+hashes $32$ bytes. For the $k$-suffix as well as the $2m$ $0$-blocks in $\pi$,
+neither coinbase data nor prev ids are needed, limiting header size to $48$
+bytes. The root and leaves of the pointers tree can be omitted from coinbase when
+transmitting the proof. In fact, no block ids need to be transmitted. From these
+observations, we estimate our scheme's proof sizes for various parameterizations
+of $m$ in Table~\ref{table.size}.
+
 \section{Proof of security}
 Assume there are $t$ adversarial parties and $n$ total parties, each with $q$
 proof-of-work random oracle queries per round. We will call a query to the
