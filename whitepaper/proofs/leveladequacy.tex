@@ -1,32 +1,18 @@
 \begin{proof}
-    Because $\mu_B$ is the compared level of the honest party we have:
-
-    $2^{\mu_B}|\chain\{b:\}\upchain^{\mu_B}| > 2^{\mu_B}|\chain\{b:\}|$
-
-    We will prove the claim by contradiction. Suppose $\mu_B' < \mu_B$. Because
-    by definition $\mu_B'$ is the maximum level such that
+    Because $\mu_B$ is the compared level of the honest party we have
+    $2^{\mu_B}|\chain\{b:\}\upchain^{\mu_B}| > 2^{\mu_B}|\chain\{b:\}|$.
+    The proof is by contradiction. Suppose $\mu_B' < \mu_B$.
+    By definition, $\mu_B'$ is the maximum level such that
     $|\pi_B\{b:\}\upchain^\mu[1:]| \geq \max(m, (1 -
     \delta)2^{-\mu}|\pi_B\{b:\}\upchain^\mu[1:]\downchain|)$, therefore
     $\mu_B$ does not satisfy this condition. But we know that
     $|\pi_B\{b:\}\upchain^{\mu_B}[1:]| \geq m$ because $\mu_B$ was selected by
-    the Verifier. So therefore,
-
-    \begin{equation*}
-    2^{\mu_B}|\chain_B\{b:\}\upchain^{\mu_B}| < (1 - \delta)|\chain\{b:\}|
-    \end{equation*}
-
-    By the fact that $\mu_B'$ satisfies goodness, we have that:
-
-    \begin{equation*}
-    2^{\mu_B'}|\chain_B\{b:\}\upchain^{\mu_B'} > (1 - \delta)|\chain\{b:\}|
-    \end{equation*}
-
-    From the last two equations, we obtain that:
-
-    \begin{equation*}
-    (1 - \delta)|\chain\{b:\}| > 2^{\mu_B'}|\chain\{b:\}\upchain^{\mu_B'}|
-    \end{equation*}
-
-    But the last two equations contradict, hence the claim holds.
+    the Verifier. Therefore
+    $2^{\mu_B}|\chain_B\{b:\}\upchain^{\mu_B}| < (1 - \delta)|\chain\{b:\}|$.
+    But $\mu_B'$ satisfies goodness, so
+    $2^{\mu_B'}|\chain_B\{b:\}\upchain^{\mu_B'} > (1 - \delta)|\chain\{b:\}|$.
+    From the last two equations, we obtain
+    $(1 - \delta)|\chain\{b:\}| > 2^{\mu_B'}|\chain\{b:\}\upchain^{\mu_B'}|$,
+    which contradicts the previous equation.
     \Qed
 \end{proof}
