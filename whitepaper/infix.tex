@@ -2,25 +2,30 @@
 
 \label{sec:infix}
 
-\subsection{Construction}
+%\subsection{Construction}
 
-The previous proofs we constructed proved suffix. The most useful class of
+In the previous section we have seen how to construct proofs for suffix predicates. 
+As mentioned, the main purpose of this construction is to serve as a stepping
+stone for the construction of this section that presents 
+a most useful class of
 proofs allow proving more general predicates that can depend on multiple blocks
 even buried deep within the blockchain.
 
-We extend our prover to support this generalization. The generalized prover for
+More specifically, the generalized prover for
 \textit{infix proofs} allows proving any predicate $Q(\chain)$ that depends on a
 number of blocks that can appear anywhere within the chain (except the $k$
 suffix for stability). These blocks constitute a \textit{subset} $\chain'$ of
 blocks which may not necessarily be a stand-alone blockchain. This allows
-proving powerful statements such as, for example, whether a transaction took
-place.
+proving powerful statements such as, for example, whether a transaction is 
+confirmed. 
+We define next formally the class of predicates that will be of interest. 
 
 % XXX extend this class of predicates to include comparison of position
 % within the blockchain (these position-dependent predicates may be unprovable
 % in velvet mode due to diamond topologies)
 \begin{definition}[Infix sensitivity]
-A chain predicate $Q_{\ell,d,k}$ is $k$-\textnormal{infix sensitive} if it can be
+\label{def:infix}
+A chain predicate $Q_{\ell,d,k}$ is \textnormal{infix sensitive} if it can be
 written in the form
 
 $$
@@ -37,14 +42,19 @@ Where $D$ is an arbitrary predicate. Note that $\chain'$ is a blockset and may
 not necessarily be a blockchain.
 \end{definition}
 
+We next show how to express the predicate that asks whether 
+a certain transaction with id $txid$ has been confirmed by a certain time as an infix sensitive predicate. 
+First, we need specify a time bound  as the maximum number of blocks
+$\ell$ up to which we want to test whether $txid$ is included (this is necessary as without such a time bound the predicate cannot be monotonic). Then we define the
+ predicate $D^{txid}$ that receives  a single block and tests whether a transaction with id $txid$ is included. The predicate $Q^{txid}_{\ell, 1, k}$  is now defined
+as in Definition~\ref{def:infix}  using the predicate $D^{txid}$ and the parameter $k$ which in this case  determines the desired stability of the assertion that $txid$ is included. 
+
 % XXX example
-Similarly to suffix-sensitive predicates, infix-sensitive predicates $Q$ can be
-evaluated by a short evaluation. In particular, here, because of the form of
-infix-sensitive predicates, to evaluate $Q(\chain)$ it suffices to pass to $Q$
-any short blockset $\chain'' \subseteq \chain$ such that there is a $\chain'
-\subseteq \chain''$ which satisfies the condition that $|\chain'| \leq k \land
-P(\chain')$. The $|\chain[:-k]| < \ell$ portion can be determined by examining the
-block number.
+Similarly to suffix-sensitive predicates, infix-sensitive predicates $Q$ can be evaluated very efficiently. Intuitively this is possible because
+of their localized nature and dependency on the $D(\cdot)$ predicate which
+requires only a small number of blocks to conclude whether the predicate should
+be true. Nevertheless, some special care will be needed to ensure the condition
+on the length  of the chain with respect to $\ell$ is captured. 
 
 The construction of these proofs is shown in
 Algorithm~\ref{alg.nipopow-infix-prover}. The infix prover accepts two
