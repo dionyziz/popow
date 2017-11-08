@@ -29,7 +29,7 @@
 \usepackage{thm-restate}
 
 \iftwocolumn
-% \g@addto@macro{\UrlBreaks}{\UrlOrds}
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
 \else
 \usepackage{geometry}
 \geometry{
@@ -60,7 +60,7 @@
 \newcommand{\Qed}{
     \iftwocolumn
     \else
-        \Qed
+        \qed
     \fi
 }
 

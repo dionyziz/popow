@@ -1,8 +1,7 @@
 \section{Applications \& Evaluation}
 \label{sec.applications}
 
-\noindent
-\textbf{Multi-blockchain wallets.}
+\subsection{Multi-blockchain wallets}
 \label{sec.multichain}
 An application of our technique is an efficient multi-cryptocoin client.
 Consider a merchant who wishes to accept payments in any cryptocoin, not just
@@ -18,8 +17,7 @@ client downloads nearly every block header, like an ordinary SPV client; but for
 cryptocoins used infrequently, the NIPoPoW-based client can skip over most
 blocks.
 
-\noindent
-\textbf{Simulation.}
+\subsection{Simulation}
 We simulated the resources savings resulting from the use of a NIPoPoW-based
 client. We model the arrival of payments in each cryptocoin as a Poisson process
 and assume that the market cap of a cryptocoin is a proxy for usage. Currently,
@@ -78,10 +76,10 @@ sync up) by 90\%.
   \centering
   \begin{tabular}
     {
-      l@{\hspace{1pt}}|
-      l@{\hspace{1pt}}l@{\hspace{1pt}}|
-      l@{\hspace{1pt}}l@{\hspace{1pt}}|
-      l@{\hspace{0.1pt}}}
+      l@{\hspace{2pt}}|
+      l@{\hspace{2pt}}l@{\hspace{2pt}}|
+      l@{\hspace{2pt}}l@{\hspace{2pt}}|
+      l@{\hspace{2pt}}}
 
       \multicolumn{1}{l|}{\bf Daily} & \multicolumn{2}{c|}{\bf Naive SPV} & \multicolumn{2}{c|}{\bf NIPoPoW} \\
       {\bf tx} & {\bf Total} & {\bf (Daily)} & {\bf Total} & {\bf (Daily)} & {\bf Savings} \\
@@ -93,8 +91,7 @@ sync up) by 90\%.
     \end{tabular}
   \end{table}
 
-\noindent
-\textbf{Certificate Transparency. }
+\subsection{Certificate Transparency}
 \label{sec.catena}
 In Catena~\cite{catena} the Bitcoin blockchain is used as an
 equivocation-resistant public log in which to publish SSL certificate
@@ -112,8 +109,7 @@ generate 6 kilobytes of headers, whereas a NIPoPoW proof covering the same range
 would require less than half this size. The savings would increase further if
 Catena were implemented using any PoW blockchain with more frequent blocks.
 
-\noindent
-\textbf{Sidechains.}
+\subsection{Sidechains}
 \label{sec.sidechains}
 It is widely known that Bitcoin faces significant scaling
 hurdles~\cite{onscaling}, but upgrading Bitcoin is notoriously difficult. A
@@ -138,4 +134,14 @@ sidechain backed by currency on the host chain (a two-way
 peg)~\cite{sidechains}. This is accomplished by defining two new transaction
 types: ``deposit'' transactions lock coins on the host chain and create new
 assets on the side chain; ``withdrawal'' transactions do the opposite. Deposit
-transactions committed on the host chain are delivered to the sidechain using a proof; vice versa for withdrawal transactions. Whereas in the multi-blockchain wallet application the client queries each of its peers (one of which is assumed to be honest), in this setting peers must listen for event notifications when a ``withdrawal'' transaction is commited, and if they have a better NiPoPoW proof that invalidates this claim, they must submit it as a transaction within some time bound. The smart contract should collect a security deposit from the withdrawer that can be used to compensate peers for providing invalidation claims. Succinctness (and certificates of badness) are thus especially important for sidechains, since the size of the largest proof under normal conditions should determine what is an acceptable security deposit.
+transactions committed on the host chain are delivered to the sidechain using a
+proof; vice versa for withdrawal transactions. Whereas in the multi-blockchain
+wallet application the client queries each of its peers (one of which is assumed
+to be honest), in this setting peers must listen for event notifications when a
+``withdrawal'' transaction is commited, and if they have a better NiPoPoW proof
+that invalidates this claim, they must submit it as a transaction within some
+time bound. The smart contract should collect a security deposit from the
+withdrawer that can be used to compensate peers for providing invalidation
+claims. Succinctness (and certificates of badness) are thus especially important
+for sidechains, since the size of the largest proof under normal conditions
+should determine what is an acceptable security deposit.

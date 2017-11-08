@@ -26,7 +26,7 @@ correct value of the predicate in question.
 %the proof-of-work of the omitted blocks also took place. The same logic can be
 %applied to any level $\mu$, namely blocks with id less than $T 2^{-\mu}$.
 
-%\subsection{New algorithms in the backbone model}
+\subsection{The prover and verifier model}
 
 The prover-verifier interaction is as follows: for a given predicate on the chain (e.g. ``the transaction took place''), the
 prover computes the proof string and transmits it to the verifier. The verifier
@@ -69,8 +69,8 @@ receives a pair of proofs $(\pi_A, \pi_B)$ from both an honest party and the
 adversary and returns its decision $d \in \{T, F, \bot\}$ before the next round
 and terminates. The honest miners produce proofs for $V$ using $P$, while the adversary produces proofs following some arbitrary strategy. Before we introduce the security properties for blockchain proof protocols we introduce some necessary notation for blockchains.
 
-%\subsection{Blockchain addressing}
-\noindent {\bf Blockchain addressing.}
+\subsection{Blockchain addressing}
+% \noindent {\bf Blockchain addressing.}
 Blockchains are finite block sequences obeying the \textit{blockchain property}
 that for every block in the chain there exists a pointer to its previous block.
 A chain is \textit{anchored} if its first block is \textit{genesis}, denoted
@@ -87,7 +87,7 @@ and $A$ must point to $\chain_1[-1]$. We denote $\chain\{A:Z\}$ the subarray of
 the chain from $A$ (inclusive) to $Z$ (exclusive). We can omit blocks or indices
 from the range to take the chain to the beginning or end.
 
-\noindent \textbf{Helper functions for blockchains.} The \textit{id} function returns the id of a block
+\textbf{Helper functions for blockchains.} The \textit{id} function returns the id of a block
 given its data. This is done by applying the hash functions $H$ and $G$:
 $\textsf{id} = H(ctr, G(x, \textsf{interlink}))$. Here, $ctr$ is the nonce, $x$
 is the Merkle tree root of the transactions.% \cite{princetonbook}

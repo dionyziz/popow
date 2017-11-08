@@ -31,266 +31,40 @@
 %
 % \import{./}{algorithms/alg.backbone-velvet-prover.tex}
 
-\noindent
-\textbf{Attack probabilities.}
-% \textbf{Remark.} It is worth isolating the mistake in the security proof from
-% the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
-% player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block, was honestly
-% generated and suppose that the superchain comparison happens at level $\mu$.
-% Their proof then argues that there will have been more honestly- than
-% adversarially-generated $\mu$-superblocks after block $b$. Nevertheless, we
-% observe that the mere fact that there have been more honestly- than
-% adversarially-generated $\mu$-superblocks after $b$ does not imply that
-% $|\overline\pi_\mathcal{A}[\mu]\{b:\}| \leq |\overline\pi_B[\mu]\{b:\}|$. The
-% reason is that some of these superblocks could belong to blocktree forks that
-% have been abandoned by $B$. Thus, the security conclusion does not follow.
-% Regardless, their basic argument and construction is what we will use as a basis
-% for constructing a system that is both provably secure and succinct under the
-% same assumptions, albeit requiring a more complicated proof structure to obtain
-% security.
-We calculate the attack probabilities precisely.
-% \footnote{We wish to thank Giorgos Panagiotakos, Peter Ga\u{z}i and Nikos
-% Leonardos for their insights and feedback here.}.
-We simplify the attack to ease the probabilistic analysis. The attack is
-parameterized by  parameters $r, \mu$ which are picked by the adversary. $\mu$
-is the superblock level at which the adversary will produce a proof longer than
-the honest proof. The modified attack works as follows: Without loss of
-generality, fix block $b$ to be Genesis. The adversary always mines on the
-secret chain which forks off from genesis, unless a \textit{superblock
-generation event} occurs. If a superblock generation event occurs, then the
-adversary pauses mining on the secret chain and attempts a \textit{block
-suppression attack} on the honest chain. The adversary devotes exactly $r$
-rounds to this suppression attack; then resumes mining on the secret chain. We
-show that, despite this simplification (of fixing $r$) which is harmful to the
-adversary, the probability of a successful attack is non-negligible for certain
-values of the protocol parameters.
+% \noindent
+% \textbf{Analysis of the attack.}
 
-The adversary monitors the network for superblock generation events. Whenever an
-honest party diffuses an honestly-generated $\mu$-superblock at the end of a
-given round $r_1$, the superblock generation event will have occurred and the
-adversary will starting devoting their mining power to block suppression
-starting from the next round.
-
-A block suppression attack works as follows. Let $B$ be the honestly generated
-$\mu$-superblock which was diffused at the end of the previous round. If the
-round was not uniquely successful, let $B$ be any of the diffused
-honestly-generated $\mu$-superblocks. Let $B$ be the tip of an honest chain
-$\chain_B$. The adversary first mines on top of $\chain_B[-2]$. If she is
-successful in mining a block $B'$, she continues extending the chain ending
-at $B'$ (to mine $B''$ and so on). The value $r$ is fixed, so the adversary
-devotes exactly $r$ rounds to this whole process; the adversary will keep mining
-on top of $\chain_B[-2]$ (or one of the adversarially-generated extensions of
-it) for exactly $r$ rounds, regardless of whether $B'$ or $B''$ have been found.
-At the same time, the honest parties will be mining on top of $B$ (or a
-competing block in the case of a non-uniquely successful round). Again, further
-successful block diffusion by the honest parties shall not affect that the
-adversary is going to spend exactly $r$ rounds for suppression.
-This attack will succeed with overwhelming probability for the right choice
-of protocol values.
-
-\begin{theorem}[Double-spending attack]
-There exist parameters $p, n, t, q,  \mu, \delta$, with $t\leq (1-\delta)(n-t)$,
-and a double spending attack against KLS PoPoW that succeeds with overwhelming
-probability.
-\end{theorem}
-\import{./}{proofs/attack.tex}
-
-\noindent
-\textbf{Interlink optimizations.}
-We now discuss the manner in which the interlink data structure is hashed for
-coinbase inclusion. A Merkle tree is used to hash the interlink data structure
-into a single hash \cite{KLS}. NIPoPoWs form a chain of various levels
-which can omit blocks. For each block in the proof,
-only a single pointer needs to be presented to convince the Verifier. Near
-genesis, the pointers needed correspond to high levels; near
-the tip, the pointers to low levels. In the construction of
-the proof, the highest superchain with at least $m$ blocks is included, and
-assume it is of level $\mu$. The level $\mu - 1$ superchain is fully
-included and has an expected number of $2m$ blocks. Since all
-$\mu$-superblocks are also $(\mu - 1)$-superblocks, they only need to be
-counted once, for $\mu - 1$. Among the expected $2m$ $(\mu - 1)$-superblocks,
-the last $m$ will be supported by level $\mu - 2$. As before, since $(\mu -
-1)$-superblocks are $(\mu - 2)$-superblocks, in expectation only $m$
-$(\mu-1)$-superblocks are counted. The argument continues inductively, until
-$2m$ $0$-blocks are included in expectation immediately before the $\chi$
-suffix. This gives an estimation on the proof size: a total of $m
-(\log(|\chain|) - \log(m))$ blocks in expectation, $m$ at each of the $\mu - 1$
-levels and $2m$ $0$-blocks.
-
-Organizing interlink into a Merkle tree of $\log(|\chain|)$ items, a
-proof-of-inclusion is provided in $\log \log(|\chain|)$ space; $0$-level
-pointers need not be included in it, but the genesis block does. The root of the
-tree can be proved to have been included in the block header in $\log(|\overline
-x|)$ using the standard Merkle tree of transactions. This makes the proof size
-require $\log(|\overline x|) + \log\log(|\chain|)$ hashes per block for a total
-of $m (\log(|\chain|) - \log(m))(\log(|\overline x|) + \log\log(|\chain|))$
-hashes. In addition, $m (\log(|\chain|) - \log(m))$ headers and coinbase
-transactions are needed. Concretely, given that currently in bitcoin $|\chain| =
-464,185$ and $|\overline x| = 2000$, we have $\log(|\chain|) = 18,
-\log\log(|\chain|) = 5, \log(|\overline x|) = 11$. For the $k$-suffix, only $k$
-headers are needed. We set $k = 6$ and see that headers are $80$ bytes and
-hashes $32$ bytes. For the $k$-suffix as well as the $2m$ $0$-blocks in $\pi$,
-neither coinbase data nor prev ids are needed, limiting header size to $48$
-bytes. The root and leaves of the pointers tree can be omitted from coinbase when
-transmitting the proof. In fact, no block ids need to be transmitted. From these
-observations, we estimate our scheme's proof sizes for various parameterizations
-of $m$ in Table~\ref{table.size}.
-
-\noindent
-\textbf{Proof of security. }
-Assume $t$ adversarial and $n$ total parties, each with $q$
-PoW random oracle queries per round. We will call a query to the
-RO $\mu$-\textit{successful} if the RO returns a value $h$
-such that $h \leq 2^{-\mu}T$.
-
-We define boolean random variables $X_r^\mu$, $Y_r^\mu$ and $Z_r^\mu$. Fix some
-round $r$, query index $j$ and adversarial party index $k$ (out of $t$). If at
-round $i$ an honest party obtains a PoW with $id < 2^{-\mu}T$, set $X_r^\mu =
-1$, otherwise $X_r^\mu = 0$. If at round $r$ exactly one honest party obtains a
-PoW with $id < 2^{-\mu}T$, set $Y_r^\mu = 1$, otherwise $Y_r^\mu = 0$. If at
-round $r$ the $j$-th query of the $k$-th corrupted party is $\mu$-successful,
-set $Z^\mu_{ijk} = 1$, otherwise $Z^\mu_{ijk} = 0$. Let $Z^\mu_r = \sum_{k=1}^t
-\sum_{j=1}^q Z^\mu_{ijk}$. For a set of rounds $S$, let $X^\mu(S) = \sum_{r \in
-S} X_r$ and similarly define $Y^\mu(S), Z^\mu(S)$.
-
-\begin{definition} %{(Typical execution)}
-    An execution of the protocol is $(\epsilon, \eta)$-\textit{typical} if:
-
-    \textnormal{\bf Block counts don't deviate.}
-    For all $\mu \geq 0$ and any set $S$ of consecutive rounds
-    with $|S| \geq 2^\mu \eta\kappa$, we have:
-
-    \begin{itemize}
-        \item $(1 - \epsilon)E[X^\mu(S)] < X^\mu(S) < (1 + \epsilon)E[X^\mu(S)]$ and $(1 - \epsilon)E[Y^\mu(S)] < Y^\mu(s)$.
-        \item $Z^\mu(S) < (1 + \epsilon)E[Z^\mu(S)]$.
-    \end{itemize}
-
-    \textnormal{\bf Round count doesn't deviate.}
-    Let $S$ be a set of consecutive rounds such that $Z^\mu(S)
-    \geq k$ for some security parameter $k$. Then $|S| \geq (1 -
-    \epsilon)2^\mu\frac{k}{pqt}$ with overwhelming probability in $k$.
-
-    \textnormal{\bf Chain regularity.}
-    No insertions, no copies, and no predictions \cite{backbone} have occurred.
-\end{definition}
-
-\begin{theorem}[Typicality]
-\label{thm.typicality}
-Executions are $(\epsilon, \eta)$-typical with overwhelming
-probability in $\kappa$.
-\end{theorem}
-\import{./}{proofs/typicality.tex}
-
-The following lemma is at the heart of the security proof that will follow.
-
-\begin{lemma}\label{lem.level-comparison}
-    Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$
-    and $\chain_B$ is
-    a chain adopted by an honest party at round $r_2$ of a typical execution.
-    Let $\chain_B^S = \{b \in
-    \chain_B: b \textnormal{ was generated during } S\}$. Let $\mu_\mathcal{A},
-    \mu_B \in \mathbb{N}$. Suppose $\chain_B^S\upchain^{\mu_B}$ is good.
-    Suppose $\chain'_\mathcal{A}$ is a $\mu_\mathcal{A}$-superchain containing
-    only adversarially generated blocks generated during $S$ and suppose that
-    $|\chain'_\mathcal{A}| \geq k$.
-    Then
-    $2^{\mu_\mathcal{A}}|\chain'_\mathcal{A}| < \frac{1}{3}2^{\mu_B}|\chain_B^S\upchain^{\mu_B}|$.
-\end{lemma}
-\import{./}{proofs/levelcomparison.tex}
-
-\begin{definition}[Adequate level of honest proof]
-Let $\pi$ be an honestly generated proof constructed upon some adopted chain
-$\chain$ and let $b \in \pi$.
-
-Then $\mu'$ is defined as  $\mu' = \max\{\mu: |\pi\{b:\}\upchain^\mu| \geq
-\max(m + 1, (1 - \delta)2^{-\mu}|\pi\{b:\}\upchain^\mu\downchain|)\}$.
-We call $\mu'$ the \textit{adequate} level of proof $\pi$ with respect to
-block $b$ with security parameters $\delta$ and $m$. Note that the adequate
-level of a proof is a function of both the proof $\pi$ and the chosen block $b$.
-\end{definition}
-
-\begin{restatable}{lemma}{restateThmAllBlocks}\label{lem.allblocks}
-Let $\pi$ be some honest proof generated with security parameters $\delta, m$.
-Let $\chain$ be the underlying chain, $b \in \chain$ be any block and $\mu'$ be
-the adequate level of the proof with respect to $b$ and the same security
-parameters.
-
-Then $\chain\{b:\}\upchain^{\mu'} = \pi\{b:\}\upchain^{\mu'}$.
-\end{restatable}
-\import{./}{proofs/allblocks.tex}
-
-\begin{lemma}
-Suppose the verifier evaluates $\pi_\mathcal{A} \geq \pi_B$ in a protocol
-interaction where $B$ is honest and assume during the comparison that the
-compared level of the honest party is $\mu_B$. Let $b =
-\textsf{LCA}(\pi_\mathcal{A}, \pi_B)$ and let $\mu_B'$ be the adequate
-level of $\pi_B$ with respect to $b$. Then $\mu_B' \geq \mu_B$.
-\end{lemma}
-\import{./}{proofs/leveladequacy.tex}
-
-\noindent
-\textbf{Theorem \ref{thm.security}}
-\import{./}{proofs/security.tex}
-
-\noindent
-\textbf{Full proofs. }
-\label{sec.proofs}
+% \noindent
+% \textbf{Interlink optimizations.}
+% \noindent
+% \textbf{Proof of security. }
+% \noindent
+% \textbf{Full proofs. }
+% \subsection{Full proofs}
+% \label{sec.proofs}
 % \restateThmPredicatePersistence*
 % \import{./}{proofs/predicatepersistence.tex}
-\begin{lemma}[Local goodness]
-\label{lem.localgood}
-Assume $\chain$ contains only honestly-generated blocks in an optimistic
-execution. For all levels $\mu$, for all constant $\delta > 0$, all continuous
-subchains $\chain' = \chain[i:j]$ with $|\chain'| \geq m$ are locally good,
-$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, with overwhelming
-probability in $m$.
-\end{lemma}
-\import{./}{proofs/localgood.tex}
-
-\begin{lemma}[Multilevel quality]\label{lem.multilevel}
-For all $\mu, 0 < \delta \leq 0.5$, chain $\chain$ containing only
-honestly-generated blocks in an optimistic execution has $(\delta, k_1)$
-multilevel quality at level $\mu$ with overwhelming probability in $k_1$.
-\end{lemma}
-% \begin{proof}
-% Identical.
-% \Qed
-% \end{proof}
-
-\begin{lemma}[Superquality]
-\label{lem.superquality}
-For all $\mu, \delta > 0$, a chain $\chain$ adopted in an optimistic execution
-has $(\delta, m)$-superquality at level $\mu$ with overwhelming probability in
-$m$.
-\end{lemma}
-\import{./}{proofs/superquality.tex}
-
 % \noindent
 % \textbf{Theorem~\ref{thm.few-levels}}
-\restateThmFewLevels*
-\import{./}{proofs/fewlevels.tex}
-
+% \restateThmFewLevels*
+% \import{./}{proofs/fewlevels.tex}
 % \noindent
 % \textbf{Theorem~\ref{thm.large-expansion}}
-\restateThmLargeExpansion*
-\import{./}{proofs/largeexpansion.tex}
-
+% \restateThmLargeExpansion*
+% \import{./}{proofs/largeexpansion.tex}
 % \noindent
 % \textbf{Lemma~\ref{lem.small-support}}
-\restateThmSmallSupport*
-\import{./}{proofs/smallsupport.tex}
-
+% \restateThmSmallSupport*
+% \import{./}{proofs/smallsupport.tex}
 % \noindent
 % \textbf{Theorem~\ref{thm.succinctness}}
-\restateThmSuccinctness*
-\import{./}{proofs/succinctness.tex}
-
+% \restateThmSuccinctness*
+% \import{./}{proofs/succinctness.tex}
 % \noindent
 % \textbf{Theorem~\ref{thm.infix-security}}
-\restateThmInfixSecurity*
-\import{./}{proofs/infixsecurity.tex}
-
+% \restateThmInfixSecurity*
+% \import{./}{proofs/infixsecurity.tex}
 % \noindent
 % \textbf{Theorem~\ref{thm.velvet-succinctness}}
-\restateThmVelvetSuccinctness*
-\import{./}{proofs/velvetsuccinctness.tex}
+% \restateThmVelvetSuccinctness*
+% \import{./}{proofs/velvetsuccinctness.tex}

@@ -3,37 +3,35 @@
 
 In this section, we revisit the construction for interactive proofs of
 proof-of-work from \cite{KLS} and its security.  Their construction is also the
-starting point for our non-interactive PoPoW. We show that their
-construction is susceptible to  a double-spending attack even in the case the
-adversary controls a minority of the hashing power.
+starting point for our non-interactive PoPoW. We show that their construction is
+susceptible to  a double-spending attack even in the case the adversary controls
+a minority of the hashing power.
 
-We proceed in two steps, we first show that a powerful attacker can break chain superquality with
-non-negligible probability and then we construct a concrete double spending 
-attack based on this observation.
-Note that maintaining   chain superquality was  not in the original security model,  however,
-we show how the property affects the security of the underlying blockchain proofs. Our  concrete attack works
-under the assumption that the adversary has sufficient hashing power, but still
-below $50\%$.
+We proceed in two steps, we first show that a powerful attacker can break chain
+superquality with non-negligible probability and then we construct a concrete
+double spending  attack based on this observation. Note that maintaining   chain
+superquality was  not in the original security model,  however, we show how the
+property affects the security of the underlying blockchain proofs. Our  concrete
+attack works under the assumption that the adversary has sufficient hashing
+power, but still below $50\%$.
 
-\noindent
-\textbf{The interactive proofs of proof-of-work protocol.}
-The interactive PoPoW of \cite{KLS} works as follows. The main algorithm of the verifier aims at distinguishing 
-between two candidate proofs $(\pi_A, \chi_A)$ and $(\pi_B, \chi_B)$. If $\pi_A =
-\pi_B$, the decision is drawn immediately without interaction based on
-$\chi_A,\chi_B$. Otherwise, the verifier queries the provers for their claimed
-anchored superchains $\pi_A\upchain^\mu, \pi_B\upchain^\mu$ at some level $\mu$.
-The verifier starts querying at the highest possible level $\mu$ and descends
-until level $\mu$ is sufficiently low such that $b = LCA(\pi_A\upchain^\mu,
-\pi_B\upchain^\mu)$ is $m$ blocks from the tip of the chain for one of the proofs.
-That is,
-the querying stops at such $\mu$ when $max(|\pi_A\upchain^\mu\{b:\}|,
-|\pi_B\upchain^\mu\{b:\}|) \geq m$. The winner is designated as the prover with
-the most blocks after $b$ at that level; i.e., $A$, if $|\pi_A\upchain^\mu\{b:\}|
-\geq |\pi_B\upchain^\mu\{b:\}|$, and $B$ otherwise. The communication overhead
-is reduced by only requesting blocks after the purported LCA.
+\subsection{The interactive proofs of proof-of-work protocol}
+The interactive PoPoW of \cite{KLS} works as follows. The main algorithm of the
+verifier aims at distinguishing between two candidate proofs $(\pi_A, \chi_A)$
+and $(\pi_B, \chi_B)$. If $\pi_A = \pi_B$, the decision is drawn immediately
+without interaction based on $\chi_A,\chi_B$. Otherwise, the verifier queries
+the provers for their claimed anchored superchains $\pi_A\upchain^\mu,
+\pi_B\upchain^\mu$ at some level $\mu$. The verifier starts querying at the
+highest possible level $\mu$ and descends until level $\mu$ is sufficiently low
+such that $b = LCA(\pi_A\upchain^\mu, \pi_B\upchain^\mu)$ is $m$ blocks from the
+tip of the chain for one of the proofs. That is, the querying stops at such
+$\mu$ when $max(|\pi_A\upchain^\mu\{b:\}|, |\pi_B\upchain^\mu\{b:\}|) \geq m$.
+The winner is designated as the prover with the most blocks after $b$ at that
+level; i.e., $A$, if $|\pi_A\upchain^\mu\{b:\}| \geq |\pi_B\upchain^\mu\{b:\}|$,
+and $B$ otherwise. The communication overhead is reduced by only requesting
+blocks after the purported LCA.
 
-\noindent
-\textbf{Attacking chain superquality.}
+\subsection{Attacking chain superquality}
 \label{subsec.superquality-attack}
 We construct an adversary $\mathcal{A}$ that breaks this property at level $\mu$.
 % Suppose $\mathcal{A}$ controls a portion $t/n$ of the hashing power.
@@ -57,18 +55,19 @@ position $\chain_B[i]$ at round $r$. We now examine the probability that
 $\chain_B[i]$ will remain a $\mu$-superblock in the long run. Suppose $r' > r$
 is the first round after $r$ during which a block is generated. $\mathcal{A}$
 will succeed in this attack with non-negligible probability and cause $B$ to
-abandon the $\mu$-superblock from their adopted chain. Therefore, there  
+abandon the $\mu$-superblock from their adopted chain. Therefore, there
 exists $\delta$ such that the adversary will be able to cause $\delta$-variance
 with non-negligible probability in $m$. This suffices to show that superquality
 is violated.
 
-\noindent
-\textbf{A double-spending attack. }
+\subsection{A double-spending attack}
 Extending the above attack, we modify the superquality attacker into an attacker
-that causes a double spending attack in the PoPoW construction. As before,
-$\mathcal{A}$ targets the proofs generated by honest party $B$ by violating
-$\mu$-superquality in $B$'s adopted chain. $\mathcal{A}$ begins by remaining
-idle until a certain chosen block $b$. After block $b$ is produced,
+that causes a double spending attack in the PoPoW construction. We first give
+a sketch of the attack.
+
+As before, $\mathcal{A}$ targets the proofs generated by honest party $B$ by
+violating $\mu$-superquality in $B$'s adopted chain. $\mathcal{A}$ begins by
+remaining idle until a certain chosen block $b$. After block $b$ is produced,
 $\mathcal{A}$ starts mining a secret chain which forks off from $b$ akin to a
 selfish mining attacker~\cite{selfish}. The adversary performs a normal spending
 transaction on the honestly adopted blockchain and has it confirmed in the block
@@ -86,6 +85,69 @@ larger than the honest parties' superchain quality (which will be harmed by the
 adversary) and therefore, even though the adversary's $0$-chain will be shorter
 than the honest parties' $0$-chain, the adversary's $\mu$-superchain will be
 longer than the honest parties' $\mu$-superchain and thus will be favored by the
-verifier! The formal calculation of the
-probability of this attack succeeding is in the Appendix. We note that  actually, for appropriate choice of system parameters, the attack can be made to
-succeed with overwhelming probability.
+verifier! The formal calculation of the probability of this attack succeeding is
+in the next section. We note that  actually, for appropriate choice of system
+parameters, the attack can be made to succeed with overwhelming probability.
+
+\textbf{Remark.} It is worth isolating the mistake in the security proof from
+the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
+player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block, was honestly
+generated and suppose that the superchain comparison happens at level $\mu$.
+Their proof then argues that there will have been more honestly- than
+adversarially-generated $\mu$-superblocks after block $b$. Nevertheless, we
+observe that the mere fact that there have been more honestly- than
+adversarially-generated $\mu$-superblocks after $b$ does not imply that
+$|\overline\pi_\mathcal{A}[\mu]\{b:\}| \leq |\overline\pi_B[\mu]\{b:\}|$. The
+reason is that some of these superblocks could belong to blocktree forks that
+have been abandoned by $B$. Thus, the security conclusion does not follow.
+Regardless, their basic argument and construction is what we will use as a basis
+for constructing a system that is both provably secure and succinct under the
+same assumptions, albeit requiring a more complicated proof structure to obtain
+security.
+
+We now calculate the exact attack probabilities.
+\footnote{We wish to thank Giorgos Panagiotakos, Peter Ga\u{z}i, and Nikos
+Leonardos for their insights.}.
+We simplify the attack to ease the probabilistic analysis. The attack is
+parameterized by  parameters $r, \mu$ which are picked by the adversary. $\mu$
+is the superblock level at which the adversary will produce a proof longer than
+the honest proof. The modified attack works as follows: Without loss of
+generality, fix block $b$ to be Genesis. The adversary always mines on the
+secret chain which forks off from genesis, unless a \textit{superblock
+generation event} occurs. If a superblock generation event occurs, then the
+adversary pauses mining on the secret chain and attempts a \textit{block
+suppression attack} on the honest chain. The adversary devotes exactly $r$
+rounds to this suppression attack; then resumes mining on the secret chain. We
+show that, despite this simplification (of fixing $r$) which is harmful to the
+adversary, the probability of a successful attack is non-negligible for certain
+values of the protocol parameters.
+
+The adversary monitors the network for superblock generation events. Whenever an
+honest party diffuses an honestly-generated $\mu$-superblock at the end of a
+given round $r_1$, the superblock generation event will have occurred and the
+adversary will starting devoting their mining power to block suppression
+starting from the next round.
+
+A block suppression attack works as follows. Let $B$ be the honestly generated
+$\mu$-superblock which was diffused at the end of the previous round. If the
+round was not uniquely successful, let $B$ be any of the diffused
+honestly-generated $\mu$-superblocks. Let $B$ be the tip of an honest chain
+$\chain_B$. The adversary first mines on top of $\chain_B[-2]$. If she is
+successful in mining a block $B'$, she continues extending the chain ending
+at $B'$ (to mine $B''$ and so on). The value $r$ is fixed, so the adversary
+devotes exactly $r$ rounds to this whole process; the adversary will keep mining
+on top of $\chain_B[-2]$ (or one of the adversarially-generated extensions of
+it) for exactly $r$ rounds, regardless of whether $B'$ or $B''$ have been found.
+At the same time, the honest parties will be mining on top of $B$ (or a
+competing block in the case of a non-uniquely successful round). Again, further
+successful block diffusion by the honest parties shall not affect that the
+adversary is going to spend exactly $r$ rounds for suppression.
+This attack will succeed with overwhelming probability for the right choice
+of protocol values.
+
+\begin{theorem}[Double-spending attack]
+There exist parameters $p, n, t, q,  \mu, \delta$, with $t\leq (1-\delta)(n-t)$,
+and a double spending attack against KLS PoPoW that succeeds with overwhelming
+probability.
+\end{theorem}
+\import{./}{proofs/attack.tex}
