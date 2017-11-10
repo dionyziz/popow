@@ -72,10 +72,11 @@ that for every block in the chain there exists a pointer to its previous block.
 A chain is \textit{anchored} if its first block is \textit{genesis}, denoted
 $Gen$.
 
-For chain addressing we use Python brackets $\chain[\cdot]$. A zero-based
-positive number in a bracket indicates the indexed block in the chain. A
-negative index indicates a block from the end. A range $\chain[i:j]$ is a
-subarray starting from $i$ (inclusive) to j (exclusive).
+For chain addressing we use Python brackets $\chain[\cdot]$ as in
+\cite{fruitchains}. A zero-based positive number in a bracket indicates the
+indexed block in the chain. A negative index indicates a block from the end. A
+range $\chain[i:j]$ is a subarray starting from $i$ (inclusive) to j
+(exclusive).
 
 Given chains $\chain_1, \chain_2$ and blocks $A, Z$ we concatenate them as
 $\chain_1 \chain_2$ or $\chain_1 A$. $\chain_2[0]$ must point to $\chain_1[-1]$
