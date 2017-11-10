@@ -82,7 +82,8 @@ Given chains $\chain_1, \chain_2$ and blocks $A, Z$ we concatenate them as
 $\chain_1 \chain_2$ or $\chain_1 A$. $\chain_2[0]$ must point to $\chain_1[-1]$
 and $A$ must point to $\chain_1[-1]$. We denote $\chain\{A:Z\}$ the subarray of
 the chain from $A$ (inclusive) to $Z$ (exclusive). We can omit blocks or indices
-from the range to take the chain to the beginning or end.
+from either side of the range to take the chain to the beginning or end
+respectively.
 
 \textbf{Helper functions for blockchains.} The \textit{id} function returns the id of a block
 given its data. This is done by applying the hash functions $H$ and $G$:
