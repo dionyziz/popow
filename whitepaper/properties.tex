@@ -17,6 +17,8 @@ Based on these definitions, it is trivial to construct a secure but not succinct
 protocol: The prover provides the chain $\chain$ itself as a proof and the
 verifier simply compares the proofs received by length: Since the longest proof
 is literally the longest chain, the protocol is trivially secure but not
-succinct. The challenge we will solve is to provide a
-non-interactive protocol which at the same time achieves security and
-succinctness over a large class of predicates.
+succinct. This is what traditional SPV clients do. It is also easy to build
+succinct insecure clients: The prover simply sends the value of the predicate
+directly. This is what web-based wallets do. The challenge we will solve is to
+provide a non-interactive protocol which at the same time achieves security and
+(optimistic) succinctness over a large class of predicates.
