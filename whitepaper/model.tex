@@ -43,19 +43,15 @@ regards to which blockchain is the largest. The verifiers attempt to determine
 the value of a predicate on these chains.
 
 We model proof-of-work discovery attempts by using a random oracle~\cite{RO} as
-in \cite{backbone}.
-The network is synchronized into rounds, which correspond to moments in time.
-The predicates of interest in our context are predicates on the active
-blockchain. Some of the predicates are more suitable for succinct proofs than
-others. We focus our attention in what we call \textit{reliable} predicates.
-These predicates have the exceptional property that all honest miners share
-their view of them in a way that is updated in a predictable manner, with a
-truth-value that persists as the blockchain grows (an example of an unreliable
-predicate is e.g., the least significant bit of the hash of last block).
-% Furthermore, we are
-%interested in \textit{succinct} predicates, predicates which may be proven using
-%a succinct protocol, a protocol which requires proofs that are short in terms of
-%the total blockchain size
+in \cite{backbone}. The network is synchronized into numbered rounds, which
+correspond to moments in time. The predicates of interest in our context are
+predicates on the active blockchain. Some of the predicates are more suitable
+for succinct proofs than others. We focus our attention in what we call
+\textit{reliable} predicates. These predicates have the exceptional property
+that all honest miners share their view of them in a way that is updated in a
+predictable manner, with a truth-value that persists as the blockchain grows (an
+example of an unreliable predicate is e.g., the least significant bit of the
+hash of last block).
 
 In our setting, for a given predicate $Q$,
 several  provers (including adversarial ones)
