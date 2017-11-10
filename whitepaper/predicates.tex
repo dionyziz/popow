@@ -5,19 +5,21 @@ blockchain predicates that will be of interest to us for constructing proofs.
 Given that we are in a decentralized setting it can be the case that for certain
 sensible blockchain predicate, there will be honest nodes that have not reached
 a conclusion about its value. For this reason we allow our predicates to have an
-undefined value $\bot$ before they take on a truth value of $0$ or $1$. We
-define a number of predicate properties and prove a simple but useful relation
-between them.
+undefined value $\bot$ before they take on a truth value of $T$ or $F$.
+We now define some useful predicate properties.
+% and prove a simple but useful
+% relation
+% between them.
 
 \begin{definition}{(Monotonicity)}
     A chain predicate $Q(\chain)$ is $\textit{monotonic}$ if for all chains
     $\chain$ and for all blocks $B$ we have that:
     $Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B)$.
+\end{definition}
 
-\noindent
- {(Stability)}
+\begin{definition}{(Stability)}
     Parameterized by $k \in \mathbb{N}$, a chain predicate
-    $Q$ has $\textit{stability}$ if its value only depends on $\chain[:-k]$.
+    $Q$ is $k$-\textit{stable} if its value only depends on $\chain[:-k]$.
 
 % \noindent
 % {(Persistence)}
