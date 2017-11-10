@@ -85,10 +85,12 @@ the chain from $A$ (inclusive) to $Z$ (exclusive). We can omit blocks or indices
 from either side of the range to take the chain to the beginning or end
 respectively.
 
-\textbf{Helper functions for blockchains.} The \textit{id} function returns the id of a block
-given its data. This is done by applying the hash functions $H$ and $G$:
-$\textsf{id} = H(ctr, G(x, \textsf{interlink}))$. Here, $ctr$ is the nonce, $x$
-is the Merkle tree root of the transactions.% \cite{princetonbook}
+\textbf{Helper functions for blockchains.} The \textit{id} function returns the
+id of a block given its data. This is done by applying the hash functions $H$
+and $G$: $\textsf{id} = H(ctr, G(x, \textsf{interlink}))$. Here, $ctr$ is the
+nonce, $x$ is the Merkle tree root of the transactions. In bitcoin's case, both
+$H$ and $G$ would be SHA256.
+% \cite{princetonbook}
 However, note
 that block $B$ maintains an \textit{interlink} data structure instead of a
 previous block pointer. We will explain this further in section
