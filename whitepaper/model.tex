@@ -112,17 +112,17 @@ blocks. Certain blocks can be omitted from a chain, obtaining a subchain, as
 long as the blockchain property that each block must contain a pointer to its
 previous block in the sequence is maintained.
 
-Blockchains are sequences, but it is still more convenient to use set notation for some operation. Specifically, $B \in \chain,
-\emptyset, \chain_1 \subseteq \chain_2$ have the obvious meaning. $\chain_1 \cup
-\chain_2$ is the chain obtained by sorting the blocks contained in both
-$\chain_1$ and $\chain_2$ into a sequence (this may be not always defined).
-$\chain_1 \cap \chain_2$ is the chain
-$\{B: B \in \chain_1 \land B \in \chain_2\}$. In both cases, the blockchain property
-must be maintained. The lowest common ancestor is $\textsf{LCA}(\chain_1,
-\chain_2) = (\chain_1 \cap \chain_2)[-1]$. %We will freely use set builder notation $\{B \in \chain: p(B)\}$.
-%In all cases, because we are talking about
-%blockchains and not blocktrees, any set of blocks has a unique order obtained by
-%topologically sorting the blocks.
+Blockchains are sequences, but it is more convenient to use set notation for
+some operations. Specifically, $B \in \chain$; $\chain_1 \subseteq \chain_2$ and
+$\emptyset$ have the obvious meaning. $\chain_1 \cup \chain_2$ is the chain
+obtained by sorting the blocks contained in both $\chain_1$ and $\chain_2$ into
+a sequence (this may be not always defined).
+We will freely use set builder notation $\{B \in \chain: p(B)\}$.
+$\chain_1 \cap \chain_2$ is the
+chain $\{B: B \in \chain_1 \land B \in \chain_2\}$. In all cases, the
+blockchain property must be maintained. The lowest common ancestor is
+$\textsf{LCA}(\chain_1,
+\chain_2) = (\chain_1 \cap \chain_2)[-1]$.
 If $\chain_1[0] = \chain_2[0]$ and
 $\chain_1[-1] = \chain_2[-1]$, we say the chains \textit{span} the same
 block range.
