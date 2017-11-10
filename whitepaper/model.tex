@@ -97,10 +97,11 @@ previous block pointer. We will explain this further in section
 \ref{sec.consensus}. \textit{depth} is a function which, given a block, returns
 its distance from the genesis block.
 
-Valid blocks satisfy the proof-of-work condition: $id \leq T$, where
-$T$ is the mining target. Some blocks will achieve a lower id. If $id \leq
-\frac{T}{2^\mu}$ we say that the block is of level $\mu$. All blocks are
-level $0$. Blocks with level $\mu$ are $\mu$-\textit{superblocks}.
+Valid blocks satisfy the proof-of-work condition: $id \leq T$, where $T$ is the
+mining target. Throughout this work, we make the simplifying assumption that $T$
+is constant. Some blocks will achieve a lower id. If $id \leq \frac{T}{2^\mu}$
+we say that the block is of level $\mu$. All blocks are level $0$. Blocks with
+level $\mu$ are $\mu$-\textit{superblocks}.
 % The level of a block is given as
 % $\mu = \left \lfloor \log(T) - \log(\sf{id}(B)) \right \rfloor$ and denoted
 % $\textit{level}(B)$.
