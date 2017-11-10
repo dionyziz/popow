@@ -35,10 +35,10 @@ Note that in the interactive case the prover and verifier may engage in more tha
 
 The entities on the blockchain network are of 3 kinds: (1) miners, who
 try to mine new blocks on top of the longest known blockchain and broadcast them
-as soon as they are discovered (For simplicity we assume that difficulty
-is constant and thus the ``longest chain rule'' sufficiently describes honst miner behavior); (2) full nodes, which maintain the longest
+as soon as they are discovered (for simplicity we assume that difficulty
+is constant and thus the ``longest chain rule'' sufficiently describes honest miner behavior); (2) full nodes, who maintain the longest
 blockchain without mining and also act as the provers in the network; (3)
-verifiers or stateless clients, which connect to provers and ask for proofs in
+verifiers or stateless clients, who connect to provers and ask for proofs in
 regards to which blockchain is the largest. The verifiers attempt to determine
 the value of a predicate on these chains.
 
@@ -61,7 +61,7 @@ In our setting, for a given predicate $Q$,
 several  provers (including adversarial ones)
 will generate proofs claiming potentially different truth values for
 $Q$ based on their claimed local longest chains. The verifier
-receives these proofs and accepts one of them proofs, determining the truth value
+receives these proofs and accepts one of the proofs, determining the truth value
 of the predicate.  We denote a  \textit{blockchain proof protocol} for a predicate $Q$ as a pair $(P, V)$ where $P$ is the \textit{prover} and $V$ is the \textit{verifier}. $P$ is a PPT algorithm that is spawned by a full node when they wish to produce a proof,
 accepts as input a full chain $\chain$ and produces a proof $\pi$ as its output.
 $V$ is a PPT algorithm which is spawned at some round,
@@ -107,7 +107,7 @@ level $0$. Blocks with level $\mu$ are $\mu$-\textit{superblocks}.
 By convention, for $Gen$ we set $id = 0$ and $\mu = \infty$.
 
 In this paper, we will extend blocks to contain multiple pointers to previous
-blocks. Certain blocks can be omitted from a chain, obtaining a subchain. as
+blocks. Certain blocks can be omitted from a chain, obtaining a subchain, as
 long as the blockchain property that each block must contain a pointer to its
 previous block in the sequence is maintained.
 
