@@ -90,6 +90,7 @@ adversary to produce large dummy (incorrect) proofs that
 expand the verification time; security will not be hurt but it would take more time to complete verification. One may dismiss this as a trivial denial of
 service attack (and have a resource bounded
 verifier simply stop  if it is confronted with such a processing task).
+%
 Nevertheless, it would be useful for honest provers
 to have the ability to signal to the
 verifier that such time expansion is indeed necessary because
@@ -97,8 +98,8 @@ of an attack on superchain quality rather than because
 a malicious prover is simply sending long proofs that will eventually
 be rejected. With such signaling mechanism, a resource bounded verifier can
 distinguish between a denial of service attack that may be directed solely to it
-from  a denial of service attack that is launched system-wide
-and interferes globally with superchain quality.
+from  a denial of service attack that  is launched by an attacker
+that has the ability to  interfere globally with superchain quality.
 
  To facilitate the above signaling, we offer a simple generalization of our
 construction that achieves this.
