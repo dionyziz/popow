@@ -62,7 +62,8 @@ network by moving coins to dedicated sidechains, which can later be moved back.
 
 These examples illustrate that our solution is a key component for two important
 pillars needed for next-generation blockchains: \textit{interoperability} and
-\textit{scalability}.
+\textit{scalability}. While we use bitcoin concretely as an example, any
+proof-of-work cryptocurrency can adopt our techniques.
 
 \subsection{Our contributions}
 In summary, we make the following contributions.
@@ -74,7 +75,7 @@ We present a formal model and a provably secure instantiation of NIPoPoWs in the
 backbone model \cite{backbone}. Our contribution builds on previous work  of \cite{KLS} who posed {\em interactive} proofs of proof-of-work, which, in turn,
 are based on previous discussion of such concepts in the bitcoin forums
 \cite{highway}. We in fact show an explicit attack against the construction of \cite{KLS} that showcases the difficulty of designing such protocols. It follows
-that our construction is the first secure proof-of-proof-of-work.
+that our construction is the first secure Proof of Proof-of-Work.
 Furthermore, our solution has the additional property of being non-interactive,
 as the previous construction could be forced into interaction by an adversarial
 prover. Similar to previous work, we prove that the proofs are
@@ -88,15 +89,16 @@ proposals, especially the notion of cumulative ``Dynamic Member Multisignature''
 
 We provide concrete parameterization and empirical analysis focusing on showing
 the potential savings of our approach versus existing clients. Using real data
-from the bitcoin blockchain, we quantify the actual savings of NIPoPoWs over the
-previous known techniques of constructing efficient SPV verifiers.
+from the bitcoin and other blockchains, we quantify the actual savings of
+NIPoPoWs over the previous known techniques of constructing efficient SPV
+verifiers.
 
 We describe two practical deployment paths for our NIPoPoWs that existing
 cryptocurrencies can adopt: First using either a ``soft fork'' or a ``hard
 fork'' upgrade procedure, both of which have been successfully used by existing
 cryptocurrencies~\cite{sok}. Second, using a less disruptive update mechanism
 that we term a ``velvet fork'' and which may be of independent interest. In a
-velvet fork update the clients that have ``forked'' from the original
+velvet fork update, the clients that have ``forked'' from the original
 implementation continue to be fully compatible with un-updated clients. It
 follows that, in a velvet fork, the blockchain system can remain supported by a
 diverse software codebase indefinitely, while it can still enjoy, at least in

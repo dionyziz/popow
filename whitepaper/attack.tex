@@ -7,10 +7,10 @@ starting point for our non-interactive PoPoW. We show that their construction is
 susceptible to  a double-spending attack even in the case the adversary controls
 a minority of the hashing power.
 
-We proceed in two steps, we first show that a powerful attacker can break chain
-superquality with non-negligible probability and then we construct a concrete
+We proceed in two steps. We first show that a powerful attacker can break chain
+superquality with non-negligible probability. Then we construct a concrete
 double spending  attack based on this observation. Note that maintaining   chain
-superquality was  not in the original security model,  however, we show how the
+superquality was  not in the original security model; however, we show how the
 property affects the security of the underlying blockchain proofs. Our  concrete
 attack works under the assumption that the adversary has sufficient hashing
 power, but still below $50\%$.
@@ -18,10 +18,17 @@ power, but still below $50\%$.
 \subsection{The interactive proofs of proof-of-work protocol}
 The interactive PoPoW of \cite{KLS} works as follows. The main algorithm of the
 verifier aims at distinguishing between two candidate proofs $(\pi_A, \chi_A)$
-and $(\pi_B, \chi_B)$. If $\pi_A = \pi_B$, the decision is drawn immediately
-without interaction based on $\chi_A,\chi_B$. Otherwise, the verifier queries
-the provers for their claimed anchored superchains $\pi_A\upchain^\mu,
-\pi_B\upchain^\mu$ at some level $\mu$. The verifier starts querying at the
+and $(\pi_B, \chi_B)$. The honest prover, having adopted $\chain_B$ during
+mining, initially produces the proof $(\pi_B, \chi_B)$ as follows. First, the
+last $k$ blocks are sent literally as $\chi_B = \chain_B[-k:]$. Then for the
+first part of the chain, $\chain_B[:-k]$, the prover sets $\pi_B$ to be the
+$\mu$-superchain spanning $\chain_B$ for the largest $\mu$ such that $|\pi_B| =
+m$, where $m$ is the protocol's security parameter. The verifier ensures that
+$|\pi_A| \geq m, |\pi_B| \geq m$ so that the proofs are not shorter than $m$ and
+then checks whether $\pi_A = \pi_B$; if so, the decision is drawn immediately
+based on $\chi_A,\chi_B$ without interaction. Otherwise, the verifier queries
+the provers for their claimed anchored superchains $\chain_A\upchain^\mu$,
+$\chain_B\upchain^\mu$ at some level $\mu$. The verifier starts querying at the
 highest possible level $\mu$ and descends until level $\mu$ is sufficiently low
 such that $b = LCA(\pi_A\upchain^\mu, \pi_B\upchain^\mu)$ is $m$ blocks from the
 tip of the chain for one of the proofs. That is, the querying stops at such
@@ -29,7 +36,9 @@ $\mu$ when $max(|\pi_A\upchain^\mu\{b:\}|, |\pi_B\upchain^\mu\{b:\}|) \geq m$.
 The winner is designated as the prover with the most blocks after $b$ at that
 level; i.e., $A$, if $|\pi_A\upchain^\mu\{b:\}| \geq |\pi_B\upchain^\mu\{b:\}|$,
 and $B$ otherwise. The communication overhead is reduced by only requesting
-blocks after the purported LCA.
+blocks after the purported LCA. The security parameter $m$ ensures, through the
+application of a binomial Chernoff bound, that the probability of the attacker
+producing a long superchain is negligible.
 
 \subsection{Attacking chain superquality}
 \label{subsec.superquality-attack}
@@ -47,8 +56,22 @@ to mine another block $b'$ on top of $b$. If successful again, she broadcasts
 $b$ and $b'$. The adversarial mining continues until $B$ adopts a new chain,
 which can be due to two reasons: Either the adversary successfully mined $b, b'$
 on top of $\chain_B[-2]$ and $B$ adopts them; or one of the honest parties mined
-a block which was adopted by $B$. In either case, the adversary continues with
-the strategy by inspecting $\chain[-1]$ and acting accordingly.
+a block which was adopted by $B$. In either case, the adversary restarts
+the strategy by inspecting $\chain[-1]$ and acting accordingly. An execution of
+this attack is illustrated in Figure~\ref{fig.superquality-attack}.
+
+\begin{figure}
+    \caption{The superquality attack.
+    Gray blocks are adversarially mined 0-blocks.
+    Black blocks are $\mu$-superblocks.}
+    \centering
+    \iftwocolumn
+        \includegraphics[width=\columnwidth,keepaspectratio]{figures/superquality-attack-popow.png}
+    \else
+        \includegraphics[width=0.5 \columnwidth,keepaspectratio]{figures/superquality-attack-popow.png}
+    \fi
+    \label{fig.superquality-attack}
+\end{figure}
 
 Assume now that an honestly-generated $\mu$-superblock was adopted by $B$ at
 position $\chain_B[i]$ at round $r$. We now examine the probability that
@@ -59,6 +82,10 @@ abandon the $\mu$-superblock from their adopted chain. Therefore, there
 exists $\delta$ such that the adversary will be able to cause $\delta$-variance
 with non-negligible probability in $m$. This suffices to show that superquality
 is violated.
+
+As seen in the illustration, while the honest parties have generated several
+$\mu$-superblocks, some of them are in blockchain forks which have been
+abandoned, causing a superquality harm.
 
 \subsection{A double-spending attack}
 Extending the above attack, we modify the superquality attacker into an attacker
@@ -78,7 +105,7 @@ following $b$.
 $\mathcal{A}$ keeps extending her own secret chain as usual. However, whenever a
 $\mu$-superblock is adopted by $B$, she temporarily pauses mining in her secret
 chain and devotes her mining power to harm the $\mu$-superquality of $B$'s
-adopted chain as seen in~\ref. Intuitively, for large enough $\mu$, the time spent trying to
+adopted chain. Intuitively, for large enough $\mu$, the time spent trying to
 harm superquality will be limited, because the probability of a $\mu$-superblock
 occurring will be small. Therefore, the adversary's superchain quality will be
 larger than the honest parties' superchain quality (which will be harmed by the
@@ -93,19 +120,19 @@ parameters, the attack can be made to succeed with overwhelming probability.
 the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
 player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block, was honestly
 generated and suppose that the superchain comparison happens at level $\mu$.
-Their proof then argues that there will have been more honestly- than
+Their security proof then argues that there will have been more honestly- than
 adversarially-generated $\mu$-superblocks after block $b$. Nevertheless, we
 observe that the mere fact that there have been more honestly- than
 adversarially-generated $\mu$-superblocks after $b$ does not imply that
-$|\overline\pi_\mathcal{A}[\mu]\{b:\}| \leq |\overline\pi_B[\mu]\{b:\}|$. The
+$|\overline\pi_\mathcal{A}\upchain^\mu\{b:\}| \leq |\overline\pi_B\upchain^\mu\{b:\}|$. The
 reason is that some of these superblocks could belong to blocktree forks that
 have been abandoned by $B$. Thus, the security conclusion does not follow.
 Regardless, their basic argument and construction is what we will use as a basis
 for constructing a system that is both provably secure and succinct under the
-same assumptions, albeit requiring a more complicated proof structure to obtain
-security.
+same assumptions, albeit requiring a more complicated construction structure to
+obtain security.
 
-We now calculate the exact attack probabilities.
+We now calculate the exact attack probabilities
 \footnote{We wish to thank Giorgos Panagiotakos, Peter Ga\u{z}i, and Nikos
 Leonardos for their insights.}.
 We simplify the attack to ease the probabilistic analysis. The attack is
@@ -128,17 +155,17 @@ given round $r_1$, the superblock generation event will have occurred and the
 adversary will starting devoting their mining power to block suppression
 starting from the next round.
 
-A block suppression attack works as follows. Let $B$ be the honestly generated
+A block suppression attack works as follows. Let $b$ be the honestly generated
 $\mu$-superblock which was diffused at the end of the previous round. If the
-round was not uniquely successful, let $B$ be any of the diffused
-honestly-generated $\mu$-superblocks. Let $B$ be the tip of an honest chain
+round was not uniquely successful, let $b$ be any of the diffused
+honestly-generated $\mu$-superblocks. Let $b$ be the tip of an honest chain
 $\chain_B$. The adversary first mines on top of $\chain_B[-2]$. If she is
-successful in mining a block $B'$, she continues extending the chain ending
-at $B'$ (to mine $B''$ and so on). The value $r$ is fixed, so the adversary
+successful in mining a block $b'$, she continues extending the chain ending
+at $b'$ (to mine $b''$ and so on). The value $r$ is fixed, so the adversary
 devotes exactly $r$ rounds to this whole process; the adversary will keep mining
 on top of $\chain_B[-2]$ (or one of the adversarially-generated extensions of
-it) for exactly $r$ rounds, regardless of whether $B'$ or $B''$ have been found.
-At the same time, the honest parties will be mining on top of $B$ (or a
+it) for exactly $r$ rounds, regardless of whether $b'$ or $b''$ have been found.
+At the same time, the honest parties will be mining on top of $b$ (or a
 competing block in the case of a non-uniquely successful round). Again, further
 successful block diffusion by the honest parties shall not affect that the
 adversary is going to spend exactly $r$ rounds for suppression.
