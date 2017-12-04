@@ -6,13 +6,14 @@ consistent transaction ledger, using a consensus protocol based on proof-of-work
 (PoW) puzzles~\cite{pow,hashcash}. Worker nodes called ``miners'' expend
 computational work in order to reach agreement on the state of the network.
 Clients on the network, such as mobile phone apps, must verify these
-PoWs in order to determine the correct view of the network's state, as necessary
-to transmit and receive payments.
+PoWs in order to determine the correct view of the network's state, something necessary
+to transmit and receive payments correctly.
 
 In this work we introduce, analyze and instantiate a new primitive,
 Non-Interactive Proofs of Proof-of-Work (NIPoPoWs), which can be adapted into
 existing cryptocurrencies to support more efficient clients. A traditional
-blockchain client must verify the entire chain of proofs-of-work, which grows
+blockchain client in order to check a certain blockchain property 
+must verify the entire chain of proofs-of-work, which grows
 linearly over time. On the contrary, clients based on NIPoPoWs require resources
 only logarithmic in the length of the blockchain.
 
@@ -29,11 +30,10 @@ efficient multi-blockchain client, which could efficiently support payments
 using hundreds of separate cryptocurrencies. This requires optimizing the ``SPV
 client'' described in the original Bitcoin paper~\cite{bitcoin} which, while
 quite efficient, requires processing an amount of data growing linearly with the
-size of the chain $|\chain|$.
+size of the blockchain.
 
-Second, cryptocurrencies are increasingly used as components of larger systems
-(the cryptocurrency system is typically called a ``blockchain'' when its
-currency feature is not salient). As one example, a recent system called
+Second, cryptocurrencies and blockchain protocols in general
+are increasingly used as components of larger systems. As one example, a recent system called
 Catena~\cite{catena} uses the blockchain as an authenticated log; the browser
 embeds a Bitcoin client to validate HTTPS certificates. The bandwidth costs that
 are tolerable for a dedicated Bitcoin wallet are likely unacceptable in such
@@ -43,21 +43,21 @@ similar systems.
 Finally, there has been significant interest in the development of
 ``cross-chain'' applications, i.e. logical transactions that span multiple
 separate blockchains. Simple cross-chain transactions are feasible today: the
-most well-known is the atomic exchange ~\cite{tiernolan} e.g. a trade of
-Bitcoins for Ether. However, more sophisticated applications could be enabled by
+most well-known is the atomic exchange~\cite{tiernolan}, e.g., a trade of
+bitcoin for ether. However, more sophisticated applications could be enabled by
 our protocol, which would allow the blockchain of one cryptocurrency to embed a
 client of a separate cryptocurrency. This concept, initially popularized by a
 proposal by Back et al. ~\cite{sidechains}, can be used to avoid a difficult
 upgrade process: a new blockchain with additional features, such as experimental
-opcodes, can be backed by deposits in the original Bitcoin currency, obviating
+opcodes, can be backed by deposits in the original bitcoin currency, obviating
 the need to bootstrap new currencies from scratch. The ability to use sidechains
 as an upgrade and experimentation mechanism has been heralded as a key enabler
 of scalability in the Bitcoin ecosystem; however, the sidechains proposal is
 incomplete, as it does not provide a protocol that satisfies a natural security
-definition, i.e. where attacks succeed with only negligible probability, even
+definition, i.e., where attacks succeed with only negligible probability, even
 though several attempts were made~\cite{pos,compactspv}. Our work is the
 first to answer the open problem posed by Back et al. Sidechains can also be
-used as a mechanism to off-load some of the workload incurred by the bitcoin
+used as a mechanism to off-load some of the workload incurred by the Bitcoin
 network by moving coins to dedicated sidechains, which can later be moved back.
 
 These examples illustrate that our solution is a key component for two important
@@ -77,19 +77,19 @@ are based on previous discussion of such concepts in the bitcoin forums
 \cite{highway}. We in fact show an explicit attack against the construction of \cite{KLS} that showcases the difficulty of designing such protocols. It follows
 that our construction is the first secure Proof of Proof-of-Work.
 Furthermore, our solution has the additional property of being non-interactive,
-as the previous construction could be forced into interaction by an adversarial
+as the previous construction could revert into interaction by an adversarial
 prover. Similar to previous work, we prove that the proofs are
 optimistically succinct meaning that, in honest conditions, the proofs are
 logarithmic in size. Improving previous work, we show that optimistic
 succinctness can be achieved for adversarially-generated proofs for a number
 of blockchain predicates that are high value use cases. Our definition
 fills the gap in terms of security modelling and design that existed in previous
-proposals, especially the notion of cumulative ``Dynamic Member Multisignature''
+proposals, e.g., the notion of cumulative ``Dynamic Member Multisignature''
 ~\cite{sidechains}.
 
 We provide concrete parameterization and empirical analysis focusing on showing
 the potential savings of our approach versus existing clients. Using real data
-from the bitcoin and other blockchains, we quantify the actual savings of
+from the Bitcoin network and other blockchains, we quantify the actual savings of
 NIPoPoWs over the previous known techniques of constructing efficient SPV
 verifiers.
 
