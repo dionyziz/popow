@@ -1,0 +1,34 @@
+\documentclass[11pt]{llncs}
+\newif\iftwocolumn
+\newif\ifonecolumn
+\onecolumntrue
+
+\usepackage{preamble}
+
+\begin{document}
+\title{
+    Multilevel Proofs of Proof-of-Work (notes)
+}
+\author{
+        Aggelos Kiayias\inst{1} \and
+        Nikos Leonardos\inst{2} \and
+        Dionysis Zindros\inst{2}
+}
+        % \email{akiayias@inf.ed.ac.uk}, \email{amiller@cs.umd.edu}, \email{dionyziz@di.uoa.gr}
+\institute{
+           University of Edinburgh, IOHK \and
+           National and Kapodistrian University of Athens, IOHK}
+\maketitle
+\noindent
+\makebox[\linewidth]{\today}
+% \begin{abstract}
+% \input{abstract}
+% \end{abstract}
+\thispagestyle{plain}
+
+\import{./}{algorithms/alg.multilevel-maxchain.tex}
+\import{./}{algorithms/alg.multilevel-prover.tex}
+
+% \import{./}{nipopows-body.tex}
+% \import{./}{references.tex}
+\end{document}

@@ -1,0 +1,39 @@
+\begin{algorithm}[H]
+    \caption{\label{alg.multilevel-nipopow-maxchain}The algorithm implementation for the
+    $\geq$ operator to compare two proofs in the multilevel NIPoPoW protocol
+    parameterized with security parameter $m$. Returns True if the underlying
+    chain of player $A$ is deemed longer than the underlying chain of player
+    $B$}
+
+    \begin{algorithmic}[1]
+        \Function{{\sf partition-score}$_m$}{$\tilde\pi$}
+            \Let{M}
+                {\{\mu: |\tilde\pi\upchain^\mu| \geq m\}}
+            \State\Return{$\max_{\mu \in M}\{2^\mu|\tilde\pi\upchain^\mu|\}$}
+        \EndFunction
+        \Function{{\sf best-arg}$_m$}{$\pi, b$}
+            \For{$i = 0$\text{ to }$|\pi| - 1$}
+                \For{$j = i + 1$\text{ to }$|\pi|$}
+                    \Let{P[i][j]}{\textsf{partition-score}_m(\pi[i:j])}
+                \EndFor
+            \EndFor
+            \Let{\textsf{DP}[0]}{\langle (0), 0 \rangle}
+            \For{$i = 1$\text{ to }$|\pi|$}
+                \Let{j}{\argmax_{j < i}\{\textsf{DP}[j][1] + P[j][i]\}}
+                \Let{\textsf{DP}[i]}
+                    {\langle
+                        \textsf{DP}[j][0] \| (i),
+                        \textsf{DP}[j][1] + P[j][i]
+                    \rangle}
+            \EndFor
+            \State\Return{$\textsf{DP}[|\pi|]$}
+        \EndFunction
+        \Operator{$\pi_A \geq_m \pi_B$}
+            \Let{b}{(\pi_\mathcal{A} \cap \pi_B)[-1]}
+              \Comment LCA
+            \State\Return{$\textsf{best-arg}_m(\pi_A, b) \geq
+                           \textsf{best-arg}_m(\pi_B, b)$}
+        \EndOperator
+    \vskip8pt
+    \end{algorithmic}
+\end{algorithm}
