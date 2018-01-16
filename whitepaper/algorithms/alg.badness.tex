@@ -10,7 +10,7 @@
                     \Let{\chain'}{\chain\upchain^\mu\{B:\}[:m]}
                     \If{$|\chain'| = m$}
                         \Comment{Sliding m-sized window}
-                        \Let{\chain^*}{\chain\downchain\upchain^{\mu - 1}}
+                        \Let{\chain^*}{\chain'\downchain\upchain^{\mu - 1}}
                         \If{$2|\chain'| < (1 - \delta)^\rho|\chain^*|$}
                             \State\Return{$\chain^*$}
                             \Comment{Chain is bad}
