@@ -1,3 +1,4 @@
+import cPickle as pickle
 import sys
 import bitcoin
 from bitcoin.core import CBlockHeader, CheckProofOfWork, CheckBlockHeader, CheckProofOfWorkError, _SelectCoreParams, uint256_from_compact, Hash, uint256_from_str
