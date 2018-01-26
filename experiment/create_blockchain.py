@@ -60,16 +60,31 @@ def prove_interlink(vInterlink, mu):
     # Merkle tree proof
     assert 0 <= mu < len(vInterlink)
     if len(vInterlink) >= 2:
-        if mu < len(vInterlink)/2:
-            hashR = hash_interlink(vInterlink[len(vInterlink)/2:])
-            return [(0, hashR)] + prove_interlink(vInterlink[:len(vInterlink)/2], mu/2)
+        midway = len(vInterlink)/2
+        if mu < midway:
+            hashR = hash_interlink(vInterlink[midway:])
+            return [(0, hashR)] + prove_interlink(vInterlink[:midway], mu)
         else:
-            hashL = hash_interlink(vInterlink[:len(vInterlink)/2])
-            return [(1, hashL)] + prove_interlink(vInterlink[len(vInterlink)/2:], mu/2)
+            hashL = hash_interlink(vInterlink[:midway])
+            return [(1, hashL)] + prove_interlink(vInterlink[midway:], mu - midway)
     elif len(vInterlink) == 1:
         return []
     else:
         raise Exception
+
+def verify_interlink(h, hashInterlink, proof):
+    """
+    returns: mu
+    """
+    mu = 0
+    for i, (bit, sibling) in enumerate(proof[::-1]):
+        mu += bit << i
+        assert len(sibling) == 32
+        if bit: h = Hash(sibling + h)
+        else:   h = Hash(h + sibling)
+    assert h == hashInterlink, "root hash did not match"
+    return mu
+    
 
 ###
 # Cons lists (to enable pointer sharing when building the header chain)
@@ -196,7 +211,7 @@ def make_proof(header, headerMap, mapInterlink, m=15, k=15):
     mp = []
     while True:
         # TODO: go for the first k blocks
-        proof.append((header.GetHash(), mp))
+        proof.append((header.serialize(), mp))
         _mu = header.compute_level()
         for i in range(mu, _mu+1):
             num_at_level[i] += 1
@@ -212,12 +227,34 @@ def make_proof(header, headerMap, mapInterlink, m=15, k=15):
         # Skip to the next block at current level
         mp = prove_interlink(vInterlink, mu)
         header = headerMap[vInterlink[mu]]
+
+        _mu = verify_interlink(header.GetHash(), hash_interlink(vInterlink), mp)
+        
         vInterlink = list_flatten(mapInterlink[header.GetHash()])
 
-    for h,mp in proof:
-        print '*'*(headerMap[h].compute_level()+1)
+    for hs,mp in proof:
+        print hs.encode('hex')
+        header = CBlockHeaderPopow.deserialize(hs)
+        h = header.GetHash()
+        print '*'*(header.compute_level()+1)
         print h[::-1][:3].encode('hex')
         vInterlink = list_flatten(mapInterlink[h])
         print [_h[::-1][:3].encode('hex') for _h in vInterlink]
         print [(b,h[::-1][:3].encode('hex')) for (b,h) in mp]
     return proof
+
+"""
+call with:
+   verify_proof(Hash(proof[0][0]), proof)
+"""
+def verify_proof(h, proof):
+    proof = iter(proof)
+    hs, _ = next(proof)
+    header = CBlockHeaderPopow.deserialize(hs)
+    assert header.GetHash() == h
+    for hs, merkle_proof in proof:
+        hashInterlink = header.hashInterlink
+        header = CBlockHeaderPopow.deserialize(hs)
+        # Check hash matches
+        mu = verify_interlink(header.GetHash(), hashInterlink, merkle_proof)
+        

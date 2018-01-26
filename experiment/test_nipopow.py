@@ -24,9 +24,11 @@ zfill = lambda s: (32-len(s))*'\x00' + s
 flatten = lambda x: [z for y in x for z in y]
 
 # Create the simulated blockchain
+
+# Need to increase the gas limit. These are some large contracts!
+tester.gas_limit = 314159200
 s = tester.state()
 s.mine()
-tester.gas_limit = 3141592
 
 # Create the contract
 contract = s.abi_contract(None, path='./contractNipopow.sol', language='solidity', contract_name='contractNipopow.sol:Nipopow')
@@ -45,12 +47,32 @@ def str_to_bytes32(s):
         r.append(s[start:start+32])
     return r
 
-def submit_proof():
-    assert len(sampleBlock) == 112
-    r = str_to_bytes32(sampleBlock)
-    print r
-    contract.submitProof([r])
+def submit_proof(proof=proof):
 
+    headers = []
+    siblings = []
+    for hs, mp in proof:
+        # Copy the header to an array of 4 bytes32
+        header = str_to_bytes32(hs)
+        # Encode the Merkle bits (mu) in the largest byte
+        # Encode the mp size in the next largest byte
+        assert 0 <= len(mp) < 256
+        mu = sum(bit << i for (i,(bit,_)) in enumerate(mp[::-1]))
+        assert 0 <= mu < 256
+        #header[3] = chr(len(mp)) + chr(mu) + header[3][2:]
+        header[3] = header[3] + ('\x00'*14) + chr(len(mp)) + chr(mu)
+        headers.append(header)
+
+        print repr(sha256(sha256(hs)))
+
+        for (_,sibling) in mp:
+            siblings.append(sibling)
+
+    #assert len(sampleBlock) == 112
+    #headers = [str_to_bytes32(sampleBlock)]
+    g = s.block.gas_used
+    contract.submit_nipopow(headers, siblings)
+    print 'Gas used:', s.block.gas_used - g
 
 # Take a snapshot before trying out test cases
 #try: s.revert(s.snapshot())
