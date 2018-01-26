@@ -39,6 +39,9 @@ sampleBlock = "f8912eb0b65eedfe76e7e63e053d98c02b9cfb03dae5970a86ed85fddf2d8efe0
 
 import cPickle as pickle
 proof = pickle.load(open('proof.pkl'))
+proof2 = pickle.load(open('proof-2.pkl'))
+proof3 = pickle.load(open('proof-3.pkl'))
+proof4 = pickle.load(open('proof-4.pkl'))
 
 
 def str_to_bytes32(s):

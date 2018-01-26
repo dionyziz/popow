@@ -71,7 +71,7 @@ contract Nipopow {
 	
 	// TODO: check the first header?
 
-	for (uint i = 1; i < headers.length; i++) {
+	for (uint i = 1; i < 1; i++) {
 	    header = headers[i];
 	 
 	    // Compute the hash of 112-byte header
