@@ -1,12 +1,14 @@
 \subsection{Provable chain predicates}
 
-Not all predicates are suitable for our purposes. In this section we characterize the class of
-blockchain predicates that will be of interest to us for constructing proofs.
-Given that we are in a decentralized setting it can be the case that for certain
-sensible blockchain predicate, there will be honest nodes that have not reached
-a conclusion about its value. For this reason we allow our predicates to have an
-undefined value $\bot$ before they take on a truth value of $T$ or $F$.
-We now define some useful predicate properties.
+Our aim is to prove statements about the blockchain, such as ``The transaction $t$ is included in the blockchain at height $H$.'' We consider a general class of predicate that take on values $T$, $F$, or $\bot$. 
+  Since a Bitcoin-like blockchain can experience delays and intermittent forks, not all honest parties will be in exact agreement about the entire chain, hence we model predicates that may take on the value $\bot$ but eventually reach a truth value $T$ or $F$.
+%Not all predicates are suitable for our purposes. In this section we characterize the class of
+%blockchain predicates that will be of interest to us for constructing proofs.
+%Given that we are in a decentralized setting it can be the case that for certain
+%sensible blockchain predicate, there will be honest nodes that have not reached
+%a conclusion about its value. For this reason we allow our predicates to have an
+%undefined value $\bot$ before they take on a truth value of $T$ or $F$.
+%We now define some useful predicate properties.
 % and prove a simple but useful
 % relation
 % between them.
@@ -19,7 +21,7 @@ We now define some useful predicate properties.
 
 \begin{definition}{(Stability)}
     Parameterized by $k \in \mathbb{N}$, a chain predicate
-    $Q$ is $k$-\textit{stable} if its value only depends on $\chain[:-k]$.
+    $Q$ is $k$-\textit{stable} if its value only depends on the prefix $\chain[:-k]$.
 
 % \noindent
 % {(Persistence)}
@@ -40,3 +42,5 @@ We now define some useful predicate properties.
 % \else
 %     Full proofs are provided in the appendix.
 % \fi
+
+\anote{At this point, we need should sanity check that the natural motivation can be written to satisfy these properties. We're already stuck because ``transaction $t$ is commited'' is not $k$-stable, and ``transaction $t$ is committed before time $T$'' is not monotonic. What can we say instead?}

@@ -1,37 +1,19 @@
 \section{Model and Definitions}
 \label{sec.model}
+Our system model is based on the standard ``backbone'' model for proof-of-work cryptocurrencies~\cite{backbone} and the widely used Simplified Payment Verification (SPV) mode due to Nakamoto~\cite{bitcoin}.
+We consider three roles in our setting: lightweight \emph{clients}, and full \emph{nodes}, and \emph{miners}.\footnote{Full nodes can be thought of as miners with zero hashpower, we use this terminology to be consistent with typical usage in cryptocurrency.}
 
-We define our problem in the setting of a blockchain client which is completely
-stateless beyond the knowledge of a common reference string, the genesis block.
-Without loss of generality, this single reference block could be any stable
-checkpoint block, either hard-coded in the client or obtained through a previous
-interaction with the network. However, importantly, the client does not maintain
-a blockchain. The challenge is, then, to build a client that is able to
-communicate with the network and, without downloading the whole chain headers,
-is convinced in a secure manner about a certain predicate on the ``main chain'', e.g., whether a specific transaction has been confirmed. We term such
-a client a \textit{verifier} and we term \textit{provers} the full nodes it
-connects to.
-%
-The provers maintain a complete blockchain and can be thought of as full nodes.
-The verifier connects to multiple provers, some of which may be malicious, but
-at least one of which is honest. All of the provers provide a proof and the
-verifier has to decide based on the feedback received what is the
-correct value of the predicate in question.
-% AK:  I think this is not necessary now.
-%The general intuition behind building such proofs is quite simple: Let $T$ be
-%the mining target for the network. Then because block ids are generated
-%uniformly at random, half of the blocks will have an id less than $T / 2$. By
-%having the prover present to the verifier just these blocks which capture more
-%proof-of-work than their neighbour counterparts, the verifier is convinced that
-%the proof-of-work of the omitted blocks also took place. The same logic can be
-%applied to any level $\mu$, namely blocks with id less than $T 2^{-\mu}$.
+Nodes and miners run the Bitcoin backbone protocol, maintaining a copy of the blockchain and committing new transactions they receive from clients.
+Clients do not store the entire blockchain, but instead connect to nodes for service and request up-to-date information about the blockchain, for example whether a particular payment has been finalized. Our main challenge is to design a protocol so that clients can authenticate the responses they receive from untrusted nodes.
 
-\subsection{The prover and verifier model}
+\subsection{Backbone model}
 
-The prover-verifier interaction is as follows: for a given predicate on the chain (e.g. ``the transaction took place''), the
-prover computes the proof string and transmits it to the verifier. The verifier
-accepts or rejects the string.
-Note that in the interactive case the prover and verifier may engage in more than one round of message passing.
+% AM:
+%We define our problem in the setting of a blockchain client which is completely
+%stateless beyond the knowledge of a common reference string, the genesis block.
+%Without loss of generality, this single reference block could be any stable
+%checkpoint block, either hard-coded in the client or obtained through a previous
+%interaction with the network.
 
 The entities on the blockchain network are of 3 kinds: (1) miners, who
 try to mine new blocks on top of the longest known blockchain and broadcast them
@@ -43,7 +25,10 @@ regards to which blockchain is the largest. The verifiers attempt to determine
 the value of a predicate on these chains.
 
 We model proof-of-work discovery attempts by using a random oracle~\cite{RO} as
-in \cite{backbone}. The random oracle produces $\kappa$-bit strings, where
+in \cite{backbone}.%
+\footnote{For clarity, we present our results in the backbone model~\cite{backbone}, although we suspect our results transfer easily to more refined models, such as Pass et al.~\cite{PSS}.}%
+
+The random oracle produces $\kappa$-bit strings, where
 $\kappa$ is the system's security parameter. The network is synchronized into
 numbered rounds, which correspond to moments in time. $n$ denotes the total
 number of miners in the game, while $t$ denotes the total number of adversarial
@@ -81,6 +66,15 @@ the previous block. We will explain this further in Section~
 oracles, the id of a block is defined as $\textsf{id} = H(ctr, G(x,
 \textsf{interlink}))$. In bitcoin's case, both $H$ and $G$ would be SHA256.
 
+\subsection{The prover and verifier model}
+In our protocol, the nodes include a \emph{proof} along with their responses to clients.
+We need to assume that clients are able to connect to at least one correctly functioning node (i.e., that they cannot be eclipsed from the network\anote{cite eclipse attacks}).
+Each client makes the same request to every node, and by verifying the proofs is able to identify the correct response.
+Henceforth we will call clients \textit{verifiers} and nodes \textit{provers}.
+Note that in the interactive case the prover and verifier may engage in more than one round of message passing.
+
+The prover-verifier interaction is parameterized by a predicate (e.g. ``the transaction took place'').
+%
 The predicates of interest in our context are predicates on the active
 blockchain. Some of the predicates are more suitable for succinct proofs than
 others. We focus our attention in \textit{stable} predicates having the property
@@ -108,8 +102,9 @@ while the adversary produces proofs following some arbitrary strategy. Before we
 introduce the security properties for blockchain proof protocols we introduce
 some necessary notation for blockchains.
 
-\subsection{Blockchain addressing}
+\subsection{Blockchain notation and conventions}
 % \noindent {\bf Blockchain addressing.}
+Our development makes use of several notation conventions for manipulating blockchain data structures, which we introduce here.
 Blockchains are finite block sequences obeying the \textit{blockchain property}
 that in every block in the chain there exists a pointer to its previous block.
 A chain is \textit{anchored} if its first block is \textit{genesis}, denoted

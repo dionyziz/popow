@@ -147,8 +147,7 @@ Then to save:
 # Simulate mining
 ###
 
-def mine_block(hashPrevBlock=b'\xbb'*32, nBits=0x207fffff, vInterlink=[]):
-    hashMerkleRoot = b'\xaa'*32
+def mine_block(hashPrevBlock=b'\xbb'*32, nBits=0x207fffff, vInterlink=[], hashMerkleRoot=b'\xaa'*32):
     for nNonce in xrange(2**31):
         header = CBlockHeaderPopow(hashPrevBlock=hashPrevBlock, hashMerkleRoot=hashMerkleRoot, nBits=nBits, nNonce=nNonce, hashInterlink=hash_interlink(vInterlink))
         try:
@@ -158,24 +157,30 @@ def mine_block(hashPrevBlock=b'\xbb'*32, nBits=0x207fffff, vInterlink=[]):
             continue
     return header
 
-def create_blockchain():
+def create_blockchain(genesis=None, blocks=450000, headerMap=None, mapInterlink=None, hashMerkleRoot=b'\x00'*32):
     # This way of handling the mapInterlink only requires O(N) space
     # Rather than O(N log N) when done naively
-    headerMap = {}
-    heightMap = {}
-    mapInterlink = {}
+    if headerMap is None: headerMap = {}
+    #if heightMap is None: heightMap = {}
+    if mapInterlink is None: mapInterlink = {}
 
-    listInterlink = ()
-    for i in range(450000):
+    if genesis is None:
+        genesis = mine_block()
+        listInterlink = ()
+    else:
+        listInterlink = mapInterlink[genesis.GetHash()]
+
+    header = None
+    for i in range(blocks):
         vInterlink = list_flatten(listInterlink)
-        if i == 0:
-            genesis = header = mine_block()
-        else:            
-            header = mine_block(header.GetHash(), header.nBits, vInterlink)
+        if header is None:
+            header = genesis
+        else:
+            header = mine_block(header.GetHash(), header.nBits, vInterlink, hashMerkleRoot=hashMerkleRoot)
 
         headerMap[header.GetHash()] = header # Persist the header
         mapInterlink[header.GetHash()] = listInterlink
-        heightMap[header.GetHash()] = i
+        #heightMap[header.GetHash()] = i
 
         mu = header.compute_level()
         # Update interlink vector, extending if necessary
@@ -258,3 +263,23 @@ def verify_proof(h, proof):
         # Check hash matches
         mu = verify_interlink(header.GetHash(), hashInterlink, merkle_proof)
         
+###
+# Graphing
+###
+
+def draw_fullgraph(header, headerMap):
+    global scores
+    scores = []
+    while True:
+        scores.append(header.compute_level())
+        header = headerMap[header.hashPrevBlock]
+        if header.hashPrevBlock == b'\xbb'*32: break
+    
+
+def create_fork(header, headerMap, mapInterlink, fork=50000, blocks=1000):
+    # Walk backward `fork` blocks
+    for i in range(fork):
+        header = headerMap[header.hashPrevBlock]
+    header, headerMap, mapInterlink = create_blockchain(header, blocks, headerMap, mapInterlink, hashMerkleRoot=b'\xcc'*32)
+
+    return header, headerMap, mapInterlink

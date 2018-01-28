@@ -1,36 +1,21 @@
 \section{Introduction}
 
-Cryptocurrencies such as Bitcoin~\cite{bitcoin}\cite{bitcoinsoftware} and
-Ethereum~\cite{ethereum} are peer-to-peer networks that maintain a globally
-consistent transaction ledger, using a consensus protocol based on proof-of-work
-(PoW) puzzles~\cite{pow,hashcash}. Worker nodes called ``miners'' expend
-computational work in order to reach agreement on the state of the network.
-Clients on the network, such as mobile phone apps, must verify these
-PoWs in order to determine the correct view of the network's state, something necessary
-to transmit and receive payments correctly.
 
-In this work we introduce, analyze and instantiate a new primitive,
-Non-Interactive Proofs of Proof-of-Work (NIPoPoWs), which can be adapted into
-existing cryptocurrencies to support more efficient clients. A traditional
-blockchain client in order to check a certain blockchain property 
-must verify the entire chain of proofs-of-work, which grows
-linearly over time. On the contrary, clients based on NIPoPoWs require resources
-only logarithmic in the length of the blockchain.
+%% must verify the entire chain of proofs-of-work, which grows
+%% linearly over time. On the contrary, clients based on NIPoPoWs require resources
+%% only logarithmic in the length of the blockchain.
 
-\subsection{Motivation}
-There are three trends that motivate the need for more efficient clients,
-specifically clients that can verify transactions without having to process the
-whole blockchain. First, while Bitcoin remains by far the largest
-cryptocurrency, the ecosystem has become significantly more diverse. There are
-hundreds of competitors, called ``altcoins'', and Bitcoin's dominance in the
-market is at an all time low ~\cite{marketcap}.\footnote{Using market cap as a
-measure of economic size is debatable but still indicates the direction of the
-evolving landscape.} We envision our protocol will form the basis of an
+%
+Today, Bitcoin and Ethereum remain the two wealthiest
+proof-of-work cryptocurrencies (by market cap). However, the ecosystem has grown diverse,
+with dozens of viable ``altcoin'' competitors.
+In this paper we discuss two applications motivated by the trend towards multiple cryptocurrencies.
+
+First, we envision our NiPoPoW protocol will form the basis of an
 efficient multi-blockchain client, which could efficiently support payments
-using hundreds of separate cryptocurrencies. This requires optimizing the ``SPV
-client'' described in the original Bitcoin paper~\cite{bitcoin} which, while
-quite efficient, requires processing an amount of data growing linearly with the
-size of the blockchain.
+using hundreds of different cryptocurrencies. This requires optimizing the ``SPV
+client'' described in the original Bitcoin paper~\cite{bitcoin} which requires
+processing an amount of data growing linearly with the size of the blockchain.
 
 Second, cryptocurrencies and blockchain protocols in general
 are increasingly used as components of larger systems. As one example, a recent system called
@@ -39,6 +24,20 @@ embeds a Bitcoin client to validate HTTPS certificates. The bandwidth costs that
 are tolerable for a dedicated Bitcoin wallet are likely unacceptable in such
 embedded contexts. Our techniques can directly reduce the cost of Catena and
 similar systems.
+
+%% Cryptocurrencies such as Bitcoin~\cite{bitcoin}\cite{bitcoinsoftware} and
+%% Ethereum~\cite{ethereum} are peer-to-peer networks that maintain a globally
+%% consistent transaction ledger, using a consensus protocol based on proof-of-work
+%% (PoW) puzzles~\cite{pow,hashcash}. Worker nodes called ``miners'' expend
+%% computational work in order to reach agreement on the state of the network.
+%% Clients on the network, such as mobile phone apps, must verify these
+%% PoWs in order to determine the correct view of the network's state, something necessary
+%% to transmit and receive payments correctly.
+
+%% In this work we introduce, analyze and instantiate a new primitive,
+%% Non-Interactive Proofs of Proof-of-Work (NIPoPoWs), which can be adapted into
+%% existing cryptocurrencies to support more efficient clients. A traditional
+%% blockchain client in order to check a certain blockchain property \anote{TODO: too abstract
 
 Finally, there has been significant interest in the development of
 ``cross-chain'' applications, i.e. logical transactions that span multiple
@@ -50,13 +49,14 @@ client of a separate cryptocurrency. This concept, initially popularized by a
 proposal by Back et al. ~\cite{sidechains}, can be used to avoid a difficult
 upgrade process: a new blockchain with additional features, such as experimental
 opcodes, can be backed by deposits in the original bitcoin currency, obviating
-the need to bootstrap new currencies from scratch. The ability to use sidechains
+the need to transfer capital to the new cryptocurrency. The ability to use sidechains
 as an upgrade and experimentation mechanism has been heralded as a key enabler
 of scalability in the Bitcoin ecosystem; however, the sidechains proposal is
 incomplete, as it does not provide a protocol that satisfies a natural security
 definition, i.e., where attacks succeed with only negligible probability, even
 though several attempts were made~\cite{pos,compactspv}. Our work is the
-first to answer the open problem posed by Back et al. Sidechains can also be
+first to answer the open problem posed by Back et al. \anote{The open problem
+  is about establishing an efficient ``two-way-peg'' between multiple proof-of-work blockchains.}  can also be
 used as a mechanism to off-load some of the workload incurred by the Bitcoin
 network by moving coins to dedicated sidechains, which can later be moved back.
 

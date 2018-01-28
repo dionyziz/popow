@@ -1,6 +1,6 @@
 \subsection{Desired properties}
 
-We now define two desired properties of a non-interactive blockchain proof protocol, \textit{succinctness} and \textit{security}. For clarity, the properties are described in the execution model of \cite{backbone} and can be easily ported to a more refined model e.g., \cite{PSS}.
+We now define two desired properties of a non-interactive blockchain proof protocol, \textit{succinctness} and \textit{security}.
 
 \begin{definition}{(Security)}
 A \textit{blockchain proof protocol} is \textit{secure} if for all environments
@@ -13,12 +13,12 @@ A \textit{blockchain proof protocol} is \textit{succinct} if the maximum proof
 size $|\pi|$ across all provers for a given round $r$ is $O(polylog(r))$.
 \end{definition}
 
-Based on these definitions, it is trivial to construct a secure but not succinct
-protocol: The prover provides the chain $\chain$ itself as a proof and the
-verifier simply compares the proofs received by length: Since the longest proof
-is literally the longest chain, the protocol is trivially secure but not
-succinct. This is what traditional SPV clients do. It is also easy to build
-succinct insecure clients: The prover simply sends the value of the predicate
-directly. This is what web-based wallets do. The challenge we will solve is to
-provide a non-interactive protocol which at the same time achieves security and
+We first observe it is easy to construct a secure but not succinct
+protocol: The prover provides the entire chain $\chain$ as a proof and the
+verifier simply selects the longest chain:
+by the \emph{common-prefix property} of the backbone protocol (c.f.~\cite{backbone}), this is consistent with
+the view of every honest party (as long as $Q$ depends only on a prefix of the chain, as we explain in more detail shortly). In fact this is how widely-used cryptocurrency clients operate today.
+%It is also easy to build succinct but insecure clients: The prover simply sends the predicate value directly. This is roughly what hosted wallets do ().
+The challenge we will solve is to
+provide a non-interactive protocol that at the same time achieves security and
 (optimistic) succinctness over a large class of predicates.

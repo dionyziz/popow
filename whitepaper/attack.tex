@@ -20,7 +20,7 @@ The interactive PoPoW of \cite{KLS} works as follows. The main algorithm of the
 verifier aims at distinguishing between two candidate proofs $(\pi_A, \chi_A)$
 and $(\pi_B, \chi_B)$. The honest prover, having adopted $\chain_B$ during
 mining, initially produces the proof $(\pi_B, \chi_B)$ as follows. First, the
-last $k$ blocks are sent literally as $\chi_B = \chain_B[-k:]$. Then for the
+last $k$ blocks are sent as $\chi_B = \chain_B[-k:]$. Then for the
 first part of the chain, $\chain_B[:-k]$, the prover sets $\pi_B$ to be the
 $\mu$-superchain spanning $\chain_B$ for the largest $\mu$ such that $|\pi_B| =
 m$, where $m$ is the protocol's security parameter. The verifier ensures that
@@ -36,13 +36,14 @@ $\mu$ when $max(|\pi_A\upchain^\mu\{b:\}|, |\pi_B\upchain^\mu\{b:\}|) \geq m$.
 The winner is designated as the prover with the most blocks after $b$ at that
 level; i.e., $A$, if $|\pi_A\upchain^\mu\{b:\}| \geq |\pi_B\upchain^\mu\{b:\}|$,
 and $B$ otherwise. The communication overhead is reduced by only requesting
-blocks after the purported LCA. The security parameter $m$ ensures, through the
-application of a binomial Chernoff bound, that the probability of the attacker
+blocks after the purported LCA. The security parameter $m$ is chosen to ensure
+%application of a binomial Chernoff bound:
+that the probability of the attacker
 producing a long superchain is negligible.
 
 \subsection{Attacking chain superquality}
 \label{subsec.superquality-attack}
-We construct an adversary $\mathcal{A}$ that breaks this property at level $\mu$.
+We construct an adversary $\mathcal{A}$ that breaks the superchain quality at level $\mu$.
 % Suppose $\mathcal{A}$ controls a portion $t/n$ of the hashing power.
 $\mathcal{A}$ works as follows. Assume she wants to attack the honest party $B$
 in order to have him adopt chain $\chain_B$ which has a bad distribution of
@@ -61,7 +62,7 @@ the strategy by inspecting $\chain[-1]$ and acting accordingly. An execution of
 this attack is illustrated in Figure~\ref{fig.superquality-attack}.
 
 \begin{figure}
-    \caption{The superquality attack.
+    \caption{The superquality attack on prior work~\cite{popow}.
     Gray blocks are adversarially mined 0-blocks.
     Black blocks are $\mu$-superblocks.}
     \centering
@@ -132,10 +133,13 @@ for constructing a system that is both provably secure and succinct under the
 same assumptions, albeit requiring a more complicated construction structure to
 obtain security.
 
-We now calculate the exact attack probabilities
-\footnote{We wish to thank Giorgos Panagiotakos, Peter Ga\u{z}i, and Nikos
-Leonardos for their insights.}.
-We simplify the attack to ease the probabilistic analysis. The attack is
+\anote{Let's defer the attack probabilities to the full version.}
+We now calculate the exact attack probabilities.
+% AM: suppressed for anonymization
+%\footnote{We wish to thank Giorgos Panagiotakos, Peter Ga\u{z}i, and Nikos
+%Leonardos for their insights.}
+
+The attack is
 parameterized by  parameters $r, \mu$ which are picked by the adversary. $\mu$
 is the superblock level at which the adversary will produce a proof longer than
 the honest proof. The modified attack works as follows: Without loss of
@@ -147,15 +151,17 @@ suppression attack} on the honest chain. The adversary devotes exactly $r$
 rounds to this suppression attack; then resumes mining on the secret chain. We
 show that, despite this simplification (of fixing $r$) which is harmful to the
 adversary, the probability of a successful attack is non-negligible for certain
-values of the protocol parameters.
-
-The adversary monitors the network for superblock generation events. Whenever an
-honest party diffuses an honestly-generated $\mu$-superblock at the end of a
-given round $r_1$, the superblock generation event will have occurred and the
-adversary will starting devoting their mining power to block suppression
+values of the protocol parameters. 
+%\footnote{The attack could be further optimized, but we simplify it for exposition.}
+%
+%The adversary monitors the network for superblocks.
+Whenever an
+honest party diffuses an honestly-generated $\mu$-superblock,
+%at the end of a given round $r_1$, 
+the adversary starts devoting their mining power to block suppression
 starting from the next round.
 
-A block suppression attack works as follows. Let $b$ be the honestly generated
+The block suppression attack works as follows. Let $b$ be the honestly generated
 $\mu$-superblock which was diffused at the end of the previous round. If the
 round was not uniquely successful, let $b$ be any of the diffused
 honestly-generated $\mu$-superblocks. Let $b$ be the tip of an honest chain

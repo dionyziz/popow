@@ -3,11 +3,7 @@
 We now provide a concrete NIPoPoW construction which allows proving certain
 predicates $Q$ of the chain $\chain$.
 Among the predicates which are stable, in this section, we will limit ourselves to \textit{suffix
-sensitive} predicates. These predicates are easier to prove, but at the same
-time allow us to use the construction as a scaffold for the more general setting to
-be presented  in Section~\ref{sec:infix}.
-%
-
+  sensitive} predicates. These predicates are easier to prove, but are not expressive enough for our applications.. Nonetheless, They will be a building block for our extended construction in Section~\ref{sec:infix}.
 
 \begin{definition}[Suffix sensitivity]
 A chain predicate $Q$ is called $k$-\textnormal{suffix sensitive} if for all
@@ -15,18 +11,10 @@ chains $\chain, \chain'$ with $|\chain| \geq k$ and $|\chain'| \geq k$ such that
 $\chain[-k:] = \chain'[-k:]$ we have that $Q(\chain) = Q(\chain')$.
 \end{definition}
 
-Given the suffix-sensitivity definition, we deduce that for a suffix-sensitive
-predicate $Q$ there must be a quick way of deducing the value of $Q(\chain)$ by
-only examining the $k$-suffix of the chain.
+Notice that if a predicate $Q$ is suffix-sensitive, then then its value must be determined only by the $k$-suffix of the chain.
 
-Beyond acting as a building block for our more involved construction of  Section~\ref{sec:infix},
-suffix-sensitive predicates are still useful in practice. Such
-predicates can describe an event that is visible at the exact block
-$\chain[-k-1]$ and that will remain true as the chain grows in perpetuity (due
-to monotonicity). These predicates make sense for blockchains such as Ethereum
-which maintain state \cite{vitalik} that is propagated and committed to in every
-block. One example of such predicate is the existence of a particular Ethereum
-account.
+\textbf{Example.}
+In general our applications will require predicates that are not suffix-sensitive. However, as an example, consider the predicate ``an Ethereum contract at address $C$ has been initialized with code $h$ at least $k$ blocks ago'' where $h$ does not invoke the \texttt{selfdestruct} opcode. This can be implemented in a suffix-sensitive way because in Ethereum, each block includes a merkle trie over all of the contract codes, which cannot be changed after initializtion. This predicate is thus also monotonic and $k$-stable.
 
 \subsection{Construction}
 We present a generic form of the verifier first and the prover afterwards. The
@@ -38,6 +26,7 @@ description of our protocol by first illustrating the generic verifier. Next, we
 describe the prover specific to our protocol. Finally, we show the instantiation
 of the $\leq_m$ operator, which plugs into the generic verifier to make a
 concrete verifier for our protocol.
+\anote{the above is wordy}
 
 \noindent
 \textbf{The generic verifier.}
