@@ -1,4 +1,5 @@
-#import solc
+#import 
+import ethereum.config as config
 from ethereum.tools import tester
 from ethereum import utils
 from ethereum.tools._solidity import (
@@ -30,14 +31,12 @@ flatten = lambda x: [z for y in x for z in y]
 
 # Create the simulated blockchain
 
-s = tester.Chain()
+env = config.Env()
+env.config['BLOCK_GAS_LIMIT'] = 3141592000
+env.config['START_GAS_LIMIT'] = 3141592000
+s = tester.Chain(env = env)
 # Need to increase the gas limit. These are some large contracts!
-s.chain.state.gas_limit = 200000000;
 s.mine()
-
-# Create the contract
-# contract_name='contractNipopow.sol:Nipopow'
-#contract = s.contract('contractNipopow.sol:Nipopow', language='solidity')
 
 contract_path = './contractNipopow.sol'
 contract_name = 'Nipopow'
@@ -64,7 +63,6 @@ proof_f = pickle.load(open('proof-fork50k.pkl'))
 proof2 = pickle.load(open('proof-2.pkl'))
 proof3 = pickle.load(open('proof-3.pkl'))
 proof4 = pickle.load(open('proof-4.pkl'))
-
 
 def str_to_bytes32(s):
     r = []
@@ -95,7 +93,6 @@ def extract_headers_siblings(proof = proof):
 
     return headers, siblings
 
-# Compare
 def compare_header_proofs(proof1 = proof, proof2 = proof_f):
 
     headers1, _ = extract_headers_siblings(proof1)
@@ -119,8 +116,6 @@ def submit_proof(proof=proof):
     #assert len(sampleBlock) == 112
     #headers = [str_to_bytes32(sampleBlock)]
 
-    # Set the gas limit to 2*10^8
-    s.head_state.gas_limit = 200000000
     g = s.head_state.gas_used
     contract_abi.submit_nipopow(headers, siblings, startgas = 100000000)
     print 'Gas used:', s.head_state.gas_used - g
