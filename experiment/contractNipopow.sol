@@ -47,14 +47,14 @@ contract Nipopow {
       }
       dest += 32;
       src += 32;
+    }
 
-      // Copy remaining bytes.
-      uint mask = 256 ** (32 - len) - 1;
-      assembly {
-        let srcpart := and(mload(src), not(mask))
-          let destpart := and(mload(dest), mask)
-          mstore(dest, or(destpart, srcpart))
-      }
+    // Copy remaining bytes.
+    uint mask = 256 ** (32 - len) - 1;
+    assembly {
+      let srcpart := and(mload(src), not(mask))
+      let destpart := and(mload(dest), mask)
+      mstore(dest, or(destpart, srcpart))
     }
   }
 
