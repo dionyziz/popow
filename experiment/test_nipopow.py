@@ -93,22 +93,6 @@ def extract_headers_siblings(proof = proof):
 
     return headers, siblings
 
-def compare_header_proofs(proof1 = proof, proof2 = proof_f):
-
-    headers1, _ = extract_headers_siblings(proof1)
-    headers2, _ = extract_headers_siblings(proof2)
-
-    cnt = 0
-
-    for i in range(0, len(headers1)):
-        for j in range(0, len(headers2)):
-            if headers1[i] == headers2[j]:
-                cnt = cnt + 1
-                print "Match found! ", i, " ", j
-
-    # How many headers are the same in both chains.
-    print cnt
-
 def submit_proof(proof=proof):
 
     headers, siblings = extract_headers_siblings(proof)
@@ -117,7 +101,10 @@ def submit_proof(proof=proof):
     #headers = [str_to_bytes32(sampleBlock)]
 
     g = s.head_state.gas_used
-    contract_abi.submit_nipopow(headers, siblings, startgas = 100000000)
+    better_proof = contract_abi.submit_nipopow(headers, siblings, startgas = 100000000)
+    #lca_index = contract_abi.test_lca(headers, startgas = 10000000)
+    #print 'Lca index', lca_index
+    print 'Was it a better proof', better_proof
     print 'Gas used:', s.head_state.gas_used - g
 
 # Take a snapshot before trying out test cases

@@ -35,6 +35,9 @@ contract Nipopow {
   uint m = 15;
   uint k = 6;
 
+  // Boolean for the first submitted proof.
+  bool submitted_proof;
+
   event LogInit();
   event LogBytes32(string name, bytes32 b);
   event LogUint8(string name, uint8 b);
@@ -67,6 +70,13 @@ contract Nipopow {
       mapHeader[b].bitcoinHeader[1] = 0;
       mapHeader[b].bitcoinHeader[2] = 0;
     }
+  }
+
+  function storeHeader(bytes32[4] header, bytes32 hash){
+    mapHeader[hash].hashInterlink = header[0];
+    mapHeader[hash].bitcoinHeader[0] = header[1];
+    mapHeader[hash].bitcoinHeader[1] = header[2];
+    mapHeader[hash].bitcoinHeader[2] = header[3];
   }
 
   // Hash the header using double SHA256 
@@ -108,42 +118,50 @@ contract Nipopow {
     return index;
   }
 
-  // TODO: Implement.
   function get_level(bytes32[4] header) internal returns(uint8) {
+    uint256 hash = uint256(hashHeader(header));
+
+    for (uint256 i = 0; i <= 255; i++) {
+      uint256 k = uint256(1 << i);
+      if ((hash & k) != 0) {
+        return uint8(i);
+      }
+    }
     return 0;
   }
 
   function best_argument(bytes32[4][] proof, uint al_index) internal returns(uint256) {
-    uint8 max_level = 255;
+    uint max_level = 255;
     uint256 max_score = 0;
+    uint lvl_cnt = 0;
 
-    for (uint256 i = 0; i <= max_level; i++) {
+    for (uint i = 0; i <= max_level; i++) {
       uint256 cur_score = 0;
 
-      for (uint j = al_index - 1; j >= 0; j--) {
+      for (uint j = 0; j < al_index; j++) {
         if (get_level(proof[j]) >= i) {
           cur_score += uint256(1 << i);
-        }
-
-        if (cur_score == 0) {
-          break; // Maximum level achieved.
+          lvl_cnt++;
         }
       }
-      if (cur_score > max_score) {
+      if (cur_score == 0) {
+          break; // Maximum level reached.
+      }
+      if (cur_score > max_score && lvl_cnt >= m) {
         max_score = cur_score;
       }
     }
     return max_score;
   }
 
+  // Initialise security parameters?
   function Nipopow() public {
     // Convert nBits to constant?
   }
 
   function compare_proofs(bytes32[4][] cur_proof) internal returns(bool) {
     LcaIndex memory lca_index = get_lca(cur_proof);
-    return best_argument(cur_proof, lca_index.c_lca) >
-      best_argument(best_proof, lca_index.b_lca);
+    return best_argument(cur_proof, lca_index.c_lca) > best_argument(best_proof, lca_index.b_lca);
   }
 
   function verify_merkle(bytes32 roothash, bytes32 leaf, uint8 mu, bytes32[] memory siblings) constant internal {
@@ -160,13 +178,12 @@ contract Nipopow {
     require(h == roothash);
   }
 
-  function submit_nipopow(bytes32[4][] headers, bytes32[] siblings) public {
-
+  function submit_nipopow(bytes32[4][] headers, bytes32[] siblings) public returns(bool) {
     uint ptr = 0; // Index of the current sibling
     bytes32[4] memory header = headers[0];
     bytes32 hashInterlink = header[0];
 
-    // TODO: check the first header?
+    storeHeader(header, hashHeader(header));
 
     for (uint i = 1; i < headers.length; i++) {
       header = headers[i];
@@ -187,10 +204,7 @@ contract Nipopow {
       verify_merkle(hashInterlink, b, mu, _siblings);
 
       // Store the header indexed by its hash
-      mapHeader[b].hashInterlink = header[0];
-      mapHeader[b].bitcoinHeader[0] = header[1];
-      mapHeader[b].bitcoinHeader[1] = header[2];
-      mapHeader[b].bitcoinHeader[2] = header[3];
+      storeHeader(header, b);
 
       // Update hash interlink
       hashInterlink = header[0];
@@ -199,11 +213,19 @@ contract Nipopow {
       //LogBytes32("header[0] hash", b);
     }
 
-    /*if (compare_proofs(headers)) {
+    bool better_proof;
+    if (!submitted_proof) {
+      better_proof = true;
+      submitted_proof = true;
       best_proof = headers;
-      }*/
+    } else if (compare_proofs(headers)) {
+      better_proof = true;
+      best_proof = headers;
+    }
 
     // We don't need to store the map.
     clean_hashmap(headers);
+
+    return better_proof;
   }
 }
