@@ -86,10 +86,11 @@ def extract_headers_siblings(proof = proof):
         #header[3] = chr(len(mp)) + chr(mu) + header[3][2:]
         header[3] = header[3] + ('\x00'*14) + chr(len(mp)) + chr(mu)
         headers.append(header)
-        #print repr(sha256(sha256(hs)))
 
         for (_,sibling) in mp:
             siblings.append(sibling)
+
+    print repr(sha256(sha256(sampleBlock)))
 
     return headers, siblings
 
@@ -138,11 +139,16 @@ def test_forked_proof():
 """
 # The following tests/debugging functions require the functions to be set to public. 
 def test_best_argument():
-    headers1, siblings1 = extract_headers_siblings(proof)
-    headers2, siblings2 = extract_headers_siblings(proof_f) # forked proof
 
-    best_arg_1 = contract_abi.best_arg(headers1, 198, startgas = 100000000)
-    best_arg_2 = contract_abi.best_arg(headers2, 112, startgas = 100000000)
+    hash_headers1 = []
+    hash_headers2 = []
+    for header, _ in proof:
+        hash_headers1.append(sha256(sha256(header)))
+    for header, _ in proof_f:
+        hash_headers2.append(sha256(sha256(header)))
+
+    best_arg_1 = contract_abi.best_arg(hash_headers1, 198, startgas = 100000000)
+    best_arg_2 = contract_abi.best_arg(hash_headers2, 112, startgas = 100000000)
 
     print "Best argument 1", best_arg_1
     print "Best argument 2", best_arg_2
@@ -150,19 +156,25 @@ def test_best_argument():
 def test_get_lca():
 
     headers1, siblings1 = extract_headers_siblings(proof)
-    headers2, _ = extract_headers_siblings(proof_f) # forked proof
+    headers2, siblings2 = extract_headers_siblings(proof_f) # forked proof
+
+    hash_headers2 = []
+    for header, _ in proof_f:
+        hash_headers2.append(sha256(sha256(header)))
 
     contract_abi.submit_nipopow(headers1, siblings1, startgas = 100000000)
     contract_abi.store_proof_in_map(headers2, startgas = 100000000)
-    b_lca, c_lca = contract_abi.get_lca(headers2)
+    b_lca, c_lca = contract_abi.get_lca(hash_headers2)
 
     print "Stored proof lca", b_lca, "Current proof lca", c_lca
 
 def test_get_level(proof, lca):
     levels = {}
+    pr_levels = []
     for i in range(0, lca):
         hs, _ = proof[i]
-        level = contract_abi.get_level(str_to_bytes32(hs))
+        level = contract_abi.get_level(sha256(sha256(hs)))
+        pr_levels.append(level)
         if level in levels:
             levels[level] = levels[level] + 1
         else:
@@ -170,6 +182,8 @@ def test_get_level(proof, lca):
 
     for level in levels:
         print level, "->", levels[level]
+
+    print pr_levels
 """
 
 def test_OK():
