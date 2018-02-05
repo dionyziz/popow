@@ -97,21 +97,80 @@ def submit_proof(proof=proof):
 
     headers, siblings = extract_headers_siblings(proof)
 
-    #assert len(sampleBlock) == 112
-    #headers = [str_to_bytes32(sampleBlock)]
-
     g = s.head_state.gas_used
     better_proof = contract_abi.submit_nipopow(headers, siblings, startgas = 100000000)
-    #lca_index = contract_abi.test_lca(headers, startgas = 10000000)
-    #print 'Lca index', lca_index
     print 'Was it a better proof', better_proof
     print 'Gas used:', s.head_state.gas_used - g
+
+    return better_proof
 
 # Take a snapshot before trying out test cases
 #try: s.revert(s.snapshot())
 #except: pass # FIXME: I HAVE NO IDEA WHY THIS IS REQUIRED
 s.mine()
 base = s.snapshot()
+
+def test_forked_proof():
+
+    headers1, siblings1 = extract_headers_siblings(proof)
+    headers2, siblings2 = extract_headers_siblings(proof_f) # forked proof
+
+    base = s.snapshot()
+
+    s_better = contract_abi.submit_nipopow(headers1, siblings1, startgas = 100000000)
+    f_better = contract_abi.submit_nipopow(headers2, siblings2, startgas = 100000000)
+
+    assert (s_better == True)
+    assert (f_better == False)
+
+    s.revert(base)
+
+    # Change the order of the proofs.
+    f_better = contract_abi.submit_nipopow(headers2, siblings2, startgas = 100000000)
+    s_better = contract_abi.submit_nipopow(headers1, siblings1, startgas = 100000000)
+
+    # proof should still be better.
+    assert (f_better == True)
+    assert (s_better == True)
+
+    print "Test: OK"
+
+"""
+# The following tests/debugging functions require the functions to be set to public. 
+def test_best_argument():
+    headers1, siblings1 = extract_headers_siblings(proof)
+    headers2, siblings2 = extract_headers_siblings(proof_f) # forked proof
+
+    best_arg_1 = contract_abi.best_arg(headers1, 198, startgas = 100000000)
+    best_arg_2 = contract_abi.best_arg(headers2, 112, startgas = 100000000)
+
+    print "Best argument 1", best_arg_1
+    print "Best argument 2", best_arg_2
+
+def test_get_lca():
+
+    headers1, siblings1 = extract_headers_siblings(proof)
+    headers2, _ = extract_headers_siblings(proof_f) # forked proof
+
+    contract_abi.submit_nipopow(headers1, siblings1, startgas = 100000000)
+    contract_abi.store_proof_in_map(headers2, startgas = 100000000)
+    b_lca, c_lca = contract_abi.get_lca(headers2)
+
+    print "Stored proof lca", b_lca, "Current proof lca", c_lca
+
+def test_get_level(proof, lca):
+    levels = {}
+    for i in range(0, lca):
+        hs, _ = proof[i]
+        level = contract_abi.get_level(str_to_bytes32(hs))
+        if level in levels:
+            levels[level] = levels[level] + 1
+        else:
+            levels[level] = 1
+
+    for level in levels:
+        print level, "->", levels[level]
+"""
 
 def test_OK():
     #s.revert(base)  # Restore the snapshot

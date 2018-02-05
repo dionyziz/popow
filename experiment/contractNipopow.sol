@@ -12,20 +12,15 @@ contract Nipopow {
   struct Header { bytes32 hashInterlink;
     bytes32[3] bitcoinHeader; }
 
-  // Stores the indices of the LCA in the best and current proof. 
-  struct LcaIndex {
-    uint b_lca;
-    uint c_lca;
-  }
-
   // TODO: Use the proof struct.
   struct Proof {
-    Header[] pi; 
+    Header[] pi;
     Header[] chi;
   }
 
   // Access header data, by hash.
   mapping (bytes32 => Header) mapHeader;
+  mapping (uint => uint) levelCounter;
 
   // Headers of the best proof.
   bytes32[4][] best_proof;
@@ -61,9 +56,9 @@ contract Nipopow {
     }
   }
 
-  function clean_hashmap(bytes32[4][] headers) {
+  function clear_hashmap(bytes32[4][] headers) internal {
     for (uint i = 0; i < headers.length; i++) {
-      bytes32 b = hashHeader(headers[i]);
+      bytes32 b = hash_header(headers[i]);
       // TODO: Is 0 the default value of the byte?
       mapHeader[b].hashInterlink = 0;
       mapHeader[b].bitcoinHeader[0] = 0;
@@ -72,7 +67,14 @@ contract Nipopow {
     }
   }
 
-  function storeHeader(bytes32[4] header, bytes32 hash){
+  /* Used only for testing.
+  function store_proof_in_map(bytes32[4][] proof) internal {
+    for (uint i = 0; i < proof.length; i++) {
+      store_header(proof[i], hash_header(proof[i]));
+    }
+  }*/
+
+  function store_header(bytes32[4] header, bytes32 hash) internal {
     mapHeader[hash].hashInterlink = header[0];
     mapHeader[hash].bitcoinHeader[0] = header[1];
     mapHeader[hash].bitcoinHeader[1] = header[2];
@@ -80,8 +82,8 @@ contract Nipopow {
   }
 
   // Hash the header using double SHA256 
-  function hashHeader(bytes32[4] header) internal returns(bytes32) {
-    // Compute the hash of 112-byte header
+  function hash_header(bytes32[4] header) internal returns(bytes32) {
+    // Compute the hash of 112-byte header.
     var s = new string(112);
     uint sptr;
     uint hptr;
@@ -91,17 +93,17 @@ contract Nipopow {
     return sha256(sha256(s));
   }
 
-  function get_lca(bytes32[4][] cur_proof) public view returns(LcaIndex) {
-    LcaIndex memory index;
-
+  function get_lca(bytes32[4][] cur_proof) internal returns(uint, uint) {
     bytes32 lca_hash;
     bytes32 cur_hash;
+
+    uint b_lca = 0;
+    uint c_lca = 0;
     for (uint i = 0; i < best_proof.length; i++) {
-      // Is the hashing unnecessary(expensive)?
-      cur_hash = hashHeader(best_proof[i]);
+      cur_hash = hash_header(best_proof[i]);
       // Different than the default value.
       if (mapHeader[cur_hash].hashInterlink != 0) {
-        index.b_lca = i;
+        b_lca = i;
         lca_hash = cur_hash;
         break;
       }
@@ -109,20 +111,20 @@ contract Nipopow {
 
     // Get the index of lca in the current_proof.
     for (i = 0; i < cur_proof.length; i++) {
-      cur_hash = hashHeader(cur_proof[i]);
+      cur_hash = hash_header(cur_proof[i]);
       if (cur_hash == lca_hash) {
-        index.c_lca = i;
+        c_lca = i;
         break;
       }
     }
-    return index;
+    return (b_lca, c_lca);
   }
 
   function get_level(bytes32[4] header) internal returns(uint8) {
-    uint256 hash = uint256(hashHeader(header));
+    uint256 hash = uint256(hash_header(header));
 
-    for (uint256 i = 0; i <= 255; i++) {
-      uint256 k = uint256(1 << i);
+    for (uint i = 0; i <= 255; i++) {
+      uint256 k = 2 ** i;
       if ((hash & k) != 0) {
         return uint8(i);
       }
@@ -130,26 +132,22 @@ contract Nipopow {
     return 0;
   }
 
-  function best_argument(bytes32[4][] proof, uint al_index) internal returns(uint256) {
+  function best_arg(bytes32[4][] proof, uint al_index) internal returns(uint256) {
     uint max_level = 255;
     uint256 max_score = 0;
-    uint lvl_cnt = 0;
 
-    for (uint i = 0; i <= max_level; i++) {
-      uint256 cur_score = 0;
+    // Count the frequency of the levels.
+    for (uint i = 0; i < al_index; i++) {
+      levelCounter[get_level(proof[i])]++;
+    }
 
-      for (uint j = 0; j < al_index; j++) {
-        if (get_level(proof[j]) >= i) {
-          cur_score += uint256(1 << i);
-          lvl_cnt++;
-        }
+    for (i = 0; i <= max_level; i++) {
+      uint256 cur_score = uint256(levelCounter[i] * 2 ** i);
+      if (levelCounter[i] >= m && cur_score > max_score) {
+        max_score = levelCounter[i] * 2 ** i;
       }
-      if (cur_score == 0) {
-          break; // Maximum level reached.
-      }
-      if (cur_score > max_score && lvl_cnt >= m) {
-        max_score = cur_score;
-      }
+      // clear the map.
+      levelCounter[i] = 0;
     }
     return max_score;
   }
@@ -160,8 +158,8 @@ contract Nipopow {
   }
 
   function compare_proofs(bytes32[4][] cur_proof) internal returns(bool) {
-    LcaIndex memory lca_index = get_lca(cur_proof);
-    return best_argument(cur_proof, lca_index.c_lca) > best_argument(best_proof, lca_index.b_lca);
+    var (b_lca, c_lca) = get_lca(cur_proof);
+    return best_arg(cur_proof, c_lca) > best_arg(best_proof, b_lca);
   }
 
   function verify_merkle(bytes32 roothash, bytes32 leaf, uint8 mu, bytes32[] memory siblings) constant internal {
@@ -183,11 +181,11 @@ contract Nipopow {
     bytes32[4] memory header = headers[0];
     bytes32 hashInterlink = header[0];
 
-    storeHeader(header, hashHeader(header));
+    store_header(header, hash_header(header));
 
     for (uint i = 1; i < headers.length; i++) {
       header = headers[i];
-      bytes32 b = hashHeader(header);
+      bytes32 b = hash_header(header);
 
       // Length of merkle branch is 2nd byte, index is 1st byte
       var branch_length = uint8((header[3] >> 8) & 0xff);
@@ -204,7 +202,7 @@ contract Nipopow {
       verify_merkle(hashInterlink, b, mu, _siblings);
 
       // Store the header indexed by its hash
-      storeHeader(header, b);
+      store_header(header, b);
 
       // Update hash interlink
       hashInterlink = header[0];
@@ -212,6 +210,8 @@ contract Nipopow {
       // Log output
       //LogBytes32("header[0] hash", b);
     }
+
+    // TODO: Last step of the verifier.
 
     bool better_proof;
     if (!submitted_proof) {
@@ -224,7 +224,7 @@ contract Nipopow {
     }
 
     // We don't need to store the map.
-    clean_hashmap(headers);
+    clear_hashmap(headers);
 
     return better_proof;
   }
