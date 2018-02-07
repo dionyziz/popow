@@ -1,8 +1,8 @@
 PACKAGE=acmart
 
 SAMPLES = \
-	nipopows.tex \
-	nipopows-single.tex
+	nipopows.tex
+#%nipopows-single.tex
 
 PDF = $(PACKAGE).pdf ${SAMPLES:%.tex=%.pdf}
 

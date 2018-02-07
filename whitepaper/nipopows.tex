@@ -1,14 +1,14 @@
-\documentclass[sigconf,anonymous]{acmart}
+\documentclass[letterpaper,twocolumn,10pt]{article}
+\usepackage{usenix}
 
 \newif\iftwocolumn
 \twocolumntrue
 \newif\ifonecolumn
 
-\setcopyright{none}
+%\setcopyright{none}
+%\settopmatter{printacmref=false, printccs=true, printfolios=true} % We want page numbers on submissions
 
-\settopmatter{printacmref=false, printccs=true, printfolios=true} % We want page numbers on submissions
-
-	\usepackage{preamble}
+\usepackage{preamble}
 
 \begin{document}
 \import{./}{title-text.tex}
@@ -22,9 +22,12 @@
 
 \input{nipopows-body}
 
-\bibliographystyle{ACM-Reference-Format}
-% \bibliography{ccs-sample}
+{\footnotesize
+%\bibliographystyle{ACM-Reference-Format}
+  % \bibliography{ccs-sample}
+\bibliographystyle{abbrv}
 \input{references}
+}
 
 \end{document}
 % \documentclass[11pt]{llncs}
