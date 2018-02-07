@@ -11,9 +11,22 @@ contract Nipopow {
   mapping (uint => uint) levelCounter;
 
   // Headers of the best proof.
-  // TODO: Pass only the hashes.
   // Stores the hashes of the best proof.
   bytes32[] best_proof;
+
+  // Ancestors of the best proof. Used for the calculation of the predicate.
+  bytes32[] ancestors;
+  // Mapping that marks the visited blocks when traversing the graphs.
+  // TODO: Compare the computation cost with the storage cost. (In gas).
+  mapping (bytes32 => bool) visitedBlock;
+
+  // Stores the block precedence in the proofs.
+  // For example: Given proof [1, 2, 3] we have 3 -> 2, 2 -> 1.
+  // Used for preventing filling the blockDAG with duplicates.
+  // TODO: Compare the computation-cost with the storage-cost. (In gas).
+  mapping (bytes32 => mapping(bytes32 => bool)) blockPrecedence;
+  // Stores DAG of blocks.
+  mapping (bytes32 => bytes32[]) blockDAG;
 
   // Security parameters.
   // TODO: Double-check the parameter values.
@@ -43,6 +56,36 @@ contract Nipopow {
       let srcpart := and(mload(src), not(mask))
       let destpart := and(mload(dest), mask)
       mstore(dest, or(destpart, srcpart))
+    }
+  }
+
+  function add_to_dag(bytes32 hash_prev, bytes32 hash_cur) internal {
+    if (!blockPrecedence[hash_prev][hash_cur]) {
+      blockPrecedence[hash_prev][hash_cur] = true;
+
+      blockDAG[hash_prev].length++;
+      blockDAG[hash_prev][blockDAG[hash_prev].length - 1] = hash_cur;
+    }
+  }
+
+  function ancestors_traversal(bytes32 current_block) internal {
+    ancestors.length++;
+    ancestors[ancestors.length - 1] = current_block;
+    visitedBlock[current_block] = true;
+
+    for (uint i = 0; i < blockDAG[current_block].length; i++) {
+      if (!visitedBlock[blockDAG[current_block][i]]) {
+        ancestors_traversal(blockDAG[current_block][i]);
+      }
+    }
+  }
+
+  function compute_ancestors(bytes32 current_block) internal {
+    ancestors_traversal(current_block);
+
+    // Clear visitedBlock map.
+    for (uint i = 0; i < ancestors.length; i++) {
+      visitedBlock[ancestors[i]] = false;
     }
   }
 
@@ -158,20 +201,21 @@ contract Nipopow {
     uint ptr = 0; // Index of the current sibling
     bytes32[4] memory header = headers[0];
     bytes32 hashInterlink = header[0];
-    bytes32 hashed_header = hash_header(header);
+    bytes32 prev_hash = hash_header(header);
 
-    mapHeader[hash_header(header)] = true;
-    // TODO: Consider chi.
+    mapHeader[prev_hash] = true;
     bytes32[] memory cur_proof = new bytes32[](headers.length);
-    cur_proof[0] = hashed_header;
+    cur_proof[0] = prev_hash;
 
     for (uint i = 1; i < headers.length; i++) {
       header = headers[i];
-      bytes32 b = hash_header(header);
-      cur_proof[i] = b;
+      bytes32 cur_hash = hash_header(header);
+      cur_proof[i] = cur_hash;
 
       // Store the header indexed by its hash
-      mapHeader[b] = true;
+      mapHeader[cur_hash] = true;
+      // Add to precedence to the graph.
+      add_to_dag(prev_hash, cur_hash);
 
       // Length of merkle branch is 2nd byte, index is 1st byte
       var branch_length = uint8((header[3] >> 8) & 0xff);
@@ -179,34 +223,44 @@ contract Nipopow {
       require(branch_length <= 5);
       require(mu <= 32);
 
-      // Copy siblings
+      // Copy siblings.
       bytes32[] memory _siblings = new bytes32[](branch_length);
       for (uint8 j = 0; j < branch_length; j++) _siblings[j] = siblings[ptr+j];
       ptr += branch_length;
 
       // Verify the merkle tree proof
-      verify_merkle(hashInterlink, b, mu, _siblings);
+      verify_merkle(hashInterlink, cur_hash, mu, _siblings);
 
       // Update hash interlink
       hashInterlink = header[0];
+      prev_hash = cur_hash;
     }
 
     // TODO: Last step of the infix verifier.
     // TODO: Union blocks that are before the lca.
-    bool better_proof = false;
+    bool is_better_proof = false;
     if (!submitted_proof) {
-      better_proof = true;
+      is_better_proof = true;
       submitted_proof = true;
       best_proof = cur_proof;
     } else if (compare_proofs(cur_proof)) {
-      better_proof = true;
+      is_better_proof = true;
       // "Merge proofs".
       best_proof = cur_proof;
-    } 
+    }
 
     // We don't need to store the map.
     clear_hashmap(cur_proof);
 
-    return better_proof;
+    // Update the ancestors.
+    // Should this be here or in the predicate function?
+    compute_ancestors(best_proof[0]);
+
+    return is_better_proof;
+  }
+
+  // Returns the value of the predicate. {Undefined -> -1, True -> 1, False -> 0}.
+  function predicate(/* params */) public returns(uint8) {
+    // Use the ancestors field to calculate the predicate.
   }
 }
