@@ -5,28 +5,25 @@
 \twocolumntrue
 \newif\ifonecolumn
 
-%\setcopyright{none}
-%\settopmatter{printacmref=false, printccs=true, printfolios=true} % We want page numbers on submissions
-
 \usepackage{preamble}
 
 \begin{document}
 \import{./}{title-text.tex}
-
-\begin{abstract}
-    \input{abstract}
-% Your abstract should go here. You will also need to upload a plain-text abstract into the web submission form.
-\end{abstract}
+\author{Anonymous Submission}
 
 \maketitle
+
+\subsection*{Abstract}
+    \input{abstract}
 
 \input{nipopows-body}
 
 {\footnotesize
-%\bibliographystyle{ACM-Reference-Format}
-  % \bibliography{ccs-sample}
+% \bibliographystyle{ACM-Reference-Format}
+% \bibliographystyle{acm}
 \bibliographystyle{abbrv}
-\input{references}
+\bibliography{bibliography}
+% \input{references}
 }
 
 \end{document}
