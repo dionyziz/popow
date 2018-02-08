@@ -42,7 +42,14 @@ transmitting the proof. In fact, no block ids need to be transmitted. From these
 observations, we estimate our scheme's proof sizes for various parameterizations
 of $m$ in Table~\ref{table.size}.
 
-\subsection{Concrete parameterization}
+\paragraph{Concrete parameterization.}
+To determine concrete values for security parameter $m$, we focus on a
+particular adversarial strategy and analyze its probability of success. This
+adversarial strategy is only one possible strategy; an advanced adversary can
+perform more sophisticated attacks. However, the fact that this attack is
+reasonable and possible to simulate allows us to extract specific values for
+$m$. The attack is an extension of the stochastic processes described in
+\cite{bitcoin} and \cite{rosenfeld}.
 
 \begin{table}
   \caption{
@@ -67,13 +74,6 @@ of $m$ in Table~\ref{table.size}.
   \end{tabular}
 \end{table}
 
-To determine concrete values for security parameter $m$, we focus on a
-particular adversarial strategy and analyze its probability of success. This
-adversarial strategy is only one possible strategy; an advanced adversary can
-perform more sophisticated attacks. However, the fact that this attack is
-reasonable and possible to simulate allows us to extract specific values for
-$m$. The attack is an extension of the stochastic processes described in
-\cite{bitcoin} and \cite{rosenfeld}.
 
 The experiment works as follows: $m$ is fixed and some adversarial computational
 power percentage $q$ of the total network computational power is chosen; $k$ is
