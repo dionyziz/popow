@@ -1,0 +1,18 @@
+\subsection{Certificate Transparency and Catena}
+\label{sec.catena}
+\anote{Maybe we should cut this section or defer it to appendix.}
+Catena~\cite{catena} is an approach for certificate transparency that uses a public proof-of-work blockchain to hold Certificate Authorities (CAs) accountable.
+CAs publish commitments to (a Merkle tree over) their SSL certificates in the blockchain. 
+Relying parties (e.g., browsers, mobile phones) fetch the proofs-of-work from the blockchain to verify that these commitments have been widely published, preventing equivocation.
+
+Catena clients must currently rely on linear SPV proofs, and would therefore see improved performance immediately if using NIPoPoWs. New clients must currently be boostrapped with the entire 40MB Bitcoin header chain, whereas this can be reduced to $156$ kB when (when $m=15$, see Table~\ref{table.size}).
+Catena authors anticipate needing to launch a dedicated
+Header Relay Network~\cite{catena} to accommodate the extra bandwidth demands
+from new Catena clients.
+ Second, the steady state cost of operating a Catena client depends
+on how frequently certificate digests are published. For example, one usage
+scenario cited by Catena~\cite{catena} is Keybase, a service which publishes
+certificate digests every 6 hours. During a 6 hour period, Bitcoin would
+generate 6 kilobytes of headers, whereas a NIPoPoW proof covering the same range
+would require less than half this size. The savings would increase further if
+Catena were implemented using any PoW blockchain with more frequent blocks.
