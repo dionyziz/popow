@@ -1,3 +1,6 @@
+\appendix
+\section*{Appendix}
+
 % \section{Backbone integration}
 % \label{sec.appendix-backbone}
 %
@@ -69,8 +72,8 @@
 % \restateThmVelvetSuccinctness*
 % \import{./}{proofs/velvetsuccinctness.tex}
 
-\subsection{Where the proof of PoPoW goes wrong}
-\textbf{Remark.} It is worth isolating the mistake in the security proof from
+\section{Where the proof of PoPoW fails}
+It is worth isolating the mistake in the security proof from
 the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
 player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block, was honestly
 generated and suppose that the superchain comparison happens at level $\mu$.
@@ -85,4 +88,3 @@ Regardless, their basic argument and construction is what we will use as a basis
 for constructing a system that is both provably secure and succinct under the
 same assumptions, albeit requiring a more complicated construction structure to
 obtain security.
-
