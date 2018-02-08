@@ -67,9 +67,9 @@ the strategy by inspecting $\chain[-1]$ and acting accordingly. An execution of
 this attack is illustrated in Figure~\ref{fig.superquality-attack}.
 
 \begin{figure}
-    \caption{The superquality attack on prior work~\cite{popow}.
-    Gray blocks are adversarially mined 0-blocks.
-    Black blocks are $\mu$-superblocks.}
+    \caption{Superquality attack on prior work (PoPoW)~\cite{popow}.
+    The adversary performs a selfish-mining~\cite{selfishmining} attack (gray blocks)
+    whenever any honest parties have recently mined a rare $\mu$-superblock (black). The attack reduces the honest chain's superquality, while the attacker's private chain is unaffected. }
     \centering
     \iftwocolumn
         \includegraphics[width=\columnwidth,keepaspectratio]{figures/superquality-attack-popow.png}

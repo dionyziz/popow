@@ -1,7 +1,7 @@
 \section{Model and Definitions}
 \label{sec.model}
-Our system model is based on the standard ``backbone'' model for proof-of-work cryptocurrencies~\cite{backbone} and the widely used Simplified Payment Verification (SPV) mode due to Nakamoto~\cite{bitcoin}.
-We consider three roles in our setting: lightweight \emph{clients}, and full \emph{nodes}, and \emph{miners}.\footnote{Full nodes can be thought of as miners with zero hashpower, we use this terminology to be consistent with typical usage in cryptocurrency.}
+Our system model is based on the standard ``backbone'' model for proof-of-work cryptocurrencies~\cite{backbone}, extended with the widely used Simplified Payment Verification (SPV) mode due to Nakamoto~\cite{bitcoin}.
+We consider three roles in our setting: lightweight \emph{clients}, and full \emph{nodes}, and \emph{miners}.\footnote{Full nodes can be thought of as miners with zero hashpower, we use this terminology to be consistent with Bitcoin developers.}
 
 Nodes and miners run the Bitcoin backbone protocol, maintaining a copy of the blockchain and committing new transactions they receive from clients.
 Clients do not store the entire blockchain, but instead connect to nodes for service and request up-to-date information about the blockchain, for example whether a particular payment has been finalized. Our main challenge is to design a protocol so that clients can authenticate the responses they receive from untrusted nodes.
@@ -68,12 +68,12 @@ oracles, the id of a block is defined as $\textsf{id} = H(ctr, G(x,
 
 \subsection{The prover and verifier model}
 In our protocol, the nodes include a \emph{proof} along with their responses to clients.
-We need to assume that clients are able to connect to at least one correctly functioning node (i.e., that they cannot be eclipsed from the network\anote{cite eclipse attacks}).
-Each client makes the same request to every node, and by verifying the proofs is able to identify the correct response.
+We need to assume that clients are able to connect to at least one correctly functioning node (i.e., that they cannot be eclipsed from the network~\cite{heilman2015eclipse,hijackingbitcoin}).
+Each client makes the same request to every node, and by verifying the proofs the client identifies the correct response.
 Henceforth we will call clients \textit{verifiers} and nodes \textit{provers}.
-Note that in the interactive case the prover and verifier may engage in more than one round of message passing.
+Note that in the interactive protocol from prior work~\cite{KLS},  the prover and verifier may engage in more than one round of message passing.
 
-The prover-verifier interaction is parameterized by a predicate (e.g. ``the transaction took place'').
+The prover-verifier interaction is parameterized by a predicate (e.g. ``the transaction $t$ is committed in the blockchain'').
 %
 The predicates of interest in our context are predicates on the active
 blockchain. Some of the predicates are more suitable for succinct proofs than
