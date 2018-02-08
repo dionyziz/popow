@@ -2,8 +2,9 @@
 
 We now provide a concrete NIPoPoW construction which allows proving certain
 predicates $Q$ of the chain $\chain$.
-Among the predicates which are stable, in this section, we will limit ourselves to \textit{suffix
-  sensitive} predicates. These predicates are easier to prove, but are not expressive enough for our applications.. Nonetheless, They will be a building block for our extended construction in Section~\ref{sec:infix}.
+Among the predicates which are stable, in this section, we will limit ourselves to \textit{suffix sensitive} predicates.
+%These predicates are easier to prove, but are not expressive enough for our applications. Nonetheless,
+We extend the protocol to support more flexible predicates (such as transaction inclusion, as needed for our applications) in Section~\ref{sec:infix}.
 
 \begin{definition}[Suffix sensitivity]
 A chain predicate $Q$ is called $k$-\textnormal{suffix sensitive} if for all
@@ -26,7 +27,6 @@ description of our protocol by first illustrating the generic verifier. Next, we
 describe the prover specific to our protocol. Finally, we show the instantiation
 of the $\leq_m$ operator, which plugs into the generic verifier to make a
 concrete verifier for our protocol.
-\anote{the above is wordy}
 
 \noindent
 \textbf{The generic verifier.}

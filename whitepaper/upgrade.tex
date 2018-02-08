@@ -90,14 +90,14 @@ $\mu$-superblock, by following the interlink pointer if it is correct.
 Otherwise, it follows the previd link which is available in all blocks, and
 tries to follow the interlink pointer again from there. Finally, the velvet
 prover
-shown in
-Algorithm~\ref{alg.nipopow-velvet-prover}
+%shown in
+%Algorithm~\ref{alg.nipopow-velvet-prover}
 simply applies the velvet $\chain\upchain$ operator and includes the auxiliary
 connecting nodes within the final proof. No changes in the verifier are needed; note that  in the case of infix proofs the $\mathrm{index}$ of the block is used by the verifier; if this information is not provided by the underlying blockchain headers, the index should be included in the interlink structure.
 
-\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
-\import{./}{algorithms/alg.nipopow-velvet-follow.tex}
-\import{./}{algorithms/alg.nipopow-velvet-prover.tex}
+%\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
+%\import{./}{algorithms/alg.nipopow-velvet-follow.tex}
+%\import{./}{algorithms/alg.nipopow-velvet-prover.tex}
 
 Velvet NIPoPoWs preserve security. Additionally, if a constant minority of
 miners has upgraded their nodes, then succinctness is also preserved

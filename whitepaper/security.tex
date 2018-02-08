@@ -1,5 +1,16 @@
 \subsection{Security}
 
+The PoPoW design is to prevent Bahack-style
+attacks~\cite{bahack}, where the adversary constructs ``lucky'' high-difficulty
+superblocks without filling in the underlying proof-of-work in the lower
+levels.
+Our protocol retains this highlevel approach, but adds a defense against the double-spending attack of Section~\ref{sec:attack}.
+The attack is neutralized since our
+verifier is more permissive, allowing the prover to construct a proof that takes superquality  ``goodness'' into account when comparing forks.
+
+%Our verifier checks a looser condition than the PoPoW verifier.
+%Under ordinary conditions, the proofs constructed by the 
+
 \begin{restatable}{theorem}{restateThmSecurity}
     \label{thm.security}
     The non-interactive proofs-of-proof-of-work construction for $k$-stable
@@ -7,15 +18,16 @@
     probability in $\kappa$.
 \end{restatable}
 
-We will first give a draft of the proof before getting into the technical
+We will first give a sketch of the proof before getting into 
 details. Suppose an adversary produces a proof $\pi_\mathcal{A}$ and an honest
 party produces a proof $\pi_B$ such that the two proofs cause the predicate $Q$
 to evaluate to different values, while at the same time all honest parties have
 agreed that the correct value is the one obtained by $\pi_B$. Because of
 bitcoin's security, $\mathcal{A}$ will be unable to make these claims for an
-actual underlying 0-level chain. We now argue that the operator $\leq_m$ will
-signal in favour of the honest parties.
+actual underlying 0-level chain.
 
+We now argue that the operator $\leq_m$ will
+signal in favour of the honest parties.
 Suppose $b$ is the LCA block between $\pi_\mathcal{A}$ and $\pi_B$. If the chain
 forks at $b$, there can be no more adversarial blocks after $b$ than honest
 blocks after $b$, provided there are at least $k$ honest blocks (due to the
@@ -45,10 +57,6 @@ expectations of the above random variables and applying a Chernoff bound, we see
 that the actual values will be close to their means with overwhelming
 probability, completing the proof.
 
-Thmain issue motivating the design of PoPoW is to prevent Bahack-style
-attacks~\cite{bahack}, where the adversary constructs ``lucky'' high-difficulty
-superblocks without filling in the underlying proof-of-work in the lower
-levels.
 %
 %Observe that, while setting $m = 1$ ``preserves'' the proof-of-work in
 %the sense that expectations remain the same, the probability of an adversarial
@@ -59,7 +67,6 @@ levels.
 %computational power, and hence satisfy a strong notion of security.
 %
 %
-Our protocol retains this highlevel approach, but adds a defense against the double-spending attack of Section~\ref{sec:attack}. The attack is neutralized since our
-verifier takes ``goodness'' into account when comparing forks.
+
 %blockchains into account when choosing levels, 
 %and the verifier may compare proofs at the right level.

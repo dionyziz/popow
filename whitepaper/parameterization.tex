@@ -1,28 +1,29 @@
 \section{Implementation \& Parameters}
 
-\subsection{Interlink optimizations}
+%\subsection{Interlink optimizations}
 
-We now discuss the manner in which the interlink data structure is hashed for
-coinbase inclusion. A Merkle tree is used to hash the interlink data structure
-into a single hash \cite{KLS}. NIPoPoWs form a chain of various levels
-which can omit blocks. For each block in the proof,
-only a single pointer needs to be presented to convince the Verifier. Near
-genesis, the pointers needed correspond to high levels; near
-the tip, the pointers to low levels. In the construction of
-the proof, the highest superchain with at least $m$ blocks is included, and
-assume it is of level $\mu$. The level $\mu - 1$ superchain is fully
-included and has an expected number of $2m$ blocks. Since all
-$\mu$-superblocks are also $(\mu - 1)$-superblocks, they only need to be
-counted once, for $\mu - 1$. Among the expected $2m$ $(\mu - 1)$-superblocks,
-the last $m$ will be supported by level $\mu - 2$. As before, since $(\mu -
-1)$-superblocks are $(\mu - 2)$-superblocks, in expectation only $m$
-$(\mu-1)$-superblocks are counted. The argument continues inductively, until
-$2m$ $0$-blocks are included in expectation immediately before the $\chi$
-suffix. This gives an estimation on the proof size: a total of $m
-(\log(|\chain|) - \log(m))$ blocks in expectation, $m$ at each of the $\mu - 1$
-levels and $2m$ $0$-blocks.
+%We now discuss the manner in which the interlink data structure is hashed for
+%coinbase inclusion.
+%% A Merkle tree is used to hash the interlink data structure
+%% into a single hash \cite{KLS}. NIPoPoWs form a chain of various levels
+%% which can omit blocks. For each block in the proof,
+%% only a single pointer needs to be presented to convince the Verifier. Near
+%% genesis, the pointers needed correspond to high levels; near
+%% the tip, the pointers to low levels. In the construction of
+%% the proof, the highest superchain with at least $m$ blocks is included, and
+%% assume it is of level $\mu$. The level $\mu - 1$ superchain is fully
+%% included and has an expected number of $2m$ blocks. Since all
+%% $\mu$-superblocks are also $(\mu - 1)$-superblocks, they only need to be
+%% counted once, for $\mu - 1$. Among the expected $2m$ $(\mu - 1)$-superblocks,
+%% the last $m$ will be supported by level $\mu - 2$. As before, since $(\mu -
+%% 1)$-superblocks are $(\mu - 2)$-superblocks, in expectation only $m$
+%% $(\mu-1)$-superblocks are counted. The argument continues inductively, until
+%% $2m$ $0$-blocks are included in expectation immediately before the $\chi$
+%% suffix. This gives an estimation on the proof size: a total of $m
+%% (\log(|\chain|) - \log(m))$ blocks in expectation, $m$ at each of the $\mu - 1$
+%% levels and $2m$ $0$-blocks.
 
-Organizing interlink into a Merkle tree of $\log(|\chain|)$ items, a
+Organizing the interlink data structure as a Merkle tree of $\log(|\chain|)$ items, a
 proof-of-inclusion is provided in $\log \log(|\chain|)$ space; $0$-level
 pointers need not be included in it, but the genesis block does. The root of the
 tree can be proved to have been included in the block header in $\log(|\overline
