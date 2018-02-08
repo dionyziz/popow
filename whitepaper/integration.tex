@@ -89,23 +89,60 @@ client downloads nearly every block header, like an ordinary SPV client; but for
 cryptocoins used infrequently, the NIPoPoW-based client can skip over most
 blocks.
 
-\paragraph{Verifier implementation in Solidity.}
-In order to support the Cross-Chain ICO application, we implemented the NiPoPoW
-verifier algorithm as a Solidity smart contract. The contract consists of two
-functions. The \texttt{submit\_nipopow} function is used by the provers to
-provide their proof vectors. Instead of passing the block headers of the proof,
-the provers pass the hashes of the block headers and the hashes of the interlink
-vector. The reason is that the full data of the block header (especially the
-merkle root tree) is only useful for the blocks of interest. Thus, we reduce the
-amount of data needed for the proof by a factor of 2. The rest of the parameters
-are used in the inclusion proof of the block. After confirming the validity of
-the proof, the \texttt{compare\_proofs} function is called between the current
-and the best proof. If the current proof is better then it is assigned to the
-best proof in the contract's storage. The last step is to update the ancestors
-of the best proof. Regardless of whether the proof is better it may contain
-blocks that are in the honest chain and are blocks of interest. The gas costs
-are summarized in Table~\ref{tbl:gascosts}. The \$USD column represents the
-current price of this much gas on Ethereum.
+\paragraph{Cross-chain ICOs.}
+As an example use-case of our construction, we present the case of an
+ICO in which tokens are distributed in one blockchain,
+but funds are raised in another. It works as follows:
+There are two designated blockchains, the \textit{source} and
+the \textit{destination blockchain}. The source is the blockchain
+where the fund-raising will take place, while the destination is the
+blockchain where the newly issued tokens will be distributed and subsequently
+exchanged. The destination blockchain must be smart-contract-enabled in order to
+allow for the distribution of ERC-20-style~\cite{erc20} tokens.
+In addition, the smart contracts on the destination blockchain must allow for
+programming the verification of a NIPoPoW proof by including, for example, the
+appropriate hash functions. The source blockchain must be NIPoPoW-enabled via
+one of the mechanism described in the upgrade section. This setup allows the
+creation of NIPoPoWs \textit{about} the source blockchain which will be included
+in the destination blockchain. For example, a source blockchain can be Litecoin
+and a destination blockchain Ethereum.
+
+In order to run the ICO, the fund-raising entity first creates a designated
+account in the source blockchain in which funds will be deposited. It then
+creates the ERC-20-style smart contract in the destination blockchain. When
+someone wishes to participate in the ICO, they transfer funds into the
+designated account on the source blockchain. Once she has made the transfer and
+it becomes confirmed, the payer generates a NIPoPoW about the transaction paying
+into the designated account. That NIPoPoW is then sent as a parameter to a
+method call on the ICO smart contract on the destination blockchain. The method
+call stores the proof and waits for a certain period of time for possible
+contestations, which can be accepted and compared using the $\leq_m$ mechanism
+previously described. If no contesting proof is presented within the
+contestation period, the prover receives their respective ICO tokens on the
+target blockchain. In order for only the rightful owner to be able to receive
+the tokens, they are required to sign the destination address on the destination
+blockchain using the private key corresponding to their source account used to
+make the payment within the source blockchain.
+
+In order to support the cross-chain ICO application and to present concrete data
+about the cost of executing NIPoPoW-style proofs, we implemented the NiPoPoW
+verifier algorithm as a Solidity smart contract\footnote{The GitHub URL of the
+MIT-licensed smart contract has been removed for anonymity purposes and will
+be included in the full version.}. The contract consists of two functions.
+The \texttt{submit\_nipopow} function is used by the provers to provide their
+proof vectors. Instead of passing the block headers of the proof, the provers
+pass the hashes of the block headers and the hashes of the interlink vector. The
+reason is that the full data of the block header (especially the merkle root
+tree) is only useful for the blocks of interest. Thus, we reduce the amount of
+data needed for the proof by a factor of 2. The rest of the parameters are used
+in the inclusion proof of the block. After confirming the validity of the proof,
+the \texttt{compare\_proofs} function is called between the current and the best
+proof. If the current proof is better then it is assigned to the best proof in
+the contract's storage. The last step is to update the ancestors of the best
+proof. Regardless of whether the proof is better it may contain blocks that are
+in the honest chain and are blocks of interest. The gas costs are summarized in
+Table~\ref{tbl:gascosts}. The \$USD column represents the current price of this
+much gas on Ethereum.
 %The Solidity code listing will be made available in the full online version.
 
 \begin{table}[ht]
