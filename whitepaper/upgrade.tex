@@ -8,9 +8,9 @@ our construction as an upgrade. In this section we outline several possible
 upgrade paths. We also contribute a novel upgrade approach, a ``velvet fork,''
 which allows for gradual deployment without harming unupgraded miners.
 
-\subsection{Hard Forks and Soft Forks}
-% \noindent
-% {\bf Hard Forks and Soft Forks.}
+% \subsection{Hard Forks and Soft Forks}
+\noindent
+{\bf Hard Forks and Soft Forks.}
 The obvious way to upgrade a cryptocoin to support our protocol is a hard fork:
 the block header is modified to include the interlink structure, and the
 validation rules modified to require that new blocks (after a ``flag day'')
@@ -31,10 +31,9 @@ observe that including such proofs-of-inclusion will only increase the NiPoPoW
 sizes by a constant factor per block, allowing for the communication complexity
 to remain polylogarithmic.
 
-% \noindent
-% {\bf Velvet Forks.}
-
-\subsection{Velvet Forks}
+\noindent
+{\bf Velvet Forks.}
+% \subsection{Velvet Forks}
 We now describe a novel upgrade path that avoids the need for a fork at all. The
 key idea is that clients can make use of our scheme, even if only some blocks in
 the blockchain include the interlink structure. Given that intuitively the
@@ -130,10 +129,12 @@ transactions containing the most recent interlink pointers so that they are
 included in the next block. If the transaction makes it to the next block, it
 can be used by the prover who keeps track of these. Otherwise, if it becomes
 part of a subsequent block, in which case some of the pointers it contains are
-invalid, it can be ignored or only partially used.
+invalid, it can be ignored or only partially used. The complete algorithms for
+velvet forks are included in the appendix.
 
 % \textbf{Supporting clients with different beliefs.}
 % The interlink format does not depend on parameters $m, k$. Therefore, it is not
 % necessary to agree on a particular value of these parameters. Instead, the
 % choice of $m$ and $k$ can be a user-configurable parameter to clients.
-% Clients would send a particular $m$ and $k$ as a .
+% Clients would send a particular $m$ and $k$ as part of their requirement to
+% the prover.

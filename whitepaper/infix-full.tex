@@ -1,18 +1,23 @@
-\subsection{Infix proofs in more detail}
+\section{Infix proofs in more detail}
 \label{sec:infix-full}
-We next show how to express the predicate that asks whether
-a certain transaction with id $txid$ has been confirmed by a certain time as an infix sensitive predicate.
-First, we need specify a time bound  as the maximum number of blocks
-$\ell$ up to which we want to test whether $txid$ is included (this is necessary as without such a time bound the predicate cannot be monotonic). Then we define the
- predicate $D^{txid}$ that receives  a single block and tests whether a transaction with id $txid$ is included. The predicate $Q^{txid}_{\ell, 1, k}$  is now defined
-as in Definition~\ref{def:infix}  using the predicate $D^{txid}$ and the parameter $k$ which in this case  determines the desired stability of the assertion that $txid$ is included.
+We next show how to express the predicate that asks whether a certain
+transaction with id $txid$ has been confirmed by a certain time as an infix
+sensitive predicate. First, we need specify a time bound  as the maximum number
+of blocks $\ell$ up to which we want to test whether $txid$ is included (this is
+necessary as without such a time bound the predicate cannot be monotonic). Then
+we define the predicate $D^{txid}$ that receives  a single block and tests
+whether a transaction with id $txid$ is included. The predicate $Q^{txid}_{\ell,
+1, k}$  is now defined as in Definition~\ref{def:infix}  using the predicate
+$D^{txid}$ and the parameter $k$ which in this case  determines the desired
+stability of the assertion that $txid$ is included.
 
 % XXX example
-Similarly to suffix-sensitive predicates, infix-sensitive predicates $Q$ can be evaluated very efficiently. Intuitively this is possible because
-of their localized nature and dependency on the $D(\cdot)$ predicate which
-requires only a small number of blocks to conclude whether the predicate should
-be true. Nevertheless, some special care will be needed to ensure the condition
-on the length  of the chain with respect to $\ell$ is captured.
+Similarly to suffix-sensitive predicates, infix-sensitive predicates $Q$ can be
+evaluated very efficiently. Intuitively this is possible because of their
+localized nature and dependency on the $D(\cdot)$ predicate which requires only
+a small number of blocks to conclude whether the predicate should be true.
+Nevertheless, some special care will be needed to ensure the condition on the
+length  of the chain with respect to $\ell$ is captured.
 
 The construction of these proofs is shown in
 Algorithm~\ref{alg.nipopow-infix-prover}. The infix prover accepts two
@@ -86,11 +91,11 @@ the same lines of the security argument for suffix proofs. We state it below.
 The infix NIPoPoW construction is secure for all infix-sensitive stable
 predicates $Q$, except with negligible probability in $\kappa$.
 \end{restatable}
-\iftwocolumn
-The proof is included in the Appendix.
-\else
+% \iftwocolumn
+% The proof is included in the Appendix.
+% \else
 \import{./}{proofs/infixsecurity.tex}
-\fi
+% \fi
 
 \subsection{Succinctness}
 As long as the number of blocks on which the predicate depends is

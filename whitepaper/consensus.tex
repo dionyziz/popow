@@ -3,7 +3,7 @@
 %\subsection{The interlink pointers data structure}
 \label{sec.interlink}
 
-\subsection{The interlink pointers data structure}
+% \subsection{The interlink pointers data structure}
 In order to construct our protocol, we rely on the same \emph{interlink data structure} used by PoPoW~\cite{KLS}. This is an
 additional hash-based data structure that is proposed to include in the header of heach block.
 The interlink data structure is a skip-list~\cite{skiplist} that makes it efficient for a verifier to process a sparse subset of the blockchain, rather than only consecutive blocks.
@@ -20,7 +20,7 @@ according to expectation. Here, each level contains half the blocks of the level
 below.
 
 In our protocol, the verifier must roughly scan along one level at a time.
-To enable this, 
+To enable this,
 instead of just the previous block, the interlink vector also points to
 the most recent preceding block of every level $\mu$.
 Genesis is of infinite level and hence a pointer to it
@@ -61,7 +61,8 @@ to be included per block is in expectation $\log(|\chain|)$.
 % \import{./}{algorithms/alg.nipopow-helper.tex}
 %\import{./}{algorithms/alg.nipopow-interlink.tex}
 
-\subsection{Superchain quality}
+% \subsection{Superchain quality}
+\noindent{\bf Superchain quality. }
 In order to argue formally about the security
 properties of blockchains that are equipped with the interlink
 data structure we will introduce a new concept of {\em superchain quality},
@@ -86,4 +87,3 @@ an execution with random scheduling is $(\delta, m)$-good at level
 $\mu$ with overwhelming probability in $m$.
 \end{lemma}
 %\ fi
-

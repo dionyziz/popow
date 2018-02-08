@@ -14,18 +14,11 @@ We also focus on two motivating applications inspired by the trend towards multi
 %
 We envision our NiPoPoW protocol will form the basis of an
 efficient multi-blockchain client, which could efficiently support payments
-using hundreds of different cryptocurrencies. 
+using hundreds of different cryptocurrencies.
 
 Our protocol improves the performance of client.
-
 blockchain protocols in general
-are increasingly used as components of larger systems. As one example, a recent system called
-Catena~\cite{catena} uses the blockchain as an authenticated log; the browser
-embeds a Bitcoin client to validate HTTPS certificates. The bandwidth costs that
-are tolerable for a dedicated Bitcoin wallet are likely unacceptable in such
-embedded contexts. Our techniques can directly reduce the cost of Catena and
-similar systems.
-
+are increasingly used as components of larger systems.
 This requires optimizing the ``SPV
 client'' described in the original Bitcoin paper~\cite{bitcoin} which requires
 processing an amount of data growing linearly with the size of the blockchain.
@@ -56,21 +49,14 @@ client of a separate cryptocurrency. This concept, initially popularized by a
 proposal by Back et al. ~\cite{sidechains}, can be used to avoid a difficult
 upgrade process: a new blockchain with additional features, such as experimental
 opcodes, can be backed by deposits in the original bitcoin currency, obviating
-the need to transfer capital to the new cryptocurrency. The ability to use sidechains
-as an upgrade and experimentation mechanism has been heralded as a key enabler
-of scalability in the Bitcoin ecosystem; however, the sidechains proposal is
-incomplete, as it does not provide a protocol that satisfies a natural security
-definition, i.e., where attacks succeed with only negligible probability, even
-though several attempts were made~\cite{pos,compactspv}. Our work is the
-first to answer the open problem posed by Back et al. \anote{The open problem
-  is about establishing an efficient ``two-way-peg'' between multiple proof-of-work blockchains.}  can also be
-used as a mechanism to off-load some of the workload incurred by the Bitcoin
-network by moving coins to dedicated sidechains, which can later be moved back.
+the need to transfer capital to the new cryptocurrency. As one example of
+cross-chain interfacing, we describe an ICO which distributes tokens issued on
+one blockchain, but allows paying for them using coins in another blockchain.
 
-These examples illustrate that our solution is a key component for two important
-pillars needed for next-generation blockchains: \textit{interoperability} and
-\textit{scalability}. While we use bitcoin concretely as an example, any
-proof-of-work cryptocurrency can adopt our techniques.
+% These examples illustrate that our solution is a key component for two important
+% pillars needed for next-generation blockchains: \textit{interoperability} and
+% \textit{scalability}. While we use bitcoin concretely as an example, any
+% proof-of-work cryptocurrency can adopt our techniques.
 
 \subsection{Our contributions}
 In summary, we make the following contributions.
