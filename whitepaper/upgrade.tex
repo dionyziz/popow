@@ -130,7 +130,8 @@ transactions containing the most recent interlink pointers so that they are
 included in the next block. If the transaction makes it to the next block, it
 can be used by the prover who keeps track of these. Otherwise, if it becomes
 part of a subsequent block, in which case some of the pointers it contains are
-invalid, it can be ignored or only partially used.
+invalid, it can be ignored or only partially used. The complete algorithms for
+velvet forks are included in the appendix.
 
 % \textbf{Supporting clients with different beliefs.}
 % The interlink format does not depend on parameters $m, k$. Therefore, it is not

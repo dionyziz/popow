@@ -4,7 +4,50 @@
 As mentioned in Section~\ref{sec:consensus}, chain quality properties are attained
 with overwhelming probability by all chains that are generated in optimistic
 environments, i.e. if no adversary tries to violate them.
-We now establish these with the following lemmas:
+
+We now provide the formal definitions for these distributions and establish
+these with the following lemmas.
+
+\begin{definition}[Locally good superchain]
+A superchain $\chain'$ of level
+$\mu$ with underlying chain $\chain$ is said to be $\mu$-\textnormal{locally-good}
+with respect to security parameter $\delta$, written
+$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, if $|\chain'| > (1 -
+\delta)2^{-\mu}|\chain|$.
+\end{definition}
+
+\begin{definition}[Superchain quality]
+The $(\delta, m)$ superquality property $Q^\mu_{scq}$ of a chain $\chain$
+pertaining to level $\mu$ with security parameters $\delta \in \mathbb{R}$ and
+$m \in \mathbb{N}$ states that for all $m' \geq m$, it holds that
+$\textsf{local-good}_{\delta}(C\upchain^\mu[-m':],
+C\upchain^\mu[-m':]\downchain, \mu)$. That is, all sufficiently large suffixes
+are locally good.
+\end{definition}
+
+While superchain quality guarantees that a superchain has a sufficient number
+of blocks w.r.t. the level 0 chain, we will also need to be able to compare
+it with other superchains. For this reason we introduce multilevel quality.
+
+\begin{definition}[Multilevel quality]
+A $\mu$-superchain $\chain'$ is said to have \textit{multilevel quality}, written
+$\textnormal{multi-good}_{\delta, k_1}(\chain, \chain', \mu)$ with respect to an
+underlying chain $\chain = \chain'\downchain$ with security parameters $k_1,
+\delta$ if for all $\mu' < \mu$ it holds that for any $\chain^* \subseteq \chain$,
+if $|\chain^*\upchain^{\mu'}| \geq k_1$, then $|\chain^*\upchain^{\mu}| \geq (1 -
+\delta)2^{\mu - \mu'}|\chain^*\upchain^{\mu'}|$.
+\end{definition}
+
+% For $\delta < 0.5$, multilevel quality implies that
+% $|\chain^*\upchain^{\mu}| \geq 1$.
+
+Putting the above together we conclude with the notion of a {\em good} superchain.
+
+\begin{definition}[Good superchain]\label{lem.good} A $\mu$-superchain $\chain'$
+is said to be \textit{good}, written $\textnormal{good}_{\delta, k_1}(\chain,
+\chain', \mu)$, with respect to an underlying chain $\chain = \chain'\downchain$
+if it has both superquality and multilevel quality with parameters $(\delta,
+m)$. \end{definition}
 
 \begin{lemma}[Local goodness]
 \label{lem.localgood}
@@ -42,12 +85,9 @@ $\chain$ containing only honestly-generated blocks adopted by an honest party in
 an execution with random scheduling is $(\delta, m)$-good at level
 $\mu$ with overwhelming probability in $m$.
 \end{lemma}
-
 %\ifonecolumn
-%\begin{proof}
-%This is a direct consequence of Lemma~\ref{lem.superquality} and
-%Lemma~\ref{lem.multilevel}. \Qed
-%\end{proof}
+\begin{proof}
+This is a direct consequence of Lemma~\ref{lem.superquality} and
+Lemma~\ref{lem.multilevel}. \Qed
+\end{proof}
 %\fi
-
-

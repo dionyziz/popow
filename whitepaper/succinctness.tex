@@ -1,4 +1,4 @@
-\subsection{Succinctness}
+\section{Succinctness}
 \label{sec.succinctness}
 Having established security in the general case of the standard honest majority
 model, we now concentrate on establishing performance guarantees.
@@ -16,7 +16,7 @@ For instance, if superquality is harmed at $\mu = 3$, the prover will
 need to digress down to level $\mu = 2$ and include the whole $2$-superchain,
 which, in expectation, will be of size $|\chain|/2$.
 
-We next establish that in the particular 
+We next establish that in the particular
 ``optimistic'' case where the adversary does not use their (minority)
 computational power or network power. Therefore, the superquality of the chain
 must be the same as a fully honestly-generated chain generated with no network
@@ -60,5 +60,6 @@ construction that achieves this.
 Specifically, we require the prover to produce a
 \textit{certificate of badness} in case there is a violation of
 \textit{goodness} in the blockchain.
-This certificate is guaranteed to logarithmic, so a verifier can inspect it before processing any more of the proof. If the 
-We defer a formal explanation of this mechanism to the full online version.
+This certificate is guaranteed to logarithmic, so a verifier can inspect it
+before processing any more of the proof.
+We defer a formal explanation of this mechanism to the appendix.

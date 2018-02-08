@@ -1,5 +1,5 @@
 % Theorem for the double-spending attack on PoPoW
-\subsection{Success probability of attack on PoPoW}
+\section{Proof of attack on PoPoW}
 \label{sec:attack-full}
 We now calculate the probability of our attack discussed in Section\ref{sec:attack}
 
@@ -15,13 +15,13 @@ suppression attack} on the honest chain. The adversary devotes exactly $r$
 rounds to this suppression attack; then resumes mining on the secret chain. We
 show that, despite this simplification (of fixing $r$) which is harmful to the
 adversary, the probability of a successful attack is non-negligible for certain
-values of the protocol parameters. 
+values of the protocol parameters.
 %\footnote{The attack could be further optimized, but we simplify it for exposition.}
 %
 %The adversary monitors the network for superblocks.
 Whenever an
 honest party diffuses an honestly-generated $\mu$-superblock,
-%at the end of a given round $r_1$, 
+%at the end of a given round $r_1$,
 the adversary starts devoting their mining power to block suppression
 starting from the next round.
 
