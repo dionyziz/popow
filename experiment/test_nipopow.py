@@ -70,6 +70,40 @@ def str_to_bytes32(s):
         r.append(s[start:start+32])
     return r
 
+
+def extract_vars(proof = proof):
+    hashed_headers = []
+    siblings = []
+    merkle_indices = []
+    branch_size = []
+    hashed_interlink = []
+
+    # mp stands for merkle proof
+    # hs stands for headers. (probably)
+    for hs, mp in proof:
+        # Copy the header to an array of 4 bytes32
+        header = str_to_bytes32(hs)
+        hashed_headers.append(sha256(sha256(hs)))
+        # Encode the Merkle bits (mu) in the largest byte
+        # Encode the mp size in the next largest byte
+        assert 0 <= len(mp) < 256
+        mu = sum(bit << i for (i,(bit,_)) in enumerate(mp[::-1]))
+        assert 0 <= mu < 256
+        #header[3] = chr(len(mp)) + chr(mu) + header[3][2:]
+        hashed_interlink.append(header[0])
+        branch_size.append(len(mp))
+        merkle_indices.append(mu)
+
+        #header[3] = header[3] + ('\x00'*14) + chr(len(mp)) + chr(mu)
+        #headers.append(header)
+
+        for (_,sibling) in mp:
+            siblings.append(sibling)
+
+    print repr(sha256(sha256(sampleBlock)))
+
+    return hashed_headers, hashed_interlink, siblings, merkle_indices, branch_size
+
 def extract_headers_siblings(proof = proof):
     headers = []
     siblings = []
@@ -96,10 +130,13 @@ def extract_headers_siblings(proof = proof):
 
 def submit_proof(proof=proof):
 
-    headers, siblings = extract_headers_siblings(proof)
+    headers, hashed_interlink, siblings, merkle_indices, merkle_branch_sizes = extract_vars(proof)
 
     g = s.head_state.gas_used
-    better_proof = contract_abi.submit_nipopow(headers, siblings, startgas = 100000000)
+
+    better_proof = contract_abi.submit_nipopow(
+        headers, hashed_interlink, siblings, merkle_branch_sizes, merkle_indices, startgas = 100000000)
+
     print 'Was it a better proof', better_proof
     print 'Gas used:', s.head_state.gas_used - g
 
@@ -113,13 +150,15 @@ base = s.snapshot()
 
 def test_forked_proof():
 
-    headers1, siblings1 = extract_headers_siblings(proof)
-    headers2, siblings2 = extract_headers_siblings(proof_f) # forked proof
+    headers, hashed_interlink, siblings, merkle_indices, merkle_branch_sizes = extract_vars(proof)
+    headers2, hashed_interlink2, siblings2, merkle_indices2, merkle_branch_sizes2 = extract_vars(proof_f)
 
     base = s.snapshot()
 
-    s_better = contract_abi.submit_nipopow(headers1, siblings1, startgas = 100000000)
-    f_better = contract_abi.submit_nipopow(headers2, siblings2, startgas = 100000000)
+    s_better = contract_abi.submit_nipopow(
+        headers, hashed_interlink, siblings, merkle_branch_sizes, merkle_indices, startgas = 100000000)
+    f_better = contract_abi.submit_nipopow(
+        headers2, hashed_interlink2, siblings2, merkle_branch_sizes2, merkle_indices2, startgas = 100000000)
 
     assert (s_better == True)
     assert (f_better == False)
@@ -127,8 +166,10 @@ def test_forked_proof():
     s.revert(base)
 
     # Change the order of the proofs.
-    f_better = contract_abi.submit_nipopow(headers2, siblings2, startgas = 100000000)
-    s_better = contract_abi.submit_nipopow(headers1, siblings1, startgas = 100000000)
+    f_better = contract_abi.submit_nipopow(
+        headers2, hashed_interlink2, siblings2, merkle_branch_sizes2, merkle_indices2, startgas = 100000000)
+    s_better = contract_abi.submit_nipopow(
+        headers, hashed_interlink, siblings, merkle_branch_sizes, merkle_indices, startgas = 100000000)
 
     # proof should still be better.
     assert (f_better == True)
@@ -136,7 +177,23 @@ def test_forked_proof():
 
     print "Test: OK"
 
-"""
+def measure_compare_gas():
+
+    headers1, siblings1 = extract_headers_siblings(proof)
+    #headers2, siblings2 = extract_headers_siblings(proof_f) # forked proof
+
+    hash_headers2 = []
+    for header, _ in proof_f:
+        hash_headers2.append(sha256(sha256(header)))
+
+    s_better = contract_abi.submit_nipopow(headers1, siblings1, startgas = 100000000)
+
+    g = s.head_state.gas_used
+    better_proof = contract_abi.compare_proofs(hash_headers2, startgas = 100000000)
+    print 'Was it a better proof', better_proof
+    print 'Gas used:', s.head_state.gas_used - g
+
+
 # The following tests/debugging functions require the functions to be set to public. 
 def test_best_argument():
 
@@ -184,7 +241,7 @@ def test_get_level(proof, lca):
         print level, "->", levels[level]
 
     print pr_levels
-"""
+
 
 def test_OK():
     #s.revert(base)  # Restore the snapshot
