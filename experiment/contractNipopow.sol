@@ -88,38 +88,17 @@ contract Nipopow {
     }
   }
 
-  /* Clears the mapping of the submitted proof */
-  function clear_hashmap(bytes32[] headers) internal {
-    for (uint i = 0; i < headers.length; i++) {
-      curProofMap[headers[i]] = false;
-    }
-  }
-
-  /* // Used only for testing.
-  function store_proof_in_map(bytes32[4][] proof) public {
-    for (uint i = 0; i < proof.length; i++) {
-      curProofMap[hash_header(proof[i])] = true;
-    }
-  } */
-
-  /*// Hash the header using double SHA256 
-  function hash_header(bytes32[4] header) internal returns(bytes32) {
-    // Compute the hash of 112-byte header.
-    var s = new string(112);
-    uint sptr;
-    uint hptr;
-    assembly { sptr := add(s, 32) }
-    assembly { hptr := add(header, 0) }
-    memcpy(sptr, hptr, 112);
-    return sha256(sha256(s));
-  }*/
-
   function get_lca(bytes32[] cur_proof) internal returns(uint, uint) {
+
+    for (uint i = 0; i < cur_proof.length; i++) {
+      curProofMap[cur_proof[i]] = true;
+    }
+
     bytes32 lca_hash;
 
     uint b_lca = 0;
     uint c_lca = 0;
-    for (uint i = 0; i < best_proof.length; i++) {
+    for (i = 0; i < best_proof.length; i++) {
       if (curProofMap[best_proof[i]]) {
         b_lca = i;
         lca_hash = best_proof[i];
@@ -134,6 +113,12 @@ contract Nipopow {
         break;
       }
     }
+
+    // Clear the map. We don't need it anymore.
+    for (i = 0; i < cur_proof.length; i++) {
+      curProofMap[cur_proof[i]] = false;
+    }
+
     return (b_lca, c_lca);
   }
 
@@ -152,7 +137,7 @@ contract Nipopow {
     return 0;
   }
 
-  function best_arg(bytes32[] proof, uint al_index) public returns(uint256) {
+  function best_arg(bytes32[] proof, uint al_index) internal returns(uint256) {
     uint max_level = 0;
     uint256 max_score = 0;
     uint cur_level = 0;
@@ -210,9 +195,7 @@ contract Nipopow {
     bytes32[] siblings, uint8[] merkle_branch_length, uint8[] merkle_indices) public returns(bool) {
 
     uint ptr = 0; // Index of the current sibling
-    curProofMap[cur_proof[0]] = true;
     for (uint i = 1; i < cur_proof.length; i++) {
-      curProofMap[cur_proof[i]] = true;
       // Add to block precedence to the blockDAG.
       add_to_dag(cur_proof[i - 1], cur_proof[i]);
 
@@ -233,8 +216,6 @@ contract Nipopow {
       is_better_proof = true;
       best_proof = cur_proof;
     }
-    // We don't need to store the map.
-    clear_hashmap(cur_proof);
     // Update the ancestors.
     update_ancestors(best_proof[0]);
     return is_better_proof;

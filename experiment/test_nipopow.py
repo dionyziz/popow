@@ -179,14 +179,15 @@ def test_forked_proof():
 
 def measure_compare_gas():
 
-    headers1, siblings1 = extract_headers_siblings(proof)
+    headers, hashed_interlink, siblings, merkle_indices, merkle_branch_sizes = extract_vars(proof)
     #headers2, siblings2 = extract_headers_siblings(proof_f) # forked proof
 
     hash_headers2 = []
     for header, _ in proof_f:
         hash_headers2.append(sha256(sha256(header)))
 
-    s_better = contract_abi.submit_nipopow(headers1, siblings1, startgas = 100000000)
+    s_better = contract_abi.submit_nipopow(
+        headers, hashed_interlink, siblings, merkle_branch_sizes, merkle_indices, startgas = 100000000)
 
     g = s.head_state.gas_used
     better_proof = contract_abi.compare_proofs(hash_headers2, startgas = 100000000)
