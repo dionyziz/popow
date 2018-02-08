@@ -3,10 +3,10 @@ Unlike a traditional blockchain client
 which must verify the entire linearly-growing chain of PoWs, clients based on
 NIPoPoWs require resources only logarithmic in the length of the blockchain.
 
-Our work improves and extends on prior work by Kiayias et al. Compare to theirs, our protocol is non-interactive, requiring only one round of communication. We also identify and correct a double-spend vulnerability and proof flaw in the prior work. Correcting this required \anote{TODO}.
+Our work improves and extends on prior work by Kiayias et al. Compare to theirs, our protocol is non-interactive, requiring only one round of communication. We also identify and correct a double-spend vulnerability and proof flaw in the prior work. %Correcting this required \anote{TODO}.
 
 We provide empirical validation for NiPoPoWs through an implementation and benchmark study, in the context of two new applications:
-First, we consider a multi-client blockchain that supports all proof-of-work currencies rather than just one, \anote{XXX about efficiency}.
+First, we consider a multi-client blockchain that supports all proof-of-work currencies rather than just one, with up to 90\% reduction in bandwidth. %, \anote{XXX about efficiency}.
 Second, we discuss a ``two-way-peg'' token that span multiple independent blockchains. To achieve this, we implemented the NiPoPoW verifier in the Solidity programming language, enabling one blockchain to act as a client for another.
 
  Finally, we present two deployment strategies by which our NIPoPoWs can be adopted by existing cryptocurrencies: first via a soft fork, and second via a new update mechanism that we
