@@ -1,23 +1,6 @@
-\section{Applications \& Evaluation}
+\section{Evaluation \& Applications}
 \label{sec.applications}
 
-\subsection{Multi-blockchain wallets}
-\label{sec.multichain}
-An application of our technique is an efficient multi-cryptocoin client.
-Consider a merchant who wishes to accept payments in any cryptocoin, not just
-the popular ones. The na\"ive approach would be to install an SPV client for each known cryptocoin.
-This approach would entail downloading the header chain for each cryptocoin, and
-periodically syncing up by fetching any newly generated block headers. An
-alternative would be to use an online service supporting multiple currencies,
-but this introduces reliance on a third party (e.g. Jaxx and Coinomi rely on
-third party networks).
-
-A NIPoPoW-based client would not download the entire header chain, but would intead only receive NiPoPoW proofs each time a payment is received. When a peer informs the client about a payment, they include a block index $\ell$ and NiPoPoW proof of transaction inclusion. The peer must then query \emph{all} of their connected peers, requesting any better better proof for the same predicate. After waiting a short time period for a response, the client runs the \texttt{verify-infix} routine on all received proofs, and accepts the transaction if the output is \emph{true}. Although initially such proofs must be relative genesis, the client may store the most recently-known ($k$-stable) blockhash for each cryptocoin, such that future payments can include NiPoPoW proofs relative to that. Thus for popluar cryptocoins, the NIPoPoW-based
-client downloads nearly every block header, like an ordinary SPV client; but for
-cryptocoins used infrequently, the NIPoPoW-based client can skip over most
-blocks.
-
-\subsection{Simulation}
 We simulated the resources savings resulting from the use of a NIPoPoW-based
 client. We model the arrival of payments in each cryptocoin as a Poisson process
 and assume that the market cap of a cryptocoin is a proxy for usage. Currently,
@@ -91,13 +74,38 @@ sync up) by 90\%.
     \end{tabular}
   \end{table}
 
+\paragraph{Multi-blockchain wallets.}\label{sec.multichain}
+An application of our technique is an efficient multi-cryptocoin client.
+Consider a merchant who wishes to accept payments in any cryptocoin, not just
+the popular ones. The na\"ive approach would be to install an SPV client for each known cryptocoin.
+This approach would entail downloading the header chain for each cryptocoin, and
+periodically syncing up by fetching any newly generated block headers. An
+alternative would be to use an online service supporting multiple currencies,
+but this introduces reliance on a third party (e.g. Jaxx and Coinomi rely on
+third party networks).
 
-\subsection{Verifier implementation in Solidity}
+A NIPoPoW-based client would not download the entire header chain, but would intead only receive NiPoPoW proofs each time a payment is received. When a peer informs the client about a payment, they include a block index $\ell$ and NiPoPoW proof of transaction inclusion. The peer must then query \emph{all} of their connected peers, requesting any better better proof for the same predicate. After waiting a short time period for a response, the client runs the \texttt{verify-infix} routine on all received proofs, and accepts the transaction if the output is \emph{true}. Although initially such proofs must be relative genesis, the client may store the most recently-known ($k$-stable) blockhash for each cryptocoin, such that future payments can include NiPoPoW proofs relative to that. Thus for popluar cryptocoins, the NIPoPoW-based
+client downloads nearly every block header, like an ordinary SPV client; but for
+cryptocoins used infrequently, the NIPoPoW-based client can skip over most
+blocks.
 
-In order to support the Cross-Chain ICO application, we implemented the NiPoPoW verifier algorithm as a Solidity smart contract.
-The contract consists of two functions.
-The \texttt{submit\_nipopow} function is used by the provers to provide their proof vectors. Instead of passing the block headers of the proof, the provers pass the hashes of the block headers and the hashes of the interlink vector. The reason is that the full data of the block header (especially the merkle root tree) is only useful for the blocks of interest. Thus, we reduce the amount of data needed for the proof by a factor of 2. The rest of the parameters are used in the inclusion proof of the block. After confirming the validity of the proof, the \texttt{compare\_proofs} function is called between the current and the best proof. If the current proof is better then it is assigned to the best proof in the contract's storage. The last step is to update the ancestors of the best proof. Regardless of whether the proof is better it may contain blocks that are in the honest chain and are blocks of interest.
-The gas costs are summarized in Table~\ref{tbl:gascosts}. The \$USD column represents the current price of this much gas on Ethereum.
+\paragraph{Verifier implementation in Solidity.}
+In order to support the Cross-Chain ICO application, we implemented the NiPoPoW
+verifier algorithm as a Solidity smart contract. The contract consists of two
+functions. The \texttt{submit\_nipopow} function is used by the provers to
+provide their proof vectors. Instead of passing the block headers of the proof,
+the provers pass the hashes of the block headers and the hashes of the interlink
+vector. The reason is that the full data of the block header (especially the
+merkle root tree) is only useful for the blocks of interest. Thus, we reduce the
+amount of data needed for the proof by a factor of 2. The rest of the parameters
+are used in the inclusion proof of the block. After confirming the validity of
+the proof, the \texttt{compare\_proofs} function is called between the current
+and the best proof. If the current proof is better then it is assigned to the
+best proof in the contract's storage. The last step is to update the ancestors
+of the best proof. Regardless of whether the proof is better it may contain
+blocks that are in the honest chain and are blocks of interest. The gas costs
+are summarized in Table~\ref{tbl:gascosts}. The \$USD column represents the
+current price of this much gas on Ethereum.
 %The Solidity code listing will be made available in the full online version.
 
 \begin{table}[ht]
