@@ -138,9 +138,12 @@ data needed for the proof by a factor of 2. The rest of the parameters are used
 in the inclusion proof of the block. After confirming the validity of the proof,
 the \texttt{compare\_proofs} function is called between the current and the best
 proof. If the current proof is better then it is assigned to the best proof in
-the contract's storage. The last step is to update the ancestors of the best
-proof. Regardless of whether the proof is better it may contain blocks that are
-in the honest chain and are blocks of interest. The gas costs are summarized in
+the contract's storage.
+%The last step is to update the ancestors of the best
+%proof.
+%Regardless of whether the proof is better it may contain blocks that are
+%in the honest chain and are blocks of interest.
+The gas costs are summarized in
 Table~\ref{tbl:gascosts}. The \$USD column represents the current price of this
 much gas on Ethereum.
 %The Solidity code listing will be made available in the full online version.
