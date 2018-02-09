@@ -2,8 +2,6 @@
 
 %\subsection{Interlink optimizations}
 
-%We now discuss the manner in which the interlink data structure is hashed for
-%coinbase inclusion.
 %% A Merkle tree is used to hash the interlink data structure
 %% into a single hash \cite{KLS}. NIPoPoWs form a chain of various levels
 %% which can omit blocks. For each block in the proof,
@@ -23,15 +21,16 @@
 %% (\log(|\chain|) - \log(m))$ blocks in expectation, $m$ at each of the $\mu - 1$
 %% levels and $2m$ $0$-blocks.
 
+We now discuss the size of NiPoPoW proofs and evaluate concrete parameters.
 Organizing the interlink data structure as a Merkle tree of $\log(|\chain|)$ items, a
-proof-of-inclusion is provided in $\log \log(|\chain|)$ space; $0$-level
-pointers need not be included in it, but the genesis block does. The root of the
-tree can be proved to have been included in the block header in $\log(|\overline
+proof-of-inclusion is provided in $\log \log(|\chain|)$ space;
+the proof need not include $0$-level pointers, must include the genesis block. The root of the
+tree can be proved to be included in the block header in $\log(|\overline
 x|)$ using the standard Merkle tree of transactions. This makes the proof size
 require $\log(|\overline x|) + \log\log(|\chain|)$ hashes per block for a total
 of $m (\log(|\chain|) - \log(m))(\log(|\overline x|) + \log\log(|\chain|))$
 hashes. In addition, $m (\log(|\chain|) - \log(m))$ headers and coinbase
-transactions are needed. Concretely, given that currently in bitcoin $|\chain| =
+transactions are needed. As an example, given that currently in bitcoin $|\chain| =
 464,185$ and $|\overline x| = 2000$, we have $\log(|\chain|) = 18,
 \log\log(|\chain|) = 5, \log(|\overline x|) = 11$. For the $k$-suffix, only $k$
 headers are needed. We set $k = 6$ and see that headers are $80$ bytes and
@@ -44,12 +43,29 @@ of $m$ in Table~\ref{table.size}.
 
 \paragraph{Concrete parameterization.}
 To determine concrete values for security parameter $m$, we focus on a
-particular adversarial strategy and analyze its probability of success. This
-adversarial strategy is only one possible strategy; an advanced adversary can
-perform more sophisticated attacks. However, the fact that this attack is
-reasonable and possible to simulate allows us to extract specific values for
-$m$. The attack is an extension of the stochastic processes described in
+particular adversarial strategy and analyze its probability of success.
+%While other adversarial behaviors may be possible, this attack is
+%serves as a baseline for determining specific values for
+%$m$.
+The attack is an extension of the stochastic processes described in
 \cite{bitcoin} and \cite{rosenfeld}.
+
+The experiment works as follows: $m$ is fixed and some adversarial computational
+power percentage $q$ of the total network computational power is chosen; $k$ is
+chosen based on $q$ according to Nakamoto \cite{bitcoin}. The number of blocks
+$y$ during which parallel mining will occur is also fixed. The experiment begins
+with the adversary and honest parties sharing a common blockchain which ends in
+block $B$. After $B$ is mined, the adversary starts mining in secret and in
+parallel with the honest parties on her own private fork on top of $B$. She
+ignores the honest chain, so that the two chains remain disjoint after $B$. As
+soon as $y$ blocks have been mined in total, the adversary attempts a double
+spend via a NiPoPoW
+by creating two conflicting transactions which are committed to an honest
+block and an adversarial block respectively on top of each current chain.
+Finally, the adversary mines $k$ blocks on top of the double spending
+transaction within her private chain. After these $k$ blocks have been mined,
+she publishes her private chain in an attempt to overcome the honest chain.
+
 
 \begin{table}
   \caption{
@@ -75,21 +91,6 @@ $m$. The attack is an extension of the stochastic processes described in
 \end{table}
 
 
-The experiment works as follows: $m$ is fixed and some adversarial computational
-power percentage $q$ of the total network computational power is chosen; $k$ is
-chosen based on $q$ according to Nakamoto \cite{bitcoin}. The number of blocks
-$y$ during which parallel mining will occur is also fixed. The experiment begins
-with the adversary and honest parties sharing a common blockchain which ends in
-block $B$. After $B$ is mined, the adversary starts mining in secret and in
-parallel with the honest parties on her own private fork on top of $B$. She
-ignores the honest chain, so that the two chains remain disjoint after $B$. As
-soon as $y$ blocks have been mined in total, the adversary attempts a double
-spend via a NiPoPoW
-by creating two conflicting transactions which are committed to an honest
-block and an adversarial block respectively on top of each current chain.
-Finally, the adversary mines $k$ blocks on top of the double spending
-transaction within her private chain. After these $k$ blocks have been mined,
-she publishes her private chain in an attempt to overcome the honest chain.
 
 We measure the probability of success of this attack. We experiment with various
 values of $m$ for $y = 100$, indicating $100$ blocks of secret parallel mining.
