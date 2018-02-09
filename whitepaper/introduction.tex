@@ -6,25 +6,27 @@
 %% only logarithmic in the length of the blockchain.
 
 %
-Today, Bitcoin and Ethereum remain the two wealthiest
+Today, Bitcoin and Ethereum remain the two largest
 proof-of-work cryptocurrencies (by market cap). However, the ecosystem has grown diverse,
 with dozens of viable ``altcoin'' competitors.
-We also focus on two motivating applications inspired by the trend towards multiple coexisting cryptocurrencies.
-
 %
-We envision our NiPoPoW protocol will form the basis of an
-efficient multi-blockchain client, which could efficiently support payments
-using hundreds of different cryptocurrencies.
+Given such an environment,  it becomes increasingly  important to
+be able to efficiently handle  multiple blockchains by the same client
+and reliably transfer assets between them. 
+%
+%
+%
+%We envision our NiPoPoW protocol will form the basis of an
+%efficient multi-blockchain client, which could efficiently support payments
+%using hundreds of different cryptocurrencies.
+%Our protocol improves the performance of client.
+%blockchain protocols in general
+%are increasingly used as components of larger systems.
 
-Our protocol improves the performance of client.
-blockchain protocols in general
-are increasingly used as components of larger systems.
-This requires optimizing the ``SPV
+The first objective requires optimizing the ``SPV
 client'' described in the original Bitcoin paper~\cite{bitcoin} which requires
 processing an amount of data growing linearly with the size of the blockchain.
-
-
-
+%
 %% Cryptocurrencies such as Bitcoin~\cite{bitcoin}\cite{bitcoinsoftware} and
 %% Ethereum~\cite{ethereum} are peer-to-peer networks that maintain a globally
 %% consistent transaction ledger, using a consensus protocol based on proof-of-work
@@ -38,19 +40,20 @@ processing an amount of data growing linearly with the size of the blockchain.
 %% Non-Interactive Proofs of Proof-of-Work (NIPoPoWs), which can be adapted into
 %% existing cryptocurrencies to support more efficient clients. A traditional
 %% blockchain client in order to check a certain blockchain property \anote{TODO: too abstract
-
-Finally, there has been significant interest in the development of
+%
+The second objective, has received  significant attention in the context of 
 ``cross-chain'' applications, i.e. logical transactions that span multiple
 separate blockchains. Simple cross-chain transactions are feasible today: the
 most well-known is the atomic exchange~\cite{tiernolan}, e.g., a trade of
-bitcoin for ether. However, more sophisticated applications could be enabled by
-our protocol, which would allow the blockchain of one cryptocurrency to embed a
+bitcoin for ether. However, more sophisticated applications could be enabled 
+by a more efficient proof process, which would allow the blockchain of one cryptocurrency to embed a
 client of a separate cryptocurrency. This concept, initially popularized by a
-proposal by Back et al. ~\cite{sidechains}, can be used to avoid a difficult
+proposal by Back et al. ~\cite{sidechains} 
+can be used to avoid a difficult
 upgrade process: a new blockchain with additional features, such as experimental
 opcodes, can be backed by deposits in the original bitcoin currency, obviating
 the need to transfer capital to the new cryptocurrency. As one example of
-cross-chain interfacing, we describe an ICO which distributes tokens issued on
+cross-chain interfacing, we describe an initial coin offering (ICO) which distributes tokens issued on
 one blockchain, but allows paying for them using coins in another blockchain.
 
 % These examples illustrate that our solution is a key component for two important
@@ -65,10 +68,11 @@ of a new cryptographic
 primitive called Non-Interactive Proofs of Proof-of-Work (NIPoPoW).
 %
 We present a formal model and a provably secure instantiation of NIPoPoWs in the
-backbone model \cite{backbone}. Our contribution builds on previous work  of \cite{KLS} who posed {\em interactive} proofs of proof-of-work, which, in turn,
+backbone model \cite{backbone}. Our contribution builds on previous work  of \cite{KLS} who introduced
+the concept of (interactive) proofs of proof-of-work, which, in turn,
 are based on previous discussion of such concepts in the bitcoin forums
 \cite{highway}. We in fact show an explicit attack against the construction of \cite{KLS} that showcases the difficulty of designing such protocols. It follows
-that our construction is the first secure Proof of Proof-of-Work.
+that our construction is the first secure Proof of Proof-of-Work assuming honest majority.
 Furthermore, our solution has the additional property of being non-interactive,
 as the previous construction could revert into interaction by an adversarial
 prover. Similar to previous work, we prove that the proofs are
