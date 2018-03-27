@@ -44,52 +44,6 @@
 % \noindent
 % \textbf{Full proofs. }
 
-\import{./}{succinctness-full.tex}
-
-\noindent{\bf Certificates of badness and denial of service attacks.}
-In summary, with our arguments so far,  we proved security in the general case
-(for any adversarial behavior)  and succinctness only in the optimistic case
-where the adversary does not interfere with superchain quality. In this setting,
-it is possible for the adversary to produce large dummy (incorrect) proofs that
-expand the verification time; security will not be hurt but it would take more
-time to complete verification. One may dismiss this as a trivial denial of
-service attack (and have a resource bounded verifier simply stop  if it is
-confronted with such a processing task).
-
-%
-Nevertheless, it would be useful for honest provers to have the ability to
-signal to the verifier that such time expansion is indeed necessary because of
-an attack on superchain quality rather than because a malicious prover is simply
-sending long proofs that will eventually be rejected. With such signaling
-mechanism, a resource bounded verifier can distinguish between a denial of
-service attack that may be directed solely to it from  a denial of service
-attack that  is launched by an attacker that has the ability to  interfere
-globally with superchain quality.
-
-To facilitate the above signaling, we offer a simple generalization of our
-construction that achieves this.
-%Our extended construction allows
-%the verifier to stop processing
-%input early, in a streaming fashion, thereby only requiring logarithmic
-%communication complexity per proof received. To achieve
-%this, observe that honest proofs need to
-%be large only if there is a violation of \textit{goodness}. However, goodness is
-%not harmed when the chain is not under attack by the adversarial computational
-%power or network. As such,
-Specifically, we require the prover to produce a \textit{certificate of badness}
-in case there is a violation of \textit{goodness} in the blockchain. This
-certificate will always be logarithmic in size and must be sent prior to the
-rest of the proof by the prover to the verifier. Because the certificate will be
-logarithmic in size even in the case of an adversarial attack on the chain, the
-honest verifier can stop processing the certificate after a logarithmic time
-bound. If the certificate is claimed to be longer, the honest verifier can
-reject early by deciding that the prover is adversarial. Looking at the
-certificate, the honest verifier determines whether there is a possibility for a
-lack of goodness in the underlying chain. If there's no adversarial
-computational power in use, the certificate is impossible to produce. We leave
-the full description of certificates of badness for the full version of this
-paper.
-
 \section{Velvet forks revisited}
 
 \import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
