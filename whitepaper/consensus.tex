@@ -26,6 +26,11 @@ infinite level and hence a pointer to it is included in every block at the first
 available index within the interlink data structure. The number of pointers that
 need to be included per block is in expectation $\log(|\chain|)$.
 
+Figure~\ref{fig.hierarchy} illustrates the blockchain superblocks starting from
+level $1$ and going up to level $4$ in case these blocks are distributed
+exactly according to expectation. Note that each level contains half the blocks
+of the level below.
+
 \begin{figure}
     \caption{The hierarchical blockchain.
     Higher levels have achieved a lower target (higher difficulty) during mining.}
@@ -38,15 +43,9 @@ need to be included per block is in expectation $\log(|\chain|)$.
     \label{fig.hierarchy}
 \end{figure}
 
-%The \textit{interlink} data structure is proposed to be included in each block,
-%replacing the existing pointer to the previous block with a
-%
-
-%\iftr
-The algorithm
-for this construction is shown in Algorithm~\ref{alg.nipopow-interlink} and is
-borrowed from~\cite{KLS}.
-The interlink data structure turns the blockchain into a
+The algorithm for this construction is shown in
+Algorithm~\ref{alg.nipopow-interlink} and is borrowed from~\cite{KLS}. The
+interlink data structure turns the blockchain into a
 skiplist-like~\cite{skiplist} data structure.
 
 The updateInterlink algorithm accepts a block $B'$, which already has an
