@@ -1,9 +1,9 @@
 \begin{algorithm}[H]
     \caption{\label{alg.nipopow-helper}Helper functions needed for the NIPoPoW
-    construction. \textit{blockid} determines the id of a block given its
+    construction. \textit{id} determines the id of a block given its
     contents. \textit{level} determines the maximum superblock level of a block.}
     \begin{algorithmic}[1]
-        \Function{\sf blockid}{$B$}
+        \Function{\sf id}{$B$}
             \Let{(s, x, ctr, \textsf{interlink})}{B}
             \Let{\textsf{id}}{H(ctr, G(s, x, \textsf{interlink}))}
             \State\Return{\textsf{id}}
