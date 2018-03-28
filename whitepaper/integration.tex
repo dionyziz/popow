@@ -1,6 +1,6 @@
 \section{Evaluation \& Applications}
 \label{sec.applications}
-In this section we evaluate the cost of NiPoPoWs when used in realistic blockchain applications.
+In this section we evaluate the cost of NIPoPoWs when used in realistic blockchain applications.
 First we simulated the resources savings resulting from the use of a NIPoPoW-based
 client compared to ordinary SPV. We model the arrival of payments in each cryptocoin as a Poisson process
 and assume that the market cap of a cryptocoin is a proxy for usage. Currently,
@@ -84,8 +84,18 @@ alternative would be to use an online service supporting multiple currencies,
 but this introduces reliance on a third party (e.g. Jaxx and Coinomi rely on
 third party networks).
 
-A NIPoPoW-based client would not download the entire header chain, but would intead only receive NiPoPoW proofs each time a payment is received. When a peer informs the client about a payment, they include a block index $\ell$ and NiPoPoW proof of transaction inclusion. The peer must then query \emph{all} of their connected peers, requesting any better better proof for the same predicate. After waiting a short time period for a response, the client runs the \texttt{verify-infix} routine on all received proofs, and accepts the transaction if the output is \emph{true}. Although initially such proofs must be relative genesis, the client may store the most recently-known ($k$-stable) blockhash for each cryptocoin, such that future payments can include NiPoPoW proofs relative to that. Thus for popluar cryptocoins, the NIPoPoW-based
-client downloads nearly every block header, like an ordinary SPV client; but for
+A NIPoPoW-based client would not download the entire header chain, but would
+intead only receive NIPoPoW proofs each time a payment is received. When a peer
+informs the client about a payment, they include a block index $\ell$ and
+NIPoPoW proof of transaction inclusion. The peer must then query \emph{all} of
+their connected peers, requesting any better better proof for the same
+predicate. After waiting a short time period for a response, the client runs the
+\texttt{verify-infix} routine on all received proofs, and accepts the
+transaction if the output is \emph{true}. Although initially such proofs must be
+relative genesis, the client may store the most recently-known ($k$-stable)
+blockhash for each cryptocoin, such that future payments can include NIPoPoW
+proofs relative to that. Thus for popluar cryptocoins, the NIPoPoW-based client
+downloads nearly every block header, like an ordinary SPV client; but for
 cryptocoins used infrequently, the NIPoPoW-based client can skip over most
 blocks.
 
@@ -125,7 +135,7 @@ blockchain using the private key corresponding to their source account used to
 make the payment within the source blockchain.
 
 In order to support the cross-chain ICO application and to present concrete data
-about the cost of executing NIPoPoW-style proofs, we implemented the NiPoPoW
+about the cost of executing NIPoPoW-style proofs, we implemented the NIPoPoW
 verifier algorithm as a Solidity smart contract\footnote{The GitHub URL of the
 MIT-licensed smart contract has been removed for anonymity purposes and will
 be included in the full version.}. The contract consists of two functions.

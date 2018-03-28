@@ -14,11 +14,11 @@ solves an open problem posed by Back et al., and thus enables this vision.
   \begin{tabular}{r|rrr}
               & Decentralized & Cost        & \\
     \hline
-    Federated\cite{rootstock,federated} 
+    Federated\cite{rootstock,federated}
               &  & $O(1)$ & \\
     Drivechain,BTCRelay\cite{drivechain,btcrelay,peacerelay}
               & x& $O(N)$ & \\
-    Ours\cite{nipopow} 
+    Ours\cite{nipopow}
               & x& $O(polylog N)$ & \\
   \end{tabular}
 \end{table}
@@ -42,7 +42,7 @@ transactions committed on the host chain are delivered to the sidechain using a
 proof; vice versa for withdrawal transactions. Whereas in the multi-blockchain
 wallet application the client queries each of its peers (one of which is assumed
 to be honest), in this setting peers must listen for event notifications when a
-``withdrawal'' transaction is commited, and if they have a better NiPoPoW proof
+``withdrawal'' transaction is commited, and if they have a better NIPoPoW proof
 that invalidates this claim, they must submit it as a transaction within some
 time bound. The smart contract should collect a security deposit from the
 withdrawer that can be used to compensate peers for providing invalidation

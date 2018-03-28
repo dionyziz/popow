@@ -5,9 +5,13 @@ NIPoPoWs require resources only logarithmic in the length of the blockchain.
 
 Our work  extends and improves prior work that introduced ``proofs of proofs of work'' [Bitcoin '16]. Compared to theirs, our protocol is non-interactive, requiring only one round of communication thus resolving the main open question that was left open. We also identify and correct a double-spend vulnerability and security flaw in that work. % Correcting this required \anote{TODO}.
 
-We provide empirical validation for NiPoPoWs through an implementation and benchmark study, in the context of two new applications:
-First, we consider a multi-client blockchain that supports all proof-of-work currencies rather than just one, with up to 90\% reduction in bandwidth. 
-Second, we discuss a ``cross-chain ICO'' application that spans multiple independent blockchains. To achieve this, we implemented the NiPoPoW verifier in the Solidity programming language, enabling one blockchain to act as a client for another.
+We provide empirical validation for NIPoPoWs through an implementation and
+benchmark study, in the context of two new applications: First, we consider a
+multi-client blockchain that supports all proof-of-work currencies rather than
+just one, with up to 90\% reduction in bandwidth.  Second, we discuss a
+``cross-chain ICO'' application that spans multiple independent blockchains. To
+achieve this, we implemented the NIPoPoW verifier in the Solidity programming
+language, enabling one blockchain to act as a client for another.
 
 Finally, we present two deployment strategies by which our NIPoPoWs can be adopted by existing cryptocurrencies: first via a soft fork, and second via a new update mechanism that we
 term a ``velvet fork'' that enables harnessing some of the performance benefits

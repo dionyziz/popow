@@ -21,7 +21,7 @@
 %% (\log(|\chain|) - \log(m))$ blocks in expectation, $m$ at each of the $\mu - 1$
 %% levels and $2m$ $0$-blocks.
 
-We now discuss the size of NiPoPoW proofs and evaluate concrete parameters.
+We now discuss the size of NIPoPoW proofs and evaluate concrete parameters.
 Organizing the interlink data structure as a Merkle tree of $\log(|\chain|)$ items, a
 proof-of-inclusion is provided in $\log \log(|\chain|)$ space;
 the proof need not include $0$-level pointers, must include the genesis block. The root of the
@@ -59,7 +59,7 @@ block $B$. After $B$ is mined, the adversary starts mining in secret and in
 parallel with the honest parties on her own private fork on top of $B$. She
 ignores the honest chain, so that the two chains remain disjoint after $B$. As
 soon as $y$ blocks have been mined in total, the adversary attempts a double
-spend via a NiPoPoW
+spend via a NIPoPoW
 by creating two conflicting transactions which are committed to an honest
 block and an adversarial block respectively on top of each current chain.
 Finally, the adversary mines $k$ blocks on top of the double spending
