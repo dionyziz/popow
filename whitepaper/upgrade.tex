@@ -66,10 +66,8 @@ invalid data. The one thing the Verifier cannot verify in terms of interlink
 claims is whether the claimed superblock of a given level is the most recent
 previous superblock of that level. However, an adversarial prover cannot make
 use of that to construct winning proofs, as they are only able to present
-shorter chains in that case.
-The
-honest prover can simply ignore such pointers as if they were not included at
-all.
+shorter chains in that case. The honest prover can simply ignore such pointers
+as if they were not included at all.
 
 The velvet prover works as usual, but additionally maintains a \textit{realLink}
 data structure, which stores the \textit{correct} interlink for each block.
@@ -78,30 +76,29 @@ for blocks that it hasn't seen before. For those blocks, it maintains its own
 realLink data structure which it updates accordingly to make sure it is correct
 regardless of what the interlink data structure of the received block claims.
 
-The velvet $\chain\upchain$ operator
-shown in Algorithm~\ref{alg.nipopow-velvet-innerchain}
-is implemented identically as before, except that instead of following the
-interlink pointer blindly it now calls the helper function \textit{followUp},
-shown in Algorithm~\ref{alg.nipopow-velvet-follow}. It accepts block $B$ and
-level $\mu$ and creates a connection from $B$ back to the most recent preceding
+The velvet $\chain\upchain$ operator shown in
+Algorithm~\ref{alg.nipopow-velvet-innerchain} is implemented identically as
+before, except that instead of following the interlink pointer blindly it now
+calls the helper function \textit{followUp}, shown in
+Algorithm~\ref{alg.nipopow-velvet-follow}. It accepts block $B$ and level $\mu$
+and creates a connection from $B$ back to the most recent preceding
 $\mu$-superblock, by following the interlink pointer if it is correct.
 Otherwise, it follows the previd link which is available in all blocks, and
 tries to follow the interlink pointer again from there. Finally, the velvet
-prover
-%shown in
-%Algorithm~\ref{alg.nipopow-velvet-prover}
-simply applies the velvet $\chain\upchain$ operator and includes the auxiliary
-connecting nodes within the final proof. No changes in the verifier are needed; note that  in the case of infix proofs the $\mathrm{index}$ of the block is used by the verifier; if this information is not provided by the underlying blockchain headers, the index should be included in the interlink structure.
+prover shown in Algorithm~\ref{alg.nipopow-velvet-prover} simply applies the
+velvet $\chain\upchain$ operator and includes the auxiliary connecting nodes
+within the final proof. No changes in the verifier are needed; note that  in the
+case of infix proofs the $\mathrm{index}$ of the block is used by the verifier;
+if this information is not provided by the underlying blockchain headers, the
+index should be included in the interlink structure.
 
-%\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
-%\import{./}{algorithms/alg.nipopow-velvet-follow.tex}
-%\import{./}{algorithms/alg.nipopow-velvet-prover.tex}
+\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
+\import{./}{algorithms/alg.nipopow-velvet-follow.tex}
+\import{./}{algorithms/alg.nipopow-velvet-prover.tex}
 
 Velvet NIPoPoWs preserve security. Additionally, if a constant minority of
 miners has upgraded their nodes, then succinctness is also preserved
-as shown below.
-%as there
-%is only a constant factor penalty as proven in the following theorem.
+as there is only a constant factor penalty as proven in the following theorem.
 
 \begin{restatable}{theorem}{restateThmVelvetSuccinctness}
     \label{thm.velvet-succinctness}
@@ -109,10 +106,7 @@ as shown below.
     provers remain succinct as long as a constant percentage $g$ of miners has
     upgraded, with overwhelming probability.
 \end{restatable}
-
-\ifonecolumn
 \import{./}{proofs/velvetsuccinctness.tex}
-\fi
 
 The reason we were able to upgrade using a velvet fork was because the changes
 we made were helpful but verifiable by those looking at the chain. We would not
@@ -128,10 +122,7 @@ transactions containing the most recent interlink pointers so that they are
 included in the next block. If the transaction makes it to the next block, it
 can be used by the prover who keeps track of these. Otherwise, if it becomes
 part of a subsequent block, in which case some of the pointers it contains are
-invalid, it can be ignored or only partially used. The complete algorithms for
-velvet forks are included in the appendix.
-
-\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
+invalid, it can be ignored or only partially used.
 
 The necessary changes needed in the various construction algorithms in order to
 support a velvet fork are shown in
@@ -146,9 +137,6 @@ The following theorem establishes the security of NIPoPoWs in velvet forks.
 
 \restateThmVelvetSuccinctness*
 \import{./}{proofs/velvetsuccinctness.tex}
-
-\import{./}{algorithms/alg.nipopow-velvet-follow.tex}
-\import{./}{algorithms/alg.nipopow-velvet-prover.tex}
 
 \noindent\textbf{Supporting clients with different beliefs.}
 The interlink format does not depend on parameters $m, k$. Therefore, it is not
