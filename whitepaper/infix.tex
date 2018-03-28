@@ -1,24 +1,21 @@
-\section{Blockchain Infix proofs}
-
+\section{Blockchain infix proofs}
 \label{sec:infix}
 
-%\subsection{Construction}
+\subsection{Construction}
 
-In the previous section we have seen how to construct proofs for suffix predicates.
-As mentioned, the main purpose of this construction is to serve as a stepping
-stone for the construction of this section that presents
-a most useful class of
-proofs allow proving more general predicates that can depend on multiple blocks
-even buried deep within the blockchain.
+In the previous section we have seen how to construct proofs for suffix
+predicates. As mentioned, the main purpose of this construction is to serve as a
+stepping stone for the construction of this section that presents a most useful
+class of proofs allow proving more general predicates that can depend on
+multiple blocks even buried deep within the blockchain.
 
-More specifically, the generalized prover for
-\textit{infix proofs} allows proving any predicate $Q(\chain)$ that depends on a
-number of blocks that can appear anywhere within the chain (except the $k$
-suffix for stability). These blocks constitute a \textit{subset} $\chain'$ of
-blocks which may not necessarily be a stand-alone blockchain. This allows
-proving powerful statements such as, for example, whether a transaction is
-confirmed.
-We define next formally the class of predicates that will be of interest.
+More specifically, the generalized prover for \textit{infix proofs} allows
+proving any predicate $Q(\chain)$ that depends on a number of blocks that can
+appear anywhere within the chain (except the $k$ suffix for stability). These
+blocks constitute a \textit{subset} $\chain'$ of blocks which may not
+necessarily be a stand-alone subchain. This allows proving powerful statements
+such as, for example, whether a transaction is confirmed. We define next
+formally the class of predicates that will be of interest.
 
 % XXX extend this class of predicates to include comparison of position
 % within the blockchain (these position-dependent predicates may be unprovable
@@ -42,8 +39,106 @@ Where $D$ is an arbitrary predicate. Note that $\chain'$ is a blockset and may
 not necessarily be a blockchain.
 \end{definition}
 
-Similarly to suffix-sensitive predicates, infix-sensitive predicates $Q$ can be evaluated very efficiently. Intuitively this is possible because
-of their localized nature and dependency on the $D(\cdot)$ predicate which
-requires only a small number of blocks to conclude whether the predicate should
-be true. Nevertheless, some special care will be needed to ensure the condition
-on the length  of the chain with respect to $\ell$ is captured.
+Similarly to suffix-sensitive predicates, infix-sensitive predicates $Q$ can be
+evaluated very efficiently. Intuitively this is possible because of their
+localized nature and dependency on the $D(\cdot)$ predicate which requires only
+a small number of blocks to conclude whether the predicate should be true.
+Nevertheless, some special care will be needed to ensure the condition on the
+length  of the chain with respect to $\ell$ is captured.
+
+We next show how to express the predicate that asks whether a certain
+transaction with id $txid$ has been confirmed by a certain time as an infix
+sensitive predicate. First, we need specify a time bound  as the maximum number
+of blocks $\ell$ up to which we want to test whether $txid$ is included (this is
+necessary as without such a time bound the predicate cannot be monotonic). Then
+we define the predicate $D^{txid}$ that receives  a single block and tests
+whether a transaction with id $txid$ is included. The predicate $Q^{txid}_{\ell,
+1, k}$  is now defined as in Definition~\ref{def:infix}  using the predicate
+$D^{txid}$ and the parameter $k$ which in this case  determines the desired
+stability of the assertion that $txid$ is included.
+
+The construction of these proofs is shown in
+Algorithm~\ref{alg.nipopow-infix-prover}. The infix prover accepts two
+parameters: The chain $\chain$ which is the full blockchain and $\chain'$ which
+is a sub-blockset of the blockchain whose blocks are of interest for the
+predicate in question. The prover calls the previous suffix prover to produce a
+proof as usual. Then, having the prefix $\pi$ and suffix $\chi$ of the suffix
+proof in hand, the infix prover adds a few auxiliary blocks to the prefix $\pi$.
+The prover ensures that these auxiliary blocks form a chain with the rest of the
+proof $\pi$. Such auxiliary blocks are collected as follows: For every block $B$
+of the subchain $\chain'$, the immediate previous ($E'$) and next ($E$) blocks
+in $\pi$ are found. Then, a chain of blocks $R$ which connects $E$ back to $B'$
+is found by the algorithm followDown. If $E'$ is of level $\mu$, there can be no
+other $\mu$-superblock between $E'$ and $B'$, otherwise it would have been
+included in $\pi$. Therefore, $B'$ already contains a pointer to $E'$ in its
+interlink, completing the chain.
+
+\import{./}{algorithms/alg.nipopow-infix-follow.tex}
+
+The way to connect a superblock to a previous lower-level block is implemented
+in Algorithm~\ref{alg.nipopow-infix-follow}.  Block $B'$ cannot be of higher or
+equal level than $E$, otherwise it would be equal to $E$ and the followDown
+algorithm would return. The algorithm proceeds as follows: Starting at block $hi =
+E$, it tries to follow a pointer to as far as possible. If following the pointer
+surpasses $lo = B'$, then the following is aborted and a lower level is tried,
+which will cause a smaller step within the skiplist. If a pointer was followed
+without surpassing $B'$, the operation continues from the new block, until
+eventually $B'$ will be reached, which concludes the algorithm.
+
+\import{./}{algorithms/alg.nipopow-infix-prover.tex}
+
+An example of the output of followDown is shown in Figure~\ref{fig.infix}. This
+is a portion of the proof shown at the point where the superblock levels are at
+level $4$. A descend to level $0$ was necessary so that a regular block would be
+included in the chain. The level $0$ block can jump immediately back up to level
+$4$ because it has a high-level pointer.
+
+\begin{figure}[h]
+    \caption{An infix proof descend. Only blue blocks are included in the proof.
+    Blue blocks of level $4$ are part of $\pi$, while the blue blocks of level
+    $1$ through $3$ are produced by followDown to get to the block of level $0$
+    which is part of $\chain'$.}
+    \centering
+    \iftwocolumn
+        \includegraphics[width=\columnwidth,keepaspectratio]{figures/infix.png}
+    \else
+        \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/infix.png}
+    \fi
+    \label{fig.infix}
+\end{figure}
+
+The verification algorithm must then be modified as in
+\ref{alg.nipopow-verifier-infix}.
+
+\import{./}{algorithms/alg.verifier-infix.tex}
+
+The algorithm works by calling the old verifier. It also maintains a blockDAG
+collecting blocks from all proofs (it is a DAG because \textit{interlink} can be
+adversarially defined). This DAG is maintained in the $\textsf{blockById}$
+hashmap. Using it, \textsf{ancestors} uses simple graph search to extract the
+set of ancestors of a block present. In the final predicate evaluation, the set
+of ancestors of the best blockchain tip is passed to the predicate. The
+ancestors are included to avoid an adversary who presents an honest chain but
+skips the blocks of interest.
+
+\subsection{Security}
+The security theorem follows easily along
+the same lines of the security argument for suffix proofs. We state it below.
+\begin{restatable}{theorem}{restateThmInfixSecurity}
+\label{thm.infix-security}
+Under honest majority, the infix NIPoPoW construction is secure for all
+infix-sensitive stable predicates $Q$, except with negligible probability in
+$\kappa$.
+\end{restatable}
+\import{./}{proofs/infixsecurity.tex}
+
+\subsection{Succinctness}
+As long as the number of blocks on which the predicate depends is
+polylogarithmic ($< d$) with respect to the chain length, our proofs remain
+succinct. Specifically, the proof size for the suffix has exactly the same size.
+Then the part of the proof that is of interest is the output of the followDown
+algorithm. However, notice that this algorithm will on average produce as many
+blocks as the difference of levels between $B'$ and $E$, which is at most
+logarithmic in the chain size. Hence the proof sizes will be in expectation $(m +
+|\chain'|)\log(|\chain|)$, which remains succinct if $|\chain'| \in
+O(polylog(|\chain|))$.
