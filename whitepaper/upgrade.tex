@@ -8,9 +8,7 @@ our construction as an upgrade. In this section we outline several possible
 upgrade paths. We also contribute a novel upgrade approach, a ``velvet fork,''
 which allows for gradual deployment without harming unupgraded miners.
 
-% \subsection{Hard Forks and Soft Forks}
-\noindent
-{\bf Hard Forks and Soft Forks.}
+\subsection{Hard Forks and Soft Forks}
 The obvious way to upgrade a cryptocoin to support our protocol is a hard fork:
 the block header is modified to include the interlink structure, and the
 validation rules modified to require that new blocks (after a ``flag day'')
@@ -31,9 +29,7 @@ observe that including such proofs-of-inclusion will only increase the NIPoPoW
 sizes by a constant factor per block, allowing for the communication complexity
 to remain polylogarithmic.
 
-\noindent
-{\bf Velvet Forks.}
-% \subsection{Velvet Forks}
+\subsection{Velvet Forks}
 We now describe a novel upgrade path that avoids the need for a fork at all. The
 key idea is that clients can make use of our scheme, even if only some blocks in
 the blockchain include the interlink structure. Given that intuitively the
