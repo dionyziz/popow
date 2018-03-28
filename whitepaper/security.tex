@@ -8,15 +8,17 @@ double-spending attack of Section~\ref{sec:attack}. The attack is neutralized
 since our verifier is more permissive, allowing the prover to construct a proof
 that takes superquality ``goodness'' into account when comparing forks.
 
-\begin{restatable}{theorem}{restateThmSecurity}
+To aid intuition, we will first give a sketch of the proof before giving the
+full technical proof.
+
+\begin{restatable}[Security]{theorem}{restateThmSecurity}
     \label{thm.security}
     Assuming honest majority, the non-interactive proofs-of-proof-of-work
     construction for $k$-stable monotonic suffix-sensitive predicates is secure
     with overwhelming probability in $\kappa$.
 \end{restatable}
-
-We will first give a sketch of the proof before getting into
-details. Suppose an adversary produces a proof $\pi_\mathcal{A}$ and an honest
+\begin{proof}[Sketch]
+Suppose an adversary produces a proof $\pi_\mathcal{A}$ and an honest
 party produces a proof $\pi_B$ such that the two proofs cause the predicate $Q$
 to evaluate to different values, while at the same time all honest parties have
 agreed that the correct value is the one obtained by $\pi_B$. Because of
@@ -53,8 +55,10 @@ random variable for the length of the honest argument. By taking the
 expectations of the above random variables and applying a Chernoff bound, we see
 that the actual values will be close to their means with overwhelming
 probability, completing the proof.
+\Qed
+\end{proof}
 
-\paragraph{Remark.}
+\noindent\textbf{Remark.}
 Observe that, while setting $m = 1$ ``preserves'' the proof-of-work in the sense
 that expectations remain the same, the probability of an adversarial attack
 becomes approximately proportional to the adversary power if the adversary
@@ -63,7 +67,6 @@ parameterization section). With higher values of $m$, the probability of an
 adversarial attack drops exponentially in $m$, even though they maintain
 constant computational power, and hence satisfy a strong notion of security.
 
-\paragraph{Proof of security. }
 We now go on to formalize the above proof sketch.
 
 Assume $t$ adversarial and $n$ total parties, each with $q$
@@ -81,7 +84,7 @@ set $Z^\mu_{ijk} = 1$, otherwise $Z^\mu_{ijk} = 0$. Let $Z^\mu_r = \sum_{k=1}^t
 \sum_{j=1}^q Z^\mu_{ijk}$. For a set of rounds $S$, let $X^\mu(S) = \sum_{r \in
 S} X_r$ and similarly define $Y^\mu(S), Z^\mu(S)$.
 
-\begin{definition} %{(Typical execution)}
+\begin{definition}[Typical execution]
     An execution of the protocol is $(\epsilon, \eta)$-\textit{typical} if:
 
     \textnormal{\bf Block counts don't deviate.}
@@ -176,8 +179,7 @@ an adversarial attack drops exponentially in $m$, even though they maintain cons
 computational power, and hence satisfy a strong notion of security.
 \end{remark}
 
-\begin{remark}
+\noindent\textbf{Remark.}
 Intuitively, the attack of Section~\ref{sec:attack} is neutralized, because
 our prover takes ``goodness'' of blockchains into account and the verifier
 does not compare proofs strictly at the same level.
-\end{remark}
