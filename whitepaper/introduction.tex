@@ -6,13 +6,13 @@
 %% only logarithmic in the length of the blockchain.
 
 %
-Today, Bitcoin and Ethereum remain the two largest
-proof-of-work cryptocurrencies (by market cap). However, the ecosystem has grown diverse,
-with dozens of viable ``altcoin'' competitors.
+Today, Bitcoin and Ethereum remain the two largest proof-of-work
+cryptocurrencies (by market cap). However, the ecosystem has grown diverse, with
+dozens of viable ``altcoin'' competitors.
 %
-Given such an environment,  it becomes increasingly  important to
-be able to efficiently handle  multiple blockchains by the same client
-and reliably transfer assets between them.
+Given such an environment,  it becomes increasingly  important to be able to
+efficiently handle  multiple blockchains by the same client and reliably
+transfer assets between them.
 %
 %
 %
@@ -23,9 +23,9 @@ and reliably transfer assets between them.
 %blockchain protocols in general
 %are increasingly used as components of larger systems.
 
-The first objective requires optimizing the ``SPV
-client'' described in the original Bitcoin paper~\cite{bitcoin} which requires
-processing an amount of data growing linearly with the size of the blockchain.
+The first objective requires optimizing the ``SPV client'' described in the
+original Bitcoin paper~\cite{bitcoin} which requires processing an amount of
+data growing linearly with the size of the blockchain.
 %
 %% Cryptocurrencies such as Bitcoin~\cite{bitcoin}\cite{bitcoinsoftware} and
 %% Ethereum~\cite{ethereum} are peer-to-peer networks that maintain a globally
@@ -45,16 +45,16 @@ The second objective, has received  significant attention in the context of
 ``cross-chain'' applications, i.e. logical transactions that span multiple
 separate blockchains. Simple cross-chain transactions are feasible today: the
 most well-known is the atomic exchange~\cite{tiernolan}, e.g., a trade of
-bitcoin for ether. However, more sophisticated applications could be enabled
-by a more efficient proof process, which would allow the blockchain of one cryptocurrency to embed a
-client of a separate cryptocurrency. This concept, initially popularized by a
-proposal by Back et al. ~\cite{sidechains}
-can be used to avoid a difficult
-upgrade process: a new blockchain with additional features, such as experimental
-opcodes, can be backed by deposits in the original bitcoin currency, obviating
-the need to transfer capital to the new cryptocurrency. As one example of
-cross-chain interfacing, we describe an initial coin offering (ICO) which distributes tokens issued on
-one blockchain, but allows paying for them using coins in another blockchain.
+bitcoin for ether. However, more sophisticated applications could be enabled by
+a more efficient proof process, which would allow the blockchain of one
+cryptocurrency to embed a client of a separate cryptocurrency. This concept,
+initially popularized by a proposal by Back et al. ~\cite{sidechains} can be
+used to avoid a difficult upgrade process: a new blockchain with additional
+features, such as experimental opcodes, can be backed by deposits in the
+original bitcoin currency, obviating the need to transfer capital to the new
+cryptocurrency. As one example of cross-chain interfacing, we describe an
+initial coin offering (ICO) which distributes tokens issued on one blockchain,
+but allows paying for them using coins in another blockchain.
 
 % These examples illustrate that our solution is a key component for two important
 % pillars needed for next-generation blockchains: \textit{interoperability} and
@@ -62,27 +62,28 @@ one blockchain, but allows paying for them using coins in another blockchain.
 % proof-of-work cryptocurrency can adopt our techniques.
 
 \subsection{Our contributions}
-In summary, we make the following contributions.
-Our main technical contribution is the introduction and instantiation
-of a new cryptographic
-primitive called Non-Interactive Proofs of Proof-of-Work (NIPoPoW).
-%
+In summary, we make the following contributions. Our main technical contribution
+is the introduction and instantiation of a new cryptographic primitive called
+\textit{Non-Interactive} Proofs of Proof-of-Work (NIPoPoW).
+
 We present a formal model and a provably secure instantiation of NIPoPoWs in the
-backbone model \cite{backbone}. Our contribution builds on previous work  of \cite{KLS} who introduced
-the concept of (interactive) proofs of proof-of-work, which, in turn,
-are based on previous discussion of such concepts in the bitcoin forums
-\cite{highway}. We in fact show an explicit attack against the construction of \cite{KLS} that showcases the difficulty of designing such protocols. It follows
-that our construction is the first secure Proof of Proof-of-Work assuming honest majority.
+backbone model \cite{backbone}. Our contribution builds on previous work  of
+\cite{KLS} who introduced the concept of (interactive) Proofs of Proof-of-Work,
+which, in turn, are based on previous discussion of such concepts in the bitcoin
+forums \cite{highway}. We in fact show an explicit attack against the
+construction of \cite{KLS} that showcases the difficulty of designing such
+protocols. It follows that our construction is the first \textit{secure} Proof
+of Proof-of-Work (regardless of interactivity) assuming honest majority.
 Furthermore, our solution has the additional property of being non-interactive,
 as the previous construction could revert into interaction by an adversarial
-prover. Similar to previous work, we prove that the proofs are
-optimistically succinct meaning that, in honest conditions, the proofs are
-logarithmic in size. Improving previous work, we show that optimistic
-succinctness can be achieved for adversarially-generated proofs for a number
-of blockchain predicates that are high value use cases. Our definition
-fills the gap in terms of security modelling and design that existed in previous
-proposals, e.g., the notion of cumulative ``Dynamic Member Multisignature''
-~\cite{sidechains}.
+prover. Similar to previous work, we prove that the proofs are optimistically
+succinct meaning that, in honest conditions, the proofs are logarithmic in size.
+Improving previous work, we show that, in the optimistic model of no adversarial
+mining power, succinctness can be achieved for even
+\textit{adversarially-generated} proofs by introducing the novel concept of
+\textit{certificates of badness}. Our definition fills the gap in terms of
+security modeling and design that existed in previous proposals, e.g., the
+notion of cumulative ``Dynamic Member Multisignature'' ~\cite{sidechains}.
 
 We provide concrete parameterization and empirical analysis focusing on showing
 the potential savings of our approach versus existing clients. Using real data
