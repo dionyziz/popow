@@ -1,5 +1,6 @@
 \section{Succinctness}
 \label{sec.succinctness}
+\subsection{Succinctness in the honest setting}
 Having established security in the general case of the standard honest majority
 model, we now concentrate on establishing performance guarantees.
 
@@ -71,14 +72,17 @@ Based on this, we can establish our theorem on succinctness:
 In the above theorem, note the linear dependency between the round $r$ that a
 proof is generated and the length $|\chain|$ of the chain of each honest prover.
 
-\subsection{Certificates of badness and denial of service attacks}
+\subsection{Succinctness of adversarial proofs}
 In the stronger adversarial setting, however, it is possible for the adversary
 to produce large dummy (incorrect) proofs that expand the verification time;
 security will not be hurt but it would take more time to complete verification.
-One may dismiss this as a trivial denial of service attack (and have a resource
-bounded verifier simply stop  if it is confronted with such a processing task).
+One may dismiss this as a trivial denial of service attack and have a resource
+bounded verifier simply stop if it is confronted with such a processing task.
+However, simply dismissing superpolylogarithmic proofs is an incorrect strategy,
+as honest provers can produce such longer proofs in case an adversarial miner
+harms the goodness of the blockchain.
 
-Nevertheless, it would be useful for honest provers to have the ability to
+It would therefore be useful for honest provers to have the ability to
 signal to the verifier that such time expansion is indeed necessary because of
 an attack on superchain quality, rather than because a malicious prover is
 simply sending long proofs that will eventually be rejected. With such signaling
