@@ -106,7 +106,7 @@ introduce the security properties for blockchain proof protocols we introduce
 some necessary notation for blockchains.
 
 \subsection{Blockchain notation and conventions}
-% \noindent {\bf Blockchain addressing.}
+\noindent {\bf Blockchain addressing.}
 Our development makes use of several notation conventions for manipulating blockchain data structures, which we introduce here.
 Blockchains are finite block sequences obeying the \textit{blockchain property}
 that in every block in the chain there exists a pointer to its previous block.
@@ -126,7 +126,8 @@ the chain from $A$ (inclusive) to $Z$ (exclusive). We can omit blocks or indices
 from either side of the range to take the chain to the beginning or end
 respectively.
 
-\textbf{Helper functions for blockchains.} The \textit{id} function returns the
+\noindent {\bf Helper functions for blockchains.}
+The \textit{id} function returns the
 id of a block given its data, i.e., $\textsf{id} = H(ctr, G(x,
 \textsf{interlink}))$. % \cite{princetonbook}
  \textit{depth} is a function which, given a block, returns
@@ -138,10 +139,12 @@ is constant. Some blocks will achieve a lower id. If $id \leq \frac{T}{2^\mu}$
 we say that the block is of level $\mu$. All blocks are level $0$. Blocks with
 level $\mu$ are called $\mu$-\textit{superblocks}.
 $\mu$-superblocks for $\mu > 0$ are also $(\mu - 1)$-superblocks.
-% The level of a block is given as
-% $\mu = \left \lfloor \log(T) - \log(\sf{id}(B)) \right \rfloor$ and denoted
-% $\textit{level}(B)$.
+The level of a block is given as
+$\mu = \left \lfloor \log(T) - \log(\sf{id}(B)) \right \rfloor$ and denoted
+$\textit{level}(B)$.
 By convention, for $Gen$ we set $id = 0$ and $\mu = \infty$.
+
+\import{./}{algorithms/alg.nipopow-helper.tex}
 
 In this paper, we will extend blocks to contain multiple pointers to previous
 blocks. Certain blocks can be omitted from a chain, obtaining a subchain, as
