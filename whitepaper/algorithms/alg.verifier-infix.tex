@@ -2,17 +2,17 @@
     \caption{\label{alg.nipopow-verifier-infix}The \textsf{verify} algorithm
     for the NIPoPoW infix protocol}
     \begin{algorithmic}[1]
-      %  \Function{\sf ancestors}{$B, \textsf{blockById}$}
-      %      \If{$B = \text{Gen}$}
-      %          \State\Return{$\{B\}$}
-      %      \EndIf
-      %      \Let{\chain}{\emptyset}
-      %      \For{$B' \in B.\textsf{interlink}$}
-      %          \Let{\chain}{\chain \cup \textsf{ancestors}(B')}
-      %            \Comment{Collect into DAG}
-      %      \EndFor
-      %      \State\Return{$\chain \cup \{B\}$}
-      %  \EndFunction
+        \Function{\sf ancestors}{$B, \textsf{blockById}$}
+            \If{$B = \text{Gen}$}
+                \State\Return{$\{B\}$}
+            \EndIf
+            \Let{\chain}{\emptyset}
+            \For{$B' \in B.\textsf{interlink}$}
+                \Let{\chain}{\chain \cup \textsf{ancestors}(B')}
+                  \Comment{Collect into DAG}
+            \EndFor
+            \State\Return{$\chain \cup \{B\}$}
+        \EndFunction
         \Function{\sf verify-infx$^D_{\ell,m,k}$}{$\mathcal{P}$}
             \Let{\textsf{blockById}}{\emptyset}
               \Comment{Initialize empty hashmap}
