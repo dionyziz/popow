@@ -166,14 +166,15 @@ probability.
 \end{theorem}
 \import{./}{proofs/attack.tex}
 
-\textbf{Remark.} It is worth isolating the mistake in the security proof from
+\noindent\textbf{Remark.}
+It is worth isolating the mistake in the security proof from
 the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
 player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block, was honestly
 generated and suppose that the superchain comparison happens at level $\mu$.
-Their security proof then argues that there will have been more honestly- than
-adversarially-generated $\mu$-superblocks after block $b$. Nevertheless, we
-observe that the mere fact that there have been more honestly- than
-adversarially-generated $\mu$-superblocks after $b$ does not imply that
+Their security proof then correctly argues that there will have been more
+honestly- than adversarially-generated $\mu$-superblocks after block $b$.
+Nevertheless, we observe that the mere fact that there have been more honestly-
+than adversarially-generated $\mu$-superblocks after $b$ does not imply that
 $|\overline\pi_\mathcal{A}\upchain^\mu\{b:\}| \leq
 |\overline\pi_B\upchain^\mu\{b:\}|$. The reason is that some of these
 superblocks could belong to blocktree forks that have been abandoned by $B$.
