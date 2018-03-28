@@ -37,27 +37,6 @@
 % \noindent
 % \textbf{Interlink optimizations.}
 
-\section{Velvet forks revisited}
-
-\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
-
-For completeness, we include the necessary changes needed in the various
-construction algorithms in order to support a velvet fork. These are shown in
-Algorithm~\ref{alg.nipopow-velvet-innerchain},
-Algorithm~\ref{alg.nipopow-velvet-follow}, and
-Algorithm~\ref{alg.nipopow-velvet-prover}.
-Algorithm~\ref{alg.nipopow-velvet-innerchain} defines the innerChain method,
-which replaces the upchain/downchain abstraction that can be easily used in a
-fully upgraded chain.
-
-The following theorem establishes the security of NIPoPoWs in velvet forks.
-
-\restateThmVelvetSuccinctness*
-\import{./}{proofs/velvetsuccinctness.tex}
-
-\import{./}{algorithms/alg.nipopow-velvet-follow.tex}
-\import{./}{algorithms/alg.nipopow-velvet-prover.tex}
-
 \import{./}{infix-full.tex}
 
 % \section{Full proofs}

@@ -132,9 +132,28 @@ part of a subsequent block, in which case some of the pointers it contains are
 invalid, it can be ignored or only partially used. The complete algorithms for
 velvet forks are included in the appendix.
 
-% \textbf{Supporting clients with different beliefs.}
-% The interlink format does not depend on parameters $m, k$. Therefore, it is not
-% necessary to agree on a particular value of these parameters. Instead, the
-% choice of $m$ and $k$ can be a user-configurable parameter to clients.
-% Clients would send a particular $m$ and $k$ as part of their requirement to
-% the prover.
+\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
+
+The necessary changes needed in the various construction algorithms in order to
+support a velvet fork are shown in
+Algorithm~\ref{alg.nipopow-velvet-innerchain},
+Algorithm~\ref{alg.nipopow-velvet-follow}, and
+Algorithm~\ref{alg.nipopow-velvet-prover}.
+Algorithm~\ref{alg.nipopow-velvet-innerchain} defines the innerChain method,
+which replaces the upchain/downchain abstraction that can be easily used in a
+fully upgraded chain.
+
+The following theorem establishes the security of NIPoPoWs in velvet forks.
+
+\restateThmVelvetSuccinctness*
+\import{./}{proofs/velvetsuccinctness.tex}
+
+\import{./}{algorithms/alg.nipopow-velvet-follow.tex}
+\import{./}{algorithms/alg.nipopow-velvet-prover.tex}
+
+\noindent\textbf{Supporting clients with different beliefs.}
+The interlink format does not depend on parameters $m, k$. Therefore, it is not
+necessary to agree on a particular value of these parameters. Instead, the
+choice of $m$ and $k$ can be a user-configurable parameter to clients.
+Clients would send a particular $m$ and $k$ as part of their requirement to
+the prover.
