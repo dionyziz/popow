@@ -4,7 +4,7 @@
         \Function{\sf updateInterlink}{$B'$}
             \Let{\textsf{interlink}}{B'.\textsf{interlink}}
             \For{$\mu = 0$ to $\textit{level}(B')$}
-                \Let{\textsf{interlink}[\mu]}{blockid(B')}
+                \Let{\textsf{interlink}[\mu]}{id(B')}
             \EndFor
             \State\Return{\textsf{interlink}}
         \EndFunction

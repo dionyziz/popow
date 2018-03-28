@@ -23,10 +23,10 @@
             \EndFor
             \For{$B \in \textsf{new}$}
                 \For{$\mu = 0$ to $\textit{level}(B')$}
-                    \Let{\textsf{interlink}[\mu]}{\textsf{blockid}(B')}
+                    \Let{\textsf{interlink}[\mu]}{\textsf{id}(B')}
                 \EndFor
                 \Let{B'}{B}
-                \Let{\textsf{blockById}[blockid(B)]}{B}
+                \Let{\textsf{blockById}[id(B)]}{B}
                 \Let{\textsf{realLink}[B]}{\textsf{interlink}}
             \EndFor
             \If{$\textsc{Input}()\mbox{ contains }\textsc{ReadProof}$}
