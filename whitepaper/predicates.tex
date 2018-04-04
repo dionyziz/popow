@@ -1,22 +1,22 @@
 \subsection{Provable chain predicates}
 
-Our aim is to prove statements about the blockchain, such as ``The transaction $t$ is included in the blockchain at height $H$.'' We consider a general class of predicate that take on values $T$, $F$, or $\bot$.
-  Since a Bitcoin-like blockchain can experience delays and intermittent forks, not all honest parties will be in exact agreement about the entire chain, hence we model predicates that may take on the value $\bot$ but eventually reach a truth value $T$ or $F$.
-%Not all predicates are suitable for our purposes. In this section we characterize the class of
-%blockchain predicates that will be of interest to us for constructing proofs.
-%Given that we are in a decentralized setting it can be the case that for certain
-%sensible blockchain predicate, there will be honest nodes that have not reached
-%a conclusion about its value. For this reason we allow our predicates to have an
-%undefined value $\bot$ before they take on a truth value of $T$ or $F$.
-%We now define some useful predicate properties.
-% and prove a simple but useful
-% relation
-% between them.
+Our aim is to prove statements about the blockchain, such as ``The transaction
+$t$ is included in the current blockchain.'' We consider a general class of
+predicates that take on values \emph{true} or \emph{false}.  Since a
+Bitcoin-like blockchain can experience delays and intermittent forks, not all
+honest parties will be in exact agreement about the entire chain. However, when
+all honest parties are in agreement about the truth value of the predicate, we
+will soon require in our security definition that the verifier also arrives at
+the same truth value.
+
+To aid the construction of our proofs, we focus on predicates that are
+\emph{monotonic}; they start with the value \emph{false} and, as the blockchain
+grows, can change their value to \emph{true} but not back.
 
 \begin{definition}{(Monotonicity)}
     A chain predicate $Q(\chain)$ is $\textit{monotonic}$ if for all chains
-    $\chain$ and for all blocks $B$ we have that:
-    $Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B)$.
+    $\chain$ and for all blocks $B$ we have that
+    $Q(\chain) \Rightarrow Q(\chain B)$.
 \end{definition}
 
 Additionally, we require that our predicates only depend on the \emph{stable}
