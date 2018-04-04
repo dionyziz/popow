@@ -27,7 +27,11 @@ this is consistent with the view of every honest party (as long as $Q$ depends
 only on a \emph{prefix} of the chain, as we explain in more detail shortly). In
 fact this is how widely-used cryptocurrency clients (including SPV clients)
 operate today.
-%It is also easy to build succinct but insecure clients: The prover simply sends the predicate value directly. This is roughly what hosted wallets do ().
+
+It is also easy to build \emph{succinct but insecure} clients: The prover simply
+sends the predicate value directly. This is roughly what hosted wallets
+do~\cite{sok}.
+
 The challenge we will solve is to provide a non-interactive protocol that at the
 same time achieves security and (optimistic) succinctness over a large class of
 useful predicates.
