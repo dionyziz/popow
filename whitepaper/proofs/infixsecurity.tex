@@ -9,9 +9,10 @@ the Common Prefix property~ \cite{backbone}, $b$ will belong to all honest
 parties' chains and in the same position, as it is buried under $|\tilde\chi| =
 k$ blocks.
 
-Because $Q$ is infix-sensitive and stable, $\exists \chain' \subseteq
-\chain[:-k]: P_v(\chain')$. But $\chain' \subseteq \pi_B$. Let $S =
-\textsf{ancestors}(b)$ be the ancestors evaluated by the verifier. $\chain'
-\subseteq S$, therefore $Q(S) = Q(\chain') = v$.
+Because $Q$ is infix-sensitive, it will be defined using a witness predicate
+$D$. Because $Q$ is stable, we will have $\exists \chain' \subseteq
+\chain[:-k]: D(\chain')$. But $\chain' \subseteq \pi_B$. Let $S =
+\textsf{ancestors}(b)$ be the ancestors evaluated by the verifier. As $\chain'
+\subseteq S$, therefore $Q(\chain') = Q(S) = v$.
 \Qed
 \end{proof}
