@@ -13,7 +13,10 @@ beginning of round $r$.
 \end{definition}
 
 \begin{definition}{(Succinctness)}
-A \emph{blockchain proof protocol} is \textit{succinct} if the maximum proof
+A \emph{blockchain proof protocol} $(P, V)$ about a predicate $Q$ is
+\emph{succinct} if for all PPT provers $\mathcal{A}$, any proof $\pi$ produced
+by $\mathcal{A}$ at some round $r$, the verifier $V$ only reads a
+$O(polylog(r))$-sized portion of $\pi$.
 \end{definition}
 
 It is easy to construct a \emph{secure but not succinct} protocol for any
