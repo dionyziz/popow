@@ -56,11 +56,10 @@ preceding $\chi$. The method of choice of this subset will become clear soon.
 
 \import{./}{algorithms/alg.verifier-lite.tex}
 
-The verifier compares the proofs provided to it by calling the $\geq_m$
-operator. We will get to the operator's definition
-shortly. Proofs are checked for validity before comparison by ensuring $|\chi| =
-k$ and calling \textit{validChain} which checks if $\pi\chi$ is an anchored
-blockchain.
+The verifier compares the proof prefixes provided to it by calling the $\geq_m$
+operator. We will get to the operator's definition shortly. Proofs are checked
+for validity before comparison by ensuring $|\chi| = k$ and calling
+\textit{validChain} which checks if $\pi\chi$ is an anchored blockchain.
 
 At each loop iteration, the verifier compares the next candidate proof prefix
 $\pi$ against the currently best known proof prefix $\tilde\pi$ by calling $\pi
