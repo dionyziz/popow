@@ -26,4 +26,6 @@
 *.fls
 *.*.make
 *.pyc
+*.pdf
+*.fdb_latexmk
 .DS_Store
