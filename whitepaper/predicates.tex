@@ -1,6 +1,6 @@
 \subsection{Provable chain predicates}
 
-Our aim is to prove statements about the blockchain, such as ``The transaction $t$ is included in the blockchain at height $H$.'' We consider a general class of predicate that take on values $T$, $F$, or $\bot$. 
+Our aim is to prove statements about the blockchain, such as ``The transaction $t$ is included in the blockchain at height $H$.'' We consider a general class of predicate that take on values $T$, $F$, or $\bot$.
   Since a Bitcoin-like blockchain can experience delays and intermittent forks, not all honest parties will be in exact agreement about the entire chain, hence we model predicates that may take on the value $\bot$ but eventually reach a truth value $T$ or $F$.
 %Not all predicates are suitable for our purposes. In this section we characterize the class of
 %blockchain predicates that will be of interest to us for constructing proofs.
@@ -19,10 +19,6 @@ Our aim is to prove statements about the blockchain, such as ``The transaction $
     $Q(\chain) \neq \bot \Rightarrow Q(\chain) = Q(\chain B)$.
 \end{definition}
 
-\begin{definition}{(Stability)}
-    Parameterized by $k \in \mathbb{N}$, a chain predicate
-    $Q$ is $k$-\textit{stable} if its value only depends on the prefix $\chain[:-k]$.
-
 % \noindent
 % {(Persistence)}
 %     Parameterized by $k \in \mathbb{N}$, a chain predicate
@@ -31,6 +27,9 @@ Our aim is to prove statements about the blockchain, such as ``The transaction $
 %     whenever it is $k$-stable in any honest party's chain, the truth value of
 %     the predicate is the same. Furthermore, the change of truth value from
 %     $\bot$ to its  truth value happened at the same blockchain depth.
+\begin{definition}{(Stability)}
+    Parameterized by $k \in \mathbb{N}$, a chain predicate $Q$ is
+    $k$-\emph{stable} if its value only depends on the prefix $\chain[:-k]$.
 \end{definition}
 %
 % \begin{restatable}[Predicate persistence]{theorem}{restateThmPredicatePersistence}
