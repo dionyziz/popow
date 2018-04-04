@@ -4,9 +4,12 @@ We now define two desired properties of a non-interactive blockchain proof
 protocol, \emph{succinctness} and \emph{security}.
 
 \begin{definition}{(Security)}
-A \emph{blockchain proof protocol} is \emph{secure} if for all environments
-and for all PPT adversaries $\mathcal{A}$ the output of $V$ on round $r$ is the
-same as the evaluation of $Q(\chain)$ on some honest party's chain $\chain$.
+A \emph{blockchain proof protocol} $(P, V)$ about a predicate $Q$ is
+\emph{secure} if for all environments and for all PPT adversaries
+$\mathcal{A}$ and for all rounds $r$, if $V$ receives a proof at the beginning
+of round $r$, then the output of $V$ at the end of round $r$ is the same as the
+evaluation of $Q(\chain)$ on \emph{some} honest party's chain $\chain$ at the
+beginning of round $r$.
 \end{definition}
 
 \begin{definition}{(Succinctness)}
