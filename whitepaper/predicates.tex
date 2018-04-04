@@ -24,27 +24,7 @@ portion of the blockchain, blocks that are buried under $k$ subsequent blocks.
 This ensures that the value of the predicate will not change due to a blockchain
 reorganization.
 
-% \noindent
-% {(Persistence)}
-%     Parameterized by $k \in \mathbb{N}$, a chain predicate
-%     $Q$ has $\textit{persistence}$ if the following is true: When in a certain
-%     round the predicate is $k$-stable in some honest party's chain, then
-%     whenever it is $k$-stable in any honest party's chain, the truth value of
-%     the predicate is the same. Furthermore, the change of truth value from
-%     $\bot$ to its  truth value happened at the same blockchain depth.
 \begin{definition}{(Stability)}
     Parameterized by $k \in \mathbb{N}$, a chain predicate $Q$ is
     $k$-\emph{stable} if its value only depends on the prefix $\chain[:-k]$.
 \end{definition}
-%
-% \begin{restatable}[Predicate persistence]{theorem}{restateThmPredicatePersistence}
-%     If a chain predicate is monotonic, then it satisfies persistence with
-%     parameter $k = 2\eta \kappa f$ with overwhelming probability.
-% \end{restatable}
-% \ifonecolumn
-%     \import{./}{proofs/predicatepersistence.tex}
-% \else
-%     Full proofs are provided in the appendix.
-% \fi
-
-%\anote{At this point, we need should sanity check that the natural motivation can be written to satisfy these properties. We're already stuck because ``transaction $t$ is commited'' is not $k$-stable, and ``transaction $t$ is committed before time $T$'' is not monotonic. What can we say instead?}
