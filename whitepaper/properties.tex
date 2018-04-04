@@ -20,10 +20,13 @@ $O(polylog(r))$-sized portion of $\pi$.
 \end{definition}
 
 It is easy to construct a \emph{secure but not succinct} protocol for any
-computable predicate $Q$: The prover provides the entire chain $\chain$ as a proof and the
-verifier simply selects the longest chain:
-by the \emph{common-prefix property} of the backbone protocol (c.f.~\cite{backbone}), this is consistent with
-the view of every honest party (as long as $Q$ depends only on a \emph{prefix} of the chain, as we explain in more detail shortly). In fact this is how widely-used cryptocurrency clients operate today.
+computable predicate $Q$: The prover provides the entire chain $\chain$ as a
+proof and the verifier simply selects the longest chain: by the
+\emph{common-prefix property} of the backbone protocol (c.f.~\cite{backbone}),
+this is consistent with the view of every honest party (as long as $Q$ depends
+only on a \emph{prefix} of the chain, as we explain in more detail shortly). In
+fact this is how widely-used cryptocurrency clients (including SPV clients)
+operate today.
 %It is also easy to build succinct but insecure clients: The prover simply sends the predicate value directly. This is roughly what hosted wallets do ().
 The challenge we will solve is to provide a non-interactive protocol that at the
 same time achieves security and (optimistic) succinctness over a large class of
