@@ -1,13 +1,22 @@
 \section{Model and Definitions}
 \label{sec.model}
-Our model for describing our results is based on the standard ``backbone'' model for proof-of-work cryptocurrencies~\cite{backbone}, extended with the widely used Simplified Payment Verification (SPV) mode due to Nakamoto~\cite{bitcoin}.
-We consider three roles in our setting: lightweight \emph{clients},  full \emph{nodes}, and \emph{miners}.\footnote{Full nodes can be thought of as miners with zero hashpower, we use this terminology to be consistent with Bitcoin developers.}
+Our model for describing our results is based on the standard ``backbone'' model
+for proof-of-work cryptocurrencies~\cite{backbone}, extended with the widely
+used Simplified Payment Verification (SPV) mode due to Nakamoto~\cite{bitcoin}.
+We consider three roles in our setting: lightweight \emph{clients},  full
+\emph{nodes}, and \emph{miners}.\footnote{Full nodes can be thought of as miners
+with zero hashpower. We use this terminology to be consistent with Bitcoin
+developers.}
 
-Nodes and miners run the Bitcoin backbone protocol, maintaining a copy of the blockchain and committing new transactions they receive from clients.
-Clients do not store the entire blockchain, but instead connect to nodes for service and request up-to-date information about the blockchain, for example whether a particular payment has been finalized. Our main challenge is to design a protocol so that clients can sieve through  the responses they receive from
-the network and reach a conclusion that should never disagree with the conclusion of a full  node
-who is faced
-with the same objective and infers it from its local blockchain  state.
+Nodes and miners run the Bitcoin backbone protocol, maintaining a copy of the
+blockchain and committing new transactions they receive from clients. Clients do
+not store the entire blockchain, but instead connect to nodes for service and
+request up-to-date information about the blockchain, for example whether a
+particular payment has been finalized. Our main challenge is to design a
+protocol so that clients can sieve through  the responses they receive from the
+network and reach a conclusion that should never disagree with the conclusion of
+a full  node who is faced with the same objective and infers it from its local
+blockchain  state.
 
 \subsection{Backbone model}
 
