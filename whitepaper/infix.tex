@@ -164,12 +164,10 @@ negligible probability in $\kappa$.
 \import{./}{proofs/infixsecurity.tex}
 
 \subsection{Succinctness}
-As long as the number of blocks on which the predicate depends is
-polylogarithmic ($< d$) with respect to the chain length, our proofs remain
-succinct. Specifically, the proof size for the suffix has exactly the same size.
-Then the part of the proof that is of interest is the output of the followDown
-algorithm. However, notice that this algorithm will on average produce as many
-blocks as the difference of levels between $B'$ and $E$, which is at most
-logarithmic in the chain size. Hence the proof sizes will be in expectation $(m +
-|\chain'|)\log(|\chain|)$, which remains succinct if $|\chain'| \in
-O(polylog(|\chain|))$.
+\begin{restatable}{theorem}{restateThmInfixSuccinctness}
+\label{thm.infix-succinctness}
+The infix NIPoPoW protocol $(P, V)$ is succinct for all computable
+infix-sensitive $k$-stable predicates $Q$ in which the witness predicate $D$
+depends on a \emph{constant} number of blocks $d$.
+\end{restatable}
+\import{./}{proofs/infixsuccinctness.tex}
