@@ -44,8 +44,8 @@ pertains to the amount of proof-of-work needed to bury a block so that it is
 believed to remain stable (e.g., $k = 6$); $m$ is a security
 parameter pertaining to the prefix of the proof, which connects the genesis
 block to the $k$-sized suffix. The verifier receives several proofs by
-different provers in a collection of proofs $\mathcal{P}$. Iterating over these
-proofs, it extracts the best.
+different provers in a collection of proofs $\mathcal{P}$ at least one of which
+will be honest. Iterating over these proofs, it extracts the best.
 
 Each proof is a chain. For honest provers, these are subchains of the  adopted
 chain. Proofs consist of two parts, $\pi$ and $\chi$; $\pi \chi$ must be a valid
