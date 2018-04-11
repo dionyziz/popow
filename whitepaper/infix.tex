@@ -143,7 +143,7 @@ The verification algorithm must then be modified as in
 
 \import{./}{algorithms/alg.verifier-infix.tex}
 
-The algorithm works by calling the old verifier. It also maintains a blockDAG
+The algorithm works by calling the suffix verifier. It also maintains a blockDAG
 collecting blocks from all proofs (it is a DAG because \textit{interlink} can be
 adversarially defined). This DAG is maintained in the $\textsf{blockById}$
 hashmap. Using it, \textsf{ancestors} uses simple graph search to extract the
@@ -151,23 +151,3 @@ set of ancestors of a block present. In the final predicate evaluation, the set
 of ancestors of the best blockchain tip is passed to the predicate. The
 ancestors are included to avoid an adversary who presents an honest chain but
 skips the blocks of interest.
-
-\subsection{Security}
-The security theorem follows easily along
-the same lines of the security argument for suffix proofs. We state it below.
-\begin{restatable}{theorem}{restateThmInfixSecurity}
-\label{thm.infix-security}
-Under honest majority, the infix NIPoPoW protocol $(P, V)$ is secure for all
-computable infix-sensitive $k$-stable monotonic predicates $Q$, except with
-negligible probability in $\kappa$.
-\end{restatable}
-\import{./}{proofs/infixsecurity.tex}
-
-\subsection{Succinctness}
-\begin{restatable}{theorem}{restateThmInfixSuccinctness}
-\label{thm.infix-succinctness}
-The infix NIPoPoW protocol $(P, V)$ is succinct for all computable
-infix-sensitive $k$-stable predicates $Q$ in which the witness predicate $D$
-depends on a \emph{constant} number of blocks $d$.
-\end{restatable}
-\import{./}{proofs/infixsuccinctness.tex}

@@ -1,12 +1,41 @@
 \section{Security}
 
-The prior PoPoW protocol~\cite{KLS} designed to prevent Bahack-style
+Based on the attack explored above, it is now easy to see that our construction
+can be patched in a straightforward manner to achieve security. In particular,
+since the manner in which the adversary was able to subvert the prover was by
+the violation of \emph{goodness}, we can mandate that the prover only tries to
+use succinct proofs to prove claims about chains that are
+\emph{good at every level}. In case goodness is violated, the prover simply
+falls back to providing the whole chain. This allows us to argue that the
+construction is secure by distinguishing two cases. In case goodness is
+violated, the honest prover will fall back to providing the whole chain, in
+which case security will be reduced to the security of the standard
+blockchain protocol choosing the longest $0$-chain. In case goodness is not
+violated, we will argue that the adversary is unable to win in these
+comparisons.
+
+The previous construction was designed to prevent Bahack-style
 attacks~\cite{bahack}, where the adversary constructs ``lucky'' high-difficulty
 superblocks without filling in the underlying proof-of-work in the lower levels.
-Our protocol retains this highlevel approach, but adds a defense against the
-double-spending attack of Section~\ref{sec:attack}. The attack is neutralized
-since our verifier is more permissive, allowing the prover to construct a proof
-that takes superquality ``goodness'' into account when comparing forks.
+We now patch our protocol which, while retaining this highlevel approach, adds a
+defence against the double-spending attack of Section~\ref{sec:attack}. The
+attack is neutralized since our verifier is more permissive, allowing the prover
+to construct a proof that takes superquality ``goodness'' into account when
+comparing forks. The modified construction is shown in
+Algorithm~\ref{alg.nipopow-prover-patched}. The algorithm has been modified to
+check the current portion of the subchain $\alpha$ for \emph{goodness} prior to
+moving to the lower superchain level. If goodness is indeed maintained at the
+current level $\mu$, the prover only tries to cover the span of the last $m$
+blocks of level $\mu$ at level $\mu - 1$, as seen in
+Line~\ref{alg.nipopow-prover-patched.good}. Otherwise, if goodness is violated
+at the part of the subchain $\alpha$ at level $\mu$, then the prover completely
+ignores level $\mu$ and tries to use the lower level $\mu - 1$ to cover the
+whole span of $\alpha$.
+
+Only the concrete prover needs to be modified. The verifier and $\leq_m$
+operator remain as defined previously.
+
+\import{./}{algorithms/alg.nipopow-prover-patched.tex}
 
 To aid intuition, we will first give a sketch of the proof before giving the
 full technical proof.
@@ -180,3 +209,16 @@ computational power, and hence satisfy a strong notion of security.
 Intuitively, the attack of Section~\ref{sec:attack} is neutralized, because
 our prover takes ``goodness'' of blockchains into account and the verifier
 does not compare proofs strictly at the same level.
+
+\subsection{Infix security}
+We observe that now that we have proven the modified suffix construction secure,
+the security of infix proofs follows without any modifications in the infix
+construction. We formally state this in the following corollary.
+
+\begin{restatable}{corollary}{restateCrlyInfixSecurity}
+\label{crly.infix-security}
+Under honest majority, the infix NIPoPoW protocol $(P, V)$ is secure for all
+computable infix-sensitive $k$-stable monotonic predicates $Q$, except with
+negligible probability in $\kappa$.
+\end{restatable}
+\import{./}{proofs/infixsecurity.tex}

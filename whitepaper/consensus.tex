@@ -10,6 +10,16 @@ interlink data structure is a skip-list~\cite{skiplist} that makes it efficient
 for a verifier to process a sparse subset of the blockchain, rather than only
 consecutive blocks.
 
+Valid blocks satisfy the proof-of-work condition: $id \leq T$, where $T$ is the
+mining target. Throughout this work, we make the simplifying assumption that $T$
+is constant. Some blocks will achieve a lower id. If $id \leq \frac{T}{2^\mu}$
+we say that the block is of level $\mu$. All blocks are level $0$. Blocks with
+level $\mu$ are called $\mu$-\textit{superblocks}. $\mu$-superblocks for $\mu >
+0$ are also $(\mu - 1)$-superblocks. The level of a block is given as $\mu =
+\left \lfloor \log(T) - \log(\sf{id}(B)) \right \rfloor$ and denoted
+$\textit{level}(B)$. By convention, for $Gen$ we set $id = 0$ and $\mu =
+\infty$.
+
 Observe that in a blockchain protocol execution it is expected half of the
 blocks will be of level $1$, $1/4$ of the blocks will be of level $2$, $1/8$
 will be of level $3$ and $1/2^\mu$ blocks will be of level $\mu$. In
@@ -57,117 +67,39 @@ point to the block $B'$.
 
 \import{./}{algorithms/alg.nipopow-interlink.tex}
 
-\subsection{Superchain quality}
-In order to argue formally about the security properties of blockchains that are
-equipped with the interlink data structure we will introduce a new concept of
-{\em superchain quality}, which generalizes the chain quality property from the
-backbone model~\cite{backbone}. Superchain quality is a new contribution in this
-paper and is essential for identifying and overcoming the attack on PoPoW.
+\import{./}{algorithms/alg.nipopow-helper.tex}
 
-We first define a notion of ``goodness'' that bounds the deviation of
-superblocks of a certain level from their expected mean. Using this we then
-define superchain quality.
+\noindent\textbf{Traversing the blockchain. }
+As we have now extended blocks to contain multiple pointers to previous blocks,
+if certain blocks are omitted from a chain we will obtain a subchain, as long as
+the blockchain property that each block must contain a pointer to its previous
+block in the sequence is maintained.
 
-Intuitively, these definitions tell us that $\mu$-superblocks occur
-approximately once every $2^\mu$ blocks. Below, we make this notion more formal.
+Blockchains are sequences, but it is more convenient to use set notation for
+some operations. Specifically, $B \in \chain$; $\chain_1 \subseteq \chain_2$ and
+$\emptyset$ have the obvious meaning. $\chain_1 \cup \chain_2$ is the chain
+obtained by sorting the blocks contained in both $\chain_1$ and $\chain_2$ into
+a sequence (this may be not always defined).
+We will freely use set builder notation $\{B \in \chain: p(B)\}$.
+$\chain_1 \cap \chain_2$ is the
+chain $\{B: B \in \chain_1 \land B \in \chain_2\}$. In all cases, the
+blockchain property must be maintained. The lowest common ancestor is
+$\textsf{LCA}(\chain_1,
+\chain_2) = (\chain_1 \cap \chain_2)[-1]$.
+If $\chain_1[0] = \chain_2[0]$ and $\chain_1[-1] = \chain_2[-1]$, we say the
+chains $\chain_1, \chain_2$ \textit{span} the same block range.
 
-\begin{definition}[Locally good superchain]
-A superchain $\chain'$ of level
-$\mu$ with underlying chain $\chain$ is said to be $\mu$-\textnormal{locally-good}
-with respect to security parameter $\delta$, written
-$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, if $|\chain'| > (1 -
-\delta)2^{-\mu}|\chain|$.
-\end{definition}
-
-\begin{definition}[Superchain quality]
-The $(\delta, m)$ superquality property $Q^\mu_{scq}$ of a chain $\chain$
-pertaining to level $\mu$ with security parameters $\delta \in \mathbb{R}$ and
-$m \in \mathbb{N}$ states that for all $m' \geq m$, it holds that
-$\textsf{local-good}_{\delta}(C\upchain^\mu[-m':],
-C\upchain^\mu[-m':]\downchain, \mu)$. That is, all sufficiently large suffixes
-are locally good.
-\end{definition}
-
-While superchain quality guarantees that a superchain has a sufficient number
-of blocks w.r.t. the level 0 chain, we will also need to be able to compare
-it with other superchains. For this reason we introduce multilevel quality.
-
-\begin{definition}[Multilevel quality]
-A $\mu$-superchain $\chain'$ is said to have \textit{multilevel quality}, written
-$\textnormal{multi-good}_{\delta, k_1}(\chain, \chain', \mu)$ with respect to an
-underlying chain $\chain = \chain'\downchain$ with security parameters $k_1,
-\delta$ if for all $\mu' < \mu$ it holds that for any $\chain^* \subseteq \chain$,
-if $|\chain^*\upchain^{\mu'}| \geq k_1$, then $|\chain^*\upchain^{\mu}| \geq (1 -
-\delta)2^{\mu' - \mu}|\chain^*\upchain^{\mu'}|$.
-\end{definition}
-
-% For $\delta < 0.5$, multilevel quality implies that
-% $|\chain^*\upchain^{\mu}| \geq 1$.
-
-Putting the above together we conclude with the notion of a {\em good}
-superchain.
-
-\begin{definition}[Good superchain]
-\label{lem.good}
-A $\mu$-superchain $\chain'$
-is said to be \textit{good}, written $\textnormal{good}_{\delta, k_1}(\chain,
-\chain', \mu)$, with respect to an underlying chain $\chain = \chain'\downchain$
-if it has both superquality and multilevel quality with parameters $(\delta,
-m)$.
-\end{definition}
-
-\begin{lemma}[Local goodness]
-\label{lem.localgood}
-Assume $\chain$ contains only honestly-generated blocks in an optimistic
-execution. For all levels $\mu$, for all constant $\delta > 0$, all continuous
-subchains $\chain' = \chain[i:j]$ with $|\chain'| \geq m$ are locally good,
-$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, with overwhelming
-probability in $m$.
-\end{lemma}
-\import{./}{proofs/localgood.tex}
-
-\begin{lemma}[Multilevel quality]\label{lem.multilevel}
-For all $\mu, 0 < \delta \leq 0.5$, chain $\chain$ containing only
-honestly-generated blocks in an optimistic execution has $(\delta, k_1)$
-multilevel quality at level $\mu$ with overwhelming probability in $k_1$.
-\end{lemma}
-\begin{proof}
-Identical.
-\Qed
-\end{proof}
-
-\begin{lemma}[Superquality]
-\label{lem.superquality}
-For all $\mu, \delta > 0$, a chain $\chain$ adopted in an optimistic execution
-has $(\delta, m)$-superquality at level $\mu$ with overwhelming probability in
-$m$.
-\end{lemma}
-\import{./}{proofs/superquality.tex}
-
-\begin{lemma}[Optimistic superchain distribution]
-\label{lem.superchain-distribution}
-For any level $\mu$, and any $0 < \delta < 0.5$, a chain
-$\chain$ containing only honestly-generated blocks adopted by an honest party in
-an execution with random network scheduling is $(\delta, m)$-good at level
-$\mu$ with overwhelming probability in $m$.
-\end{lemma}
-\begin{proof}
-This is a direct consequence of Lemma~\ref{lem.superquality} and
-Lemma~\ref{lem.multilevel}. \Qed
-\end{proof}
-
-It is not hard to see that the above good statistical properties are attained
-with overwhelming probability by all chains that are generated in optimistic
-environments, i.e. if no adversary tries to violate them.
-
-\begin{lemma}[Optimistic superchain distribution]
-\label{lem.superchain-distribution}
-For a level $\mu$, and $0 < \delta < 0.5$, a chain
-$\chain$ containing only honestly-generated blocks adopted by an honest party in
-an execution with random scheduling is $(\delta, m)$-good at level
-$\mu$ with overwhelming probability in $m$.
-\end{lemma}
-\begin{proof}
-This is a direct consequence of Lemma~\ref{lem.superquality} and
-Lemma~\ref{lem.multilevel}. \Qed
-\end{proof}
+It will soon become clear that it is useful to construct a chain containing only
+the superblocks of another chain. Given $\chain$ and level $\mu$, the
+\textit{upchain} $\chain\upchain^\mu$ is defined as $\{B \in \chain: level(B)
+\geq \mu\}$. A chain containing only $\mu$-superblocks is called a
+$\mu$\textit{-superchain}. It is also useful, given a $\mu$-superchain $\chain'$
+to go back to the regular chain $\chain$. Given chains $\chain' \subseteq
+\chain$, the \textit{downchain} $\chain'\downchain\!\!_\chain$ is defined as
+$\chain[\chain'[0]:\chain'[-1]]$. $\chain$ is the \textit{underlying chain} of
+$\chain'$. The underlying chain is often implied by context, so we will simply
+write $\chain'\downchain$. By the above definition, the $\chain\upchain$
+operator is absolute: $(\chain\upchain^\mu)^{\mu + i} = \chain\upchain^{\mu +
+i}$. Given a set of consecutive rounds $S = \{r, r + 1, \cdots, r + j\}
+\subseteq \mathbb{N}$, we define $\chain^S = \{B \in \chain: B \text{ was
+generated during } S\}$.

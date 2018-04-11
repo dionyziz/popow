@@ -1,8 +1,17 @@
-\section{Blockchain suffix proofs}
-We now provide a concrete NIPoPoW construction which allows proving certain
-predicates $Q$ of the chain $\chain$. Among the predicates which are stable, in
-this section, we will limit ourselves to \textit{suffix sensitive} predicates.
-We extend the protocol to support more flexible predicates (such as transaction
+\section{Non-interactive proofs}
+In this section, we modify the PoPoW scheme introduced in KLS~\cite{KLS} to make
+it non-interactive. With foresight, we caution the reader that the
+non-interactive construction we present in this section is \emph{insecure},
+because the PoPoW scheme it is based on is also insecure. A very small patch
+will later allow us to modify our construction to achieve security.
+
+Their scheme only allowed proving \emph{suffix predicates},
+predicates that pertain to the suffix of the blockchain. We continue along those
+lines to give our NIPoPoW construction which allows proving certain predicates
+$Q$ of the chain $\chain$. Among the predicates which are stable, in this
+section, we will limit ourselves to \textit{suffix sensitive} predicates
+(similar to previous work which did not make this distinction explicit). We
+extend the protocol to support more flexible predicates (such as transaction
 inclusion, as needed for our applications) in Section~\ref{sec:infix}.
 
 \begin{definition}[Suffix sensitivity]
@@ -37,15 +46,14 @@ verifier to make a concrete verifier for our protocol.
 
 \noindent{\bf The generic verifier.}
 The \textsf{Verify} function of our NIPoPoW construction  for suffix predicates
-is described in
-Algorithm~\ref{alg.nipopow-verifier}. The verifier algorithm is parameterized by
-a chain predicate $Q$ and security parameters $k, m$; $k$
+is described in Algorithm~\ref{alg.nipopow-verifier}. The verifier algorithm is
+parameterized by a chain predicate $Q$ and security parameters $k, m$; $k$
 pertains to the amount of proof-of-work needed to bury a block so that it is
-believed to remain stable (e.g., $k = 6$); $m$ is a security
-parameter pertaining to the prefix of the proof, which connects the genesis
-block to the $k$-sized suffix. The verifier receives several proofs by
-different provers in a collection of proofs $\mathcal{P}$ at least one of which
-will be honest. Iterating over these proofs, it extracts the best.
+believed to remain stable (e.g., $k = 6$); $m$ is a security parameter
+pertaining to the prefix of the proof, which connects the genesis block to the
+$k$-sized suffix. The verifier receives several proofs by different provers in a
+collection of proofs $\mathcal{P}$ at least one of which will be honest.
+Iterating over these proofs, it extracts the best.
 
 Each proof is a chain. For honest provers, these are subchains of the  adopted
 chain. Proofs consist of two parts, $\pi$ and $\chi$; $\pi \chi$ must be a valid
@@ -132,7 +140,7 @@ for support.
 
 \begin{figure}[h]
     \caption{
-    NIPoPoW prefix $\pi$ for $m = 3$ on a good chain.
+    NIPoPoW prefix $\pi$ for $m = 3$.
     }
     \centering
     \iftwocolumn

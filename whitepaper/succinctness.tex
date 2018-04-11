@@ -2,7 +2,8 @@
 \label{sec.succinctness}
 \subsection{Succinctness in the honest setting}
 Having established security in the general case of the standard honest majority
-model, we now concentrate on establishing performance guarantees.
+model, we now concentrate on establishing performance guarantees. We analyse the
+patched scheme we saw in Algorithm~\ref{alg.nipopow-prover-patched}.
 
 We first observe that full succinctness in the standard honest majority model is
 impossible to prove for our construction. To see why, recall that an adversary
@@ -184,3 +185,15 @@ mining power.
 We note that, compared to previous work~\cite{KLS}, the adversarial model in
 which we have proven our succinctness is stronger in that the adversary is able
 to produce proofs.
+
+\subsection{Infix succinctness}
+Having established the succinctness of the modified suffix construction, the
+succinctness of the infix construction follows in the next corollary.
+
+\begin{restatable}{corollary}{restateCrlyInfixSuccinctness}
+\label{thm.infix-succinctness}
+The infix NIPoPoW protocol $(P, V)$ is succinct for all computable
+infix-sensitive $k$-stable predicates $Q$ in which the witness predicate $D$
+depends on a \emph{constant} number of blocks $d$.
+\end{restatable}
+\import{./}{proofs/infixsuccinctness.tex}

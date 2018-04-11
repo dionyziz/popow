@@ -1,5 +1,6 @@
 \begin{algorithm}[H]
-    \caption{\label{alg.nipopow-prover}The \textsf{Prove} algorithm
+    \caption{\label{alg.nipopow-prover-patched}
+    The \emph{secure} \textsf{Prove} algorithm
     for the NIPoPoW protocol}
     \begin{algorithmic}[1]
         \Function{\sf Prove$_{m,k,\delta}$}{$\chain$}
@@ -8,7 +9,9 @@
             \For{$\mu = |\chain[-k].\mathsf{interlink}|$ down to $0$}
                 \Let{\alpha}{\chain[:-k]\{B:\}\upchain^\mu}
                 \Let{\pi}{\pi \cup \alpha}
-                \Let{B}{\alpha[-m]}
+                \If{$\textnormal{good}_{\delta, m}(\chain, \alpha, \mu)$}
+                    \Let{B}{\alpha[-m]} \label{alg.nipopow-prover-patched.good}
+                \EndIf
             \EndFor
             \Let{\chi}{\chain[-k:]}
             \State\Return{$\pi\chi$}
