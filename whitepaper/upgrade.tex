@@ -14,17 +14,18 @@ the block header is modified to include the interlink structure, and the
 validation rules modified to require that new blocks (after a ``flag day'')
 contain a correctly-formed interlink hash.
 
-Hard forks are not ``forward compatible,'' and are best avoided. A soft fork
-construction requires including the interlink not in the block
-header, but in the coinbase transaction. It is enough to only store a hash of
-the interlink structure. The only requirement for the NIPoPoWs to work is that the
-PoW commits to all the pointers within interlink so that the adversary cannot
-cause a chain reorg. If we take that route, then each NIPoPoW will be required to
-present not only the block header, but also a proof-of-inclusion path within the
-Merkle tree of transactions proving that the coinbase transaction is indeed part
-of the block. Once that is established, the coinbase data can be presented, and
-the verifier will thereby know that the hash of the interlink data structure is
-correct. Given that in Bitcoin implementation there is a block size limit,
+The safety of a hard fork is debated~\cite{vitalikforks}, as they are not
+``forward compatible,''. NIPoPoWs can also be implemented by a soft fork. A soft
+fork construction requires including the interlink not in the block header, but
+in the coinbase transaction. It is enough to only store a hash of the interlink
+structure. The only requirement for the NIPoPoWs to work is that the PoW commits
+to all the pointers within the interlink so that the adversary cannot cause a
+chain reorganization. If we take that route, then each NIPoPoW will be required
+to present not only the block header, but also a proof-of-inclusion path within
+the Merkle tree of transactions proving that the coinbase transaction is indeed
+part of the block. Once that is established, the coinbase data can be presented,
+and the verifier will thereby know that the hash of the interlink data structure
+is correct. Given that in Bitcoin implementation there is a block size limit,
 observe that including such proofs-of-inclusion will only increase the NIPoPoW
 sizes by a constant factor per block, allowing for the communication complexity
 to remain polylogarithmic.
@@ -51,10 +52,12 @@ incorrect levels. Furthermore, the pointers could be pointing to superblocks of
 the correct level, but not to the most recent block. By requiring upgraded
 miners to accept all such blocks, we do not modify the set of accepted blocks.
 Therefore, the upgrade is simply a ``recommendation'' for miners and not an
-actual change in the consensus rules. The velvet fork has the effect that blocks
-produced by either upgraded or unupgraded clients are valid for either. Hence,
-the blockchain is never forked. Only the codebase is upgraded, and the  data on
-the blockchain is interpreted differently.
+actual change in the consensus rules. Hence, while a hard fork makes new
+upgraded blocks invalid to unupgraded clients and a soft fork makes new
+unupgraded blocks invalid to upgraded clients, the velvet fork has the effect
+that blocks produced by either upgraded or unupgraded clients are valid for
+either. In reality, the blockchain is never forked. Only the codebase is
+upgraded, and the data on the blockchain is interpreted differently.
 
 The reason this can work is because provers and verifiers of our protocol can
 check the validity of the claims of miners who make false interlink chain
