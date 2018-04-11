@@ -62,21 +62,30 @@ but allows paying for them using coins in another blockchain.
 % proof-of-work cryptocurrency can adopt our techniques.
 
 \subsection{Our contributions}
-In summary, we make the following contributions. Our main technical contribution
-is the introduction and instantiation of a new cryptographic primitive called
-\textit{Non-Interactive} Proofs of Proof-of-Work (NIPoPoW).
+Our main technical contribution is the introduction and instantiation of a new
+cryptographic primitive called \textit{Non-Interactive} Proofs of Proof-of-Work
+(NIPoPoW).
 
 We present a formal model and a provably secure instantiation of NIPoPoWs in the
 backbone model \cite{backbone}. Our contribution builds on previous work  of
-\cite{KLS} who introduced the concept of (interactive) Proofs of Proof-of-Work,
+~\cite{KLS} who introduced the concept of (interactive) Proofs of Proof-of-Work,
 which, in turn, are based on previous discussion of such concepts in the bitcoin
-forums \cite{highway}. We in fact show an explicit attack against the
+forums \cite{highway}. We in fact show an explicit \emph{attack} against the
 construction of \cite{KLS} that showcases the difficulty of designing such
 protocols. It follows that our construction is the first \textit{secure} Proof
 of Proof-of-Work (regardless of interactivity) assuming honest majority.
 Furthermore, our solution has the additional property of being non-interactive,
 as the previous construction could revert into interaction by an adversarial
-prover. Similar to previous work, we prove that the proofs are optimistically
+prover.
+
+While previous work allowed only proving that the $k$-sized \emph{suffix} of the
+currently adopted blockchain is as claimed, we generalize this notion to prove
+any predicate across a class of \emph{predicates} which we call \emph{infix
+sensitive}. This enables proving powerful statements pertaining to the
+blockchain such as the fact that a transaction took place, that a smart contract
+method ran with certain parameters, or that a payment was made into an account.
+
+Similar to previous work, we prove that the proofs are optimistically
 succinct meaning that, in honest conditions, the proofs are logarithmic in size.
 Improving previous work, we show that, in the optimistic model of no adversarial
 mining power, succinctness can be achieved for even
@@ -93,8 +102,7 @@ verifiers.
 
 We describe two practical deployment paths for our NIPoPoWs that existing
 cryptocurrencies can adopt: First using either a ``soft fork'' or a ``hard
-fork'' upgrade procedure, both of which have been successfully used by existing
-cryptocurrencies~\cite{sok}. Second, using a less disruptive update mechanism
+fork'' upgrade procedure. Second, using a less disruptive update mechanism
 that we term a ``velvet fork'' and which may be of independent interest. In a
 velvet fork update, the clients that have ``forked'' from the original
 implementation continue to be fully compatible with un-updated clients. It
@@ -102,3 +110,19 @@ follows that, in a velvet fork, the blockchain system can remain supported by a
 diverse software codebase indefinitely, while it can still enjoy, at least in
 proportion, some of the (efficiency in our case) benefits of the update without
 any of the security downsides.
+
+In summary, we make the following contributions:
+\begin{enumerate}
+  \item We construct the first \emph{provably secure} Proofs of Proof-of-Work.
+  \item We make them \emph{non-interactive}.
+  \item We describe an \emph{attack} against previous work.
+  \item We extend proofs to prove \emph{generic infix predicates} pertaining to
+        transactions deep within the blockchain.
+  \item We improve \emph{succinctness} of previous proofs by weakening the
+        optimality assumptions.
+  \item We provide \emph{experimental data} which measure the efficiency and
+        security of our scheme as well as concrete parameters based on these
+        experiments.
+  \item We introduce \emph{velvet forks}, a gradual deployment mechanism for
+        blockchain systems, in general.
+\end{enumerate}
