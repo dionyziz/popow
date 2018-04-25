@@ -19,6 +19,20 @@ following constraints:
 \end{itemize}
 \end{definition}
 
+Some explanation is needed for the rationale of the above definition. The
+parameter $\eta$ is borrowed from the Backbone~\cite{backbone} work and
+indicates the rate at which new blocks are produced, i.e., the number of rounds
+needed on average to produce a block. If the scheme is secure, this means that
+the output of the verifier should match the output of a \emph{potential honest
+full node}. However, in various executions, not all potential honest full node
+behaviors will be instantiated. Therefore, we require that, if the output of the
+proof verifier is \emph{true} then, consistently with honest behavior, all other
+honest full nodes will converge to the value \emph{true}. Conversely, if the
+output of the proof verifier is \emph{false} then, consistently with honest
+behavior, all honest full nodes must not have indicated \emph{true} sufficiently
+long in the past. The period $\eta k$ is the average period needed for obtaining
+sufficient confirmations ($k$) in a blockchain system.
+
 \begin{definition}{(Succinctness)}
 A \emph{blockchain proof protocol} $(P, V)$ about a predicate $Q$ is
 \emph{succinct} if for all PPT provers $\mathcal{A}$, any proof $\pi$ produced
