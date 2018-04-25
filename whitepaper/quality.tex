@@ -1,0 +1,114 @@
+\section{Superchain quality}
+In order to argue formally about the security properties of blockchains that are
+equipped with the interlink data structure we will introduce a new concept of
+{\em superchain quality}, which generalizes the chain quality property from the
+backbone model~\cite{backbone}. Superchain quality is a new contribution in this
+paper and is essential for identifying and overcoming the attack on PoPoW.
+
+We first define a notion of ``goodness'' that bounds the deviation of
+superblocks of a certain level from their expected mean. Using this we then
+define superchain quality.
+
+Intuitively, these definitions tell us that $\mu$-superblocks occur
+approximately once every $2^\mu$ blocks. Below, we make this notion more formal.
+
+\begin{definition}[Locally good superchain]
+A superchain $\chain'$ of level
+$\mu$ with underlying chain $\chain$ is said to be $\mu$-\textnormal{locally-good}
+with respect to security parameter $\delta$, written
+$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, if $|\chain'| > (1 -
+\delta)2^{-\mu}|\chain|$.
+\end{definition}
+
+\begin{definition}[Superchain quality]
+The $(\delta, m)$ superquality property $Q^\mu_{scq}$ of a chain $\chain$
+pertaining to level $\mu$ with security parameters $\delta \in \mathbb{R}$ and
+$m \in \mathbb{N}$ states that for all $m' \geq m$, it holds that
+$\textsf{local-good}_{\delta}(C\upchain^\mu[-m':],
+C\upchain^\mu[-m':]\downchain, \mu)$. That is, all sufficiently large suffixes
+are locally good.
+\end{definition}
+
+While superchain quality guarantees that a superchain has a sufficient number
+of blocks w.r.t. the level 0 chain, we will also need to be able to compare
+it with other superchains. For this reason we introduce multilevel quality.
+
+\begin{definition}[Multilevel quality]
+A $\mu$-superchain $\chain'$ is said to have \textit{multilevel quality}, written
+$\textnormal{multi-good}_{\delta, k_1}(\chain, \chain', \mu)$ with respect to an
+underlying chain $\chain = \chain'\downchain$ with security parameters $k_1,
+\delta$ if for all $\mu' < \mu$ it holds that for any $\chain^* \subseteq \chain$,
+if $|\chain^*\upchain^{\mu'}| \geq k_1$, then $|\chain^*\upchain^{\mu}| \geq (1 -
+\delta)2^{\mu' - \mu}|\chain^*\upchain^{\mu'}|$.
+\end{definition}
+
+% For $\delta < 0.5$, multilevel quality implies that
+% $|\chain^*\upchain^{\mu}| \geq 1$.
+
+Putting the above together we conclude with the notion of a {\em good}
+superchain.
+
+\begin{definition}[Good superchain]
+\label{lem.good}
+A $\mu$-superchain $\chain'$
+is said to be \textit{good}, written $\textnormal{good}_{\delta, k_1}(\chain,
+\chain', \mu)$, with respect to an underlying chain $\chain = \chain'\downchain$
+if it has both superquality and multilevel quality with parameters $(\delta,
+m)$.
+\end{definition}
+
+\begin{lemma}[Local goodness]
+\label{lem.localgood}
+Assume $\chain$ contains only honestly-generated blocks in an optimistic
+execution. For all levels $\mu$, for all constant $\delta > 0$, all continuous
+subchains $\chain' = \chain[i:j]$ with $|\chain'| \geq m$ are locally good,
+$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, with overwhelming
+probability in $m$.
+\end{lemma}
+\import{./}{proofs/localgood.tex}
+
+\begin{lemma}[Multilevel quality]\label{lem.multilevel}
+For all $\mu, 0 < \delta \leq 0.5$, chain $\chain$ containing only
+honestly-generated blocks in an optimistic execution has $(\delta, k_1)$
+multilevel quality at level $\mu$ with overwhelming probability in $k_1$.
+\end{lemma}
+\begin{proof}
+Identical.
+\Qed
+\end{proof}
+
+\begin{lemma}[Superquality]
+\label{lem.superquality}
+For all $\mu, \delta > 0$, a chain $\chain$ adopted in an optimistic execution
+has $(\delta, m)$-superquality at level $\mu$ with overwhelming probability in
+$m$.
+\end{lemma}
+\import{./}{proofs/superquality.tex}
+
+\begin{lemma}[Optimistic superchain distribution]
+\label{lem.superchain-distribution}
+For any level $\mu$, and any $0 < \delta < 0.5$, a chain
+$\chain$ containing only honestly-generated blocks adopted by an honest party in
+an execution with random network scheduling is $(\delta, m)$-good at level
+$\mu$ with overwhelming probability in $m$.
+\end{lemma}
+\begin{proof}
+This is a direct consequence of Lemma~\ref{lem.superquality} and
+Lemma~\ref{lem.multilevel}. \Qed
+\end{proof}
+
+It is not hard to see that the above good statistical properties are attained
+with overwhelming probability by all chains that are generated in optimistic
+environments, i.e. if no adversary tries to violate them.
+
+\begin{lemma}[Optimistic superchain distribution]
+\label{lem.superchain-distribution}
+For a level $\mu$, and $0 < \delta < 0.5$, a chain
+$\chain$ containing only honestly-generated blocks adopted by an honest party in
+an execution with random scheduling is $(\delta, m)$-good at level
+$\mu$ with overwhelming probability in $m$.
+\end{lemma}
+\begin{proof}
+This is a direct consequence of Lemma~\ref{lem.superquality} and
+Lemma~\ref{lem.multilevel}. \Qed
+\end{proof}
