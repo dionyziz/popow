@@ -12,13 +12,14 @@ exposition of this attack, a patch for our construction, which will also lead to
 a correct generic security proof, will become clear.
 
 We focus on illustrating why the PoPoW construction of previous work is
-insecure. The attack immediately carries over to our scheme. We proceed in two
-steps. We first show that a powerful attacker can break chain superquality with
-non-negligible probability. Then we construct a concrete double spending  attack
-based on this observation assuming an attacker of sufficiently high hashing
-power (but still below $50\%$). Note that maintaining chain superquality was not
-in the original security model; however, we show how the property affects the
-security of the underlying blockchain proofs.
+insecure. The attack immediately carries over to our straw man construction
+introduced above, a vulnerability we will address in later sections. We proceed
+in two steps. We first show that a powerful attacker can break chain
+superquality with non-negligible probability. Then we construct a concrete
+double spending attack based on this observation assuming an attacker of
+sufficiently high hashing power (but still below $50\%$). Note that maintaining
+chain superquality was not in the original security model; however, we show how
+the property affects the security of the underlying blockchain proofs.
 
 \subsection{Interactive proofs of proof-of-work}
 In PoPoW, the main algorithm of the verifier aims at distinguishing between two
