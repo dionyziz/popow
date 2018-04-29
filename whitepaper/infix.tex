@@ -1,7 +1,5 @@
-\section{Blockchain infix proofs}
+\section{Non-interactive blockchain \emph{infix} proofs}
 \label{sec:infix}
-
-\subsection{Construction}
 
 In the previous section we have seen how to construct proofs for suffix
 predicates. As mentioned, the main purpose of this construction is to serve as a
@@ -87,6 +85,8 @@ blockchains which include a verified block depth in their block headers such as
 Ethereum. As always, the block whose header is checked for block depth must be
 a \emph{stable} block in $\chain[:-k]$ to ensure that a malicious miner is not
 able to tamper with it.
+
+\subsection{Construction}
 
 The construction of these proofs is shown in
 Algorithm~\ref{alg.nipopow-infix-prover}. The infix prover accepts two
