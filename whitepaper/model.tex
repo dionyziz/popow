@@ -27,29 +27,34 @@ blockchain  state.
 %checkpoint block, either hard-coded in the client or obtained through a previous
 %interaction with the network.
 
-The entities on the blockchain network are of 3 kinds: (1) miners, who
-try to mine new blocks on top of the longest known blockchain and broadcast them
-as soon as they are discovered (for simplicity we assume that difficulty
-is constant and thus the ``longest chain rule'' sufficiently describes honest miner behavior); (2) full nodes, who maintain the longest
-blockchain without mining and also act as the provers in the network; (3)
-verifiers or stateless clients, who connect to provers and ask for proofs in
-regards to which blockchain is the largest. The verifiers attempt to determine
-the value of a predicate on these chains.
+The entities on the blockchain network are of 3 kinds: (1) miners, who try to
+mine new blocks on top of the longest known blockchain and broadcast them as
+soon as they are discovered (for simplicity we assume that difficulty is
+constant and thus the ``longest chain rule'' sufficiently describes honest miner
+behavior); (2) full nodes, who maintain the longest blockchain without mining
+and also act as the provers in the network; (3) verifiers or stateless clients,
+who connect to provers and ask for proofs in regards to which blockchain is the
+largest. The verifiers attempt to determine the value of a predicate on these
+chains.
 
 We model proof-of-work discovery attempts by using a random oracle~\cite{RO} as
-in \cite{backbone}.%
-\footnote{For clarity, we present our results in the backbone model~\cite{backbone}, although we suspect our results transfer easily to more refined models, such as Pass et al.~\cite{PSS}.}%
+in \cite{backbone}. For clarity, we present our results in the backbone
+model~\cite{backbone}, although we suspect our results transfer easily to more
+refined models, such as Pass et al.~\cite{PSS}. More specifically, we remark
+that we assume a \emph{synchronous} model in this paper. While we suspect our
+results carry over in a treatment in a \emph{partially synchronous} model with
+\emph{bounded delay}, this is left for future work.
 
-The random oracle produces $\kappa$-bit strings, where
-$\kappa$ is the system's security parameter. The network is synchronized into
-numbered rounds, which correspond to moments in time. $n$ denotes the total
-number of miners in the game, while $t$ denotes the total number of adversarial
-miners. Each miner is assumed to have equal mining power captured by the number
-of queries $q$ available per player to the random oracle, each query of which
-succeeds independently with probability $p$ (a successful query produces a block
-with valid proof-of-work). Mining pools and miners of different computing power
-can be captured by assuming multiple players combine their computing power. This
-is made explicit for the adversary, as they do not incur any network overhead to
+The random oracle produces $\kappa$-bit strings, where $\kappa$ is the system's
+security parameter. The network is synchronized into numbered rounds, which
+correspond to moments in time. $n$ denotes the total number of miners in the
+game, while $t$ denotes the total number of adversarial miners. Each miner is
+assumed to have equal mining power captured by the number of queries $q$
+available per player to the random oracle, each query of which succeeds
+independently with probability $p$ (a successful query produces a block with
+valid proof-of-work). Mining pools and miners of different computing power can
+be captured by assuming multiple players combine their computing power. This is
+made explicit for the adversary, as they do not incur any network overhead to
 achieve communication between adversarial miners. On the contrary, honest
 players discovering a block must \textit{diffuse} it (broadcast it) to the
 network at a given round and wait for it to be received by the rest of the
@@ -58,8 +63,8 @@ honest block is diffused is called a \textit{successful round}; if the number of
 honest blocks diffused is one, it is called \textit{uniquely successful round}.
 We assume there is an honest majority, i.e., that $t / n < 0.5$ with a
 significant gap~\cite{backbone}. We further assume that the network is
-adversarial, but that there is no eclipsing attacks~\cite{heilman2015eclipse}. More
-specifically, we allow the adversary to reorder messages transmitted at a
+adversarial, but that there is no eclipsing attacks~\cite{heilman2015eclipse}.
+More specifically, we allow the adversary to reorder messages transmitted at a
 particular round, to inject new messages thereby capturing Sybil attacks~
 \cite{sybil}, but not to drop messages. Each honest miner maintains a local
 chain $\chain$ which they consider the current active blockchain. Upon receiving
@@ -69,23 +74,29 @@ Receiving a different blockchain of the same length as the currently adopted one
 does not change the adopted blockchain.
 
 Blockchain blocks are generated by including the following data in them: $ctr$,
-the nonce used to achieve the proof-of-work; $x$ the Merkle tree~\cite{merkle} root of the
-transactions confirmed in this block; and \textit{interlink}~\cite{KLS}, a
-vector containing pointers to previous blocks, including the id of the previous
-block. The \textit{interlink} data structure contains pointers to more blocks
-than just the previous block. We will explain this further in Section~
-\ref{sec.consensus}. Given two hash functions $H$ and $G$ modelled as random
-oracles, the id of a block is defined as $\textsf{id} = H(ctr, G(x,
-\textsf{interlink}))$. In bitcoin's case, both $H$ and $G$ would be SHA256.
+the nonce used to achieve the proof-of-work; $x$ the Merkle tree~\cite{merkle}
+root of the transactions confirmed in this block; and
+\textit{interlink}~\cite{KLS}, a vector containing pointers to previous blocks,
+including the id of the previous block. The \textit{interlink} data structure
+contains pointers to more blocks than just the previous block. We will explain
+this further in Section~ \ref{sec.consensus}. Given two hash functions $H$ and
+$G$ modelled as random oracles, the id of a block is defined as $\textsf{id} =
+H(ctr, G(x, \textsf{interlink}))$. In bitcoin's case, both $H$ and $G$ would be
+SHA256.
 
 \subsection{The prover and verifier model}
-In our protocol, the nodes include a \emph{proof} along with their responses to clients.
-We need to assume that clients are able to connect to at least one correctly functioning node (i.e., that they cannot be eclipsed from the network~\cite{heilman2015eclipse,hijackingbitcoin}).
-Each client makes the same request to every node, and by verifying the proofs the client identifies the correct response.
-Henceforth we will call clients \textit{verifiers} and nodes \textit{provers}.
-Note that in the interactive protocol from prior work~\cite{KLS},  the prover and verifier may engage in more than one round of message passing.
+In our protocol, the nodes include a \emph{proof} along with their responses to
+clients. We need to assume that clients are able to connect to at least one
+correctly functioning node (i.e., that they cannot be eclipsed from the
+network~\cite{heilman2015eclipse,hijackingbitcoin}). Each client makes the same
+request to every node, and by verifying the proofs the client identifies the
+correct response. Henceforth we will call clients \textit{verifiers} and nodes
+\textit{provers}. Note that in the interactive protocol from prior
+work~\cite{KLS},  the prover and verifier may engage in more than one round of
+message passing.
 
-The prover-verifier interaction is parameterized by a predicate (e.g. ``the transaction $t$ is committed in the blockchain'').
+The prover-verifier interaction is parameterized by a predicate (e.g. ``the
+transaction $t$ is committed in the blockchain'').
 %
 The predicates of interest in our context are predicates on the active
 blockchain. Some of the predicates are more suitable for succinct proofs than
