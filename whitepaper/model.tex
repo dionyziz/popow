@@ -108,7 +108,7 @@ predicate $Q$ as a pair $(P, V)$ where $P$ is the \textit{prover} and $V$ is the
 they wish to produce a proof, accepts as input a full chain $\chain$ and
 produces a proof $\pi$ as its output. $V$ is a PPT algorithm which is spawned at
 some round, receives a pair of proofs $(\pi_A, \pi_B)$ from both an honest party
-and the adversary and returns its decision $d \in \{T, F, \bot\}$ before the
+and the adversary and returns its decision $d \in \{T, F\}$ before the
 next round and terminates. The honest miners produce proofs for $V$ using $P$,
 while the adversary produces proofs following some arbitrary strategy. Before we
 introduce the security properties for blockchain proof protocols we introduce
