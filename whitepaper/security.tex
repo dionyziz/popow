@@ -210,6 +210,13 @@ Intuitively, the attack of Section~\ref{sec:attack} is neutralized, because
 our prover takes ``goodness'' of blockchains into account and the verifier
 does not compare proofs strictly at the same level.
 
+\noindent\textbf{Remark.}
+We have explored security in the \emph{synchronous} model. We remark that the
+same construction can work in a \emph{partially synchronous} model by setting
+$k' = 2k$, where $k'$ is the security parameter of the partially synchronous
+model and $k$ is the security parameter in the synchronous model. We leave the
+full treatment of this for future work.
+
 \subsection{Infix security}
 We observe that now that we have proven the modified suffix construction secure,
 the security of infix proofs follows without any modifications in the infix
