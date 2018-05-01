@@ -1,4 +1,3 @@
-#import 
 import ethereum.config as config
 from ethereum.tools import tester
 from ethereum import utils
@@ -128,19 +127,19 @@ def extract_headers_siblings(proof = proof):
 
     return headers, siblings
 
-def submit_proof(proof=proof):
+def submit_event_proof(proof=proof):
 
     headers, hashed_interlink, siblings, merkle_indices, merkle_branch_sizes = extract_vars(proof)
-
     g = s.head_state.gas_used
 
-    better_proof = contract_abi.submit_nipopow(
-        headers, hashed_interlink, siblings, merkle_branch_sizes, merkle_indices, startgas = 100000000)
+    #header[100] as our block of interest. We know that it's in the proof.
+    success = contract_abi.submit_event_proof(
+        headers, hashed_interlink, siblings, merkle_branch_sizes, merkle_indices,
+        headers[100], value = pow(10, 17) , startgas = 100000000)
 
-    print 'Was it a better proof', better_proof
     print 'Gas used:', s.head_state.gas_used - g
 
-    return better_proof
+    assert(success)
 
 # Take a snapshot before trying out test cases
 #try: s.revert(s.snapshot())
