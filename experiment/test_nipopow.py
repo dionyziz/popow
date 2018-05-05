@@ -12,6 +12,10 @@ def sha256(s):
     import hashlib
     return hashlib.sha256(s).digest()
 
+from ethereum import slogging
+#slogging.configure(':INFO,eth.vm:INFO')
+slogging.configure(':DEBUG')
+
 # Create the simulated blockchain
 s = tester.Chain()
 s.chain.config['BLOCK_GAS_LIMIT'] = 3141592000
@@ -32,9 +36,6 @@ contract_abi = tester.ABIContract(
     s,
     contract_data['abi'],
     contract_address)
-
-# Sample block
-sampleBlock = "f8912eb0b65eedfe76e7e63e053d98c02b9cfb03dae5970a86ed85fddf2d8efe020000002717f5042fac9869b9b2ca9284ec87980bd2efc5a33c6353c8158a9ccc62b833aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa00000000ffff7f2000000000".decode('hex')
 
 import cPickle as pickle
 proof = pickle.load(open('proof.pkl'))
@@ -89,8 +90,8 @@ def submit_event_proof(proof=proof):
 # Take a snapshot before trying out test cases
 #try: s.revert(s.snapshot())
 #except: pass # FIXME: I HAVE NO IDEA WHY THIS IS REQUIRED
-s.mine()
-base = s.snapshot()
+#s.mine()
+#base = s.snapshot()
 
 def test_forked_proof():
 
