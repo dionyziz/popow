@@ -2,7 +2,7 @@ pragma solidity ^0.4.18;
 
 //import "strings.sol";
 
-contract Nipopow {
+contract Crosschain {
   //using strings for *;
 
   // TODO: Set the genesis_block. Is it going to be constant?
@@ -40,7 +40,7 @@ contract Nipopow {
 
   // Security parameters.
   uint constant m = 15;
-  uint constant k = 6;
+  uint constant k = 6; // Should be bigger.
 
   function memcpy(uint dest, uint src, uint len) private {
     // Copy word-length chunks while possible
@@ -60,6 +60,18 @@ contract Nipopow {
     }
   }
 
+    // Hash the header using double SHA256 
+  function hash_header(bytes32[4] header) internal returns(bytes32) {
+    // Compute the hash of 112-byte header.
+    string memory s = new string(112);
+    uint sptr;
+    uint hptr;
+    assembly { sptr := add(s, 32) }
+    assembly { hptr := add(header, 0) }
+    memcpy(sptr, hptr, 112);
+    return sha256(sha256(s));
+  }
+
   function add_proof_to_dag(Nipopow storage nipopow, bytes32[] proof) internal {
     for (uint i = 1; i < proof.length; i++) {
       if (!nipopow.blockPrecedence[proof[i - 1]][proof[i]]) {
@@ -69,19 +81,22 @@ contract Nipopow {
     }
   }
 
-  function ancestors_traversal(Nipopow storage nipopow, bytes32 current_block) internal {
+  function ancestors_traversal(Nipopow storage nipopow,
+    bytes32 current_block) internal {
     nipopow.ancestors.push(current_block);
     nipopow.visitedBlock[current_block] = true;
 
     for (uint i = 0; i < nipopow.blockDAG[current_block].length; i++) {
-      if (!nipopow.visitedBlock[nipopow.blockDAG[current_block][i]]) {
-        ancestors_traversal(nipopow, nipopow.blockDAG[current_block][i]);
+      bytes32 neigh_block = nipopow.blockDAG[current_block][i];
+      if (!nipopow.visitedBlock[neigh_block]) {
+         ancestors_traversal(nipopow, neigh_block);
       }
     }
   }
 
-  function update_ancestors(Nipopow storage nipopow, bytes32 current_block) internal {
-    ancestors_traversal(nipopow, current_block);
+  function update_ancestors(Nipopow storage nipopow,
+    bytes32 block_header) internal {
+    ancestors_traversal(nipopow, block_header);
 
     // Clear visitedBlock map.
     for (uint i = 0; i < nipopow.ancestors.length; i++) {
@@ -125,7 +140,7 @@ contract Nipopow {
   }
 
   // TODO: Implement the O(log(max_level)) algorithm.
-  function get_level(bytes32 hashed_header) internal returns(uint256) {
+  function get_level(bytes32 hashed_header) internal pure returns(uint256) {
     uint256 hash = uint256(hashed_header);
 
     for (uint i = 0; i <= 255; i++) {
@@ -169,15 +184,19 @@ contract Nipopow {
 
   function compare_proofs(Nipopow storage nipopow,
     bytes32[] contesting_proof) internal returns(bool) {
+    if (nipopow.best_proof.length == 0) {
+      return true;
+    }
     uint proof_lca_index;
     uint contesting_lca_index;
-    (proof_lca_index, contesting_lca_index) = get_lca(nipopow, contesting_proof);
+    (proof_lca_index, contesting_lca_index) 
+      = get_lca(nipopow, contesting_proof);
     return best_arg(nipopow, contesting_proof, contesting_lca_index) >
            best_arg(nipopow, nipopow.best_proof, proof_lca_index);
   }
 
   function verify_merkle(bytes32 roothash, bytes32 leaf, uint8 mu,
-    bytes32[] siblings) constant internal {
+    bytes32[] siblings) pure internal {
     bytes32 h = leaf;
     for (uint i = 0; i < siblings.length; i++) {
       uint8 bit = mu & 0x1;
@@ -191,28 +210,31 @@ contract Nipopow {
     require(h == roothash);
   }
 
-  function validate_interlink(bytes32[] proof, bytes32[] hash_interlinks,
-    bytes32[] siblings, uint8[] merkle_branch_length, uint8[] merkle_indices) internal {
+  function validate_interlink(bytes32[4][] headers, bytes32[] hashed_headers,
+    bytes32[] siblings) internal pure {
     uint ptr = 0; // Index of the current sibling
-    for (uint i = 1; i < proof.length; i++) {
+    for (uint i = 1; i < headers.length; i++) {
 
-      require(merkle_branch_length[i] <= 5);
-      require(merkle_indices[i] <= 32);
+      uint8 branch_length = uint8((headers[i][3] >> 8) & 0xff);
+      uint8 merkle_index = uint8((headers[i][3] >> 0) & 0xff);
+      require(branch_length <= 5);
+      require(merkle_index <= 32);
 
       // Copy siblings.
-      bytes32[] memory _siblings = new bytes32[](merkle_branch_length[i]);
-      for (uint8 j = 0; j < merkle_branch_length[i]; j++) _siblings[j] = siblings[ptr+j];
-      ptr += merkle_branch_length[i];
+      bytes32[] memory _siblings = new bytes32[](branch_length);
+      for (uint8 j = 0; j < branch_length; j++) _siblings[j] = siblings[ptr+j];
+      ptr += branch_length;
 
       // Verify the merkle tree proof
-      verify_merkle(hash_interlinks[i - 1], proof[i], merkle_indices[i], _siblings);
+      verify_merkle(headers[i - 1][0], hashed_headers[i],
+        merkle_index, _siblings);
     }
   }
 
   // Simple proofs that checks for the inclusion of the block of
   // interest in the proof.
-  function predicate(bytes32[] ancestors, bytes32 block_of_interest)
-    internal returns (bool) {
+  function block_exists_in_proof(bytes32[] ancestors, bytes32 block_of_interest)
+    internal pure returns (bool) {
       for (uint i = 0; i < ancestors.length; i++) {
         if (ancestors[i] == block_of_interest) {
           return true;
@@ -221,26 +243,16 @@ contract Nipopow {
     return false;
   }
 
-  // Verify the first proof.
-  function verify(bytes32[] proof, bytes32[] hash_interlinks,
-    bytes32[] siblings, uint8[] merkle_branch_length, uint8[] merkle_indices,
-    bytes32 block_of_interest) public returns(bool) {
+  function verify(Nipopow storage proof, bytes32[4][] headers,
+    bytes32[] siblings, bytes32[4] block_of_interest) internal returns(bool) {
 
-     //Throws if invalid.
-    validate_interlink(proof, hash_interlinks, siblings, merkle_branch_length,
-      merkle_indices);
-
-    return predicate(proof, block_of_interest);
-  }
-
-  function verify(Nipopow storage proof, bytes32[] contesting_proof,
-    bytes32[] hash_interlinks, bytes32[] siblings,
-    uint8[] merkle_branch_length, uint8[] merkle_indices,
-    bytes32 block_of_interest) internal returns(bool) {
+    bytes32[] memory contesting_proof = new bytes32[](headers.length);
+    for (uint i = 0; i < headers.length; i++) {
+      contesting_proof[i] = hash_header(headers[i]);
+    }
 
       // Throws if invalid.
-    validate_interlink(contesting_proof, hash_interlinks, siblings,
-      merkle_branch_length, merkle_indices);
+    validate_interlink(headers, contesting_proof, siblings);
 
     add_proof_to_dag(proof, contesting_proof);
 
@@ -251,65 +263,69 @@ contract Nipopow {
     update_ancestors(proof, proof.best_proof[0]);
 
     // Use ancestors.
-    return predicate(proof.ancestors, block_of_interest);
+    return block_exists_in_proof(proof.ancestors,
+      hash_header(block_of_interest));
   }
 
   // TODO: Deleting a mapping is impossible without knowing
   // beforehand all the keys of the mapping. That costs gas
   // and it may be in our favor to never delete this stored memory.
-  function submit_event_proof(bytes32[] proof, bytes32[] hash_interlinks,
-    bytes32[] siblings, uint8[] merkle_branch_length, uint8[] merkle_indices,
-    bytes32 block_of_interest) public payable returns(bool) {
+  function submit_event_proof(bytes32[4][] headers, bytes32[] siblings,
+    bytes32[4] block_of_interest) public payable returns(bool) {
+
+    bytes32 hashed_block = hash_header(block_of_interest);
 
     if (msg.value < z) {
       return false;
     }
 
-    verify(proof, hash_interlinks, siblings, merkle_branch_length,
-        merkle_indices, block_of_interest);
-
-    /*if (events[block_of_interest].expire == 0 &&  
-      verify(proof, hash_interlinks, siblings, merkle_branch_length,
-        merkle_indices, block_of_interest)) {
-      events[block_of_interest].expire = block.number + k;
-      events[block_of_interest].author = msg.sender;
-      events[block_of_interest].proof.best_proof = proof;
-      add_proof_to_dag(events[block_of_interest].proof, proof);
+    // No proof for that event for the moment.
+    if (events[hashed_block].expire == 0
+      && events[hashed_block].proof.best_proof.length == 0
+      && verify(events[hashed_block].proof, headers,
+        siblings, block_of_interest)) {
+      events[hashed_block].expire = block.number + k;
+      events[hashed_block].author = msg.sender;
       return true;
-    }*/
+    }
+
     return false;
   }
 
-  function finalize_event(bytes32 block_of_interest) public returns(bool) {
-    if (events[block_of_interest].expire == 0 ||
-      block.number < events[block_of_interest].expire) {
+  function finalize_event(bytes32[4] block_of_interest) public returns(bool) {
+    bytes32 hashed_block = hash_header(block_of_interest);
+
+    if (events[hashed_block].expire == 0 ||
+      block.number < events[hashed_block].expire) {
       return false;
     }
-    finalized_events[block_of_interest] = true;
-    address author = events[block_of_interest].author;
-    events[block_of_interest].expire = 0;
+    finalized_events[hashed_block] = true;
+    address author = events[hashed_block].author;
+    events[hashed_block].expire = 0;
     author.transfer(z);
 
     return true;
   }
 
-  function submit_contesting_proof(bytes32[] proof, bytes32[] hash_interlinks,
-    bytes32[] siblings, uint8[] merkle_branch_length, uint8[] merkle_indices,
-    bytes32 block_of_interest) public returns(bool) {
-    if (events[block_of_interest].expire < block.number) {
+  function submit_contesting_proof(bytes32[4][] headers, bytes32[] siblings,
+    bytes32[4] block_of_interest) public returns(bool) {
+    bytes32 hashed_block = hash_header(block_of_interest);
+
+    if (events[hashed_block].expire < block.number) {
       return false;
     }
 
-    if (!verify(events[block_of_interest].proof, proof,
-      hash_interlinks, siblings, merkle_branch_length, merkle_indices, block_of_interest)) {
-      events[block_of_interest].expire = 0;
+    if (!verify(events[hashed_block].proof, headers,
+      siblings, block_of_interest)) {
+      events[hashed_block].expire = 0;
       msg.sender.transfer(z);
     }
 
     return true;
   }
 
-  function event_exists(bytes32 block_header) public returns(bool) {
-    return finalized_events[block_header];
+  function event_exists(bytes32[4] block_header) public returns(bool) {
+    bytes32 hashed_block = hash_header(block_header);
+    return finalized_events[hashed_block];
   }
 }
