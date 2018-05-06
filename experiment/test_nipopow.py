@@ -50,6 +50,15 @@ def str_to_bytes32(s):
         r.append(s[start:start+32])
     return r
 
+def cycle_detection():
+    headers_f, siblings_f = extract_headers_siblings(proof_f)
+    headers, siblings = extract_headers_siblings()
+
+    for i in range(0, len(headers_f)):
+        for j in range(0, len(headers)):
+            if (headers[j] == headers_f[i]):
+                print i, j
+
 def extract_headers_siblings(proof = proof):
     headers = []
     hashed_headers = []
@@ -73,8 +82,9 @@ def extract_headers_siblings(proof = proof):
 
     return headers, siblings
 
-def submit_event_proof(proof=proof):
+def submit_event_proof_good(proof=proof):
 
+    #headers_f, siblings_f = extract_headers_siblings(proof_f)
     headers, siblings = extract_headers_siblings()
     g = s.head_state.gas_used
 
@@ -85,13 +95,59 @@ def submit_event_proof(proof=proof):
 
     print 'Gas used:', s.head_state.gas_used - g
 
-    #assert(success)
+    assert(success)
+
+def submit_event_proof_bad(proof=proof):
+
+    #headers_f, siblings_f = extract_headers_siblings(proof_f)
+    headers, siblings = extract_headers_siblings()
+    g = s.head_state.gas_used
+
+    #header[100] as our block of interest. We know that it's in the proof.
+    success = contract_abi.submit_event_proof(
+        headers, siblings, headers[100],
+        value = pow(10, 17) , startgas = 100000000)
+
+    print 'Gas used:', s.head_state.gas_used - g
+
+    assert(success)
 
 # Take a snapshot before trying out test cases
 #try: s.revert(s.snapshot())
 #except: pass # FIXME: I HAVE NO IDEA WHY THIS IS REQUIRED
-#s.mine()
-#base = s.snapshot()
+s.mine()
+base = s.snapshot()
+
+def submit_contesting_proof():
+
+    headers_f, siblings_f = extract_headers_siblings(proof_f)
+    headers, siblings = extract_headers_siblings()
+
+    g = s.head_state.gas_used
+
+    success1 = contract_abi.submit_event_proof(
+        headers_f, siblings_f, headers_f[100],
+        value = pow(10, 17) , startgas = 100000000)
+
+    assert(success1)
+
+    print 'Gas used:', s.head_state.gas_used - g
+
+    s.mine()
+
+    g = s.head_state.gas_used
+
+    success2 = contract_abi.submit_contesting_proof(
+        headers, siblings, headers_f[100], startgas = 1000000000)
+
+    print 'Gas used:', s.head_state.gas_used - g
+
+    assert(success2)
+
+    #Change the user that is submitting the contesting proof.
+
+
+
 
 def test_forked_proof():
 

@@ -21,6 +21,11 @@ contract Crosschain {
     // Stores DAG of blocks.
     mapping (bytes32 => bytes32[]) blockDAG;
     // Stores the hashes of the block headers of the best proof.
+
+    mapping (bytes32 => bool) visitedBlock;
+
+    bytes32[] traversal_stack;
+    bytes32[] ancestors;
     bytes32[] best_proof;
   }
 
@@ -69,6 +74,12 @@ contract Crosschain {
     return sha256(sha256(s));
   }
 
+  // pop() is not implemented in solidity.
+  function stack_pop (bytes32[] storage stack) internal {
+    require(stack.length > 0);
+    stack.length--;
+  }
+
   function add_proof_to_dag(Nipopow storage nipopow,
     bytes32[] proof) internal {
     for (uint i = 1; i < proof.length; i++) {
@@ -79,7 +90,27 @@ contract Crosschain {
     }
   }
 
-  function ancestors_traversal(Nipopow storage nipopow,
+  function find_ancestors(Nipopow storage nipopow,
+    bytes32 last_block) internal {
+    nipopow.traversal_stack.push(last_block);
+
+    while(nipopow.traversal_stack.length != 0) {
+      bytes32 current_block =
+      nipopow.traversal_stack[nipopow.traversal_stack.length - 1];
+
+      nipopow.visitedBlock[current_block] = true;
+      nipopow.ancestors.push(current_block);
+      stack_pop(nipopow.traversal_stack);
+
+      for (uint i = 0; i < nipopow.blockDAG[current_block].length; i++) {
+        if (!nipopow.visitedBlock[nipopow.blockDAG[current_block][i]]) {
+          nipopow.traversal_stack.push(nipopow.blockDAG[current_block][i]);
+        }
+      }
+    }
+  }
+
+  /*function ancestors_traversal(Nipopow storage nipopow,
     bytes32 current_block, bytes32 block_of_interest) internal returns(bool) {
     if (current_block == block_of_interest) {
       return true;
@@ -90,11 +121,27 @@ contract Crosschain {
     // cost a lot of gas. Consider the gas trade-offs.
     bool predicate_value = false;
     for (uint i = 0; i < nipopow.blockDAG[current_block].length; i++) {
-      predicate_value = ancestors_traversal(nipopow, 
-        nipopow.blockDAG[current_block][i],
+      predicate_value = ancestors_traversal(nipopow,
+        blockDAG[current_block][i],
         block_of_interest) || predicate_value;
     }
     return predicate_value;
+  }*/
+
+  function predicate(Nipopow storage proof, bytes32 block_of_interest) private 
+    returns (bool) {
+    bool predicate = false;
+    for (uint i = 0; i < proof.ancestors.length; i++) {
+      if (proof.ancestors[i] == block_of_interest) {
+        predicate = true;
+      }
+      // Clean the stored memory.
+      proof.visitedBlock[proof.ancestors[i]] = false;
+    }
+
+    delete proof.ancestors;
+
+    return predicate;
   }
 
   function get_lca(Nipopow storage nipopow, bytes32[] c_proof)
@@ -235,14 +282,15 @@ contract Crosschain {
       // Throws if invalid.
     validate_interlink(headers, contesting_proof, siblings);
 
-    add_proof_to_dag(proof, contesting_proof);
-
     if (compare_proofs(proof, contesting_proof)) {
       proof.best_proof = contesting_proof;
+      // Only when we get the "best" we add them to the DAG.
+      add_proof_to_dag(proof, contesting_proof);
     }
 
-    return ancestors_traversal(proof, proof.best_proof[0],
-      hash_header(block_of_interest));
+    find_ancestors(proof, proof.best_proof[0]);
+
+    return predicate(proof, hash_header(block_of_interest));
   }
 
   // TODO: Deleting a mapping is impossible without knowing
@@ -297,9 +345,10 @@ contract Crosschain {
       siblings, block_of_interest)) {
       events[hashed_block].expire = 0;
       msg.sender.transfer(z);
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   function event_exists(bytes32[4] block_header) public returns(bool) {
