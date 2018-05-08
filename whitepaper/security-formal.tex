@@ -1,0 +1,133 @@
+\section{Formal security treatment}
+
+Assume $t$ adversarial and $n$ total parties, each with $q$
+PoW random oracle queries per round. We will call a query to the
+RO $\mu$-\textit{successful} if the RO returns a value $h$
+such that $h \leq 2^{-\mu}T$.
+
+We define boolean random variables $X_r^\mu$, $Y_r^\mu$ and $Z_r^\mu$. Fix some
+round $r$, query index $j$ and adversarial party index $k$ (out of $t$). If at
+round $i$ an honest party obtains a PoW with $id < 2^{-\mu}T$, set $X_r^\mu =
+1$, otherwise $X_r^\mu = 0$. If at round $r$ exactly one honest party obtains a
+PoW with $id < 2^{-\mu}T$, set $Y_r^\mu = 1$, otherwise $Y_r^\mu = 0$. If at
+round $r$ the $j$-th query of the $k$-th corrupted party is $\mu$-successful,
+set $Z^\mu_{ijk} = 1$, otherwise $Z^\mu_{ijk} = 0$. Let $Z^\mu_r = \sum_{k=1}^t
+\sum_{j=1}^q Z^\mu_{ijk}$. For a set of rounds $S$, let $X^\mu(S) = \sum_{r \in
+S} X_r$ and similarly define $Y^\mu(S), Z^\mu(S)$.
+
+\begin{definition}[Typical execution]
+    An execution of the protocol is $(\epsilon, \eta)$-\textit{typical} if:
+
+    \textnormal{\bf Block counts don't deviate.}
+    For all $\mu \geq 0$ and any set $S$ of consecutive rounds
+    with $|S| \geq 2^\mu \eta\kappa$, we have:
+
+    \begin{itemize}
+        \item $(1 - \epsilon)E[X^\mu(S)] < X^\mu(S) < (1 + \epsilon)E[X^\mu(S)]$ and $(1 - \epsilon)E[Y^\mu(S)] < Y^\mu(s)$.
+        \item $Z^\mu(S) < (1 + \epsilon)E[Z^\mu(S)]$.
+    \end{itemize}
+
+    \textnormal{\bf Round count doesn't deviate.}
+    Let $S$ be a set of consecutive rounds such that $Z^\mu(S)
+    \geq k$ for some security parameter $k$. Then $|S| \geq (1 -
+    \epsilon)2^\mu\frac{k}{pqt}$ with overwhelming probability in $k$.
+
+    \textnormal{\bf Chain regularity.}
+    No insertions, no copies, and no predictions \cite{backbone} have occurred.
+\end{definition}
+
+\begin{theorem}[Typicality]
+\label{thm.typicality}
+Executions are $(\epsilon, \eta)$-typical with overwhelming
+probability in $\kappa$.
+\end{theorem}
+\import{./}{proofs/typicality.tex}
+
+The following lemma is at the heart of the security proof that will follow.
+
+\begin{lemma}\label{lem.level-comparison}
+    Suppose $S$ is a set of consecutive rounds $r_1 \ldots r_2$
+    and $\chain_B$ is
+    a chain adopted by an honest party at round $r_2$ of a typical execution.
+    Let $\chain_B^S = \{b \in
+    \chain_B: b \textnormal{ was generated during } S\}$. Let $\mu_\mathcal{A},
+    \mu_B \in \mathbb{N}$. Suppose $\chain_B^S\upchain^{\mu_B}$ is good.
+    Suppose $\chain'_\mathcal{A}$ is a $\mu_\mathcal{A}$-superchain containing
+    only adversarially generated blocks generated during $S$ and suppose that
+    $|\chain'_\mathcal{A}| \geq k$.
+    Then
+    $2^{\mu_\mathcal{A}}|\chain'_\mathcal{A}| < \frac{1}{3}2^{\mu_B}|\chain_B^S\upchain^{\mu_B}|$.
+\end{lemma}
+\import{./}{proofs/levelcomparison.tex}
+
+\begin{definition}[Adequate level of honest proof]
+Let $\pi$ be an honestly generated proof constructed upon some adopted chain
+$\chain$ and let $b \in \pi$.
+
+Then $\mu'$ is defined as  $\mu' = \max\{\mu: |\pi\{b:\}\upchain^\mu| \geq
+\max(m + 1, (1 - \delta)2^{-\mu}|\pi\{b:\}\upchain^\mu\downchain|)\}$.
+We call $\mu'$ the \textit{adequate} level of proof $\pi$ with respect to
+block $b$ with security parameters $\delta$ and $m$. Note that the adequate
+level of a proof is a function of both the proof $\pi$ and the chosen block $b$.
+\end{definition}
+
+\begin{restatable}{lemma}{restateThmAllBlocks}\label{lem.allblocks}
+Let $\pi$ be some honest proof generated with security parameters $\delta, m$.
+Let $\chain$ be the underlying chain, $b \in \chain$ be any block and $\mu'$ be
+the adequate level of the proof with respect to $b$ and the same security
+parameters.
+
+Then $\chain\{b:\}\upchain^{\mu'} = \pi\{b:\}\upchain^{\mu'}$.
+\end{restatable}
+\import{./}{proofs/allblocks.tex}
+
+\begin{lemma}
+Suppose the verifier evaluates $\pi_\mathcal{A} \geq \pi_B$ in a protocol
+interaction where $B$ is honest and assume during the comparison that the
+compared level of the honest party is $\mu_B$. Let $b =
+\textsf{LCA}(\pi_\mathcal{A}, \pi_B)$ and let $\mu_B'$ be the adequate
+level of $\pi_B$ with respect to $b$. Then $\mu_B' \geq \mu_B$.
+\end{lemma}
+\import{./}{proofs/leveladequacy.tex}
+
+\restateThmSecurity*
+\import{./}{proofs/security.tex}
+
+\begin{remark}[Variance attacks]
+\label{rmk.variance}
+The critical issue addressed by this security proof is to avoid Bahack-style
+attack \cite{bahack} where the adversary constructs ``lucky'' high-difficulty
+superblocks without filling in the underlying proof-of-work in the lower
+levels. Observe that, while setting $m = 1$ ``preserves'' the proof-of-work in
+the sense that expectations remain the same, the probability of an adversarial
+attack becomes approximately proportional to the adversary power if the
+adversary follows a suitable strategy (for a description of such a strategy,
+see the parameterization section). With higher values of $m$, the probability of
+an adversarial attack drops exponentially in $m$, even though they maintain constant
+computational power, and hence satisfy a strong notion of security.
+\end{remark}
+
+\noindent\textbf{Remark.}
+Intuitively, the attack of Section~\ref{sec:attack} is neutralized, because
+our prover takes ``goodness'' of blockchains into account and the verifier
+does not compare proofs strictly at the same level.
+
+\noindent\textbf{Remark.}
+We have explored security in the \emph{synchronous} model. We remark that the
+same construction can work in a \emph{partially synchronous} model by setting
+$k' = 2k$, where $k'$ is the security parameter of the partially synchronous
+model and $k$ is the security parameter in the synchronous model. We leave the
+full treatment of this for future work.
+
+\subsection{Infix security}
+We observe that now that we have proven the modified suffix construction secure,
+the security of infix proofs follows without any modifications in the infix
+construction. We formally state this in the following corollary.
+
+\begin{restatable}{corollary}{restateCrlyInfixSecurity}
+\label{crly.infix-security}
+Under honest majority, the infix NIPoPoW protocol $(P, V)$ is secure for all
+computable infix-sensitive $k$-stable monotonic predicates $Q$, except with
+negligible probability in $\kappa$.
+\end{restatable}
+\import{./}{proofs/infixsecurity.tex}

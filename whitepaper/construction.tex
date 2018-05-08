@@ -94,9 +94,11 @@ technical detail, we denote $\tilde Q$ the predicate which accepts only a
 $k$-suffix of a blockchain and outputs the same value that $Q$ would have output
 if it had been evaluated on a chain with that suffix.
 
+\import{./}{algorithms/alg.nipopow-prover.tex}
+
 \noindent
 \textbf{The concrete prover.}
-The NIPoPoW honest prover construction is shown in
+The NIPoPoW prover construction is shown in
 Algorithm~\ref{alg.nipopow-prover}. The honest prover is supplied with an
 honestly adopted chain $\chain$ and security parameters $m, k, \delta$ and
 returns proof $\pi\chi$, which is a chain. The suffix $\chi$ is the last $k$
@@ -109,8 +111,6 @@ $m$ is taken. Then the underlying superchain of level $\mu - 1$ spanning the
 same blocks as that suffix is also included, until level $0$ is reached. This
 underlying superchain will have $2m$ blocks in expectation and always at least
 $m$ blocks.
-
-\import{./}{algorithms/alg.nipopow-prover.tex}
 
 The algorithm returns a chain $\pi\chi$. In this chain, $\chi$ is the suffix of
 an honestly adopted blockchain containing the most recent $k$ blocks. $\pi$ is a
@@ -144,7 +144,7 @@ for support.
     }
     \centering
     \iftwocolumn
-        \includegraphics[width=\columnwidth,keepaspectratio]{figures/non-interactive-popow.png}
+        \includegraphics[width=0.9\columnwidth,keepaspectratio]{figures/non-interactive-popow.png}
     \else
         \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/non-interactive-popow.png}
     \fi

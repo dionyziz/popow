@@ -1,0 +1,64 @@
+\section{Proof of attack on PoPoW}
+\label{sec:attack-full}
+We now calculate the exact probability of success of the above attack.
+
+The attack is parameterized by  parameters $r, \mu$ which are picked by the
+adversary. $\mu$ is the superblock level at which the adversary will produce a
+proof longer than the honest proof. The modified attack works as follows:
+Without loss of generality, fix block $b$ to be Genesis. The adversary always
+mines on the secret chain which forks off from genesis, unless a
+\textit{superblock generation event} occurs. If a superblock generation event
+occurs, then the adversary pauses mining on the secret chain and attempts a
+\textit{block suppression attack} on the honest chain. The adversary devotes
+exactly $r$ rounds to this suppression attack; then resumes mining on the secret
+chain. We show that, despite this simplification (of fixing $r$) which is
+harmful to the adversary, the probability of a successful attack is
+non-negligible for certain values of the protocol parameters
+\footnote{The attack could be further optimized, but we simplify it for
+exposition.}.
+
+The adversary monitors the network for superblocks. Whenever an honest party
+diffuses an honestly-generated $\mu$-superblock,
+at the end of a given round $r_1$, the adversary starts devoting their mining
+power to block suppression starting from the next round.
+
+The block suppression attack works as follows. Let $b$ be the honestly generated
+$\mu$-superblock which was diffused at the end of the previous round. If the
+round was not uniquely successful, let $b$ be any of the diffused
+honestly-generated $\mu$-superblocks. Let $b$ be the tip of an honest chain
+$\chain_B$. The adversary first mines on top of $\chain_B[-2]$. If she is
+successful in mining a block $b'$, she continues extending the chain ending
+at $b'$ (to mine $b''$ and so on). The value $r$ is fixed, so the adversary
+devotes exactly $r$ rounds to this whole process; the adversary will keep mining
+on top of $\chain_B[-2]$ (or one of the adversarially-generated extensions of
+it) for exactly $r$ rounds, regardless of whether $b'$ or $b''$ have been found.
+At the same time, the honest parties will be mining on top of $b$ (or a
+competing block in the case of a non-uniquely successful round). Again, further
+successful block diffusion by the honest parties shall not affect that the
+adversary is going to spend exactly $r$ rounds for suppression.
+This attack will succeed with overwhelming probability for the right choice
+of protocol values.
+
+\begin{theorem}[Double-spending attack]
+There exist parameters $p, n, t, q,  \mu, \delta$, with $t\leq (1-\delta)(n-t)$,
+and a double spending attack against KLS PoPoW that succeeds with overwhelming
+probability.
+\end{theorem}
+\import{./}{proofs/attack.tex}
+
+\noindent\textbf{Remark.}
+It is worth isolating the mistake in the security proof from
+the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
+player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block, was honestly
+generated and suppose that the superchain comparison happens at level $\mu$.
+Their security proof then correctly argues that there will have been more
+honestly- than adversarially-generated $\mu$-superblocks after block $b$.
+Nevertheless, we observe that the mere fact that there have been more honestly-
+than adversarially-generated $\mu$-superblocks after $b$ does not imply that
+$|\overline\pi_\mathcal{A}\upchain^\mu\{b:\}| \leq
+|\overline\pi_B\upchain^\mu\{b:\}|$. The reason is that some of these
+superblocks could belong to blocktree forks that have been abandoned by $B$.
+Thus, the security conclusion does not follow. Regardless, their basic argument
+and construction is what we will use as a basis for constructing a system that
+is both provably secure and succinct under the same assumptions, albeit
+requiring a more complicated construction structure to obtain security.

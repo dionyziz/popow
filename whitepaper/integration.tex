@@ -134,48 +134,4 @@ the tokens, they are required to sign the destination address on the destination
 blockchain using the private key corresponding to their source account used to
 make the payment within the source blockchain.
 
-In order to support the cross-chain ICO application and to present concrete data
-about the cost of executing NIPoPoW-style proofs, we implemented the NIPoPoW
-verifier algorithm as a Solidity smart contract
-\footnote{
-The source code of the smart contract is available under an open source MIT
-license at
-\url{https://github.com/dionyziz/popow/blob/master/experiment/contractNipopow.sol}
-}
-The contract consists of two functions.
-The \texttt{submit\_nipopow} function is used by the provers to provide their
-proof vectors. Instead of passing the block headers of the proof, the provers
-pass the hashes of the block headers and the hashes of the interlink vector. The
-reason is that the full data of the block header (especially the Merkle tree
-root) is only useful for the blocks of interest. Thus, we reduce the amount of
-data needed for the proof by a factor of 2. The rest of the parameters are used
-in the inclusion proof of the block. After confirming the validity of the proof,
-the \texttt{compare\_proofs} function is called between the current and the best
-proof. If the current proof is better then it is assigned to the best proof in
-the contract's storage.
-%The last step is to update the ancestors of the best
-%proof.
-%Regardless of whether the proof is better it may contain blocks that are
-%in the honest chain and are blocks of interest.
-The gas costs are summarized in
-Table~\ref{tbl:gascosts}. The \$USD column represents the current price of this
-much gas on Ethereum.
-%The Solidity code listing will be made available in the full online version.
-
-\begin{table}[ht]
-  \centering
-  \caption{Verifier contract functions}
-  \label{tbl:gascosts}
-  \begin{tabular}{l|l|l|ll}
-    \hline
-    Function & Data & Gas cost & \$USD \\ \hline
-    \texttt{compare\_proofs} & $\sim$8Kb & $\sim$5M & \$4 \\ \hline
-    \texttt{submit\_nipopow} & $\sim$65Kb & $\sim$40M & \$32 \\ \hline
-  \end{tabular}
-\end{table}
-
-Despite having proven the security of our NIPoPoWs construction, the security of
-the cross-chain ICO construction has many nuances and we leave their security
-treatment for future work.
-
 %\subsection{Compare proofs implementation details}

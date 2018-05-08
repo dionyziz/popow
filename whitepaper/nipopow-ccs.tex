@@ -1,0 +1,68 @@
+\documentclass[sigconf, anonymous]{acmart}
+
+\newif\iftwocolumn
+\newif\ifonecolumn
+\twocolumntrue
+
+\usepackage{preamble}
+
+\fancyhf{} % Remove fancy page headers
+\fancyhead[C]{Anonymous submission \#9999 to ACM CCS 2017} % TODO: replace 9999 with your paper number
+\fancyfoot[C]{\thepage}
+
+\setcopyright{none} % No copyright notice required for submissions
+\acmConference[Anonymous Submission to ACM CCS 2018]{ACM Conference on Computer and Communications Security}{Due 8 May 2018}{Toronto, Canada}
+\acmYear{2018}
+
+\settopmatter{printacmref=false, printccs=true, printfolios=true} % We want page numbers on submissions
+
+%%\ccsPaper{9999} % TODO: replace with your paper number once obtained
+
+\begin{document}
+\import{./}{title-text.tex}
+
+\begin{abstract}
+\input{abstract}
+\end{abstract}
+
+\begin{CCSXML}
+<ccs2012>
+<concept>
+<concept_id>10003752.10003777.10003789</concept_id>
+<concept_desc>Theory of computation~Cryptographic protocols</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+</ccs2012>
+\end{CCSXML}
+
+\ccsdesc[500]{Theory of computation~Cryptographic protocols}
+% -- end of section to replace with generated code
+
+\keywords{proof-of-work; blockchain; non-interactive; SPV; sidechains}
+
+\maketitle
+
+% \input{intro}
+% \input{prelim}
+% \input{definition}
+% \input{construction}
+% \input{other}
+% \input{analysis}
+
+\import{./}{nipopows-body.tex}
+
+\newpage
+
+\input{appendix}
+
+% %\input{app-ouroboros}
+% \input{app-validator}
+% \input{app-other}
+% \input{app-proofs}
+% \input{app-construction}
+
+\bibliographystyle{ACM-Reference-Format}
+% \bibliography{pubs,abbrev3,crypto}
+\bibliography{bibliography}
+
+\end{document}

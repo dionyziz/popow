@@ -100,17 +100,6 @@ from the Bitcoin network and other blockchains, we quantify the actual savings o
 NIPoPoWs over the previous known techniques of constructing efficient SPV
 verifiers.
 
-We describe two practical deployment paths for our NIPoPoWs that existing
-cryptocurrencies can adopt: First using either a ``soft fork'' or a ``hard
-fork'' upgrade procedure. Second, using a less disruptive update mechanism
-that we term a ``velvet fork'' and which may be of independent interest. In a
-velvet fork update, the clients that have ``forked'' from the original
-implementation continue to be fully compatible with un-updated clients. It
-follows that, in a velvet fork, the blockchain system can remain supported by a
-diverse software codebase indefinitely, while it can still enjoy, at least in
-proportion, some of the (efficiency in our case) benefits of the update without
-any of the security downsides.
-
 In summary, we make the following contributions:
 \begin{enumerate}
   \item We construct the first \emph{provably secure} Proofs of Proof-of-Work.
@@ -123,6 +112,4 @@ In summary, we make the following contributions:
   \item We provide \emph{experimental data} which measure the efficiency and
         security of our scheme as well as concrete parameters based on these
         experiments.
-  \item We introduce \emph{velvet forks}, a gradual deployment mechanism for
-        blockchain systems, in general.
 \end{enumerate}

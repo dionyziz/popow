@@ -46,7 +46,7 @@ of the level below.
     Higher levels have achieved a lower target (higher difficulty) during mining.}
     \centering
     \iftwocolumn
-        \includegraphics[width=\columnwidth,keepaspectratio]{figures/hierarchical-ledger.png}
+        \includegraphics[width=0.9\columnwidth,keepaspectratio]{figures/hierarchical-ledger.png}
     \else
         \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/hierarchical-ledger.png}
     \fi
@@ -66,8 +66,6 @@ then modifies its entries from level $0$ to $\textsf{level}(B')$ to
 point to the block $B'$.
 
 \import{./}{algorithms/alg.nipopow-interlink.tex}
-
-\import{./}{algorithms/alg.nipopow-helper.tex}
 
 \noindent\textbf{Traversing the blockchain. }
 As we have now extended blocks to contain multiple pointers to previous blocks,

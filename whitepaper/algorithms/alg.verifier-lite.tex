@@ -10,9 +10,8 @@
                 \If{$\mathsf{validChain}(\pi \chi)
                     \land |\chi| = k
                     \land \pi \geq_m \tilde\pi$}
-                    \Let{\tilde\pi}{\pi}
-                    \Let{\tilde\chi}{\chi}
-                      \Comment{Update current best}
+                    \State{$\tilde\pi \gets \pi$; $\tilde\chi \gets \chi$}
+                    \Comment{Update current best}
                 \EndIf
             \EndFor
             % \State\Return{$Q(\epsilon^{|\chain| - k} \tilde\chi)$}

@@ -20,26 +20,6 @@ $r$ has the following constraints:
 \end{itemize}
 \end{definition}
 
-\begin{figure}
-    \caption{The truth value of a fixed predicate $Q$ about the blockchain, as
-             seen from the point of view of $5$ honest nodes, drawn on the
-             vertical axis, over time, drawn as the horizontal axis. The truth
-             value evolves over time starting as \emph{false} at the beginning,
-             indicated by a dashed red line. At some point in time $t_0$, the
-             predicate is ready to be evaluated as \emph{true}, indicated by the
-             solid blue line. The various honest nodes each realize this
-             independently over a period of $\eta k$ duration, shaded in gray.
-             The predicate remains \emph{false} for everyone before $t_0$ and
-             \emph{true} for everyone after $t_0 + \eta k$.}
-    \centering
-    \iftwocolumn
-        \includegraphics[width=\columnwidth,keepaspectratio]{figures/predicate-evolution.pdf}
-    \else
-        \includegraphics[width=0.4\columnwidth,keepaspectratio]{figures/predicate-evolution.pdf}
-    \fi
-    \label{fig.evolution}
-\end{figure}
-
 Some explanation is needed for the rationale of the above definition. The
 parameter $\eta$ is borrowed from the Backbone~\cite{backbone} work and
 indicates the rate at which new blocks are produced, i.e., the number of rounds
@@ -52,16 +32,15 @@ honest full nodes will converge to the value \emph{true}. Conversely, if the
 output of the proof verifier is \emph{false} then, consistently with honest
 behavior, all honest full nodes must not have indicated \emph{true} sufficiently
 long in the past. The period $\eta k$ is the period needed for obtaining
-sufficient confirmations ($k$) in a blockchain system. This is illustrated in
-Figure~\ref{fig.evolution}. A predicate's value has the potential of being
-\emph{true} as seen by an honest party starting at time $t_0$. Before time
-$t_0$, all honest parties agree that the predicate is \emph{false}. It takes
-$\eta k$ time for all parties to agree that the predicate is \emph{true}, which
-is certain after time $t_0 + \eta k$. The adversary may be able to convince the
-verifier that the predicate has any value during the period from $t_0$ to
-$t_0 + \eta k$. However, our security definition mandates that before time $t_0$
-the verifier will necessarily output \emph{false} and after time $t_0 + \eta k$
-the verifier will necessarily output \emph{true}.
+sufficient confirmations ($k$) in a blockchain system. A predicate's value has
+the potential of being \emph{true} as seen by an honest party starting at time
+$t_0$. Before time $t_0$, all honest parties agree that the predicate is
+\emph{false}. It takes $\eta k$ time for all parties to agree that the predicate
+is \emph{true}, which is certain after time $t_0 + \eta k$. The adversary may be
+able to convince the verifier that the predicate has any value during the period
+from $t_0$ to $t_0 + \eta k$. However, our security definition mandates that
+before time $t_0$ the verifier will necessarily output \emph{false} and after
+time $t_0 + \eta k$ the verifier will necessarily output \emph{true}.
 
 \noindent
 \textbf{Remark. } The above security definition, which works in the synchronous

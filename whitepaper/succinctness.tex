@@ -1,6 +1,10 @@
 \section{Succinctness}
 \label{sec.succinctness}
-\subsection{Succinctness in the honest setting}
+
+We will illustrate why our construction is succinct in the honest setting. For
+techniques to make the construction succinct in broader adversarial settings,
+consult the appendix.
+
 Having established security in the general case of the standard honest majority
 model, we now concentrate on establishing performance guarantees. We analyse the
 patched scheme we saw in Algorithm~\ref{alg.nipopow-prover-patched}.
@@ -34,7 +38,9 @@ shortly.
     $\log(|S|)$, where $S$ is the set of all blocks produced, with overwhelming
     probability in $m$.
 \end{restatable}
+\ifonecolumn
 \import{./}{proofs/fewlevels.tex}
+\fi
 
 The above theorem establishes that the number of superchains is small. What
 remains to be shown is that few blocks will be included at each superchain
@@ -47,7 +53,9 @@ level.
     Then $|\chain'\upchain^\mu| \geq m$
     with overwhelming probability in $m$.
 \end{restatable}
+\ifonecolumn
 \import{./}{proofs/largeexpansion.tex}
+\fi
 
 \begin{restatable}[Small downchain support]{lemma}{restateThmSmallSupport}
     \label{lem.small-support}
@@ -55,7 +63,9 @@ level.
     \chain\upchain^\mu[i:i + m]$. Then $|\chain'\downchain\upchain^{\mu - 1}|
     \leq 4m$ with overwhelming probability in $m$.
 \end{restatable}
+\ifonecolumn
 \import{./}{proofs/smallsupport.tex}
+\fi
 
 This last theorem establishes the fact that the support of blocks needed under
 the $m$-sized chain suffix to move from one level to the one below is small.
@@ -68,132 +78,9 @@ Based on this, we can establish our theorem on succinctness:
     succinct with the number of blocks bounded by $4m \log(|\chain|)$, with
     overwhelming probability in $m$.
 \end{restatable}
+\ifonecolumn
 \import{./}{proofs/succinctness.tex}
+\fi
 
 In the above theorem, note the linear dependency between the round $r$ that a
 proof is generated and the length $|\chain|$ of the chain of each honest prover.
-
-\subsection{Succinctness of adversarial proofs}
-In the stronger adversarial setting, however, it is possible for the adversary
-to produce large dummy (incorrect) proofs that expand the verification time;
-security will not be hurt but it would take more time to complete verification.
-One may dismiss this as a trivial denial of service attack and have a resource
-bounded verifier simply stop if it is confronted with such a processing task.
-However, simply dismissing superpolylogarithmic proofs is an incorrect strategy,
-as honest provers can produce such longer proofs in case an adversarial miner
-harms the goodness of the blockchain.
-
-It would therefore be useful for honest provers to have the ability to
-signal to the verifier that such time expansion is indeed necessary because of
-an attack on superchain quality, rather than because a malicious prover is
-simply sending long proofs that will eventually be rejected. With such signaling
-mechanism, a resource bounded verifier can distinguish between a denial of
-service attack that may be directed solely to it from  a denial of service
-attack that  is launched by an attacker that has the ability to  interfere
-globally with superchain quality.
-
-To facilitate the above signaling, we offer a simple generalization of our
-construction that achieves this. Our extended construction allows the verifier
-to stop processing input early, in a streaming fashion, thereby only requiring
-logarithmic communication complexity per proof received. To achieve this,
-observe that honest proofs need to be large only if there is a violation of
-\textit{goodness}. However, goodness is not harmed when the chain is not under
-attack by the adversarial computational power or network. Therefore, we require
-the prover to produce a \textit{certificate of badness} in case there is a
-violation of \textit{goodness} in the blockchain. This certificate will always
-be logarithmic in size and must be sent prior to the rest of the proof by the
-prover to the verifier. Because the certificate will be logarithmic in size even
-in the case of an adversarial attack on the chain, the honest verifier can stop
-processing the certificate after a logarithmic time bound. If the certificate is
-claimed to be longer, the honest verifier can reject early by deciding that the
-prover is adversarial. Looking at the certificate, the honest verifier
-determines whether there is a possibility for a lack of goodness in the
-underlying chain. If there's no adversarial computational power in use, the
-certificate is impossible to produce. We leave the full description of
-certificates of badness for the full version of this paper.
-
-The certificates of badness are produced easily as follows. First, the honest
-verifier finds the maximum level $\text{max-}\mu$ at which there are at least
-$m$ $\text{max-}\mu$-superblocks and includes it in the certificate. Then,
-because there is a violation of goodness there must exist two levels $\mu <
-\mu'$ such that $2^\mu|\chain\upchain^\mu| > (1 +
-\delta)2^{\mu'}|\chain\upchain^{\mu'}|$ in some part $\chain$ of the honestly
-adopted chain. But $\mu' - \mu \leq \text{max-}\mu$. Therefore, there must exist
-two adjacent levels $\mu_1 < \mu_2$ which break goodness but with error
-parameter $(1 + \delta)^{1/{\text{max-}\mu}}$. In particular, it will hold that
-$2^{\mu_1}|\chain\upchain^{\mu_1}| > (1 +
-\delta)^{1/{\text{max-}\mu}}2^{\mu_2}|\chain\upchain^{\mu_2}|$. This condition
-is direct for the prover to find and trivial for the verifier to check and
-completes the construction. Note that it is possible that a certificate of
-badness is produceable where two adjacent levels have more than $(1 +
-\delta)^{1/{\text{max-}\mu}}$ error even if there is no harm to global goodness;
-however, these certificates cannot be produced when no adversarial power is in
-use. The algorithm to do this is shown in Algorithm~\ref{alg.badness}.
-
-\import{./}{algorithms/alg.badness.tex}
-
-Therefore, we augment the NIPoPoW construction as follows. The honest prover
-sends a tuple of two items. The first item is empty if the second item is
-polylogarithmic in the size of the chain; otherwise it is a certificate of
-badness. The second item is the NIPoPoW proof as in the previous construction.
-The verifier processes only the first polylogarithmic number of bytes from the
-incoming proof. If within that portion a certificate of badness is found, it is
-checked for validity. If it is found to be valid, the whole proof is checked,
-regardless of size. If it is found to be invalid or no certificate has been
-provided, then the proof is rejected as invalid. We call the augmented
-construction \textit{certified NIPoPoWs}.
-
-\begin{theorem}[Certified NIPoPoWs succinctness]
-    \label{thm.certified-succinctness}
-    If all miners are honest and the network scheduling is random,
-    certified non-interactive proofs-of-proof-of-work produced by the adversary
-    are processed in polylogarithmic time in the size of the chain by honest
-    verifiers, except with negligible probability in $m$.
-\end{theorem}
-\begin{proof}
-    Because all miners are honest and the network scheduling is random,
-    therefore certificates of badness exist with negligible probability in $m$.
-    Conditioning on the event that certificates of badness do not exist, the
-    honest verifier will reject the proof in polylogarithmic time.
-    \Qed
-\end{proof}
-
-We also establish that the modified construction does not harm security below.
-Security is established in the general case where the adversary has minority
-mining power.
-
-\begin{theorem}[Certified NIPoPoWs security]
-    Assuming honest majority, certified non-interactive proofs-of-proof-of-work
-    are secure, except with negligible probability in $\kappa$.
-\end{theorem}
-\begin{proof}
-    We distinguish two cases: Either goodness has been violated; or it has not
-    been violated. Suppose that goodness has been violated. In that case, an
-    honest prover will include a certificate of badness in their proof and their
-    proof will be processed by an honest verifier.
-
-    In the case where goodness is not violated, all honest proofs will be
-    logarithmic in size as established by
-    Theorem~\ref{thm.certified-succinctness}. Therefore, all honest proofs will
-    be processed by an honest verifier.
-
-    Under the condition that all honest proofs will be processed, the rest of
-    the security argument follows immediately from Theorem~\ref{thm.security}.
-    \Qed
-\end{proof}
-
-We note that, compared to previous work~\cite{KLS}, the adversarial model in
-which we have proven our succinctness is stronger in that the adversary is able
-to produce proofs.
-
-\subsection{Infix succinctness}
-Having established the succinctness of the modified suffix construction, the
-succinctness of the infix construction follows in the next corollary.
-
-\begin{restatable}{corollary}{restateCrlyInfixSuccinctness}
-\label{thm.infix-succinctness}
-The infix NIPoPoW protocol $(P, V)$ is succinct for all computable
-infix-sensitive $k$-stable predicates $Q$ in which the witness predicate $D$
-depends on a \emph{constant} number of blocks $d$.
-\end{restatable}
-\import{./}{proofs/infixsuccinctness.tex}

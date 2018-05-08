@@ -1,45 +1,10 @@
 \appendix
 \section*{Appendix}
 
-% \section{Backbone integration}
-% \label{sec.appendix-backbone}
-%
-% %We use this model to explore which predicates are reliable and can be proven
-% %succinctly.
-%
-% In this section, we illustrate the detailed formalisms to integrate our proof
-% systems with the backbone model \cite{backbone}.
-%
-% The backbone protocol of a miner node is shown in Algorithm~\ref{alg.backbone}.
-% The honest miner maintains the longest chain from the network and tries to mine
-% on top of it. In Algorithm~\ref{alg.backbone-prover}, we illustrate our new
-% entity for the model, the full node or \textit{prover}.  While the full node is
-% not mining, it maintains a state with the longest chain from the network.
-% Furthermore, whenever it is asked to prove a predicate $Q$ about its local
-% chain $\chain$, it calls a Prove function to provide the proof.  We leave this
-% Prove function undefined here, as it is part of the concrete protocol
-% construction. On the other hand, in Algorithm~\ref{alg.generic-verifier} we
-% illustrate another new entity to the model, the generic \textit{verifier},
-% which is stateless, but receives proofs from the provers on the network (via
-% the environment) and takes a decision about a predicate on the blockchain it
-% believes to be the longest.
-%
-% \import{./}{algorithms/alg.backbone.tex}
-% \import{./}{algorithms/alg.backbone-prover.tex}
-% \import{./}{algorithms/alg.verifier-framework.tex}
-%
-% The prover which additionally maintains the \textit{blockById},
-% \textit{depth} and \textit{realLink} data structures is illustrated in
-% Algorithm~\ref{alg.backbone-velvet-prover}.
-%
-% \import{./}{algorithms/alg.backbone-velvet-prover.tex}
-
-% \noindent
-% \textbf{Interlink optimizations.}
-% \section{Full proofs}
-%
-% \label{sec.proofs}
-% \restateThmPredicatePersistence*
-% \import{./}{proofs/predicatepersistence.tex}
-% \noindent
-% \textbf{Theorem~\ref{thm.velvet-succinctness}}
+\import{./}{upgrade.tex}
+\import{./}{app-quality.tex}
+\import{./}{attack-formal.tex}
+\import{./}{security-formal.tex}
+\import{./}{proofs.tex}
+\import{./}{app-succinctness.tex}
+\import{./}{app-ico.tex}

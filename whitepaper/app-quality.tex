@@ -1,0 +1,51 @@
+\section{Superchain Quality Distributions}
+
+\begin{restatable}[Local goodness]{lemma}{restateLemLocalGood}
+\label{lem.localgood}
+Assume $\chain$ contains only honestly-generated blocks in an optimistic
+execution. For all levels $\mu$, for all constant $\delta > 0$, all continuous
+subchains $\chain' = \chain[i:j]$ with $|\chain'| \geq m$ are locally good,
+$\textsf{local-good}_{\delta}(\chain', \chain, \mu)$, with overwhelming
+probability in $m$.
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/localgood.tex}
+\fi
+
+\begin{restatable}[Multilevel quality]{lemma}{restateLemMultilevel}
+\label{lem.multilevel}
+For all $\mu, 0 < \delta \leq 0.5$, chain $\chain$ containing only
+honestly-generated blocks in an optimistic execution has $(\delta, k_1)$
+multilevel quality at level $\mu$ with overwhelming probability in $k_1$.
+\end{restatable}
+\ifonecolumn
+\begin{proof}
+Identical.
+\Qed
+\end{proof}
+\else
+\fi
+
+\begin{restatable}[Superquality]{lemma}{restateLemSuperquality}
+\label{lem.superquality}
+For all $\mu, \delta > 0$, a chain $\chain$ adopted in an optimistic execution
+has $(\delta, m)$-superquality at level $\mu$ with overwhelming probability in
+$m$.
+\end{restatable}
+\ifonecolumn
+\import{./}{proofs/superquality.tex}
+\fi
+
+\begin{restatable}[Optimistic superchain distribution]{lemma}{restateLemSuperchain}
+\label{lem.superchain-distribution}
+For any level $\mu$, and any $0 < \delta < 0.5$, a chain
+$\chain$ containing only honestly-generated blocks adopted by an honest party in
+an execution with random network scheduling is $(\delta, m)$-good at level
+$\mu$ with overwhelming probability in $m$.
+\end{restatable}
+\ifonecolumn
+\begin{proof}
+This is a direct consequence of Lemma~\ref{lem.superquality} and
+Lemma~\ref{lem.multilevel}. \Qed
+\end{proof}
+\fi
