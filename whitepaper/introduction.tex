@@ -70,41 +70,42 @@ Our main technical contribution is the introduction and instantiation of a new
 cryptographic primitive called \textit{Non-Interactive} Proofs of Proof-of-Work
 (NIPoPoW).
 
-We present a formal model and a provably secure instantiation of NIPoPoWs. Our contribution builds on previous work  of
-of
-backbone model \cite{backbone} in terms of modeling and~\cite{KLS} who introduced the concept of (interactive) Proofs of Proof-of-Work,
-which, in turn, are based on previous discussion of such concepts in the bitcoin
-forums \cite{highway}. In fact, we present an attack against the
-construction of \cite{KLS} that can be mounted by an adversary with sufficient, but still less than $50\%$, of hashing power.
-As a result  our construction is the first Proof
-of Proof-of-Work (regardless of interactivity) that is secure assuming honest majority.
-Furthermore, our solution is non-interactive making it the first protocol
-of this kind.
+We present a formal model and a provably secure instantiation of NIPoPoWs. Our
+contribution builds on previous work of the backbone model \cite{backbone} in
+terms of modeling and~\cite{KLS} who introduced the concept of (interactive)
+Proofs of Proof-of-Work, which, in turn, are based on previous discussion of
+such concepts in the bitcoin forums~\cite{highway}. In fact, we present an
+attack against the construction of~\cite{KLS} that can be mounted by an
+adversary with less than $50\%$ of hashing power. As a result our construction
+is the first Proof of Proof-of-Work (regardless of interactivity) that is secure
+assuming honest majority. Furthermore, our solution is non-interactive making it
+the first protocol of this kind.
 
-Regarding to the predicates that are to be demonstrated,
- previous work allowed only proving that the $k$-sized \emph{suffix} of the
-currently adopted blockchain is as claimed. We generalize this notion to prove
-any \emph{predicate} across a class of predicates which we call \emph{infix
+Regarding to the predicates that are to be demonstrated, previous work allowed
+only proving that the $k$-sized \emph{suffix} of the currently adopted
+blockchain is as claimed. We generalize this notion to prove any
+\emph{predicate} across a class of predicates which we call \emph{infix
 sensitive}. This enables proving powerful statements pertaining to the
 blockchain such as the fact that a transaction took place, that a smart contract
 method ran with certain parameters, or that a payment was made into an account.
 The most basic application of such proofs, payment verification, require more
 general predicates than what is covered in previous work, and we enable these.
 
-Similar to previous work, we prove that the proofs are optimistically
-succinct meaning that, in honest conditions, the proofs are logarithmic in size.
-Improving previous work, we show that, in the optimistic model of no adversarial
-mining power, succinctness can be achieved for even
-\textit{adversarially-generated} proofs by introducing the novel concept of
-\textit{certificates of badness}. Our definition fills the gap in terms of
-security modeling and design that existed in previous proposals, e.g., the
-notion of cumulative ``Dynamic Member Multisignature'' ~\cite{sidechains}.
+We prove the proofs are optimistically succinct meaning that they are
+logarithmic in size in honest conditions. Improving previous work, we show that,
+in the optimistic model of no adversarial mining power, succinctness can be
+achieved for even \textit{adversarially-generated} proofs by introducing the
+novel concept of \textit{certificates of badness}. Our definition fills the gap
+in terms of security modeling and design that existed in previous proposals,
+e.g., the notion of cumulative ``Dynamic Member Multisignature''
+~\cite{sidechains}.
 
-We provide concrete parameterization and empirical analysis focusing on showing
-the potential savings of our approach versus existing clients. Using real data
-from the Bitcoin network and other blockchains, we quantify the actual savings of
-NIPoPoWs over the previous known techniques of constructing efficient SPV
-verifiers.
+We provide concrete parameterization and empirical analysis showing the savings
+of our approach versus existing clients. Using real data from the Bitcoin and
+other networks, we quantify the savings of NIPoPoWs over the previous techniques
+of constructing SPV verifiers. For a multi-blockchain client that receives 100
+payments per day, we offer a 90\% reduction in bandwidth compared to na\"ive
+SPV.
 
 % In the Appendix, we propose a novel gradual deployment path for our scheme which
 % we term a \emph{velvet fork} and which can provide the benefits of our scheme
