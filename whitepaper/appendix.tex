@@ -1,10 +1,30 @@
 \appendix
 \section*{Appendix}
 
+Our Appendix is structured as follows. In Section~\ref{sec.forks}, we illustrate
+gradual deployment paths. One of our techniques allows adoption of our scheme
+without requiring miner consensus. We term this technique a \emph{velvet fork}
+in contrast to the classical \emph{soft} and \emph{hard forks} which require
+approval by a majority of miners. This technique is a novel contribution and may
+be of independent interest for other blockchain protocols.
+Section~\ref{sec.app-quality} gives the lemmas and associated proofs showing how
+superchains are distributed. This provides the necessary tools to show that the
+construction is optimistically succinct. Section~\ref{sec:attack-full} contains
+the full formality of our attack against previous work, together with a proof
+that our attack succeeds with overwhelming probability, given the correct
+strategy and protocol parameters. Section~\ref{sec:security-full} gives a formal
+proof of our security claims through a cryptographic reduction. Section~
+\ref{sec.app-succinctness} includes the remaining proofs that were omitted from
+the body of the paper with the goal of proving optimistic succinctness, a
+central result of our paper. It also proves succinctness in more adversarial
+settings, which is another novel contribution, as succinctness in any kind of
+adversarial setting has not been explored in previous work. We conclude with
+Section~\ref{sec.app-ico} which includes experimental data of our Solidity
+implementation for the ICO application.
+
 \import{./}{upgrade.tex}
 \import{./}{app-quality.tex}
 \import{./}{attack-formal.tex}
 \import{./}{security-formal.tex}
-\import{./}{proofs.tex}
 \import{./}{app-succinctness.tex}
 \import{./}{app-ico.tex}
