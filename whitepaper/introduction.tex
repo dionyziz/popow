@@ -41,20 +41,24 @@ data growing linearly with the size of the blockchain.
 %% existing cryptocurrencies to support more efficient clients. A traditional
 %% blockchain client in order to check a certain blockchain property \anote{TODO: too abstract
 %
-The second objective, has received  significant attention in the context of
-``cross-chain'' applications, i.e. logical transactions that span multiple
+The second objective has received  significant attention in the context of
+``cross-chain'' applications, i.e., logical transactions that span multiple
 separate blockchains. Simple cross-chain transactions are feasible today: the
-most well-known is the atomic exchange~\cite{tiernolan}, e.g., a trade of
-bitcoin for ether. However, more sophisticated applications could be enabled by
-a more efficient proof process, which would allow the blockchain of one
-cryptocurrency to embed a client of a separate cryptocurrency. This concept,
-initially popularized by a proposal by Back et al. ~\cite{sidechains} can be
-used to avoid a difficult upgrade process: a new blockchain with additional
-features, such as experimental opcodes, can be backed by deposits in the
-original bitcoin currency, obviating the need to transfer capital to the new
-cryptocurrency. As one example of cross-chain interfacing, we describe an
-initial coin offering (ICO) which distributes tokens issued on one blockchain,
-but allows paying for them using coins in another blockchain.
+most well-known is the atomic exchange~\cite{tiernolan,herlihy2018atomic}, e.g.,
+a trade of bitcoin for ether. However, more sophisticated
+applications~
+\cite{interledger,DBLP:journals/corr/DilleyPWPGF16,
+      lerner,drivechains,wood2016polkadot,buchman2016tendermint}
+could be enabled by a more efficient proof process, which would allow the
+blockchain of one cryptocurrency to embed a client of a separate cryptocurrency.
+This concept, initially popularized by a proposal by Back et al.
+~\cite{sidechains} can be used to avoid a difficult upgrade process: a new
+blockchain with additional features, such as experimental opcodes, can be backed
+by deposits in the original bitcoin currency, obviating the need to transfer
+capital to the new cryptocurrency. As one example of cross-chain interfacing, we
+describe an initial coin offering (ICO)~\cite{ico} which distributes tokens
+issued on one blockchain, but allows paying for them using coins in another
+blockchain.
 
 % These examples illustrate that our solution is a key component for two important
 % pillars needed for next-generation blockchains: \textit{interoperability} and
@@ -66,18 +70,18 @@ Our main technical contribution is the introduction and instantiation of a new
 cryptographic primitive called \textit{Non-Interactive} Proofs of Proof-of-Work
 (NIPoPoW).
 
-We present a formal model and a provably secure instantiation of NIPoPoWs. Our contribution builds on previous work  of 
+We present a formal model and a provably secure instantiation of NIPoPoWs. Our contribution builds on previous work  of
 of
 backbone model \cite{backbone} in terms of modeling and~\cite{KLS} who introduced the concept of (interactive) Proofs of Proof-of-Work,
 which, in turn, are based on previous discussion of such concepts in the bitcoin
 forums \cite{highway}. In fact, we present an attack against the
-construction of \cite{KLS} that can be mounted by an adversary with sufficient, but still less than $50\%$, of hashing power. 
+construction of \cite{KLS} that can be mounted by an adversary with sufficient, but still less than $50\%$, of hashing power.
 As a result  our construction is the first Proof
 of Proof-of-Work (regardless of interactivity) that is secure assuming honest majority.
 Furthermore, our solution is non-interactive making it the first protocol
-of this kind. 
+of this kind.
 
-Regarding to the predicates that are to be demonstrated, 
+Regarding to the predicates that are to be demonstrated,
  previous work allowed only proving that the $k$-sized \emph{suffix} of the
 currently adopted blockchain is as claimed. We generalize this notion to prove
 any \emph{predicate} across a class of predicates which we call \emph{infix

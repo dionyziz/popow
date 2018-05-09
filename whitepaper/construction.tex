@@ -29,7 +29,7 @@ suffix-sensitive. However, as an example, consider the predicate ``an Ethereum
 contract at address $C$ has been initialized with code $h$ at least $k$ blocks
 ago'' where $h$ does not invoke the \texttt{selfdestruct} opcode. This can be
 implemented in a suffix-sensitive way because, in Ethereum, each block includes
-a Merkle Trie over all of the contract codes~\cite{vitalik}, which cannot be
+a Merkle Trie over all of the contract codes~\cite{vitalik,wood}, which cannot be
 changed after initializtion. This predicate is thus also monotonic and
 $k$-stable.
 
