@@ -1,22 +1,19 @@
-Today's leading cryptocurrencies, Bitcoin and Ethereum, as well as myriad
-others, are built on a public consensus network based on proof-of-work (PoW)
-mining. In this work, we construct a new primitive called
+Open consensus protocols based on proof-of-work (PoW)
+mining are at the core of cryptocurrencies such
+ Bitcoin and Ethereum, as well as many
+others. In this work, we construct a new primitive called
 Non-Interactive-Proofs-of-Proof-of-Work (NIPoPoWs) that can be adapted into
 existing PoW-based cryptocurrencies to improve their performance and extend
 their functionality. Unlike a traditional blockchain client which must verify
 the entire linearly-growing chain of PoWs, clients based on NIPoPoWs require
-resources only logarithmic in the length of the blockchain.
+resources only logarithmic in the length of the blockchain. NiPoPoWs
+are thus succinct proofs and require only a single message between the prover and the verifier of the transaction. 
 
-Our work  extends and improves prior work that introduced ``proofs of proofs of
-work''. Compared to theirs, our protocol is non-interactive, requiring only one
-round of communication thus resolving the main open question that was left open.
-We also identify and correct a double-spend vulnerability and security flaw in
-that work. We also extend their proofs to be able to prove general useful
-predicates about facts buried deep within a blockchain, an extension necessary
-for the basic application of accepting payments.
+With our construction we are able to prove a broad array of useful
+predicates in the context of cross PoW-based blockchain transfers of assets,  including predicates about facts buried deep within a blockchain which is necessary for the basic application of accepting payments. 
 
 We provide empirical validation for NIPoPoWs through an implementation and
 benchmark study, in the context of two new applications: First, we consider a
 multi-client blockchain that supports all proof-of-work currencies rather than
 just one, with up to 90\% reduction in bandwidth.  Second, we discuss a
-``cross-chain ICO'' application that spans multiple independent blockchains.
+``cross-chain Initial '' application that spans multiple independent blockchains.

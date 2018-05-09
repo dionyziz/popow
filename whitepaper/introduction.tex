@@ -66,20 +66,20 @@ Our main technical contribution is the introduction and instantiation of a new
 cryptographic primitive called \textit{Non-Interactive} Proofs of Proof-of-Work
 (NIPoPoW).
 
-We present a formal model and a provably secure instantiation of NIPoPoWs in the
-backbone model \cite{backbone}. Our contribution builds on previous work  of
-~\cite{KLS} who introduced the concept of (interactive) Proofs of Proof-of-Work,
+We present a formal model and a provably secure instantiation of NIPoPoWs. Our contribution builds on previous work  of 
+of
+backbone model \cite{backbone} in terms of modeling and~\cite{KLS} who introduced the concept of (interactive) Proofs of Proof-of-Work,
 which, in turn, are based on previous discussion of such concepts in the bitcoin
-forums \cite{highway}. We in fact show an explicit \emph{attack} against the
-construction of \cite{KLS} that showcases the difficulty of designing such
-protocols. It follows that our construction is the first \textit{secure} Proof
-of Proof-of-Work (regardless of interactivity) assuming honest majority.
-Furthermore, our solution has the additional property of being non-interactive,
-as the previous construction could revert into interaction by an adversarial
-prover.
+forums \cite{highway}. In fact, we present an attack against the
+construction of \cite{KLS} that can be mounted by an adversary with sufficient, but still less than $50\%$, of hashing power. 
+As a result  our construction is the first Proof
+of Proof-of-Work (regardless of interactivity) that is secure assuming honest majority.
+Furthermore, our solution is non-interactive making it the first protocol
+of this kind. 
 
-While previous work allowed only proving that the $k$-sized \emph{suffix} of the
-currently adopted blockchain is as claimed, we generalize this notion to prove
+Regarding to the predicates that are to be demonstrated, 
+ previous work allowed only proving that the $k$-sized \emph{suffix} of the
+currently adopted blockchain is as claimed. We generalize this notion to prove
 any \emph{predicate} across a class of predicates which we call \emph{infix
 sensitive}. This enables proving powerful statements pertaining to the
 blockchain such as the fact that a transaction took place, that a smart contract
@@ -106,7 +106,7 @@ In summary, we make the following contributions:
 \begin{enumerate}
   \item We construct the first \emph{provably secure} Proofs of Proof-of-Work.
   \item We make them \emph{non-interactive}.
-  \item We describe an \emph{attack} against previous work.
+  \item We describe an \emph{attack} against the previously known proof-of-proof-of-work construction.
   \item We extend proofs to prove \emph{generic infix predicates} pertaining to
         transactions deep within the blockchain.
   \item We improve \emph{succinctness} of previous proofs by weakening the
