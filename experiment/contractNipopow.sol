@@ -194,7 +194,6 @@ contract Crosschain {
     return 0;
   }
 
-  // TODO: Check if anchored.
   function best_arg(Nipopow storage nipopow, bytes32[] proof, uint al_index)
     internal returns(uint256) {
     uint max_level = 0;
@@ -204,7 +203,11 @@ contract Crosschain {
     // Count the frequency of the levels.
     for (uint i = 0; i < al_index; i++) {
       cur_level = get_level(proof[i]);
-      nipopow.levelCounter[cur_level]++;
+
+      // Superblocks of level m are also superblocks of level m - 1.
+      for (uint j  = 0; j <= cur_level; j++) {
+        nipopow.levelCounter[j]++;
+      }
 
       if (max_level < cur_level) {
         max_level = cur_level;
@@ -219,6 +222,7 @@ contract Crosschain {
       // clear the map.
       nipopow.levelCounter[i] = 0;
     }
+
     return max_score;
   }
 
@@ -279,7 +283,7 @@ contract Crosschain {
       contesting_proof[i] = hash_header(headers[i]);
     }
 
-      // Throws if invalid.
+    // Throws if invalid.
     validate_interlink(headers, contesting_proof, siblings);
 
     if (compare_proofs(proof, contesting_proof)) {
