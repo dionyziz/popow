@@ -97,7 +97,15 @@ We measure the probability of success of this attack. We experiment with various
 values of $m$ for $y = 100$, indicating $100$ blocks of secret parallel mining.
 We make the assumption that honest party communication is perfect and immediate.
 We ran $1,000,000$ Monte Carlo executions
-\footnote{The link to the source code of our experiment has been redacted for anonymity.}
+\footnote{
+\ifanonymous
+The link to the source code of our experiment has been redacted for anonymity.
+\else
+Our experiment can be reproduced by running our code available under
+an open source MIT license at
+\url{https://github.com/dionyziz/popow/tree/master/experiment}
+\fi
+}
 of the experiment for each value
 of $m$ from $1$ to $30$. We ran the simulation for values of computational power
 percentage $q = 0.1$, $q = 0.2$ and $q = 0.3$. The results are plotted in
