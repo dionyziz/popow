@@ -22,9 +22,6 @@
                 \EndFor
             \EndFor
             \Let{\tilde\pi}{\text{best }\pi\in\mathcal{P}\text{ according to suffix verifier}}
-            % \If{$|\tilde\pi[-1]\text{.index}| < \ell$}
-            %     \State\Return{\text{undefined}}
-            % \EndIf
             \State\Return{$D(\textsf{ancestors}(\tilde\pi[-1],
             \textsf{blockById}))$}
         \EndFunction
