@@ -1,0 +1,17 @@
+{
+  "name": "nipopows-website",
+  "homepage": "https://github.com/dionyziz/popow",
+  "authors": [
+    "Dionysis Zindros <dionyziz@gmail.com>"
+  ],
+  "description": "A website explaining what NIPoPoWs are",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
