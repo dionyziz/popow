@@ -146,15 +146,15 @@
         rare and happen randomly. The idea with NIPoPoWs is that the whole list
         of block headers doesn't need to be presented to the network, as these
         blocks capture cumulative difficulty on average. If a blockchain portion
-        has 128 blocks, then on average half of them will have an extra zero in
-        the binary representation of their hashes, a quarter will have two
-        zeroes, and so on. A blockchain can therefore be "compressed" by only
-        sending these blocks on the network.
+        has 128 blocks, then on average half of them (64) will have an extra
+        zero in the binary representation of their hashes, a quarter (32) will
+        have two zeroes, and so on. A blockchain can therefore be "compressed"
+        by only sending these blocks on the network.
       </p>
 
       <p>
         The average distribution of blocks is illustrated in the following
-        figure. The bottom part shows the regular blockchain. Higher portions
+        figure. The bottom part shows the regular blockchain. Higher levels
         show blocks with 1, 2, or 3 extra zeroes in their hashes. Taking only
         these blocks, one can form a <strong>superchain</strong>.
       </p>
@@ -172,8 +172,8 @@
       </p>
 
       <p>
-        The full details of how to interconnect the blockchain, how to produce,
-        verify, and compare proofs are given in our papers.
+        The full details of how to interlink the blockchain, as well as how to
+        produce, verify, and compare proofs are given in our papers.
       </p>
     </div>
 
