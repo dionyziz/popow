@@ -7,6 +7,9 @@ without requiring miner consensus. We term this technique a \emph{velvet fork}
 in contrast to the classical \emph{soft} and \emph{hard forks} which require
 approval by a majority of miners. This technique is a novel contribution and may
 be of independent interest for other blockchain protocols.
+Section~\ref{sec.variable} gives an intuition about creating a construction for
+variable difficulty NIPoPoWs by modifying the construction presented in this
+paper.
 Section~\ref{sec.app-quality} gives the lemmas and associated proofs showing how
 superchains are distributed. This provides the necessary tools to show that the
 construction is optimistically succinct. Section~\ref{sec:attack-full} contains
@@ -23,6 +26,7 @@ Section~\ref{sec.app-ico} which includes experimental data of our Solidity
 implementation for the ICO application.
 
 \import{./}{upgrade.tex}
+\import{./}{variable.tex}
 \import{./}{app-quality.tex}
 \import{./}{attack-formal.tex}
 \import{./}{security-formal.tex}

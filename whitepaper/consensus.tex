@@ -12,8 +12,9 @@ consecutive blocks.
 
 Valid blocks satisfy the proof-of-work condition: $id \leq T$, where $T$ is the
 mining target. Throughout this work, we make the simplifying assumption that $T$
-is constant. Some blocks will achieve a lower id. If $id \leq \frac{T}{2^\mu}$
-we say that the block is of level $\mu$. All blocks are level $0$. Blocks with
+is constant\footnote{We discuss how this assumption can be removed in the
+Appendix.}. Some blocks will achieve a lower id. If $id \leq \frac{T}{2^\mu}$ we
+say that the block is of level $\mu$. All blocks are level $0$. Blocks with
 level $\mu$ are called $\mu$-\textit{superblocks}. $\mu$-superblocks for $\mu >
 0$ are also $(\mu - 1)$-superblocks. The level of a block is given as $\mu =
 \left \lfloor \log(T) - \log(\sf{id}(B)) \right \rfloor$ and denoted

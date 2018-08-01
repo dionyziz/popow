@@ -1,0 +1,49 @@
+\section{Chains of Variable Difficulty}
+
+In this paper, we have explored constructing PoPoWs always assuming that the
+mining target $T$ is constant. In this section, we give the intuition behind a
+\emph{variable difficulty} PoPoW construction based on our constant difficulty
+construction.
+
+The construction is modified as follows. Assume the chain adjusts its difficulty
+in the usual manner as formalized, e.g., in~\cite{backbone2}. In this case, an
+\emph{epoch} $e$ is a $0$-subchain of fixed length, say $\ell$, during which the
+difficulty remains the same and which is examined in order to perform the
+difficulty recalculation. The target has a maximum value in which the difficulty
+is the easiest. Suppose this value is $T_0 = \frac{1}{2^\kappa}$ such that all
+attempted blocks are valid. We consider the case where the current difficulty is
+possible to adjust by factors of $2$; that is, the target of each epoch $e$ is
+quantized as $T_e = \frac{T_0}{2^{\mu^*}}$ for some non-negative integer
+$\mu^*$, the current \emph{mining level}. Under this light, changing the
+difficulty is equivalent to saying that the mining game will be played at some
+level $\mu^* \geq 0$ and every node considers only chains of that level,
+ignoring chains of inferior level. In this setting, NIPoPoWs can be proved as
+usual, except the used target for NIPoPoW generation and verification will be
+the maximum target $T_0$ instead of the current mining target $T_e$. The only
+difference is that the honest prover will only provide chains of level $\mu \geq
+\mu^*$, as inferior blocks will neither be mined nor successfully validated by
+honest participants. The size of variable difficulty NIPoPoWs is the same as in
+the constant difficulty case.
+
+The security arguments follow through as before when the comparison of two
+proofs $\pi_\mathcal{A}, \pi_B$ happens at some level $\mu_\mathcal{A}, \mu_B
+\geq \mu^*$. We must therefore only concern ourselves for the case, during the
+comparison, when the adversary presents blocks of level inferior to $\mu^*$
+after the LCA block $b$. In the case of an interactive PoPoW, the honest prover
+can be informed of the attempt of the adversary to present blocks of level
+inferior to $\mu^*$. However, the adversary has committed to the LCA block $b$.
+The honest party can subsequently provide a \emph{certificate of hardness} by
+presenting the full epoch immediately preceding block $b$, which will consist of
+a constant number of blocks, $\ell$. This will allow the honest party to
+challenge the adversary's ability to descend to level $\mu_B < \mu^*$ and allow
+the verifier to decide that the honest party $B$ should be victorious. This
+PoPoW protocol can be made non-interactive by including a certificate of
+hardness for every block among the last $m$ blocks of each level presented. This
+harms the succinctness by a constant factor of $\ell$ (in Bitcoin,
+$\ell = 2016$).
+
+The above sketch gives an intuition of how proofs can be modified to work in a
+variable difficulty setting. Formal analysis of its security and succinctness in
+various conditions in the model of~\cite{backbone2}, including relaxing the
+requirement of quantization $\mu^* \in \mathbb{N}$, will be explored in future
+work.
