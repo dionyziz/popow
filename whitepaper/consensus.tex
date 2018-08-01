@@ -71,8 +71,8 @@ point to the block $B'$.
 \noindent\textbf{Traversing the blockchain. }
 As we have now extended blocks to contain multiple pointers to previous blocks,
 if certain blocks are omitted from a chain we will obtain a subchain, as long as
-the blockchain property that each block must contain a pointer to its previous
-block in the sequence is maintained.
+the \emph{blockchain property} that each block must contain a pointer to its
+previous block in the sequence is maintained.
 
 Blockchains are sequences, but it is more convenient to use set notation for
 some operations. Specifically, $B \in \chain$; $\chain_1 \subseteq \chain_2$ and

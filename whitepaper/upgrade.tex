@@ -15,7 +15,7 @@ validation rules modified to require that new blocks (after a ``flag day'')
 contain a correctly-formed interlink hash.
 
 The safety of a hard fork is debated~\cite{vitalikforks}, as they are not
-``forward compatible,''. NIPoPoWs can also be implemented by a soft fork. A soft
+``forward compatible''. NIPoPoWs can also be implemented by a soft fork. A soft
 fork construction requires including the interlink not in the block header, but
 in the coinbase transaction. It is enough to only store a hash of the interlink
 structure. The only requirement for the NIPoPoWs to work is that the PoW commits
@@ -25,10 +25,10 @@ to present not only the block header, but also a proof-of-inclusion path within
 the Merkle tree of transactions proving that the coinbase transaction is indeed
 part of the block. Once that is established, the coinbase data can be presented,
 and the verifier will thereby know that the hash of the interlink data structure
-is correct. Given that in Bitcoin implementation there is a block size limit,
-observe that including such proofs-of-inclusion will only increase the NIPoPoW
-sizes by a constant factor per block, allowing for the communication complexity
-to remain polylogarithmic.
+is correct. Given that in the Bitcoin implementation there is a block size
+limit, observe that including such proofs-of-inclusion will only increase the
+NIPoPoW sizes by a constant factor per block, allowing for the communication
+complexity to remain polylogarithmic.
 
 \subsection{Velvet Forks}
 We now describe a novel upgrade path that avoids the need for a fork at all. The
