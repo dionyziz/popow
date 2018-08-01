@@ -16,13 +16,9 @@ predicates about it). We extend the protocol to support more flexible predicates
 limited to the suffix in Section~\ref{sec:infix}.
 
 \begin{definition}[Suffix sensitivity]
-A chain predicate $Q$ is called $k$-\textnormal{suffix sensitive} if for all
-chains $\chain, \chain'$ with $|\chain| \geq k$ and $|\chain'| \geq k$ such that
-$\chain[-k:] = \chain'[-k:]$ we have that $Q(\chain) = Q(\chain')$.
+A chain predicate $Q$ is called $k$-\textnormal{suffix sensitive} if its value
+is determined by the last $k$ blocks of the chain.
 \end{definition}
-
-Notice that if a predicate $Q$ is suffix-sensitive, then then its value must be
-determined only by the $k$-suffix of the chain.
 
 \noindent\textbf{Example.}
 In general our applications will require predicates that are not
