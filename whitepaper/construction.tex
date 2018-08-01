@@ -28,7 +28,8 @@ ago'' where $h$ does not invoke the \texttt{selfdestruct} opcode. This can be
 implemented in a suffix-sensitive way because, in Ethereum, each block includes
 a Merkle Trie over all of the contract codes~\cite{vitalik,wood}, which cannot be
 changed after initialization. This predicate is thus also monotonic and
-$k$-stable.
+$k$-stable. Any predicate which is both \emph{suffix-sensitive} and
+\emph{$k$-stable} must solely depend on data at block $\chain[-k]$.
 
 \subsection{Construction}
 We next present a generic form of the verifier first and the prover afterwards.
