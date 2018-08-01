@@ -5,14 +5,15 @@ non-interactive construction we present in this section is \emph{insecure},
 because the PoPoW scheme it is based on is also insecure. A very small patch
 will later allow us to modify our construction to achieve security.
 
-Their scheme only allowed proving \emph{suffix predicates},
-predicates that pertain to the suffix of the blockchain. We continue along those
-lines to give our NIPoPoW construction which allows proving certain predicates
-$Q$ of the chain $\chain$. Among the predicates which are stable, in this
-section, we will limit ourselves to \textit{suffix sensitive} predicates
-(similar to previous work which did not make this distinction explicit). We
-extend the protocol to support more flexible predicates (such as transaction
-inclusion, as needed for our applications) in Section~\ref{sec:infix}.
+The previous work does not allow proving predicates about the blockchain, but
+only allows determining if a block is part of an honest chain's suffix. In this
+work, we allow provers to prove general predicates $Q$ about the chain $\chain$.
+Among the predicates which are stable, in this section, we will limit ourselves
+to \textit{suffix sensitive} predicates (similar to previous work in which the
+verifier extracted the suffix adopted by an honest party, but not generic
+predicates about it). We extend the protocol to support more flexible predicates
+(such as transaction inclusion, as needed for our applications) which are not
+limited to the suffix in Section~\ref{sec:infix}.
 
 \begin{definition}[Suffix sensitivity]
 A chain predicate $Q$ is called $k$-\textnormal{suffix sensitive} if for all
