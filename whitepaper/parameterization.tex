@@ -24,23 +24,34 @@
 We now discuss the size of NIPoPoW proofs and evaluate concrete parameters.
 Organizing the interlink data structure as a Merkle tree of $\log(|\chain|)$ items, a
 proof-of-inclusion is provided in $\log \log(|\chain|)$ space;
-the proof need not include $0$-level pointers, must include the genesis block. The root of the
-tree can be proved to be included in the block header in $\log(|\overline
-x|)$ using the standard Merkle tree of transactions, where $\overline x$ denotes
-the vector of all transactions included in the particular block. This makes the
-proof size require $\log(|\overline x|) + \log\log(|\chain|)$ hashes per block
-for a total of $m (\log(|\chain|) - \log(m))(\log(|\overline x|) +
-\log\log(|\chain|))$ hashes. In addition, $m (\log(|\chain|) - \log(m))$ headers
-and coinbase transactions are needed. As an example, given that currently in
-bitcoin $|\chain| = 464,185$ and $|\overline x| = 2000$, we have $\log(|\chain|) =
-18, \log\log(|\chain|) = 5, \log(|\overline x|) = 11$. For the $k$-suffix, only
-$k$ headers are needed. We set $k = 6$ and see that headers are $80$ bytes and
-hashes $32$ bytes. For the $k$-suffix as well as the $2m$ $0$-blocks in $\pi$,
-neither coinbase data nor prev ids are needed, limiting header size to $48$
-bytes. The root and leaves of the pointers tree can be omitted from coinbase
-when transmitting the proof. In fact, no block ids need to be transmitted. From
-these observations, we estimate our scheme's proof sizes for various
-parameterizations of $m$ in Table~\ref{table.size}.
+the proof need not include $0$-level pointers, but must include the genesis
+block.
+Transaction inclusion
+\footnote{This additional data is needed if a \emph{soft} or \emph{hard fork} is
+to be avoided. For more information about gradual deployment paths, consult the
+relevant section in
+\ifhasappendix
+the appendix.
+\else
+the full version of this paper.
+\fi}
+can be proved in the block header in
+$\log(|\overline x|)$ using the standard Merkle tree of transactions, where
+$\overline x$ denotes the vector of all transactions included in the particular
+block.
+This makes the proof size require $\log(|\overline x|) +
+\log\log(|\chain|)$ hashes per block for a total of $m (\log(|\chain|) -
+\log(m))(\log(|\overline x|) + \log\log(|\chain|))$ hashes. In addition, $m
+(\log(|\chain|) - \log(m))$ headers and coinbase transactions are needed. As an
+example, given that currently in bitcoin $|\chain| = 464,185$ and $|\overline x|
+= 2000$, we have $\log(|\chain|) = 18, \log\log(|\chain|) = 5, \log(|\overline
+x|) = 11$. For the $k$-suffix, only $k$ headers are needed. We set $k = 6$ and
+see that headers are $80$ bytes and hashes $32$ bytes. For the $k$-suffix as
+well as the $2m$ $0$-blocks in $\pi$, neither coinbase data nor prev ids are
+needed, limiting header size to $48$ bytes. The root and leaves of the pointers
+tree can be omitted from coinbase when transmitting the proof. In fact, no block
+ids need to be transmitted. From these observations, we estimate our scheme's
+proof sizes for various parameterizations of $m$ in Table~\ref{table.size}.
 
 \paragraph{Concrete parameterization.}
 To determine concrete values for security parameter $m$, we focus on a
