@@ -11,10 +11,8 @@
             \For{$\mu = |\textsf{realLink}[\textsf{id}(\chain[-k-1])]|$ down to $0$}
                 \State $\pi, aux \gets$
                     \begin{varwidth}[t]{\linewidth}
-                        $\textsf{constructInnerChain'}
-                        $\par$
-                        (\chain[:-k], \mu, b, \textsf{realLink},
-                        \textsf{blockById})$
+                        $\textsf{find }\chain[:-k]\upchain^\mu
+                        (b, \textsf{realLink}, \textsf{blockById})$
                     \end{varwidth}
                 \If{$|\pi| \geq m$}
                     \Let{b}{\pi[-m]}
