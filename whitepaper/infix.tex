@@ -52,39 +52,37 @@ We define the predicate $D^{txid}$ that receives a single block and tests
 whether a transaction with id $txid$ is included. The predicate $Q^{txid}_{1,
 k}$ is defined as in Definition~\ref{def:infix} using the predicate $D^{txid}$
 and the parameter $k$ which in this case determines the desired stability of the
-assertion that $txid$ is included (such as, for instance $k = 6$). Note in this
-case that auxiliary data will have to be supplied by the prover to aid the
-provability of $D$. In particular, for example, the Merkle Tree
-proof-of-inclusion path to the Merkle Tree root of transactions will need to be
-included in the case of Bitcoin or the Merkle Patricia Trie proof-of-inclusion
-path to the Transaction Trie root will need to be included in the case of
-Ethereum, similar to an SPV proof. Both of these will be logarithmic in the
-number of transactions included in the block and, hence, constant with respect
-to the size of the blockchain. In case of a vendor awaiting transaction
-confirmation to ship a product, the proof that a certain transaction paid into
-a designated address for the particular order should be sufficient. Note that,
-in this scheme, it is impossible to determine whether the money has subsequently
-been spent by the vendor in a future block, and so can only be used by the
-vendor holding the respective secret keys.
+assertion that $txid$ is included (e.g., $k = 6$). $Q$ alone proves that a
+particular block is included in the blockchain. Some auxiliary data is supplied
+by the prover to aid the provability of transaction inclusion: the Merkle Tree
+proof-of-inclusion path to the transactions Merkle Tree root, similar to an SPV
+proof. This data is logarithmic in the number of transactions in the block and,
+hence, constant with respect to blockchain size. In case of a vendor awaiting
+transaction confirmation to ship a product, the proof that a certain transaction
+paid into a designated address for the particular order is sufficient. In this
+scheme it is impossible to determine whether the money has subsequently been
+spent in a future block, and so must only be used by the vendor holding the
+respective secret keys.
 
 In the above example, note that if the verifier outputs \emph{false}, this
 behavior will generally be inconclusive in the sense that the verifier could be
 outputting \emph{false} either because the payment has not yet been confirmed or
-because the payment was never made. We can easily modify the scheme to allow the
-payer to claim that the payment was made at some particular block height $\ell$.
-The vendor can then bail out after a number of blocks $\ell$ and conclude that
-the payment was never made. In order to do that formally, \emph{two} different
-infix predicates must be evaluated by the NIPoPoW protocol. The first predicate
-$Q_1$ as above simply checks for transaction confirmation. The second predicate
-$Q_2$ attests to the size of the underlying blockchain and in particular returns
-\emph{true} if the blockchain has grown beyond $\ell$ blocks long. The payment
-is deemed successful if $Q_1$ outputs \emph{true} and unsuccessful if $Q_2$
-outputs \emph{true}. While both predicates are \emph{false} the result of the
-experiment is inconclusive. The predicate $Q_2$ can be implemented in
-blockchains which include a verified block depth in their block headers such as
-Ethereum. As always, the block whose header is checked for block depth must be
-a \emph{stable} block in $\chain[:-k]$ to ensure that a malicious miner is not
-able to tamper with it.
+because the payment was never made.
+% We can easily modify the scheme to allow the
+% payer to claim that the payment was made at some particular block height $\ell$.
+% The vendor can then bail out after a number of blocks $\ell$ and conclude that
+% the payment was never made. In order to do that formally, \emph{two} different
+% infix predicates must be evaluated by the NIPoPoW protocol. The first predicate
+% $Q_1$ as above simply checks for transaction confirmation. The second predicate
+% $Q_2$ attests to the size of the underlying blockchain and in particular returns
+% \emph{true} if the blockchain has grown beyond $\ell$ blocks long. The payment
+% is deemed successful if $Q_1$ outputs \emph{true} and unsuccessful if $Q_2$
+% outputs \emph{true}. While both predicates are \emph{false} the result of the
+% experiment is inconclusive. The predicate $Q_2$ can be implemented in
+% blockchains which include a verified block height in their block headers such as
+% Ethereum. As always, the block whose header is checked for block height must be
+% a \emph{stable} block in $\chain[:-k]$ to ensure that a malicious miner is not
+% able to tamper with it.
 
 \begin{figure}[h]
     \caption{An infix proof descend. Only blue blocks are included in the proof.
