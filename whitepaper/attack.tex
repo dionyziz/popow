@@ -22,11 +22,11 @@ power (but still below $50\%$). Note that maintaining chain superquality was not
 in the original security model; however, we show how the property affects the
 security of the underlying blockchain proofs.
 
-\subsection{Interactive proofs of proof-of-work}
-In PoPoW, the main algorithm of the verifier aims at distinguishing between two
-candidate proofs $(\pi_A, \chi_A)$ and $(\pi_B, \chi_B)$. The honest prover,
-having adopted $\chain_B$ during mining, initially produces the proof $(\pi_B,
-\chi_B)$ as follows. First, the last $k$ blocks are sent as $\chi_B =
+\subsection{Interactive Proofs of Proof-of-Work}
+In PoPoW~\cite{KLS}, the main algorithm of the verifier aims at distinguishing
+between two candidate proofs $(\pi_A, \chi_A)$ and $(\pi_B, \chi_B)$. The honest
+prover, having adopted $\chain_B$ during mining, initially produces the proof
+$(\pi_B, \chi_B)$ as follows. First, the last $k$ blocks are sent as $\chi_B =
 \chain_B[-k:]$. Then for the first part of the chain, $\chain_B[:-k]$, the
 prover sets $\pi_B$ to be the $\mu$-superchain spanning $\chain_B$ for the
 largest $\mu$ such that $|\pi_B| = m$, where $m$ is the protocol's security
