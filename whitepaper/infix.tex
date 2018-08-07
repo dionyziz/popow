@@ -123,10 +123,10 @@ in Algorithm~\ref{alg.nipopow-infix-follow}.  Block $B'$ cannot be of higher or
 equal level than $E$, otherwise it would be equal to $E$ and the followDown
 algorithm would return. The algorithm proceeds as follows: Starting at block $hi =
 E$, it tries to follow a pointer to as far as possible. If following the pointer
-surpasses $lo = B'$, then the following is aborted and a lower level is tried,
-which will cause a smaller step within the skiplist. If a pointer was followed
-without surpassing $B'$, the operation continues from the new block, until
-eventually $B'$ will be reached, which concludes the algorithm.
+surpasses $lo = B'$, then the procedure at this level is aborted and a lower
+level is tried, which will cause a smaller step within the skiplist. If a
+pointer was followed without surpassing $B'$, the operation continues from the
+new block, until eventually $B'$ is reached, which concludes the algorithm.
 
 \import{./}{algorithms/alg.nipopow-infix-follow.tex}
 
@@ -141,11 +141,11 @@ Algorithm~\ref{alg.nipopow-verifier-infix}.
 
 The algorithm works by calling the suffix verifier. It also maintains a blockDAG
 collecting blocks from all proofs (it is a DAG because \textit{interlink} can be
-adversarially defined). This DAG is maintained in the $\textsf{blockById}$
-hashmap. Using it, \textsf{ancestors} uses simple graph search to extract the
-set of ancestor blocks of a block. In the final predicate evaluation, the set of
-ancestors of the best blockchain tip is passed to the predicate. The ancestors
-are included to avoid an adversary who presents an honest chain but skips the
-blocks of interest.
+adversarially defined in adversarially mined blocks). This DAG is maintained in
+the $\textsf{blockById}$ hashmap. Using it, \textsf{ancestors} uses simple graph
+search to extract the set of ancestor blocks of a block. In the final predicate
+evaluation, the set of ancestors of the best blockchain tip is passed to the
+predicate. The ancestors are included to avoid an adversary who presents an
+honest chain but skips the blocks of interest.
 
 \import{./}{algorithms/alg.verifier-infix.tex}
