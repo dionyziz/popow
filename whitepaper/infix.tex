@@ -2,18 +2,18 @@
 \label{sec:infix}
 
 In the previous section we have seen how to construct proofs for suffix
-predicates. As mentioned, the main purpose of this construction is to serve as a
-stepping stone for the construction of this section that presents a most useful
-class of proofs allow proving more general predicates that can depend on
-multiple blocks even buried deep within the blockchain.
+predicates. As mentioned, the main purpose of that construction is to serve as a
+stepping stone for the construction of this section that presents a more useful
+class of proofs. This class of proofs allows proving more general predicates
+that can depend on multiple blocks even buried deep within the blockchain.
 
 More specifically, the generalized prover for \emph{infix proofs} allows
 proving any predicate $Q(\chain)$ that depends on a number of blocks that can
 appear anywhere within the chain (except the $k$ suffix for stability). These
 blocks constitute a \emph{subset} $\chain'$ of blocks, the \emph{witness},
-which may not necessarily be a stand-alone subchain. This allows proving
-powerful statements such as, for example, whether a transaction is confirmed. We
-define next formally the class of predicates that will be of interest.
+which may not necessarily form a chain. This allows proving useful statements
+such as, for example, whether a transaction is confirmed. We next formally
+define the class of predicates that will be of interest.
 
 % XXX extend this class of predicates to include comparison of position
 % within the blockchain (these position-dependent predicates may be unprovable
