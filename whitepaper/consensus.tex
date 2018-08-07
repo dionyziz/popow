@@ -5,7 +5,7 @@
 
 In order to construct our protocol, we rely on the same \emph{interlink data
 structure} used by PoPoW~\cite{KLS}. This is an additional hash-based data
-structure that is proposed to include in the header of each block. The
+structure that is proposed to be included in the header of each block. The
 interlink data structure is a skip-list~\cite{skiplist} that makes it efficient
 for a verifier to process a sparse subset of the blockchain, rather than only
 consecutive blocks.
@@ -21,26 +21,24 @@ level $\mu$ are called $\mu$-\textit{superblocks}. $\mu$-superblocks for $\mu >
 $\textit{level}(B)$. By convention, for $Gen$ we set $id = 0$ and $\mu =
 \infty$.
 
-Observe that in a blockchain protocol execution it is expected half of the
-blocks will be of level $1$, $1/4$ of the blocks will be of level $2$, $1/8$
-will be of level $3$ and $1/2^\mu$ blocks will be of level $\mu$. In
+Observe that in a blockchain protocol execution it is expected $1/2$ of the
+blocks will be of level $1$; $1/4$ of the blocks will be of level $2$; $1/8$
+will be of level $3$; and $1/2^\mu$ blocks will be of level $\mu$. In
 expectation, the number of superblock levels of a chain $\chain$ will be
 $\Theta(\log(\chain))$~\cite{KLS}. Figure~\ref{fig.hierarchy} illustrates the
 blockchain superblocks starting from level $0$ and going up to level $3$ in case
 these blocks are distributed exactly according to expectation. Here, each level
 contains half the blocks of the level below.
 
-In our protocol, the verifier must roughly scan along one level at a time. To
-enable this, instead of just the previous block, the interlink vector also
-points to the most recent preceding block of every level $\mu$. Genesis is of
-infinite level and hence a pointer to it is included in every block at the first
-available index within the interlink data structure. The number of pointers that
+We wish to connect the blocks at each level with a \emph{previous block}
+pointer pointing to the most recent block of the same level. These pointers must
+be included in the data of the block so that proof-of-work commits to them. As
+the level of a block cannot be prediced before its proof-of-work is calculated,
+we extend the \emph{previous block id} structure of classical blockchains to be
+a vector, the \emph{interlink vector}. The interlink vector points to the most
+recent preceding block of every level $\mu$. Genesis is of infinite level and
+hence a pointer to it is included in every block. The number of pointers that
 need to be included per block is in expectation $\log(|\chain|)$.
-
-Figure~\ref{fig.hierarchy} illustrates the blockchain superblocks starting from
-level $1$ and going up to level $4$ in case these blocks are distributed
-exactly according to expectation. Note that each level contains half the blocks
-of the level below.
 
 \begin{figure}
     \caption{The hierarchical blockchain.
@@ -70,23 +68,24 @@ point to the block $B'$.
 
 \noindent\textbf{Traversing the blockchain. }
 As we have now extended blocks to contain multiple pointers to previous blocks,
-if certain blocks are omitted from a chain we will obtain a subchain, as long as
-the \emph{blockchain property} that each block must contain a pointer to its
-previous block in the sequence is maintained.
+if certain blocks are omitted from the middle of a chain we will obtain a
+subchain, as long as the \emph{blockchain property} is maintained (i.e., that
+each block must contain an interlink pointer to its previous block in the
+sequence).
 
 Blockchains are sequences, but it is more convenient to use set notation for
-some operations. Specifically, $B \in \chain$; $\chain_1 \subseteq \chain_2$ and
-$\emptyset$ have the obvious meaning. $\chain_1 \cup \chain_2$ is the chain
-obtained by sorting the blocks contained in both $\chain_1$ and $\chain_2$ into
-a sequence (this may be not always defined).
-We will freely use set builder notation $\{B \in \chain: p(B)\}$.
-$\chain_1 \cap \chain_2$ is the
-chain $\{B: B \in \chain_1 \land B \in \chain_2\}$. In all cases, the
-blockchain property must be maintained. The lowest common ancestor is
-$\textsf{LCA}(\chain_1,
-\chain_2) = (\chain_1 \cap \chain_2)[-1]$.
-If $\chain_1[0] = \chain_2[0]$ and $\chain_1[-1] = \chain_2[-1]$, we say the
-chains $\chain_1, \chain_2$ \textit{span} the same block range.
+some operations. Specifically, $B \in \chain$ and $\emptyset$ have the obvious
+meaning. $\chain_1 \subseteq \chain_2$ means that all blocks in $\chain_1$ exist
+in $\chain_2$, perhaps with additional blocks intertwined. $\chain_1 \cup
+\chain_2$ is the chain obtained by sorting the blocks contained in both
+$\chain_1$ and $\chain_2$ into a sequence (this may be not always defined, as
+pointers may be missing). We will freely use set builder notation $\{B \in
+\chain: p(B)\}$. $\chain_1 \cap \chain_2$ is the chain $\{B: B \in \chain_1
+\land B \in \chain_2\}$. In all cases, the blockchain property must be
+maintained. The lowest common ancestor is $\textsf{LCA}(\chain_1, \chain_2) =
+(\chain_1 \cap \chain_2)[-1]$. If $\chain_1[0] = \chain_2[0]$ and $\chain_1[-1]
+= \chain_2[-1]$, we say the chains $\chain_1, \chain_2$ \textit{span} the same
+block range.
 
 It will soon become clear that it is useful to construct a chain containing only
 the superblocks of another chain. Given $\chain$ and level $\mu$, the
