@@ -3,19 +3,18 @@
 Our model for describing our results is based on the standard ``backbone'' model
 for proof-of-work cryptocurrencies~\cite{backbone}, extended with the widely
 used Simplified Payment Verification (SPV) mode due to Nakamoto~\cite{bitcoin}.
-We consider three roles in our setting: lightweight \emph{clients},  full
-\emph{nodes}, and \emph{miners}.\footnote{Full nodes can be thought of as miners
-with zero hashpower.}
+We consider three roles in our setting: \emph{lightweight clients},
+\emph{full nodes}, and \emph{miners}.
 
-Nodes and miners run the Bitcoin backbone protocol, maintaining a copy of the
-blockchain and committing new transactions they receive from clients. Clients do
-not store the entire blockchain, but instead connect to nodes for service and
-request up-to-date information about the blockchain, for example whether a
-particular payment has been finalized. Our main challenge is to design a
-protocol so that clients can sieve through  the responses they receive from the
-network and reach a conclusion that should never disagree with the conclusion of
-a full  node who is faced with the same objective and infers it from its local
-blockchain  state.
+Full nodes and miners run the Bitcoin backbone protocol, maintaining a copy of
+the blockchain. Miners commit new transactions they receive from clients.
+Clients do not store the entire blockchain, but instead connect to nodes for
+service and request up-to-date information about the blockchain, for example
+whether a particular payment has been finalized. Our main challenge is to design
+a protocol so that clients can sieve through  the responses they receive from
+the network and reach a conclusion that should never disagree with the
+conclusion of a full  node who is faced with the same objective and infers it
+from its local blockchain state.
 
 \subsection{Backbone model}
 
@@ -28,13 +27,13 @@ blockchain  state.
 
 The entities on the blockchain network are of 3 kinds: (1) miners, who try to
 mine new blocks on top of the longest known blockchain and broadcast them as
-soon as they are discovered (for simplicity we assume that difficulty is
-constant and thus the ``longest chain rule'' sufficiently describes honest miner
-behavior); (2) full nodes, who maintain the longest blockchain without mining
-and also act as the provers in the network; (3) verifiers or stateless clients,
-who connect to provers and ask for proofs in regards to which blockchain is the
-largest. The verifiers attempt to determine the value of a predicate on these
-chains.
+soon as they are discovered; (2) full nodes, who maintain the longest blockchain
+without mining and also act as the provers in the network; (3) verifiers or
+stateless clients, who connect to provers and ask for proofs in regards to which
+blockchain is the largest. The verifiers attempt to determine the value of a
+predicate on these chains. For simplicity we assume that difficulty is constant
+and thus the ``longest chain rule'' sufficiently describes honest miner
+behavior.
 
 We model proof-of-work discovery attempts by using a random oracle~\cite{RO} as
 in \cite{backbone}. For clarity, we present our results in the backbone
