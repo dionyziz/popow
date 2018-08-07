@@ -36,7 +36,7 @@ where $D$ is an arbitrary efficiently computable predicate.
 \end{definition}
 
 Note that $\chain'$ is a blockset and may not necessarily be a blockchain.
-Furthermore, observe that for all block sets $\chain' \subseteq \chain$ we have
+Furthermore, observe that for all blocksets $\chain' \subseteq \chain$ we have
 that $Q(\chain') \Rightarrow Q(\chain)$. This will allow us to later argue that
 adding more blocks to a blockchain cannot invalidate its witness.
 
@@ -105,13 +105,13 @@ able to tamper with it.
 The construction of these proofs is shown in
 Algorithm~\ref{alg.nipopow-infix-prover}. The infix prover accepts two
 parameters: The chain $\chain$ which is the full blockchain and $\chain'$ which
-is a sub-blockset of the blockchain whose blocks are of interest for the
+is a sub-blockset of the blockchain and whose blocks are of interest for the
 predicate in question. The prover calls the previous suffix prover to produce a
 proof as usual. Then, having the prefix $\pi$ and suffix $\chi$ of the suffix
 proof in hand, the infix prover adds a few auxiliary blocks to the prefix $\pi$.
 The prover ensures that these auxiliary blocks form a chain with the rest of the
 proof $\pi$. Such auxiliary blocks are collected as follows: For every block $B$
-of the subchain $\chain'$, the immediate previous ($E'$) and next ($E$) blocks
+of the subset $\chain'$, the immediate previous ($E'$) and next ($E$) blocks
 in $\pi$ are found. Then, a chain of blocks $R$ which connects $E$ back to $B'$
 is found by the algorithm followDown. If $E'$ is of level $\mu$, there can be no
 other $\mu$-superblock between $E'$ and $B'$, otherwise it would have been
