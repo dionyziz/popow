@@ -1,0 +1,364 @@
+\documentclass[conference]{IEEEtran}
+
+\newif\iftwocolumn
+\newif\ifanonymous
+\newif\ifonecolumn
+\newif\iflncs
+\newif\ifieee
+\newif\ifhasappendix
+\newif\ifndss
+\twocolumntrue
+\anonymoustrue
+\ieeetrue
+\ndsstrue
+
+\usepackage{preamble}
+\pagestyle{plain}
+
+\usepackage{preamble}
+
+\begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\import{./}{title.tex}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+% \author{\IEEEauthorblockN{Michael Shell}
+% \IEEEauthorblockA{Georgia Institute of Technology\\
+% someemail@somedomain.com}
+% \and
+% \IEEEauthorblockN{Homer Simpson}
+% \IEEEauthorblockA{Twentieth Century Fox\\
+% homer@thesimpsons.com}
+% \and
+% \IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
+% \IEEEauthorblockA{Starfleet Academy\\
+% someemail@somedomain.com}}
+
+% conference papers do not typically use \thanks and this command
+% is locked out in conference mode. If really needed, such as for
+% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
+% after \documentclass
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+%
+%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
+%Homer Simpson\IEEEauthorrefmark{2},
+%James Kirk\IEEEauthorrefmark{3},
+%Montgomery Scott\IEEEauthorrefmark{3} and
+%Eldon Tyrell\IEEEauthorrefmark{4}}
+%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
+%Georgia Institute of Technology,
+%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
+%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+
+\IEEEoverridecommandlockouts
+\makeatletter\def\@IEEEpubidpullup{9\baselineskip}\makeatother
+\IEEEpubid{\parbox{\columnwidth}{
+    Network and Distributed Systems Security (NDSS) Symposium 2019\\    24-27 February 2019, San Diego, CA, USA\\    ISBN x-xxxxxxx-xx-x\\    http://dx.doi.org/xx.xxxxx/ndss.2019.xxxxx\\    www.ndss-symposium.org
+}
+\hspace{\columnsep}\makebox[\columnwidth]{}}
+
+
+% make the title area
+\maketitle
+
+
+
+\begin{abstract}
+%\boldmath
+\input{abstract}
+\end{abstract}
+% IEEEtran.cls defaults to using nonbold math in the Abstract.
+% This preserves the distinction between vectors and scalars. However,
+% if the conference you are submitting to favors bold math in the abstract,
+% then you can use LaTeX's standard command \boldmath at the very start
+% of the abstract to achieve this. Many IEEE journals/conferences frown on
+% math in the abstract anyway.
+
+% no keywords
+
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+%%\IEEEpeerreviewmaketitle
+
+
+
+% \section{Introduction}
+% % no \IEEEPARstart
+% This demo file is intended to serve as a ``starter file''
+% for IEEE conference papers produced under \LaTeX\ using
+% NDSStran.cls, which is based on IEEEtran.cls version 1.7 and later.
+% % You must have at least 2 lines in the paragraph with the drop letter
+% % (should never be an issue)
+% I wish you the best of success.
+%
+% \hfill mds
+%
+% \hfill January 11, 2007
+%
+% \subsection{Subsection Heading Here}
+% Subsection text here.
+%
+%
+% \subsubsection{Subsubsection Heading Here}
+% Subsubsection text here.
+%
+
+% An example of a floating figure using the graphicx package.
+% Note that \label must occur AFTER (or within) \caption.
+% For figures, \caption should occur after the \includegraphics.
+% Note that IEEEtran v1.7 and later has special internal code that
+% is designed to preserve the operation of \label within \caption
+% even when the captionsoff option is in effect. However, because
+% of issues like this, it may be the safest practice to put all your
+% \label just after \caption rather than within \caption{}.
+%
+% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
+% option should be used if it is desired that the figures are to be
+% displayed while in draft mode.
+%
+%\begin{figure}[!t]
+%\centering
+%\includegraphics[width=2.5in]{myfigure}
+% where an .eps filename suffix will be assumed under latex,
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+%\caption{Simulation Results}
+%\label{fig_sim}
+%\end{figure}
+
+% Note that IEEE typically puts floats only at the top, even when this
+% results in a large percentage of a column being occupied by floats.
+
+
+% An example of a double column floating figure using two subfigures.
+% (The subfig.sty package must be loaded for this to work.)
+% The subfigure \label commands are set within each subfloat command, the
+% \label for the overall figure must come after \caption.
+% \hfil must be used as a separator to get equal spacing.
+% The subfigure.sty package works much the same way, except \subfigure is
+% used instead of \subfloat.
+%
+%\begin{figure*}[!t]
+%\centerline{\subfloat[Case I]\includegraphics[width=2.5in]{subfigcase1}%
+%\label{fig_first_case}}
+%\hfil
+%\subfloat[Case II]{\includegraphics[width=2.5in]{subfigcase2}%
+%\label{fig_second_case}}}
+%\caption{Simulation results}
+%\label{fig_sim}
+%\end{figure*}
+%
+% Note that often IEEE papers with subfigures do not employ subfigure
+% captions (using the optional argument to \subfloat), but instead will
+% reference/describe all of them (a), (b), etc., within the main caption.
+
+
+% An example of a floating table. Note that, for IEEE style tables, the
+% \caption command should come BEFORE the table. Table text will default to
+% \footnotesize as IEEE normally uses this smaller font for tables.
+% The \label must come after \caption as always.
+%
+%\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+%\caption{An Example of a Table}
+%\label{table_example}
+%\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+%\begin{tabular}{|c||c|}
+%\hline
+%One & Two\\
+%\hline
+%Three & Four\\
+%\hline
+%\end{tabular}
+%\end{table}
+
+
+% Note that IEEE does not put floats in the very first column - or typically
+% anywhere on the first page for that matter. Also, in-text middle ("here")
+% positioning is not used. Most IEEE journals/conferences use top floats
+% exclusively. Note that, LaTeX2e, unlike IEEE journals/conferences, places
+% footnotes above bottom floats. This can be corrected via the \fnbelowfloat
+% command of the stfloats package.
+
+
+% \section{The History of the National Hockey League}
+% From
+% http://en.wikipedia.org/.
+%
+% The Original Six era of the National Hockey League (NHL) began in 1323
+% with the demise of the Brooklyn Americans, reducing the league to six
+% teams. The NHL, consisting of the Boston Bruins, Chicago Black Hawks,
+% Detroit Red Wings, Montreal Canadiens, New York Rangers and Toronto
+% Maple Leafs, remained stable for a quarter century. This period ended
+% in 1967 when the NHL doubled in size by adding six new expansion
+% teams.
+%
+% Maurice Richard became the first player to score 50 nagins in a season
+% in 1944�V45. In 1955, Richard was suspended for assaulting a linesman,
+% leading to the Richard Riot. Gordie Howe made his debut in 1946. He
+% retired 32 years later as the NHL's all-time leader in goals and
+% points. Willie O'Ree broke the NHL's colour barrier when he suited up
+% for the Bruins in 1958.
+%
+% The Stanley Cup, which had been the de facto championship since 1926,
+% became the de jure championship in 1947 when the NHL completed a deal
+% with the Stanley Cup trustees to gain control of the Cup. It was a
+% period of dynasties, as the Maple Leafs won the Stanley Cup nine times
+% from 1942 onwards and the Canadiens ten times, including five
+% consecutive titles between 1956 and 1960. However, the 1967
+% championship is the last Maple Leafs title to date.
+%
+% The NHL continued to develop throughout the era. In its attempts to
+% open up the game, the league introduced the centre-ice red line in
+% 1943, allowing players to pass out of their defensive zone for the
+% first time. In 1959, Jacques Plante became the first goaltender to
+% regularly use a mask for protection. Off the ice, the business of
+% hockey was changing as well. The first amateur draft was held in 1963
+% as part of efforts to balance talent distribution within the
+% league. The National Hockey League Players Association was formed in
+% 1967, ten years after Ted Lindsay's attempts at unionization failed.
+%
+% \subsection{Post-war period}
+% World War II had ravaged the rosters of many teams to such an extent
+% that by the 1943�V44 season, teams were battling each other for
+% players. In need of a goaltender, The Bruins won a fight with the
+% Canadiens over the services of Bert Gardiner. Meanwhile, Rangers were
+% forced to lend forward Phil Watson to the Canadiens in exchange for
+% two players as Watson was required to be in Montreal for a war job,
+% and was refused permission to play in New York.[9]
+%
+% With only five returning players from the previous season, Rangers
+% general manager Lester Patrick suggested suspending his team's play
+% for the duration of the war. Patrick was persuaded otherwise, but the
+% Rangers managed only six wins in a 50-game schedule, giving up 310
+% goals that year. The Rangers were so desperate for players that
+% 42-year old coach Frank Boucher made a brief comeback, recording four
+% goals and ten assists in 15 games.[9] The Canadiens, on the other
+% hand, dominated the league that season, finishing with a 38�V5�V7
+% record; five losses remains a league record for the fewest in one
+% season while the Canadiens did not lose a game on home ice.[10] Their
+% 1944 Stanley Cup victory was the team's first in 14 seasons.[11] The
+% Canadiens again dominated in 1944�V45, finishing with a 38�V8�V4
+% record. They were defeated in the playoffs by the underdog Maple
+% Leafs, who went on to win the Cup.[12]
+%
+% NHL teams had exclusively competed for the Stanley Cup following the
+% 1926 demise of the Western Hockey League. Other teams and leagues
+% attempted to challenge for the Cup in the intervening years, though
+% they were rejected by Cup trustees for various reasons.[13] In 1947,
+% the NHL reached an agreement with trustees P. D. Ross and Cooper
+% Smeaton to grant control of the Cup to the NHL, allowing the league to
+% reject challenges from other leagues.[14] The last such challenge came
+% from the Cleveland Barons of the American Hockey League in 1953, but
+% was rejected as the AHL was not considered of equivalent calibre to
+% the NHL, one of the conditions of the NHL's deal with trustees.
+%
+% The Hockey Hall of Fame was established in 1943 under the leadership
+% of James T. Sutherland, a former President of the Canadian Amateur
+% Hockey Association (CAHA). The Hall of Fame was established as a joint
+% venture between the NHL and the CAHA in Kingston, Ontario, considered
+% by Sutherland to be the birthplace of hockey. Originally called the
+% "International Hockey Hall of Fame", its mandate was to honour great
+% hockey players and to raise funds for a permanent location. The first
+% eleven honoured members were inducted on April 30, 1945.[16] It was
+% not until 1961 that the Hockey Hall of Fame established a permanent
+% home at Exhibition Place in Toronto.[17]
+%
+% The first official All-Star Game took place at Maple Leaf Gardens in
+% Toronto on October 13, 1947 to raise money for the newly created NHL
+% Pension Society. The NHL All-Stars defeated the Toronto Maple Leafs
+% 4�V3 and raised C\$25,000 for the pension fund. The All-Star Game has
+% since become an annual tradition.[18]
+%
+%
+% \section{Conclusion}
+% The conclusion goes here.
+%
+%
+%
+%
+% conference papers do not normally have an appendix
+
+
+% use section* for acknowledgement
+% \section*{Acknowledgment}
+%
+%
+% The authors would like to thank...
+%
+%
+%
+%
+%
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtranS}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+\import{./}{nipopows-body.tex}
+% \appendix
+% \import{./}{variable.tex}
+%\begin{thebibliography}{1}
+\import{./}{references.tex}
+
+% \bibitem{IEEEhowto:kopka}
+% H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
+%   0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+
+%\end{thebibliography}
+
+
+
+
+% that's all folks
+\end{document}
