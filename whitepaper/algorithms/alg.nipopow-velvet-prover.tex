@@ -8,7 +8,7 @@
             \Let{b}{\chain[0]}
             \Comment{Genesis block}
             \Let{\tilde\Pi}{\emptyset}
-            \For{$\mu = |\textsf{realLink}[\chain[-k-1]]|$ down to $0$}
+            \For{$\mu = |\textsf{realLink}[\textsf{id}(\chain[-k-1])]|$ down to $0$}
                 \State $\pi, aux \gets$
                     \begin{varwidth}[t]{\linewidth}
                         $\textsf{constructInnerChain'}

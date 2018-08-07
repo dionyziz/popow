@@ -18,7 +18,7 @@
               \Comment{Initialize empty hashmap}
             \For{$(\pi, \chi) \in \mathcal{P}$}
                 \For{$B \in \pi$}
-                    \Let{\textsf{blockById}[B.\textsf{id}]}{B}
+                    \Let{\textsf{blockById}[\textsf{id}(B)]}{B}
                 \EndFor
             \EndFor
             \Let{\tilde\pi}{\text{best }\pi\in\mathcal{P}\text{ according to suffix verifier}}
