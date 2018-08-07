@@ -122,12 +122,13 @@ proof-of-work commits to the interlink data structure. Interestingly, the
 interlink data structure does not need to be part of coinbase and can be
 produced and included in regular transactions by users (such as OP\_RETURN
 transactions). Thus, the miners can be completely oblivious to it, while users
-and provers make use of the feature. Interested users regularly create
-transactions containing the most recent interlink pointers so that they are
-included in the next block. If the transaction makes it to the next block, it
-can be used by the prover who keeps track of these. Otherwise, if it becomes
-part of a subsequent block, in which case some of the pointers it contains are
-invalid, it can be ignored or only partially used.
+and provers make use of the feature, making it a \emph{user-activated velvet
+fork}. Interested users regularly create transactions containing the most recent
+interlink pointers so that they are included in the next block. If the
+transaction makes it to the next block, it can be used by the prover who keeps
+track of these. Otherwise, if it becomes part of a subsequent block, in which
+case some of the pointers it contains are invalid, it can be ignored or only
+partially used.
 
 The necessary changes needed in the various construction algorithms in order to
 support a velvet fork are shown in
