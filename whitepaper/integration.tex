@@ -19,10 +19,10 @@ a period of 60 days with $m=24, k=6$, with varying rates of payments received.
 For the na\"ive SPV client, the total bandwidth cost is dominated by fetching
 the entire chain of headers, which the NIPoPoW client avoids. The marginal
 cost for na\"ive SPV depends on the number of blocks generated per day, as well
-as the transaction inclusion proofs associated with each payment. The NIPoPoW
-based client provides the most savings when the number of transactions per day
-is smallest, reducing the necessary bandwidth per day (excluding the initial
-sync up) by 90\%.
+as the transaction inclusion proofs associated with each payment. The
+NIPoPoW-based client provides the most savings when the number of transactions
+per day is smallest, reducing the necessary bandwidth per day (excluding the
+initial sync up) by 90\%.
 
 \begin{table}
   \caption{Cost of header chains for all active PoW-based cryptocoins
@@ -77,27 +77,26 @@ sync up) by 90\%.
 \paragraph{Multi-blockchain wallets.}\label{sec.multichain}
 An application of our technique is an efficient multi-cryptocoin client.
 Consider a merchant who wishes to accept payments in any cryptocoin, not just
-the popular ones. The na\"ive approach would be to install an SPV client for each known cryptocoin.
-This approach would entail downloading the header chain for each cryptocoin, and
-periodically syncing up by fetching any newly generated block headers. An
-alternative would be to use an online service supporting multiple currencies,
-but this introduces reliance on a third party (e.g. Jaxx and Coinomi rely on
-third party networks).
+the popular ones. The na\"ive approach would be to install an SPV client for
+each known coin. This approach would entail downloading the header chain for
+each coin, and periodically syncing up by fetching any newly generated block
+headers. An alternative would be to use an online service supporting multiple
+currencies, but this introduces reliance on a third party (e.g. Jaxx and Coinomi
+rely on third party networks).
 
 A NIPoPoW-based client would not download the entire header chain, but would
-intead only receive NIPoPoW proofs each time a payment is received. When a peer
+instead only receive NIPoPoW proofs each time a payment is received. When a peer
 informs the client about a payment, they include a block index $\ell$ and
 NIPoPoW proof of transaction inclusion. The peer must then query \emph{all} of
-their connected peers, requesting any better better proof for the same
-predicate. After waiting a short time period for a response, the client runs the
+their connected peers, requesting any better proof for the same predicate. After
+waiting a short time period for a response, the client runs the
 \texttt{verify-infix} routine on all received proofs, and accepts the
 transaction if the output is \emph{true}. Although initially such proofs must be
-relative genesis, the client may store the most recently-known ($k$-stable)
-blockhash for each cryptocoin, such that future payments can include NIPoPoW
-proofs relative to that. Thus for popular cryptocoins, the NIPoPoW-based client
+relative to genesis, the client may store the most recently-known ($k$-stable)
+blockhash for each coin such that future payments can include NIPoPoW proofs
+relative to that. Thus for popular cryptocoins, the NIPoPoW-based client
 downloads nearly every block header, like an ordinary SPV client; but for
-cryptocoins used infrequently, the NIPoPoW-based client can skip over most
-blocks.
+coins used infrequently, the NIPoPoW-based client can skip over most blocks.
 
 \paragraph{Cross-chain ICOs.}
 As an example use-case of our construction, we present the case of an
@@ -121,11 +120,11 @@ In order to run the ICO, the fund-raising entity first creates a designated
 account in the source blockchain in which funds will be deposited. It then
 creates the ERC-20-style smart contract in the destination blockchain. When
 someone wishes to participate in the ICO, they transfer funds into the
-designated account on the source blockchain. Once she has made the transfer and
-it becomes confirmed, the payer generates a NIPoPoW about the transaction paying
-into the designated account. That NIPoPoW is then sent as a parameter to a
-method call on the ICO smart contract on the destination blockchain. The method
-call stores the proof and waits for a certain period of time for possible
+designated account on the source blockchain. Once they have made the transfer
+and it becomes confirmed, the payer generates a NIPoPoW about the transaction
+paying into the designated account. This NIPoPoW is then sent as a parameter to
+a method call on the ICO smart contract on the destination blockchain. The
+method call stores the proof and waits for a certain period of time for possible
 contestations, which can be accepted and compared using the $\leq_m$ mechanism
 previously described. If no contesting proof is presented within the
 contestation period, the prover receives their respective ICO tokens on the
