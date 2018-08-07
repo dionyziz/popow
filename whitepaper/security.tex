@@ -18,8 +18,8 @@ comparisons.
 The previous construction was designed to prevent Bahack-style
 attacks~\cite{bahack}, where the adversary constructs ``lucky'' high-difficulty
 superblocks without filling in the underlying proof-of-work in the lower levels.
-We now patch our protocol which, while retaining this highlevel approach, adds a
-defence against the double-spending attack of Section~\ref{sec:attack}. The
+We now patch our protocol which, while retaining this high level approach, adds
+a defence against the double-spending attack of Section~\ref{sec:attack}. The
 attack is neutralized since our verifier is more permissive, allowing the prover
 to construct a proof that takes superquality ``goodness'' into account when
 comparing forks. The modified construction is shown in
@@ -47,7 +47,7 @@ here.
 
 \begin{restatable}[Security]{theorem}{restateThmSecurity}
     \label{thm.security}
-    Assuming honest majority, the non-interactive proofs-of-proof-of-work
+    Assuming honest majority, the Non-interactive Proofs of Proof-of-Work
     construction for computable $k$-stable monotonic suffix-sensitive predicates
     is secure with overwhelming probability in $\kappa$.
 \end{restatable}
@@ -56,7 +56,7 @@ Suppose an adversary produces a proof $\pi_\mathcal{A}$ and an honest
 party produces a proof $\pi_B$ such that the two proofs cause the predicate $Q$
 to evaluate to different values, while at the same time all honest parties have
 agreed that the correct value is the one obtained by $\pi_B$. Because of
-bitcoin's security, $\mathcal{A}$ will be unable to make these claims for an
+Bitcoin's security, $\mathcal{A}$ will be unable to make these claims for an
 actual underlying 0-level chain.
 
 We now argue that the operator $\leq_m$ will
@@ -69,7 +69,7 @@ disjoint $\mu_\mathcal{A}$-level superblocks than honest $\mu_B$-level
 superblocks after $b$.
 
 To see this, let $b$ be an honest block generated at some round $r_1$ and let
-the honest proof have been generated at some round $r_3$. Then take the sequence
+the honest proof be generated at some round $r_3$. Then take the sequence
 of consecutive rounds $S = (r_1, \cdots, r_3)$. Because the verifier requires at
 least $m$ blocks from each of the provers, the adversary must have $m$
 $\mu_\mathcal{A}$-superblocks in $\pi_\mathcal{A}\{b:\}$ which are not in
