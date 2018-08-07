@@ -11,9 +11,10 @@
 % \let\endproof\relax
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\iftwocolumn
+\ifieee
 \usepackage{amsthm}
-\else
+\fi
+\iflncs
 \usepackage{cite}
 \fi
 \PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
@@ -64,6 +65,14 @@
         \qed
     \fi
 }
+
+\ifieee
+\newcommand{\appsection}{\subsection}
+\newcommand{\appsubsection}{\subsubsection}
+\else
+\newcommand{\appsection}{\section}
+\newcommand{\appsubsection}{\subsection}
+\fi
 
 \algblockdefx[Operator]{Operator}{EndOperator}
 [1]{\textbf{operator #1}}
