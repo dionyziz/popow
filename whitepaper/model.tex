@@ -48,11 +48,11 @@ security parameter. The network is synchronized into numbered rounds, which
 correspond to moments in time. $n$ denotes the total number of miners in the
 game, while $t$ denotes the total number of adversarial miners. Each miner is
 assumed to have equal mining power captured by the number of queries $q$
-available per player to the random oracle, each query of which succeeds
-independently with probability $p$ (a successful query produces a block with
-valid proof-of-work). Mining pools and miners of different computing power can
-be captured by assuming multiple players combine their computing power. This is
-made explicit for the adversary, as they do not incur any network overhead to
+available per player to the random oracle per round, each query of which
+succeeds independently with probability $p$ (a successful query produces a block
+with valid proof-of-work). Mining pools and miners of different computing power
+can be captured by assuming multiple players combine their computing power. This
+is made explicit for the adversary, as they do not incur any network overhead to
 achieve communication between adversarial miners. On the contrary, honest
 players discovering a block must \textit{diffuse} it (broadcast it) to the
 network at a given round and wait for it to be received by the rest of the
