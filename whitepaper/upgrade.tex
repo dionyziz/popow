@@ -137,13 +137,12 @@ support a velvet fork are shown in
 Algorithm~\ref{alg.nipopow-velvet-innerchain},
 Algorithm~\ref{alg.nipopow-velvet-follow}, and
 Algorithm~\ref{alg.nipopow-velvet-prover}.
-Algorithm~\ref{alg.nipopow-velvet-innerchain} defines the innerChain method,
-which replaces the upchain/downchain abstraction that can be easily used in a
-fully upgraded chain.
 
+\ifndss\else
 \noindent\textbf{Supporting clients with different beliefs.}
 The interlink format does not depend on parameters $m, k$. Therefore, it is not
 necessary to agree on a particular value of these parameters. Instead, the
 choice of $m$ and $k$ can be a user-configurable parameter to clients.
 Clients would send a particular $m$ and $k$ as part of their requirement to
 the prover.
+\fi
