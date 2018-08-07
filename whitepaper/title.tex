@@ -1,4 +1,6 @@
 \import{./}{title-text.tex}
+\ifanonymous
+\else
 \author{
         Aggelos Kiayias\inst{1} \and
         Andrew Miller\inst{2} \and
@@ -8,6 +10,12 @@
            University of Edinburgh, IOHK \and
            University of Illinois at Urbana-Champaign, Initiative for Cryptocurrencies and Contracts \and
            National and Kapodistrian University of Athens, IOHK}
+\fi
+\ifieee
+\else
 \maketitle
+\fi
+\iflncs
 \noindent
 \makebox[\linewidth]{\today}
+\fi
