@@ -7,15 +7,17 @@
                 \State\Return{$\{B\}$}
             \EndIf
             \Let{\chain}{\emptyset}
-            \For{$B' \in B.\textsf{interlink}$}
-                \Let{\chain}{\chain \cup \textsf{ancestors}(B')}
-                  \Comment{Collect into DAG}
+            \For{$\textsf{id} \in B.\textsf{interlink}$}
+                \If{$\textsf{id} \in \textsf{blockById}$}
+                    \Let{B'}{\textsf{blockById}[\textsf{id}]}
+                    \Let{\chain}{\chain \cup \textsf{ancestors}(B', \textsf{blockById})}
+                      \Comment{Collect into DAG}
+                \EndIf
             \EndFor
             \State\Return{$\chain \cup \{B\}$}
         \EndFunction
         \Function{\sf verify-infx$^D_{\ell,m,k}$}{$\mathcal{P}$}
             \Let{\textsf{blockById}}{\emptyset}
-              \Comment{Initialize empty hashmap}
             \For{$(\pi, \chi) \in \mathcal{P}$}
                 \For{$B \in \pi$}
                     \Let{\textsf{blockById}[\textsf{id}(B)]}{B}
