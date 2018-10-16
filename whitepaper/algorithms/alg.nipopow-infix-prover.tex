@@ -2,7 +2,7 @@
     \caption{\label{alg.nipopow-infix-prover}The \textsf{Prove} algorithm
     for infix proofs}
     \begin{algorithmic}[1]
-        \Function{\sf ProveInfix$_{m,k}$}{$\chain$, $\chain'$, depth} % , realLink, blockById}
+        \Function{\sf ProveInfix$_{m,k}$}{$\chain$, $\chain'$, \textsf{depth}} % , realLink, blockById}
             \Let{(\pi, \chi)}{\textsf{Prove}_{m,k}(\chain)}
             \For{$B' \in \chain'$}
                 \For{$E \in \pi$}

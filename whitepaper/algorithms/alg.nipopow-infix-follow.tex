@@ -3,7 +3,7 @@
     produces the necessary blocks to connect a superblock $hi$ to a preceeding
     regular block $lo$.}
     \begin{algorithmic}[1]
-        \Function{\sf followDown}{$hi$, $lo$, height} %, realLink, blockById}
+        \Function{\sf followDown}{$hi$, $lo$, \textsf{height}} %, realLink, blockById}
             \State{$B \gets hi$; $aux \gets [\ ]$; $\mu \gets \textit{level}(hi)$}
             \While{$B \neq lo$}
                 % \Let{(B', aux')}{\textsf{followUp}(B, \mu, \textsf{realLink}, \textsf{blockById})}
