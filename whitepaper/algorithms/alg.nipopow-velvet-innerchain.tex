@@ -4,7 +4,7 @@
     \begin{algorithmic}[1]
         \Function{{\sf find} $\chain\upchain^\mu$}{$b$, realLink, blockById}
             \Let{B}{\chain[-1]}
-            \Let{\textsf{aux}}{[B]}
+            \Let{\textsf{aux}}{\{B\}}
             \Let{\pi}{[B]}
             \While{$B \neq b$}
                 \State $(B, \textsf{aux'})$
@@ -13,7 +13,7 @@
                     \textsf{followUp}$(B, \mu,
                     \textsf{realLink}, \textsf{blockById})$
                 \end{varwidth}
-                \State{$\textsf{aux}$.append($\textsf{aux'}$)}
+                \Let{\textsf{aux}}{\textsf{aux} \cup \textsf{aux'}}
                 \State{$\pi$.append($B$)}
             \EndWhile
             \State\Return{$\pi$, aux}
