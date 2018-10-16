@@ -3,7 +3,7 @@
     produces the blocks to connect two superblocks in velvet forks.}
     \begin{algorithmic}[1]
         \Function{\sf followUp}{$B$, $\mu$, realLink, blockById}
-            \Let{\textsf{aux}}{[B]}
+            \Let{\textsf{aux}}{\{B\}}
             \While{$B \neq \textsf{Gen}$}
                 \If{$B.\textsf{interlink}[\mu] = \textsf{realLink}[\textsf{id}(B)][\mu]$}
                     \Let{id}{B.\textsf{interlink}[\mu]}
