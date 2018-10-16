@@ -8,7 +8,9 @@
             \For{$\mu = |\chain[-k-1].\mathsf{interlink}|$ down to $0$}
                 \Let{\alpha}{\chain[:-k]\{B:\}\upchain^\mu}
                 \Let{\pi}{\pi \cup \alpha}
-                \Let{B}{\alpha[-\min(m, |\alpha|)]}
+                \If{$m < |\alpha|$}
+                    \Let{B}{\alpha[-m]}
+                \EndIf
             \EndFor
             \Let{\chi}{\chain[-k:]}
             \State\Return{$\pi\chi$}
