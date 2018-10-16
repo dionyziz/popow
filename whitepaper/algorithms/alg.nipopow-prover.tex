@@ -5,7 +5,7 @@
         \Function{\sf Prove$_{m,k,\delta}$}{$\chain$}
             \Let{B}{\chain[0]}
             \Comment{Genesis}
-            \For{$\mu = |\chain[-k].\mathsf{interlink}|$ down to $0$}
+            \For{$\mu = |\chain[-k-1].\mathsf{interlink}|$ down to $0$}
                 \Let{\alpha}{\chain[:-k]\{B:\}\upchain^\mu}
                 \State $\pi \gets \pi \cup \alpha$; $B \gets \alpha[-\min(m, |\alpha|)]$
             \EndFor
