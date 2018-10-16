@@ -2,12 +2,13 @@
     \caption{\label{alg.nipopow-infix-prover}The \textsf{Prove} algorithm
     for infix proofs}
     \begin{algorithmic}[1]
-        \Function{\sf ProveInfix$_{m,k}$}{$\chain$, $\chain'$, \textsf{depth}} % , realLink, blockById}
+        \Function{\sf ProveInfix$_{m,k}$}{$\chain$, $\chain'$, \textsf{height}} % , realLink, blockById}
+            \Let{aux}{\emptyset}
             \Let{(\pi, \chi)}{\textsf{Prove}_{m,k}(\chain)}
             \For{$B' \in \chain'$}
                 \For{$E \in \pi$}
-                    \If{$\textsf{depth}[E] \geq \textsf{depth}[B']$}
-                        \Let{R}{\textsf{followDown}(E, B', \textsf{depth})} %, \textsf{realLink}, \textsf{blockById})}
+                    \If{$\textsf{height}[E] \geq \textsf{height}[B']$}
+                        \Let{R}{\textsf{followDown}(E, B', \textsf{height})} %, \textsf{realLink}, \textsf{blockById})}
                         % \Let{L}{\textsf{followUp}(B', \textit{level}(E'), \textsf{realLink}, \textsf{blockById})}
                         % \Let{aux}{aux \cup L}
                         \Let{aux}{aux \cup R}
