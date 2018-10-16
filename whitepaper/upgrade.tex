@@ -81,11 +81,11 @@ for blocks that it hasn't seen before. For those blocks, it maintains its own
 realLink data structure which it updates accordingly to make sure it is correct
 regardless of what the interlink data structure of the received block claims.
 
-\import{./}{algorithms/alg.nipopow-velvet-innerchain.tex}
+\import{./}{algorithms/alg.nipopow-velvet-upchain.tex}
 \import{./}{algorithms/alg.nipopow-velvet-follow.tex}
 
 The velvet $\chain\upchain$ operator shown in
-Algorithm~\ref{alg.nipopow-velvet-innerchain} is implemented identically as
+Algorithm~\ref{alg.nipopow-velvet-upchain} is implemented identically as
 before, except that instead of following the interlink pointer blindly it now
 calls the helper function \textit{followUp}, shown in
 Algorithm~\ref{alg.nipopow-velvet-follow}. It accepts block $B$ and level $\mu$
