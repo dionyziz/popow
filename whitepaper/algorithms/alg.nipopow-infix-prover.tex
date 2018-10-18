@@ -8,10 +8,10 @@
             \For{$B' \in \chain'$}
                 \For{$E \in \pi$}
                     \If{$\textsf{height}[E] \geq \textsf{height}[B']$}
-                        \Let{R}{\textsf{followDown}(E, B', \textsf{height})} %, \textsf{realLink}, \textsf{blockById})}
+                        %, \textsf{realLink}, \textsf{blockById})}
                         % \Let{L}{\textsf{followUp}(B', \textit{level}(E'), \textsf{realLink}, \textsf{blockById})}
                         % \Let{aux}{aux \cup L}
-                        \Let{aux}{aux \cup R}
+                        \Let{aux}{aux \cup \textsf{followDown}(E, B', \textsf{height})}
                         \State\textbf{break}
                     \EndIf
                 \EndFor
