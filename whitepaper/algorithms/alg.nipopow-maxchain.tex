@@ -8,7 +8,9 @@
     \begin{algorithmic}[1]
         \Function{{\sf best-arg}$_m$}{$\pi, b$}
             \Let{M}{\{\mu: |\pi\upchain^\mu\{b:\}| \geq m\} \cup \{0\}}
+            \Comment{Valid levels}
             \State\Return{$\max_{\mu \in M}\{2^\mu  \cdot |\pi\upchain^\mu\{b:\}|\}$}
+            \Comment{Score for level}
         \EndFunction
         \Operator{$\pi_A \geq_m \pi_B$}
             \Let{b}{(\pi_\mathcal{A} \cap \pi_B)[-1]}
