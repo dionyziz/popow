@@ -9,9 +9,17 @@
                 \For{$E \in \pi$}
                     \If{$\textsf{height}[E] \geq \textsf{height}[B']$}
                         %, \textsf{realLink}, \textsf{blockById})}
-                        % \Let{L}{\textsf{followUp}(B', \textit{level}(E'), \textsf{realLink}, \textsf{blockById})}
-                        % \Let{aux}{aux \cup L}
-                        \Let{aux}{aux \cup \textsf{followDown}(E, B', \textsf{height})}
+                        \ifonecolumn
+                            \Let{aux}{aux \cup \textsf{followDown}(E, B', \textsf{height})}
+                        \else
+                            \State \begin{varwidth}[t]{\linewidth}
+                                $L \gets \textsf{followUp}(B', \textit{level}(E'),$\par
+                                \hskip\algorithmicindent \hskip\algorithmicindent
+                                \hskip\algorithmicindent \hskip\algorithmicindent
+                                $\textsf{realLink}, \textsf{blockById})$
+                            \end{varwidth}
+                            \Let{aux}{aux \cup L}
+                        \fi
                         \State\textbf{break}
                     \EndIf
                 \EndFor

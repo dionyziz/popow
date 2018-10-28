@@ -10,8 +10,13 @@
             \For{$\textsf{id} \in B.\textsf{interlink}$}
                 \If{$\textsf{id} \in \textsf{blockById}$}
                     \Let{B'}{\textsf{blockById}[\textsf{id}]}
+                    \iftwocolumn
+                        \CommentLine{Collect into DAG}
+                    \fi
                     \Let{\chain}{\chain \cup \textsf{ancestors}(B', \textsf{blockById})}
-                      \Comment{Collect into DAG}
+                    \ifonecolumn
+                        \Comment{Collect into DAG}
+                    \fi
                 \EndIf
             \EndFor
             \State\Return{$\chain \cup \{B\}$}

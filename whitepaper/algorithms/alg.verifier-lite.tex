@@ -6,7 +6,11 @@
             \Let{\tilde\pi}{(\text{Gen})}
               \Comment{Trivial anchored blockchain}
             \For{$(\pi, \chi) \in \mathcal{P}$}
-                \Comment{Examine each proof $(\pi, \chi)$ in $\mathcal{P}$}
+                \ifonecolumn
+                    \Comment{Examine each proof $(\pi, \chi)$ in $\mathcal{P}$}
+                \else
+                    \CommentLine{Examine each proof $(\pi, \chi)$ in $\mathcal{P}$}
+                \fi
                 \If{$\mathsf{validChain}(\pi \chi)
                     \land |\chi| = k
                     \land \pi \geq_m \tilde\pi$}
