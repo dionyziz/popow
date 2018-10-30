@@ -121,15 +121,18 @@ Therefore, it does not hurt to add them to $\pi$ earlier.
 
 Figure~\ref{fig.nipopow} contains an example proof constructed for parameters
 $m = k = 3$. The top superchain level which contains at least $m$ blocks is
-level $\mu = 2$. For the $m$-sized suffix of that level, $5$ blocks of
-superblock level $1$ are included to span the same range. For the last $3$
-blocks of the $1$-superchain, blocks of level $0$ spanning the same range are
-included for support. Note that the superchain at a lower levels may reach
-closer to the end of the blockchain than a higher level.
+level $\mu = 2$. For the $m$-sized suffix of that level, $6$ blocks of
+superblock level $1$ are included to span the same range ($2m$ blocks at this
+level). For the last $3$ blocks of the $1$-superchain, blocks of level $0$
+spanning the same range are included (again $2m$ blocks at this level). Note
+that the superchain at a lower levels may reach closer to the end of the
+blockchain than a higher level. Level $3$ was not used, as it does not yet have
+a sufficient number of blocks.
 
 \begin{figure}[h]
     \caption{
-    NIPoPoW \emph{prefix} $\pi$ for $m = 3$.
+    NIPoPoW \emph{prefix} $\pi$ for $m = 3$. It includes the Genesis block $G$,
+    three $2$-superblocks, six $1$-superblocks, and six $0$-blocks.
     }
     \centering
     \iftwocolumn
