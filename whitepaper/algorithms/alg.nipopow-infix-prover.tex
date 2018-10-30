@@ -5,6 +5,7 @@
         \Function{\sf ProveInfix$_{m,k}$}{$\chain$, $\chain'$, \textsf{height}} % , realLink, blockById}
             \Let{aux}{\emptyset}
             \Let{(\pi, \chi)}{\textsf{Prove}_{m,k}(\chain)}
+            \Comment{Start with a suffix proof}
             \For{$B' \in \chain'$}
                 \For{$E \in \pi$}
                     \If{$\textsf{height}[E] \geq \textsf{height}[B']$}
