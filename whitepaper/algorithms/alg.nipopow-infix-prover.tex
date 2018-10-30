@@ -6,15 +6,15 @@
             \Let{aux}{\emptyset}
             \Let{(\pi, \chi)}{\textsf{Prove}_{m,k}(\chain)}
             \Comment{Start with a suffix proof}
-            \For{$B' \in \chain'$}
+            \For{$B \in \chain'$}
                 \For{$E \in \pi$}
-                    \If{$\textsf{height}[E] \geq \textsf{height}[B']$}
+                    \If{$\textsf{height}[E] \geq \textsf{height}[B]$}
                         %, \textsf{realLink}, \textsf{blockById})}
                         \ifonecolumn
-                            \Let{aux}{aux \cup \textsf{followDown}(E, B', \textsf{height})}
+                            \Let{aux}{aux \cup \textsf{followDown}(E, B, \textsf{height})}
                         \else
                             \State \begin{varwidth}[t]{\linewidth}
-                                $L \gets \textsf{followUp}(B', \textit{level}(E'),$\par
+                                $L \gets \textsf{followUp}(B, \textit{level}(E'),$\par
                                 \hskip\algorithmicindent \hskip\algorithmicindent
                                 \hskip\algorithmicindent \hskip\algorithmicindent
                                 $\textsf{realLink}, \textsf{blockById})$
