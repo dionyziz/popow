@@ -1,19 +1,15 @@
 \begin{proof}
-    Assume the $(\mu - 1)$-level superchain has $4m$ blocks. Because each block
-    of level $\mu - 1$ was generated as a query to the random oracle, it
-    constitutes an independent Bernoulli trial and the number of blocks in level
-    $\mu$, namely $\pi\upchain^\mu$, is a Binomial distribution with parameters
-    $(4m, 1/2)$. Clearly
-    $\Pr[|\pi\upchain^\mu| = m] \leq \Pr[|\pi\upchain^\mu| \leq m]$. Observing
-    that $E[\pi\upchain^\mu] = 2m$ and applying a Chernoff bound, we get
-    $\Pr[|\pi\upchain^\mu| \leq (1 - \frac{1}{2})2m] \leq \exp(-\frac{(1/2)^2}{2}
-    2m)$ which is negligible in $m$.
+    Because each block of level $\mu - 1$ was generated as a query to the random
+    oracle, it constitutes an independent Bernoulli trial and the number of
+    blocks in level $\mu$, namely $\pi\upchain^\mu$, is a Binomial distribution
+    with parameters $(4m, 1/2)$. Observing that $E[\chain'\upchain^\mu] = 2m$ and
+    applying a Chernoff bound, we get
+    $\Pr[|\chain'\upchain^\mu| \leq m]
+    = \Pr[|\chain'\upchain^\mu| \leq (1 - \frac{1}{2})2m]
+    \leq \exp(-\frac{(1/2)^2}{2} 2m)$ which is negligible in
+    $m$.
 
     % \dznote{Invoke typicality and get rid of all probabilities here. You
     % will need to define ``honest typicality'' and multiquality both ways.}
-
-    This probability bounds the probability of fewer than $m$ blocks occurring
-    in the $\mu$ level restriction of $(\mu - 1)$-level superchains of more than
-    $4m$ blocks.
     \Qed
 \end{proof}
