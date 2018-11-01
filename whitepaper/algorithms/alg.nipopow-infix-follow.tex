@@ -1,18 +1,17 @@
 \begin{algorithm}[H]
-    \caption{\label{alg.nipopow-infix-follow}The followDown function which
-    produces the necessary blocks to connect a superblock $hi$ to a preceeding
-    regular block $lo$.}
+    \caption{\label{alg.nipopow-infix-follow}The \textsf{followDown} function
+    which produces the necessary blocks to connect a superblock $E$ to a
+    preceeding regular block $B$.}
     \begin{algorithmic}[1]
-        \Function{\sf followDown}{$hi$, $lo$, \textsf{height}} %, realLink, blockById}
-            \State{$B \gets hi$; $aux \gets \emptyset$; $\mu \gets \textit{level}(hi)$}
-            \While{$B \neq lo$}
-                % \Let{(B', aux')}{\textsf{followUp}(B, \mu, \textsf{realLink}, \textsf{blockById})}
-                \Let{B'}{\textsf{blockById}[B\text{.interlink}[\mu]]}
-                \If{$\textsf{height}[B'] < \textsf{height}[lo]$}
+        \Function{\sf followDown}{$E$, $B$, \textsf{height}} %, realLink, blockById}
+            \State{$aux \gets \emptyset$; $\mu \gets \textit{level}(E)$}
+            \While{$E \neq B$}
+                \Let{B'}{\textsf{blockById}[E\text{.interlink}[\mu]]}
+                \If{$\textsf{height}[B'] < \textsf{height}[B]$}
                     \Let{\mu}{\mu - 1}
                 \Else
-                    \Let{aux}{aux \cup \{B\}}
-                    \Let{B}{B'}
+                    \Let{aux}{aux \cup \{E\}}
+                    \Let{E}{B'}
                 \EndIf
             \EndWhile
             \State\Return{$aux$}

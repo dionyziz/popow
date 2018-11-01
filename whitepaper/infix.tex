@@ -110,31 +110,31 @@ proof in hand, the infix prover adds a few auxiliary blocks to the prefix $\pi$.
 The prover ensures that these auxiliary blocks form a chain with the rest of the
 proof $\pi$. Such auxiliary blocks are collected as follows: For every block $B$
 of the subset $\chain'$, the immediate previous ($E'$) and next ($E$) blocks
-in $\pi$ are found. Then, a chain of blocks $R$ which connects $E$ back to $B'$
-is found by the algorithm followDown. If $E'$ is of level $\mu$, there can be no
-other $\mu$-superblock between $E'$ and $B'$, otherwise it would have been
-included in $\pi$. Therefore, $B'$ already contains a pointer to $E'$ in its
+in $\pi$ are found. Then, a chain of blocks $R$ which connects $E$ back to $B$
+is found by the algorithm \textsf{followDown}. If $E'$ is of level $\mu$, there
+can be no other $\mu$-superblock between $B$ and $E'$, otherwise it would have
+been included in $\pi$. Therefore, $B$ already contains a pointer to $E'$ in its
 interlink, completing the chain.
 
 \import{./}{algorithms/alg.nipopow-infix-prover.tex}
 
 The way to connect a superblock to a previous lower-level block is implemented
 in Algorithm~\ref{alg.nipopow-infix-follow}.  Block $B'$ cannot be of higher or
-equal level than $E$, otherwise it would be equal to $E$ and the followDown
-algorithm would return. The algorithm proceeds as follows: Starting at block $hi =
-E$, it tries to follow a pointer to as far as possible. If following the pointer
-surpasses $lo = B'$, then the procedure at this level is aborted and a lower
-level is tried, which will cause a smaller step within the skiplist. If a
-pointer was followed without surpassing $B'$, the operation continues from the
-new block, until eventually $B'$ is reached, which concludes the algorithm.
+equal level than $E$, otherwise it would be equal to $E$ and the
+\textsf{followDown} algorithm would return. The algorithm proceeds as follows:
+Starting at block $E$, it tries to follow a pointer to as far as possible. If
+following the pointer surpasses $B$, then the procedure at this level is aborted
+and a lower level is tried, which will cause a smaller step within the skiplist.
+If a pointer was followed without surpassing $B$, the operation continues from
+the new block, until eventually $B$ is reached, which concludes the algorithm.
 
 \import{./}{algorithms/alg.nipopow-infix-follow.tex}
 
-An example of the output of followDown is shown in Figure~\ref{fig.infix}. This
-is a portion of the proof shown at the point where the superblock levels are at
-level $4$. A descend to level $0$ was necessary so that a regular block would be
-included in the chain. The level $0$ block can jump immediately back up to level
-$4$ because it has a high-level pointer.
+An example of the output of \textsf{followDown} is shown in
+Figure~\ref{fig.infix}. This is a portion of the proof shown at the point where
+the superblock levels are at level $4$. A descend to level $0$ was necessary so
+that a regular block would be included in the chain. The level $0$ block can
+jump immediately back up to level $4$ because it has a high-level pointer.
 
 The verification algorithm must then be modified as in
 Algorithm~\ref{alg.nipopow-verifier-infix}.
