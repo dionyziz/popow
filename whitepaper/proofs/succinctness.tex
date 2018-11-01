@@ -1,15 +1,16 @@
 \begin{proof}
     Assume $\chain$ is an honest party's chain. From
     Theorem~\ref{thm.few-levels}, the number of levels in the NIPoPoW is at most
-    $\log(|\chain|)$ with overwhelming probability in $m$. First, observe that
-    the count of blocks in the highest level will be less than $4m$ from
-    Theorem~\ref{thm.large-expansion}; otherwise a higher superblock level would
-    exist. From Corollary~\ref{lem.superchain-distribution}, we know that at all
-    levels $\mu$ the chain will be good. Therefore, for each $\mu$ superchain
-    $\chain$ the supporting $(\mu - 1)$-superchain will only need to span the
-    $m$-long suffix of the $\mu$-superchain above. For the $m$-long suffix of
-    each superchain of level $\mu$, the supporting superchain of level $\mu - 1$
-    will have at most $4m$ blocks from Lemma~\ref{lem.small-support}. Therefore
-    the size of the proof is $4m \log(|\chain|)$.
+    $\log(|\chain|)$ with overwhelming probability in $m$ (note that $|\chain|
+    \sim \Theta(|S|)$). First, observe that the count of blocks in the highest
+    level will be less than $4m$ from Theorem~\ref{thm.large-expansion};
+    otherwise a higher superblock level would exist. From
+    Lemma~\ref{lem.superchain-distribution}, we know that at all levels $\mu$
+    the chain will be good. Therefore, for each $\mu$ superchain $\chain$ the
+    supporting $(\mu - 1)$-superchain will only need to span the $m$-long suffix
+    of the $\mu$-superchain above. For the $m$-long suffix of each superchain of
+    level $\mu$, the supporting superchain of level $\mu - 1$ will have at most
+    $4m$ blocks from Lemma~\ref{lem.small-support}. Therefore the size of the
+    proof is $4m \log(|\chain|)$.
     \Qed
 \end{proof}
