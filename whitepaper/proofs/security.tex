@@ -45,7 +45,11 @@
     \begin{figure}
         \caption{Two competing proofs at different levels.}
         \centering
-        \includegraphics[width=0.7 \columnwidth,keepaspectratio]{figures/security-proof-chain.pdf}
+        \iftwocolumn
+          \includegraphics[width=\columnwidth,keepaspectratio]{figures/security-proof-chain.pdf}
+        \else
+          \includegraphics[width=0.7 \columnwidth,keepaspectratio]{figures/security-proof-chain.pdf}
+        \fi
         \label{fig.sec-comparison}
     \end{figure}
 
