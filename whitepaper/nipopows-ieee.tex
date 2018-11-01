@@ -9,6 +9,7 @@
 \twocolumntrue
 \ieeetrue
 \anonymoustrue
+\hasappendixtrue
 
 \usepackage{preamble}
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
@@ -26,10 +27,9 @@ bitcoin, blockchain, proof-of-work, succinct, sidechains
 \end{IEEEkeywords}
 
 \input{nipopows-body}
-% \newpage
 \import{./}{references.tex}
 \ifhasappendix
 \appendix
-\import{./}{appendix.tex}
+\import{./}{appendix-ieee.tex}
 \fi
 \end{document}

@@ -97,6 +97,9 @@ because the payment was never made.
     \fi
     \label{fig.infix}
 \end{figure}
+\ifieee
+\import{./}{algorithms/alg.nipopow-infix-prover.tex}
+\fi
 
 \subsection{Construction}
 
@@ -116,7 +119,9 @@ can be no other $\mu$-superblock between $B$ and $E'$, otherwise it would have
 been included in $\pi$. Therefore, $B$ already contains a pointer to $E'$ in its
 interlink, completing the chain.
 
+\ifieee\else
 \import{./}{algorithms/alg.nipopow-infix-prover.tex}
+\fi
 
 The way to connect a superblock to a previous lower-level block is implemented
 in Algorithm~\ref{alg.nipopow-infix-follow}.  Block $B'$ cannot be of higher or

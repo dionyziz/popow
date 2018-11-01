@@ -36,7 +36,8 @@ and thus the ``longest chain rule'' sufficiently describes honest miner
 behavior.
 
 We model proof-of-work discovery attempts by using a random oracle~\cite{RO} as
-in \cite{backbone}. For clarity, we present our results in the backbone
+in \cite{backbone}.
+For clarity, we present our results in the backbone
 model~\cite{backbone}, although we suspect our results transfer easily to more
 refined models, such as Pass et al.~\cite{PSS}. More specifically, we remark
 that we assume a \emph{synchronous} model in this paper. While we suspect our
@@ -44,8 +45,13 @@ results carry over in a treatment in a \emph{partially synchronous} model with
 \emph{bounded delay}, this is left for future work.
 
 The random oracle produces $\kappa$-bit strings, where $\kappa$ is the system's
-security parameter. The network is synchronized into numbered rounds, which
-correspond to moments in time. $n$ denotes the total number of miners in the
+security parameter. The network is synchronized into numbered
+\ifieee
+rounds.
+\else
+rounds, which correspond to moments in time.
+\fi
+$n$ denotes the total number of miners in the
 game, while $t$ denotes the total number of adversarial miners. Each miner is
 assumed to have equal mining power captured by the number of queries $q$
 available per player to the random oracle per round, each query of which

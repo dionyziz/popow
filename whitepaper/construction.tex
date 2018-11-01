@@ -143,6 +143,10 @@ a sufficient number of blocks.
     \label{fig.nipopow}
 \end{figure}
 
+\ifieee
+\import{./}{algorithms/alg.nipopow-maxchain.tex}
+\fi
+
 \noindent
 \textbf{The concrete verifier.}
 The $\geq_m$ operator which performs the comparison of proofs is presented in
@@ -171,7 +175,9 @@ are directly compared and the winner returned.  An advantage is given to the
 first proof in case of a tie by making the $\geq_m$ operator favour the
 adversary $\mathcal{A}$.
 
+\ifieee\else
 \import{./}{algorithms/alg.nipopow-maxchain.tex}
+\fi
 
 Looking ahead, the core of the security argument will be that, given a block
 $b$, it will be difficult for a mining minority adversary to produce blocks

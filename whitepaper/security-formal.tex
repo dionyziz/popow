@@ -1,4 +1,4 @@
-\section{Formal security treatment}
+\appsection{Formal security treatment}
 \label{sec:security-full}
 
 Here, we give a formal treatment of the security proof which was sketched in
@@ -125,15 +125,17 @@ $k' = 2k$, where $k'$ is the security parameter of the partially synchronous
 model and $k$ is the security parameter in the synchronous model. We leave the
 full treatment of this for future work.
 
-\subsection{Infix security}
-We observe that now that we have proven the modified suffix construction secure,
-the security of infix proofs follows without any modifications in the infix
-construction. We formally state this in the following corollary.
+\ifieee\else
+  \subsection{Infix security}
+  We observe that now that we have proven the modified suffix construction secure,
+  the security of infix proofs follows without any modifications in the infix
+  construction. We formally state this in the following corollary.
 
-\begin{restatable}{corollary}{restateCrlyInfixSecurity}
-\label{crly.infix-security}
-Under honest majority, the infix NIPoPoW protocol $(P, V)$ is secure for all
-computable infix-sensitive $k$-stable monotonic predicates $Q$, except with
-negligible probability in $\kappa$.
-\end{restatable}
-\import{./}{proofs/infixsecurity.tex}
+  \begin{restatable}{corollary}{restateCrlyInfixSecurity}
+  \label{crly.infix-security}
+  Under honest majority, the infix NIPoPoW protocol $(P, V)$ is secure for all
+  computable infix-sensitive $k$-stable monotonic predicates $Q$, except with
+  negligible probability in $\kappa$.
+  \end{restatable}
+  \import{./}{proofs/infixsecurity.tex}
+\fi

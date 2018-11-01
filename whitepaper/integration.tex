@@ -1,6 +1,6 @@
 \section{Evaluation \& Applications}
 \label{sec.applications}
-In this section we evaluate the cost of NIPoPoWs when used in realistic blockchain applications.
+We now evaluate the cost of NIPoPoWs when used in realistic blockchain applications.
 First we simulated the resources savings resulting from the use of a NIPoPoW-based
 client compared to ordinary SPV. We model the arrival of payments in each cryptocoin as a Poisson process
 and assume that the market cap of a cryptocoin is a proxy for usage. Currently,
@@ -82,8 +82,7 @@ the popular ones. The na\"ive approach would be to install an SPV client for
 each known coin. This approach would entail downloading the header chain for
 each coin, and periodically syncing up by fetching any newly generated block
 headers. An alternative would be to use an online service supporting multiple
-currencies, but this introduces reliance on a third party (e.g. Jaxx and Coinomi
-rely on third party networks).
+currencies, but this introduces reliance on a third party.
 
 A NIPoPoW-based client would not download the entire header chain, but would
 instead only receive NIPoPoW proofs each time a payment is received. When a peer
@@ -103,10 +102,8 @@ coins used infrequently, the NIPoPoW-based client can skip over most blocks.
 \textbf{Cross-chain ICOs.}
 As an example use-case of our construction, we present the case of an
 ICO in which tokens are distributed in one blockchain,
-but funds are raised in another. It works as follows:
-There are two designated blockchains, the \textit{source} and
-the \textit{destination blockchain}. The source is the blockchain
-where the fund-raising will take place, while the destination is the
+but funds are raised in another. The \emph{source blockchain} is
+where fund-raising will take place, while the \emph{destination} is the
 blockchain where the newly issued tokens will be distributed and subsequently
 exchanged. The destination blockchain must be smart-contract-enabled in order to
 allow for the distribution of ERC-20-style~\cite{erc20} tokens.
@@ -119,10 +116,10 @@ can be Litecoin and a destination blockchain Ethereum.
 
 In order to run the ICO, the fund-raising entity first creates a designated
 account in the source blockchain in which funds will be deposited. It then
-creates the ERC-20-style smart contract in the destination blockchain. When
-someone wishes to participate in the ICO, they transfer funds into the
-designated account on the source blockchain. Once they have made the transfer
-and it becomes confirmed, the payer generates a NIPoPoW about the transaction
+creates the ERC-20-style smart contract in the destination blockchain. Someone
+wishing to participate in the ICO transfers funds into the
+designated account on the source blockchain. Once their transfer
+becomes confirmed, the payer generates a NIPoPoW about the transaction
 paying into the designated account. This NIPoPoW is then sent as a parameter to
 a method call on the ICO smart contract on the destination blockchain. The
 method call stores the proof and waits for a certain period of time for possible
