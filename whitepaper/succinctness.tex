@@ -34,9 +34,9 @@ succinctness assumption is akin to~\cite{KLS}.
 
 \begin{restatable}[Number of levels]{theorem}{restateThmFewLevels}
     \label{thm.few-levels}
-    The number of superblock levels which have at least $m$ blocks are at most
-    $\log(|S|)$, where $S$ is the set of all blocks produced, with overwhelming
-    probability in $m$.
+    In any execution, let $S$ denote the set of all blocks produced honestly or
+    adversarially. The number of superblock levels which have at least $m$
+    blocks are at most $\log(|S|)$, with overwhelming probability in $m$.
 \end{restatable}
 \ifonecolumn
 \import{./}{proofs/fewlevels.tex}
