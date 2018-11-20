@@ -13,9 +13,9 @@
 
     The verifier outputs $\lnot Q(\chain_B)$, and so
     $\textsf{Verify}^Q_{m,k} = \lnot Q(\chain_B)$. Thus it is necessary that
-    $\pi_\mathcal{A} \geq \pi_B$, otherwise, because $Q$
+    $\pi_\mathcal{A} \geq_m \pi_B$, otherwise, because $Q$
     is suffix sensitive, $\textsf{Verify}^Q$ would have returned $Q(\chain_B)$.
-    We now show that $\pi_\mathcal{A} \geq \pi_B$ is a negligible event.
+    We now show that $\pi_\mathcal{A} \geq_m \pi_B$ is a negligible event.
 
     Let $b = \textsf{LCA}(\pi_\mathcal{A}, \pi_B)$ and let $b^*$ be
     the most recent honestly generated block in $\chain_B$ preceding $b$ (and
@@ -100,7 +100,7 @@
 
     Let $b'$ be the latest honestly generated block in $\alpha_\mathcal{A}$, or
     $b^*$ if no such block exists in $\alpha_\mathcal{A}$. Let $r_1$ be the
-    round when $b^*$ was generated. Let $j$ be the index of $b^*$.
+    round when $b'$ was generated. Let $j$ be the index of $b'$.
     Consider the set $S$ of consecutive rounds $r_1 \ldots r_3$. Every block
     in $\alpha_\mathcal{A}[-k_3:]$ has been adversarially generated during $S$
     and $|\alpha_\mathcal{A}[-k_3:]| = k_3$. $\chain_B$ is a chain adopted by an
