@@ -63,16 +63,17 @@ from $t_0$ to $t_0 + \eta k$. However, our security definition mandates that
 before time $t_0$ the verifier will necessarily output \emph{false} and after
 time $t_0 + \eta k$ the verifier will necessarily output \emph{true}.
 
-\noindent
-\textbf{Remark. } The above security definition, which works in the synchronous
-model, strictly requires that all NIPoPoW proofs have all been generated at some
-round $r$. In a partially synchronous setting, NIPoPoW proofs could be generated
-for a period of time of a certain length $\eta k$. Without loss of generality,
-it can be assumed that, in such a setting, the honest party $P$ generates the
-NIPoPoW proof at time $r$ while the adversary generates her proof at time
-$r + \eta k$, gaining some advantage. The security definition can be altered to
-allow for such a setting by requiring the truth value to alter only within the
-period $r - 2\eta k$ to $r + 2\eta k$.
+\begin{remark}[Time of issuance]
+  The above security definition strictly requires that all NIPoPoW proofs have
+  all been generated at some round $r$. In a more realistic setting,
+  NIPoPoW proofs could be generated for a period of time of a certain length
+  $\eta k$. Without loss of generality, it can be assumed that, in such a
+  setting, the honest party $P$ generates the NIPoPoW proof at time $r$ while
+  the adversary generates her proof at time $r + \eta k$, gaining some
+  advantage. The security definition can be altered to allow for such a setting
+  by requiring the truth value to alter only within the period $r - 2\eta k$ to
+  $r + 2\eta k$.
+\end{remark}
 
 \begin{definition}{(Succinctness)}
 A \emph{blockchain proof protocol} $(P, V)$ about a predicate $Q$ is
