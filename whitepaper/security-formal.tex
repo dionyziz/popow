@@ -87,6 +87,15 @@ Then $\chain\{b:\}\upchain^{\mu'} = \pi\{b:\}\upchain^{\mu'}$.
 \end{restatable}
 \import{./}{proofs/allblocks.tex}
 
+\begin{remark}[Goodness adequacy]
+  If the \emph{goodness} of the chain can be assumed, then the adequate level of
+  an honest proof is nothing else than the highest level having a sufficient
+  ($m$) number of blocks after the fork point $b$. In that case, the proof for
+  the above lemma is easy and follows from the prover construction. It always
+  covers the last $m$ blocks of level $\mu$ with the respective blocks in
+  level $\mu - 1$.
+\end{remark}
+
 \begin{lemma}
 Suppose the verifier evaluates $\pi_\mathcal{A} \geq \pi_B$ in a protocol
 interaction where $B$ is honest and assume during the comparison that the
