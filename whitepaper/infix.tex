@@ -32,12 +32,14 @@ Q_{d,k}(\chain) =
 \end{cases}
 $$
 
-where $D$ is an arbitrary efficiently computable predicate.
+where $D$ is an arbitrary efficiently computable predicate such that, for any
+block sets $\chain_1 \subseteq \chain_2$ we have that
+$D(\chain_1) \rightarrow D(\chain_2)$.
 \end{definition}
 
 Note that $\chain'$ is a blockset and may not necessarily be a blockchain.
 Furthermore, observe that for all blocksets $\chain' \subseteq \chain$ we have
-that $Q(\chain') \Rightarrow Q(\chain)$. This will allow us to later argue that
+that $Q(\chain') \rightarrow Q(\chain)$. This will allow us to later argue that
 adding more blocks to a blockchain cannot invalidate its witness.
 
 Similarly to suffix-sensitive predicates, infix-sensitive predicates $Q$ can be
