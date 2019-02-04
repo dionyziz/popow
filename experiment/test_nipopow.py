@@ -53,7 +53,11 @@ s.mine()
 base = s.snapshot()
 
 def initialize_test(): 
-    s.revert(base)
+    try:
+        s.revert(base)
+    except AssertionError as e:
+        if 'block boundaries' not in str(e):
+            raise
 
 def str_to_bytes32(s):
     r = []
