@@ -316,3 +316,5 @@ def test_get_level(proof, lca):
 
     print pr_levels
 """
+
+submit_event_proof_good()
