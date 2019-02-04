@@ -14,7 +14,7 @@ def sha256(s):
 
 from ethereum import slogging
 #slogging.configure(':INFO,eth.vm:INFO')
-slogging.configure(':DEBUG')
+#slogging.configure(':DEBUG')
 
 # Create the simulated blockchain
 tester.Chain().chain.config['BLOCK_GAS_LIMIT'] = 3141592000
