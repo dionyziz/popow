@@ -1,4 +1,3 @@
-#import 
 import ethereum.config as config
 from ethereum.tools import tester
 from ethereum import utils
@@ -13,33 +12,19 @@ def sha256(s):
     import hashlib
     return hashlib.sha256(s).digest()
 
-##
-# Logging - change these to configure what solidity prints out
-##
 from ethereum import slogging
 #slogging.configure(':INFO,eth.vm:INFO')
-slogging.configure(':DEBUG')
-#slogging.configure(':DEBUG,eth.vm:TRACE')
-
-##
-# Some utilities for pyethereum tester
-##
-xor = lambda (x,y): chr(ord(x) ^ ord(y))
-xors = lambda x,y: ''.join(map(xor,zip(x,y)))
-zfill = lambda s: (32-len(s))*'\x00' + s
-flatten = lambda x: [z for y in x for z in y]
+#slogging.configure(':DEBUG')
 
 # Create the simulated blockchain
+tester.Chain().chain.config['BLOCK_GAS_LIMIT'] = 3141592000
+tester.Chain().chain.config['START_GAS_LIMIT'] = 3141592000
 
-env = config.Env()
-env.config['BLOCK_GAS_LIMIT'] = 3141592000
-env.config['START_GAS_LIMIT'] = 3141592000
-s = tester.Chain(env = env)
-# Need to increase the gas limit. These are some large contracts!
+s = tester.Chain()
 s.mine()
 
 contract_path = './contractNipopow.sol'
-contract_name = 'Nipopow'
+contract_name = 'Crosschain'
 contract_compiled = compile_file(contract_path)
 
 contract_data = solidity_get_contract_data(
@@ -54,9 +39,6 @@ contract_abi = tester.ABIContract(
     contract_data['abi'],
     contract_address)
 
-# Sample block
-sampleBlock = "f8912eb0b65eedfe76e7e63e053d98c02b9cfb03dae5970a86ed85fddf2d8efe020000002717f5042fac9869b9b2ca9284ec87980bd2efc5a33c6353c8158a9ccc62b833aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa00000000ffff7f2000000000".decode('hex')
-
 import cPickle as pickle
 proof = pickle.load(open('proof.pkl'))
 proof_f = pickle.load(open('proof-fork50k.pkl'))
@@ -64,51 +46,31 @@ proof2 = pickle.load(open('proof-2.pkl'))
 proof3 = pickle.load(open('proof-3.pkl'))
 proof4 = pickle.load(open('proof-4.pkl'))
 
+# Take a snapshot before trying out test cases
+#try: s.revert(s.snapshot())
+#except: pass # FIXME: I HAVE NO IDEA WHY THIS IS REQUIRED
+s.mine()
+base = s.snapshot()
+
+def initialize_test(): 
+    try:
+        s.revert(base)
+    except AssertionError as e:
+        if 'block boundaries' not in str(e):
+            raise
+
 def str_to_bytes32(s):
     r = []
     for start in range(0,len(s),32):
         r.append(s[start:start+32])
     return r
 
-
-def extract_vars(proof = proof):
-    hashed_headers = []
-    siblings = []
-    merkle_indices = []
-    branch_size = []
-    hashed_interlink = []
-
-    # mp stands for merkle proof
-    # hs stands for headers. (probably)
-    for hs, mp in proof:
-        # Copy the header to an array of 4 bytes32
-        header = str_to_bytes32(hs)
-        hashed_headers.append(sha256(sha256(hs)))
-        # Encode the Merkle bits (mu) in the largest byte
-        # Encode the mp size in the next largest byte
-        assert 0 <= len(mp) < 256
-        mu = sum(bit << i for (i,(bit,_)) in enumerate(mp[::-1]))
-        assert 0 <= mu < 256
-        #header[3] = chr(len(mp)) + chr(mu) + header[3][2:]
-        hashed_interlink.append(header[0])
-        branch_size.append(len(mp))
-        merkle_indices.append(mu)
-
-        #header[3] = header[3] + ('\x00'*14) + chr(len(mp)) + chr(mu)
-        #headers.append(header)
-
-        for (_,sibling) in mp:
-            siblings.append(sibling)
-
-    print repr(sha256(sha256(sampleBlock)))
-
-    return hashed_headers, hashed_interlink, siblings, merkle_indices, branch_size
-
 def extract_headers_siblings(proof = proof):
     headers = []
+    hashed_headers = []
     siblings = []
     # mp stands for merkle proof
-    # hs stands for headers. (probably)
+    # hs stands for headers.
     for hs, mp in proof:
         # Copy the header to an array of 4 bytes32
         header = str_to_bytes32(hs)
@@ -124,59 +86,174 @@ def extract_headers_siblings(proof = proof):
         for (_,sibling) in mp:
             siblings.append(sibling)
 
-    print repr(sha256(sha256(sampleBlock)))
-
     return headers, siblings
 
-def submit_proof(proof=proof):
+def submit_event_proof_good(proof=proof):
 
-    headers, hashed_interlink, siblings, merkle_indices, merkle_branch_sizes = extract_vars(proof)
+    initialize_test()
 
+    #headers_f, siblings_f = extract_headers_siblings(proof_f)
+    headers, siblings = extract_headers_siblings()
     g = s.head_state.gas_used
 
-    better_proof = contract_abi.submit_nipopow(
-        headers, hashed_interlink, siblings, merkle_branch_sizes, merkle_indices, startgas = 100000000)
+    #header[100] as our block of interest. We know that it's in the proof.
+    success = contract_abi.submit_event_proof(
+        headers, siblings, headers[100], sender = tester.k1,
+        value = pow(10, 17), startgas = 100000000)
 
-    print 'Was it a better proof', better_proof
     print 'Gas used:', s.head_state.gas_used - g
 
-    return better_proof
-
-# Take a snapshot before trying out test cases
-#try: s.revert(s.snapshot())
-#except: pass # FIXME: I HAVE NO IDEA WHY THIS IS REQUIRED
-s.mine()
-base = s.snapshot()
-
-def test_forked_proof():
-
-    headers, hashed_interlink, siblings, merkle_indices, merkle_branch_sizes = extract_vars(proof)
-    headers2, hashed_interlink2, siblings2, merkle_indices2, merkle_branch_sizes2 = extract_vars(proof_f)
-
-    base = s.snapshot()
-
-    s_better = contract_abi.submit_nipopow(
-        headers, hashed_interlink, siblings, merkle_branch_sizes, merkle_indices, startgas = 100000000)
-    f_better = contract_abi.submit_nipopow(
-        headers2, hashed_interlink2, siblings2, merkle_branch_sizes2, merkle_indices2, startgas = 100000000)
-
-    assert (s_better == True)
-    assert (f_better == False)
-
-    s.revert(base)
-
-    # Change the order of the proofs.
-    f_better = contract_abi.submit_nipopow(
-        headers2, hashed_interlink2, siblings2, merkle_branch_sizes2, merkle_indices2, startgas = 100000000)
-    s_better = contract_abi.submit_nipopow(
-        headers, hashed_interlink, siblings, merkle_branch_sizes, merkle_indices, startgas = 100000000)
-
-    # proof should still be better.
-    assert (f_better == True)
-    assert (s_better == True)
+    assert(success)
 
     print "Test: OK"
 
+def submit_event_proof_bad(proof=proof):
+
+    initialize_test()
+
+    headers_f, siblings_f = extract_headers_siblings(proof_f)
+    headers, siblings = extract_headers_siblings()
+    g = s.head_state.gas_used
+
+    #header[100] as our block of interest. We know that it's in the proof.
+    success = contract_abi.submit_event_proof(
+        headers, siblings, headers_f[100],
+        value = pow(10, 17) , startgas = 100000000)
+
+    print 'Gas used:', s.head_state.gas_used - g
+
+    assert(success == False)
+
+    print "Test: OK"
+
+def submit_contesting_proof_succeeded():
+
+    initialize_test()
+
+    collateral = pow(10, 17)
+    balance1 = s.chain.state.get_balance(tester.accounts[1])
+    balance2 = s.chain.state.get_balance(tester.accounts[2])
+
+    headers_f, siblings_f = extract_headers_siblings(proof_f)
+    headers, siblings = extract_headers_siblings()
+
+    success1 = contract_abi.submit_event_proof(
+        headers_f, siblings_f, headers_f[100],
+        value = collateral, sender = tester.k1, startgas = 100000000)
+
+    assert(success1)
+
+    s.mine()
+
+    g = s.head_state.gas_used
+
+    # We provide a better proof that shows that headers_f[100] is not in the 
+    # true chain.
+    success2 = contract_abi.submit_contesting_proof(
+        headers, siblings, headers_f[100], sender = tester.k2, startgas = 100000000)
+
+    print 'Gas used:', s.head_state.gas_used - g
+
+    assert(success2)
+
+    s.mine()
+
+    # User who contested the proof get the collateral.
+    assert(s.chain.state.get_balance(tester.accounts[2]) 
+        == (balance2 + collateral))
+
+    assert(s.chain.state.get_balance(tester.accounts[1]) 
+        == (balance1 - collateral))
+
+    print "Test: OK"
+
+def submit_contesting_proof_failed():
+
+    initialize_test()
+
+    collateral = pow(10, 17)
+    balance1 = s.chain.state.get_balance(tester.accounts[1])
+    balance2 = s.chain.state.get_balance(tester.accounts[2])
+
+    headers_f, siblings_f = extract_headers_siblings(proof_f)
+    headers, siblings = extract_headers_siblings()
+
+    success1 = contract_abi.submit_event_proof(
+        headers, siblings, headers[100],
+        value = collateral, sender = tester.k1, startgas = 100000000)
+
+    assert(success1)
+
+    s.mine()
+
+    g = s.head_state.gas_used
+
+    # We provide a better proof that shows that headers_f[100] is not in the 
+    # true chain.
+    success2 = contract_abi.submit_contesting_proof(
+        headers_f, siblings_f, headers[100], sender = tester.k2, startgas = 100000000)
+
+    print 'Gas used:', s.head_state.gas_used - g
+
+    assert(success2 == False)
+
+    s.mine()
+
+    # User2 who contested the proof does not get the collateral.
+    assert(s.chain.state.get_balance(tester.accounts[2]) 
+        == (balance2))
+
+    #User1 has to wait for the event to be finalized.
+    assert(s.chain.state.get_balance(tester.accounts[1]) 
+        == (balance1 - collateral))
+
+    print "Test: OK"
+
+def finalize_event_successful():
+    initialize_test()
+
+    balance1 = s.chain.state.get_balance(tester.accounts[1])
+    headers, siblings = extract_headers_siblings()
+
+    #header[100] as our block of interest. We know that it's in the proof.
+    success = contract_abi.submit_event_proof(
+        headers, siblings, headers[100], sender = tester.k1,
+        value = pow(10, 17), startgas = 100000000)
+
+    s.mine(7)
+
+    # It doesn't matter who finalizes the event.
+    success = contract_abi.finalize_event(headers[100], sender = tester.k2)
+
+    assert(success)
+
+    s.mine()
+
+    success = contract_abi.event_exists(headers[100], sender = tester.k0)
+
+    assert(success)
+
+    assert(balance1 == s.chain.state.get_balance(tester.accounts[1]))
+
+    print "Test: OK"
+
+def finalize_event_failed():
+
+    headers, siblings = extract_headers_siblings()
+    
+    success = contract_abi.submit_event_proof(
+        headers, siblings, headers[100], sender = tester.k1,
+        value = pow(10, 17), startgas = 100000000)
+
+    s.mine()
+
+    success = contract_abi.finalize_event(headers[100], sender = tester.k1)
+
+    assert (success == False)
+
+    print "Test: OK"
+
+"""
 def measure_compare_gas():
 
     headers, hashed_interlink, siblings, merkle_indices, merkle_branch_sizes = extract_vars(proof)
@@ -242,12 +319,11 @@ def test_get_level(proof, lca):
         print level, "->", levels[level]
 
     print pr_levels
+"""
 
-
-def test_OK():
-    #s.revert(base)  # Restore the snapshot
-
-    # To measure gas... TODO: make into a decorator
-    g = s.block.gas_used
-    contract.load_proof()
-    s.block.gas_used - g
+submit_event_proof_good()
+submit_event_proof_bad()
+submit_contesting_proof_succeeded()
+submit_contesting_proof_failed()
+finalize_event_successful()
+finalize_event_failed()
