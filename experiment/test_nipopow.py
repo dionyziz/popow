@@ -322,3 +322,8 @@ def test_get_level(proof, lca):
 """
 
 submit_event_proof_good()
+submit_event_proof_bad()
+submit_contesting_proof_succeeded()
+submit_contesting_proof_failed()
+finalize_event_successful()
+finalize_event_failed()
