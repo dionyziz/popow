@@ -56,3 +56,13 @@ footer a {
 footer a:hover {
   color: #0FA0CE;
 }
+
+div.videos {
+  text-align: center;
+  max-width: 580px;
+  margin: auto;
+}
+
+div.videos iframe {
+  margin-top: 5px;
+}
