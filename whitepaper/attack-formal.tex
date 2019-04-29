@@ -42,21 +42,46 @@ of protocol values.
 
 \begin{theorem}[Double-spending attack]
 There exist parameters $p, n, t, q,  \mu, \delta$, with $t\leq (1-\delta)(n-t)$,
-and a double spending attack against KLS PoPoW that succeeds with overwhelming
-probability.
+and a double spending attack against the constructions of
+Section~\ref{sec:suffix} and Section~\ref{sec:infix} that succeeds with
+overwhelming probability.
 \end{theorem}
 \import{./}{proofs/attack.tex}
 
-\noindent\textbf{Remark.}
-It is worth isolating the mistake in the security proof from
-the interactive construction paper \cite{KLS}. Suppose player $B$ is honest and
-player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block, was honestly
-generated and suppose that the superchain comparison happens at level $\mu$.
-Their security proof then correctly argues that there will have been more
-honestly- than adversarially-generated $\mu$-superblocks after block $b$.
-Nevertheless, we observe that the mere fact that there have been more honestly-
-than adversarially-generated $\mu$-superblocks after $b$ does not imply that
-$|\overline\pi_\mathcal{A}\upchain^\mu\{b:\}| \leq
+\subsection{Interactive Proofs of Proof-of-Work}
+Our attack also applies against the protocol described in~\cite{KLS}.
+
+In~\cite{KLS}, the main algorithm of the verifier aims at distinguishing
+between two candidate proofs $(\pi_A, \chi_A)$ and $(\pi_B, \chi_B)$. The honest
+prover, having adopted $\chain_B$ during mining, initially produces the proof
+$(\pi_B, \chi_B)$ as follows. First, the last $k$ blocks are sent as $\chi_B =
+\chain_B[-k:]$. Then for the first part of the chain, $\chain_B[:-k]$, the
+prover sets $\pi_B$ to be the $\mu$-superchain spanning $\chain_B$ for the
+largest $\mu$ such that $|\pi_B| = m$, where $m$ is the protocol's security
+parameter. The verifier ensures that $|\pi_A| \geq m, |\pi_B| \geq m$ so that
+the proofs are not shorter than $m$ and then checks whether $\pi_A = \pi_B$; if
+so, the decision is drawn immediately based on $\chi_A,\chi_B$ without
+interaction. Otherwise, the verifier queries the provers for their claimed
+anchored superchains $\chain_A\upchain^\mu$, $\chain_B\upchain^\mu$ at some
+level $\mu$. The verifier starts querying at the highest possible level $\mu$
+and descends until level $\mu$ is sufficiently low such that $b =
+LCA(\pi_A\upchain^\mu, \pi_B\upchain^\mu)$ is $m$ blocks from the tip of the
+chain for one of the proofs. That is, the querying stops at such $\mu$ when
+$max(|\pi_A\upchain^\mu\{b:\}|, |\pi_B\upchain^\mu\{b:\}|) \geq m$. The winner
+is designated as the prover with the most blocks after $b$ at that level; i.e.,
+$A$, if $|\pi_A\upchain^\mu\{b:\}| \geq |\pi_B\upchain^\mu\{b:\}|$, and $B$
+otherwise. The communication overhead is reduced by only requesting blocks after
+the purported LCA. The security parameter $m$ is chosen to ensure that the
+probability of the attacker producing a long superchain is negligible.
+
+It is worth isolating the mistake in their security proof. Suppose player $B$ is
+honest and player $\mathcal{A}$ is adversarial and suppose $b$, the LCA block,
+was honestly generated and suppose that the superchain comparison happens at
+level $\mu$. Their security proof then correctly argues that there will have
+been more honestly- than adversarially-generated $\mu$-superblocks after block
+$b$. Nevertheless, we observe that the mere fact that there have been more
+honestly- than adversarially-generated $\mu$-superblocks after $b$ does not
+imply that $|\overline\pi_\mathcal{A}\upchain^\mu\{b:\}| \leq
 |\overline\pi_B\upchain^\mu\{b:\}|$. The reason is that some of these
 superblocks could belong to blocktree forks that have been abandoned by $B$.
 Thus, the security conclusion does not follow. Regardless, their basic argument

@@ -72,35 +72,25 @@ cryptographic primitive called \textit{Non-Interactive} Proofs of Proof-of-Work
 (NIPoPoW).
 
 We present a formal model and a provably secure instantiation of NIPoPoWs. We
-introduce the first formal security definitions of (NI)PoPoW protocols and their
-security. Our contribution builds on previous work of the backbone model
-\cite{backbone} in terms of modeling and~\cite{KLS} who introduced the concept
-of (interactive) Proofs of Proof-of-Work, which, in turn, are based on previous
-discussion of such concepts in the bitcoin forums~\cite{highway}. In fact, we
-present an \emph{attack} against the construction of~\cite{KLS} that can be
-mounted by an adversary with less than $50\%$ of hashing power. As a result, our
-construction is the \emph{first secure} Proof of Proof-of-Work (regardless of
+introduce the first formal security definitions of NIPoPoW protocols and their
+security. Our proofs are in the Bitcoin backbone model~\cite{backbone}. Our
+construction is the first secure Proof of Proof-of-Work (regardless of
 interactivity), assuming honest majority. Furthermore, our solution is
 non-interactive making it the first protocol of this kind.
 
-Regarding the predicates that are to be demonstrated, previous work allowed
-only proving that the $k$-sized \emph{suffix} of the currently adopted
-blockchain is as claimed. We generalize this notion to prove any
-\emph{predicate} across a class of predicates which we call \emph{infix
-sensitive}. This enables proving powerful statements pertaining to the
-blockchain such as the fact that a transaction took place, that a smart contract
-method ran with certain parameters, or that a payment was made into an account.
-The most basic application of such proofs, payment verification, require more
-general predicates than what is covered in previous work, and we enable these.
+We encode events and other information that is useful to blockchain clients in
+the form of \emph{blockchain predicates}. We describe a large class of
+predicates that can be proven which we call \emph{infix sensitive}. This enables
+proving statements pertaining to the blockchain such as the fact that a
+transaction took place (for payment verification), that a smart contract method
+ran with certain parameters, or that a payment was made into an account.
 
 We prove the proofs are optimistically succinct meaning that they are
-logarithmic in size in honest conditions. Improving previous work, we show that,
-in the optimistic model of no adversarial mining power, succinctness can be
-achieved for even \textit{adversarially-generated} proofs by introducing the
-novel concept of \textit{certificates of badness}. Our definition fills the gap
-in terms of security modeling and design that existed in previous proposals,
-e.g., the notion of cumulative ``Dynamic Member Multisignature''
-~\cite{sidechains}.
+logarithmic in size in honest conditions. We show that, in the optimistic model
+of no adversarial mining power, succinctness can be achieved for even
+\emph{adversarially-generated} proofs. Our definition fills the gap in terms of
+security modeling and design that existed in previous proposals, e.g., the
+notion of cumulative ``Dynamic Member Multisignature'' ~\cite{sidechains}.
 
 We provide concrete parameterization and empirical analysis showing the savings
 of our approach versus existing clients. Using real data from the Bitcoin and
@@ -119,13 +109,33 @@ In summary, we make the following contributions:
   \item We construct the first \emph{provably secure} Proofs of Proof-of-Work
         and give a formal definition of security. We make them
         \emph{non-interactive}.
-  \item We describe an \emph{attack} against the only previously known Proof of
-        Proof-of-Work construction~\cite{KLS}.
-  \item We extend proofs to allow proving \emph{any predicate} out of
-        \emph{generic class} pertaining to data deep within a blockchain.
-  \item We improve \emph{succinctness} of previous proofs by weakening the
-        optimality assumptions.
+  \item We model \emph{blockchain predicates} and show which classes of
+        predicates can be proven using our protocol.
+  \item We create the first decentralized protocol which is secure against all
+        adversaries and \emph{succinct} for non-mining adversaries.
   \item We provide \emph{experimental data} which measure the efficiency and
         security of our scheme as well as concrete parameters based on these
         experiments.
+  \item We illustrate the practical value of our scheme by discussing further
+        applications and presenting a mechanism for backwards-compatible
+        deployment into existing blockchains, \emph{velvet forks}.
 \end{enumerate}
+
+\noindent
+\textbf{Previous work.} The need for succinct clients was first identified by
+Nakamoto in his original paper~\cite{bitcoin}. Predicates pertaining to events
+occurring in the blockchain have been explored in the setting of
+sidechains~\cite{sidechains} without a concrete protocol or definitions. It has
+also been implemented for simple classes of predicates such as atomic
+swaps~\cite{tiernolan,herlihy2018atomic}, which do not allow full
+synchronization. Non-succinct certificates about proof-of-\emph{stake}
+blockchains have been proposed in~\cite{gazi2019proof}, but their scheme is not
+applicable to proof-of\emph{work}. The idea of superblocks we utilize in our
+construction has been first described in the Bitcoin Forum~\cite{highway}. This
+was also adopted by~\cite{KLS} to describe their \emph{Proofs of Proof-of-Work}.
+Our scheme is comparable to theirs (cf. Section~\ref{sec:suffix}). We improve
+upon their work, as their paper does not include a security definition and,
+unlike ours, is interactive, which limits its applicability. Additionally, their
+scheme is not secure (in fact our attack of Section~\ref{sec:attack} is
+sufficient to break their scheme with overwhelming probability) nor succinct
+against adversarial provers and does not allow the proof of generic predicates.

@@ -1,17 +1,19 @@
-\section{Non-interactive blockchain \emph{suffix} proofs}
-In this section, we modify the PoPoW scheme introduced in KLS~\cite{KLS} to make
-it non-interactive. With foresight, we caution the reader that the
-non-interactive construction we present in this section is \emph{insecure},
-because the PoPoW scheme it is based on is also insecure. A very small patch
-will later allow us to modify our construction to achieve security.
+\section{Non-interactive blockchain \emph{suffix} proofs}\label{sec:suffix}
+In this section, we introduce our non-interactive suffix proofs. With foresight,
+we caution the reader that the non-interactive construction we present in this
+section is \emph{insecure}. A small patch will later allow us to modify our
+construction to achieve security.
 
-The previous work does not allow proving predicates about the blockchain, but
-only allows determining if a block is part of an honest chain's suffix. In this
-work, we allow provers to prove general predicates $Q$ about the chain $\chain$.
+% The previous work does not allow proving predicates about the blockchain, but
+% only allows determining if a block is part of an honest chain's suffix. In this
+% work,
+We allow provers to prove general predicates $Q$ about the chain $\chain$.
 Among the predicates which are stable, in this section, we will limit ourselves
-to \textit{suffix sensitive} predicates (similar to previous work in which the
-verifier extracted the suffix adopted by an honest party, but not generic
-predicates about it). We extend the protocol to support more flexible predicates
+to \emph{suffix sensitive} predicates.
+% (similar to previous work in which the
+% verifier extracted the suffix adopted by an honest party, but not generic
+% predicates about it).
+We extend the protocol to support more flexible predicates
 (such as transaction inclusion, as needed for our applications) which are not
 limited to the suffix in Section~\ref{sec:infix}.
 

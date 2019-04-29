@@ -2,52 +2,32 @@
 \label{sec:attack}
 
 We now show that our above construction is insecure by illustrating an explicit
-attack against our scheme. We show that this attack is applicable in the same
-manner against our construction as it is applicable against the previous
-PoPoW work~\cite{KLS}. PoPoW serves as the starting point and inspiration for
-our protocol. The security proof is incorrect, and in fact the PoPoW protocol is
-susceptible to a double-spending attack within the model (i.e., that can be
-carried out by an attacker with less than 50\% hash power). During the
+attack against our scheme.
+% We show that this attack is applicable in the same
+% manner against our construction as it is applicable against the previous
+% PoPoW work~\cite{KLS}. PoPoW serves as the starting point and inspiration for
+% our protocol. The security proof is incorrect, and in fact the PoPoW protocol is
+% susceptible to a double-spending attack within the model (i.e., that can be
+% carried out by an attacker with less than 50\% hash power)
+During the
 exposition of this attack, a patch for our construction, which will also lead to
 a correct generic security proof, will become clear.
 
-We focus on illustrating why the PoPoW construction of previous work is insecure
-against an adversary controlling less than $50\%$ of hashing power. The attack
-immediately carries over to our straw man construction introduced above, a
-vulnerability we will address in later sections. We proceed in two steps. We
+% We focus on illustrating why the PoPoW construction of previous work is insecure
+% against an adversary controlling less than $50\%$ of hashing power. The attack
+% immediately carries over to our straw man construction introduced above, a
+% vulnerability we will address in later sections.
+We proceed in two steps. We
 first show that a powerful attacker can break chain superquality with
 non-negligible probability. Then we construct a concrete double spending attack
 based on this observation assuming an attacker of sufficiently high hashing
-power (but still below $50\%$). Note that maintaining chain superquality was not
-in the original security model; however, we show how the property affects the
-security of the underlying blockchain proofs.
-
-\subsection{Interactive Proofs of Proof-of-Work}
-In PoPoW~\cite{KLS}, the main algorithm of the verifier aims at distinguishing
-between two candidate proofs $(\pi_A, \chi_A)$ and $(\pi_B, \chi_B)$. The honest
-prover, having adopted $\chain_B$ during mining, initially produces the proof
-$(\pi_B, \chi_B)$ as follows. First, the last $k$ blocks are sent as $\chi_B =
-\chain_B[-k:]$. Then for the first part of the chain, $\chain_B[:-k]$, the
-prover sets $\pi_B$ to be the $\mu$-superchain spanning $\chain_B$ for the
-largest $\mu$ such that $|\pi_B| = m$, where $m$ is the protocol's security
-parameter. The verifier ensures that $|\pi_A| \geq m, |\pi_B| \geq m$ so that
-the proofs are not shorter than $m$ and then checks whether $\pi_A = \pi_B$; if
-so, the decision is drawn immediately based on $\chi_A,\chi_B$ without
-interaction. Otherwise, the verifier queries the provers for their claimed
-anchored superchains $\chain_A\upchain^\mu$, $\chain_B\upchain^\mu$ at some
-level $\mu$. The verifier starts querying at the highest possible level $\mu$
-and descends until level $\mu$ is sufficiently low such that $b =
-LCA(\pi_A\upchain^\mu, \pi_B\upchain^\mu)$ is $m$ blocks from the tip of the
-chain for one of the proofs. That is, the querying stops at such $\mu$ when
-$max(|\pi_A\upchain^\mu\{b:\}|, |\pi_B\upchain^\mu\{b:\}|) \geq m$. The winner
-is designated as the prover with the most blocks after $b$ at that level; i.e.,
-$A$, if $|\pi_A\upchain^\mu\{b:\}| \geq |\pi_B\upchain^\mu\{b:\}|$, and $B$
-otherwise. The communication overhead is reduced by only requesting blocks after
-the purported LCA. The security parameter $m$ is chosen to ensure that the
-probability of the attacker producing a long superchain is negligible.
+power (but still below $50\%$).
+% Note that maintaining chain superquality was not
+% in the original security model; however, we show how the property affects the
+% security of the underlying blockchain proofs.
 
 \subsection{Attacking chain superquality}
-\label{subsec.superquality-attack}
+\label{subsec:superquality-attack}
 We construct an adversary $\mathcal{A}$ that breaks the superchain quality at level $\mu$.
 % Suppose $\mathcal{A}$ controls a portion $t/n$ of the hashing power.
 $\mathcal{A}$ works as follows. Assume she wants to attack the honest party $B$
