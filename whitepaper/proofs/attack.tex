@@ -29,17 +29,17 @@ within that period, she blindly performs the suppression attack without regard
 for the state of the world. If she is not within that period, then she must
 initially observe the blocks diffused at the end of the previous round by the
 honest parties. Call these rounds during which the diffused data must be
-examined by the adversary \textit{decision rounds}. Let there be $\omega$
+examined by the adversary \emph{decision rounds}. Let there be $\omega$
 decision rounds in total. In each such decision round, it is possible that the
 adversary discovers a diffused $\mu$-superblock and therefore decides that a
 suppression attack must be performed starting with the current round. Call these
-rounds during which this discovery is made by the adversary \textit{migration
+rounds during which this discovery is made by the adversary \emph{migration
 rounds}. Let there be $y$ migration rounds in total. The adversary devotes the
 migration round to performing the suppression attack as well as $r - 1$
 non-migration rounds after the migration round. Call these rounds, including the
-migration round, \textit{suppression rounds}. In the rest of the decision
+migration round, \emph{suppression rounds}. In the rest of the decision
 rounds, the adversary will not find any $\mu$-superblocks diffused. Call these
-\textit{secret chain rounds}; these are rounds where the adversary devotes her
+\emph{secret chain rounds}; these are rounds where the adversary devotes her
 queries to mining on the secret chain. Let there be $x$ secret chain rounds. If
 the adversary devotes $\omega$ decision rounds to the attack in total, then
 clearly we have that $\omega = x + y$. If the total number of rounds during
