@@ -1,20 +1,12 @@
 \section{Model and Definitions}
-\label{sec.model}
-Our model for describing our results is based on the standard ``backbone'' model
-for proof-of-work cryptocurrencies~\cite{backbone}, extended with the widely
-used Simplified Payment Verification (SPV) mode due to Nakamoto~\cite{bitcoin}.
-We consider three roles in our setting: \emph{lightweight clients},
-\emph{full nodes}, and \emph{miners}.
-
-Full nodes and miners run the Bitcoin backbone protocol, maintaining a copy of
-the blockchain. Miners commit new transactions they receive from clients.
-Clients do not store the entire blockchain, but instead connect to nodes for
-service and request up-to-date information about the blockchain, for example
-whether a particular payment has been finalized. Our main challenge is to design
-a protocol so that clients can sieve through  the responses they receive from
-the network and reach a conclusion that should never disagree with the
-conclusion of a full  node who is faced with the same objective and infers it
-from its local blockchain state.
+\label{sec:model}
+Our model is based on the ``backbone'' model for proof-of-work
+cryptocurrencies~\cite{backbone}, extended with SPV. Following their model, we
+assume
+\emph{synchrony} (\emph{partial synchrony}
+with \emph{bounded delay}~\cite{PSS} is left for future work)
+and constant difficulty (we briefly discuss variable difficulty
+in Appendix~\ref{sec:variable}).
 
 \subsection{Backbone model}
 
@@ -25,24 +17,21 @@ from its local blockchain state.
 %checkpoint block, either hard-coded in the client or obtained through a previous
 %interaction with the network.
 
-The entities on the blockchain network are of 3 kinds: (1) miners, who try to
+The entities on the blockchain network are of 3 kinds: (1) Miners, who try to
 mine new blocks on top of the longest known blockchain and broadcast them as
-soon as they are discovered; (2) full nodes, who maintain the longest blockchain
-without mining and also act as the provers in the network; (3) verifiers or
-stateless clients, who connect to provers and ask for proofs in regards to which
+soon as they are discovered. Miners commit new transactions they receive from clients. (2) Full nodes, who maintain the longest blockchain
+without mining and also act as the provers in the network. (3) Verifiers or
+stateless clients, who do not store the entire blockchain, but instead connect to provers and ask for proofs in regards to which
 blockchain is the largest. The verifiers attempt to determine the value of a
-predicate on these chains. For simplicity we assume that difficulty is constant
-and thus the ``longest chain rule'' sufficiently describes honest miner
-behavior.
+predicate on these chains, for example whether a particular payment has been finalized.
 
-We model proof-of-work discovery attempts by using a random oracle~\cite{RO} as
-in \cite{backbone}. For clarity, we present our results in the backbone
-model~\cite{backbone}, although we suspect our results transfer easily to more
-refined models, such as Pass et al.~\cite{PSS}. More specifically, we remark
-that we assume a \emph{synchronous} model in this paper. While we suspect our
-results carry over in a treatment in a \emph{partially synchronous} model with
-\emph{bounded delay}, this is left for future work.
+Our main challenge is to design
+a protocol so that clients can sieve through  the responses they receive from
+the network and reach a conclusion that should never disagree with the
+conclusion of a full  node who is faced with the same objective and infers it
+from its local blockchain state.
 
+We model proof-of-work discovery attempts by using a random oracle~\cite{RO}.
 The random oracle produces $\kappa$-bit strings, where $\kappa$ is the system's
 security parameter. The network is synchronized into numbered rounds, which
 correspond to moments in time. $n$ denotes the total number of miners in the
