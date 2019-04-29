@@ -1,9 +1,9 @@
 \section{More on succinctness}
-\label{sec.app-succinctness}
+\label{sec:app-succinctness}
 
 \subsection{Proof of succinctness}
 We now prove the optimistic succinctness claims of
-Section~\ref{sec.succinctness}.
+Section~\ref{sec:succinctness}.
 
 \restateThmFewLevels*
 \import{./}{proofs/fewlevels.tex}
@@ -41,10 +41,10 @@ construction that achieves this. Our extended construction allows the verifier
 to stop processing input early, in a streaming fashion, thereby only requiring
 logarithmic communication complexity per proof received. To achieve this,
 observe that honest proofs need to be large only if there is a violation of
-\textit{goodness}. However, goodness is not harmed when the chain is not under
+\emph{goodness}. However, goodness is not harmed when the chain is not under
 attack by the adversarial computational power or network. Therefore, we require
-the prover to produce a \textit{certificate of badness} in case there is a
-violation of \textit{goodness} in the blockchain. This certificate will always
+the prover to produce a \emph{certificate of badness} in case there is a
+violation of \emph{goodness} in the blockchain. This certificate will always
 be logarithmic in size and must be sent prior to the rest of the proof by the
 prover to the verifier. Because the certificate will be logarithmic in size even
 in the case of an adversarial attack on the chain, the honest verifier can stop
@@ -84,7 +84,7 @@ incoming proof. If within that portion a certificate of badness is found, it is
 checked for validity. If it is found to be valid, the whole proof is checked,
 regardless of size. If it is found to be invalid or no certificate has been
 provided, then the proof is rejected as invalid. We call the augmented
-construction \textit{certified NIPoPoWs}.
+construction \emph{certified NIPoPoWs}.
 
 \begin{restatable}[Certified NIPoPoWs succinctness]{lemma}{restateLemCertifiedSuccinctness}
     \label{lem.certified-succinctness}

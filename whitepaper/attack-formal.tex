@@ -8,9 +8,9 @@ adversary. $\mu$ is the superblock level at which the adversary will produce a
 proof longer than the honest proof. The modified attack works as follows:
 Without loss of generality, fix block $b$ to be Genesis. The adversary always
 mines on the secret chain which forks off from genesis, unless a
-\textit{superblock generation event} occurs. If a superblock generation event
+\emph{superblock generation event} occurs. If a superblock generation event
 occurs, then the adversary pauses mining on the secret chain and attempts a
-\textit{block suppression attack} on the honest chain. The adversary devotes
+\emph{block suppression attack} on the honest chain. The adversary devotes
 exactly $r$ rounds to this suppression attack; then resumes mining on the secret
 chain. We show that, despite this simplification (of fixing $r$) which is
 harmful to the adversary, the probability of a successful attack is

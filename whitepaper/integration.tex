@@ -104,8 +104,8 @@ coins used infrequently, the NIPoPoW-based client can skip over most blocks.
 As an example use-case of our construction, we present the case of an
 ICO in which tokens are distributed in one blockchain,
 but funds are raised in another. It works as follows:
-There are two designated blockchains, the \textit{source} and
-the \textit{destination blockchain}. The source is the blockchain
+There are two designated blockchains, the \emph{source} and
+the \emph{destination blockchain}. The source is the blockchain
 where the fund-raising will take place, while the destination is the
 blockchain where the newly issued tokens will be distributed and subsequently
 exchanged. The destination blockchain must be smart-contract-enabled in order to
@@ -113,7 +113,7 @@ allow for the distribution of ERC-20-style~\cite{erc20} tokens.
 In addition, the smart contracts on the destination blockchain must allow for
 programming the verification of a NIPoPoW proof by including, for example, the
 appropriate hash functions. The source blockchain must be NIPoPoW-enabled. This
-setup allows the creation of NIPoPoWs \textit{about} the source blockchain which
+setup allows the creation of NIPoPoWs \emph{about} the source blockchain which
 will be included in the destination blockchain. For example, a source blockchain
 can be Litecoin and a destination blockchain Ethereum.
 

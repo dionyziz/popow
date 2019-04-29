@@ -4,7 +4,7 @@
     preceeding regular block $B$.}
     \begin{algorithmic}[1]
         \Function{\sf followDown}{$E$, $B$, \textsf{height}} %, realLink, blockById}
-            \State{$aux \gets \emptyset$; $\mu \gets \textit{level}(E)$}
+            \State{$aux \gets \emptyset$; $\mu \gets \emph{level}(E)$}
             \While{$E \neq B$}
                 \Let{B'}{\textsf{blockById}[E\text{.interlink}[\mu]]}
                 \If{$\textsf{height}[B'] < \textsf{height}[B]$}

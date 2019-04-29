@@ -15,7 +15,7 @@ which may not necessarily form a chain. This allows proving useful statements
 such as, for example, whether a transaction is confirmed. We next formally
 define the class of predicates that will be of interest.
 
-% XXX extend this class of predicates to include comparison of position
+% TODO: extend this class of predicates to include comparison of position
 % within the blockchain (these position-dependent predicates may be unprovable
 % in velvet mode due to diamond topologies)
 \begin{definition}[Infix sensitivity]
@@ -142,7 +142,7 @@ The verification algorithm must then be modified as in
 Algorithm~\ref{alg.nipopow-verifier-infix}.
 
 The algorithm works by calling the suffix verifier. It also maintains a blockDAG
-collecting blocks from all proofs (it is a DAG because \textit{interlink} can be
+collecting blocks from all proofs (it is a DAG because \emph{interlink} can be
 adversarially defined in adversarially mined blocks). This DAG is maintained in
 the $\textsf{blockById}$ hashmap. Using it, \textsf{ancestors} uses simple graph
 search to extract the set of ancestor blocks of a block. In the final predicate

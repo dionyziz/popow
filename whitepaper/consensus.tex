@@ -19,10 +19,10 @@ Appendix.
 full version of this paper.
 \fi}. Some blocks will achieve a lower id. If $id \leq
 \frac{T}{2^\mu}$ we say that the block is of level $\mu$. All blocks are level
-$0$. Blocks with level $\mu$ are called $\mu$-\textit{superblocks}.
+$0$. Blocks with level $\mu$ are called $\mu$-\emph{superblocks}.
 $\mu$-superblocks for $\mu > 0$ are also $(\mu - 1)$-superblocks. The level of a
 block is given as $\mu = \left \lfloor \log(T) - \log(\sf{id}(B)) \right
-\rfloor$ and denoted $\textit{level}(B)$. By convention, for $Gen$ we set $id =
+\rfloor$ and denoted $\emph{level}(B)$. By convention, for $Gen$ we set $id =
 0$ and $\mu = \infty$.
 
 Observe that in a blockchain protocol execution it is expected $1/2$ of the
@@ -89,17 +89,17 @@ pointers may be missing). We will freely use set builder notation $\{B \in
 \land B \in \chain_2\}$. In all cases, the blockchain property must be
 maintained. The lowest common ancestor is $\textsf{LCA}(\chain_1, \chain_2) =
 (\chain_1 \cap \chain_2)[-1]$. If $\chain_1[0] = \chain_2[0]$ and $\chain_1[-1]
-= \chain_2[-1]$, we say the chains $\chain_1, \chain_2$ \textit{span} the same
+= \chain_2[-1]$, we say the chains $\chain_1, \chain_2$ \emph{span} the same
 block range.
 
 It will soon become clear that it is useful to construct a chain containing only
 the superblocks of another chain. Given $\chain$ and level $\mu$, the
-\textit{upchain} $\chain\upchain^\mu$ is defined as $\{B \in \chain: level(B)
+\emph{upchain} $\chain\upchain^\mu$ is defined as $\{B \in \chain: level(B)
 \geq \mu\}$. A chain containing only $\mu$-superblocks is called a
-$\mu$\textit{-superchain}. It is also useful, given a $\mu$-superchain $\chain'$
+$\mu$\emph{-superchain}. It is also useful, given a $\mu$-superchain $\chain'$
 to go back to the regular chain $\chain$. Given chains $\chain' \subseteq
-\chain$, the \textit{downchain} $\chain'\downchain\!\!_\chain$ is defined as
-$\chain\{\chain'[0]:\chain'[-1]\}$. $\chain$ is the \textit{underlying chain} of
+\chain$, the \emph{downchain} $\chain'\downchain\!\!_\chain$ is defined as
+$\chain\{\chain'[0]:\chain'[-1]\}$. $\chain$ is the \emph{underlying chain} of
 $\chain'$. The underlying chain is often implied by context, so we will simply
 write $\chain'\downchain$. By the above definition, the $\chain\upchain$
 operator is absolute: $(\chain\upchain^\mu)\upchain^{\mu + i} =
