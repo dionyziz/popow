@@ -2,17 +2,26 @@
 
 \newif\iftwocolumn
 \newif\ifonecolumn
+\newif\ifieee
+\newif\ifacm
+\newif\iflncs
+\newif\ifndss
+\newif\ifhasappendix
+\newif\ifanonymous
 \twocolumntrue
+\acmtrue
+\anonymoustrue
+\hasappendixtrue
 
 \usepackage{preamble}
 
 \fancyhf{} % Remove fancy page headers
-\fancyhead[C]{Anonymous submission \#9999 to ACM CCS 2017} % TODO: replace 9999 with your paper number
+\fancyhead[C]{Anonymous submission \#9999 to ACM CCS 2019} % TODO: replace 9999 with your paper number
 \fancyfoot[C]{\thepage}
 
 \setcopyright{none} % No copyright notice required for submissions
-\acmConference[Anonymous Submission to ACM CCS 2018]{ACM Conference on Computer and Communications Security}{Due 8 May 2018}{Toronto, Canada}
-\acmYear{2018}
+\acmConference[Anonymous Submission to ACM CCS 2019]{ACM Conference on Computer and Communications Security}{Due 5 Feb 2019}{London, UK}
+\acmYear{2019}
 
 \settopmatter{printacmref=false, printccs=true, printfolios=true} % We want page numbers on submissions
 
@@ -38,7 +47,7 @@
 \ccsdesc[500]{Theory of computation~Cryptographic protocols}
 % -- end of section to replace with generated code
 
-\keywords{proof-of-work; blockchain; non-interactive; SPV; cross-chain}
+\keywords{proof-of-work; blockchain; non-interactive; SPV; superlight}
 
 \maketitle
 
