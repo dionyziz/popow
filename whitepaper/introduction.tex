@@ -1,18 +1,53 @@
 \section{Introduction}
 
+Proof-of-work blockchain clients such as mobile wallets today are based on the
+Simplified Payment Verifications (SPV) protocol, which was described in the
+original Bitcoin paper~\cite{bitcoin}, and allows them to sychronize with the
+network by downloading only block headers and not the entire blockchain with
+transactions. However, such initial synchronization still requires receiving all
+the block headers. In this work, we study the question of whether better
+protocols exist and in particular if downloading fewer block headers is
+sufficient to securely synchronize with the rest of the blockchain network. Our
+requirement is that the system remains decentralized and that useful facts about
+the blockchain (such as a transaction that concerns us having been made) can be
+deduced from the downloaded data.
+
+To this end, we put forth a cryptographic security definition for
+Non-Interactive Proofs of Proof-of-Work protocols which describes what such a
+synchronization protocol must achieve (Section~\ref{sec:model}). We then
+construct a protocol which solves the problem and requires sending only a
+logarithmic number of blocks from the chain. To aid the presentation, our
+protocol is constructed in stages. First, we construct a protocol which can only
+synchronize recent blocks, the \emph{suffix proofs} protocol
+(Section~\ref{sec:suffix}). Next, we augment the suffix proofs protocol to a
+protocol which can synchronize any part of the blockchain that the client may be
+interested in, the \emph{infix proofs} protocol (Section~\ref{sec:infix}).
+Subsequently, we show that, while these two protocol renditions are intuitive,
+they are insecure, and illustrate an attack against them which we prove works
+with overwhelming probability (Section~\ref{sec:attack}). This attack motivates
+us to modify the protocol with an appropriate patch, which allows us to prove
+security formally in our main security theorem (Section~\ref{sec:security}). We
+then show that our final protocol really is succinct
+(Section~\ref{sec:succinctness}). Towards a real-world implementation, we
+propose concrete parameters for our protocol which are obtained by experimental
+simulations (Section~\ref{sec:parameters}) and conclude by describing
+applications beyond the individual superlight client
+(Section~\ref{sec:applications}). Finally, we discuss how our protocol can be
+retrofitted in a backwards-compatible manner into existing blockchains such as
+Bitcoin (Appendix~\ref{sec:forks}).
 
 %% must verify the entire chain of proofs-of-work, which grows
 %% linearly over time. On the contrary, clients based on NIPoPoWs require resources
 %% only logarithmic in the length of the blockchain.
 
-%
-Today, Bitcoin and Ethereum remain the two largest proof-of-work
-cryptocurrencies by market cap. However, the ecosystem has grown diverse, with
-dozens of viable ``altcoin'' competitors.
-%
-Given such an environment,  it becomes increasingly  important to be able to
-efficiently handle  multiple blockchains by the same client and reliably
-transfer assets between them.
+%% %
+%% Today, Bitcoin and Ethereum remain the two largest proof-of-work
+%% cryptocurrencies by market cap. However, the ecosystem has grown diverse, with
+%% dozens of viable ``altcoin'' competitors.
+%% %
+%% Given such an environment,  it becomes increasingly  important to be able to
+%% efficiently handle  multiple blockchains by the same client and reliably
+%% transfer assets between them.
 %
 %
 %
@@ -23,10 +58,10 @@ transfer assets between them.
 %blockchain protocols in general
 %are increasingly used as components of larger systems.
 
-The first objective requires optimizing the ``SPV client'' described in the
-original Bitcoin paper~\cite{bitcoin} which requires processing an amount of
-data growing linearly with the size of the blockchain (namely, the block
-headers).
+% The first objective requires optimizing the ``SPV client'' described in the
+% original Bitcoin paper~\cite{bitcoin} which requires processing an amount of
+% data growing linearly with the size of the blockchain (namely, the block
+% headers).
 %
 %% Cryptocurrencies such as Bitcoin~\cite{bitcoin}\cite{bitcoinsoftware} and
 %% Ethereum~\cite{ethereum} are peer-to-peer networks that maintain a globally
@@ -42,24 +77,24 @@ headers).
 %% existing cryptocurrencies to support more efficient clients. A traditional
 %% blockchain client in order to check a certain blockchain property \anote{TODO: too abstract
 %
-The second objective has received  significant attention in the context of
-``cross-chain'' applications, i.e., logical transactions that span multiple
-separate blockchains. Simple cross-chain transactions are feasible today: the
-most well-known is the atomic exchange~\cite{tiernolan,herlihy2018atomic}, e.g.,
-a trade of bitcoin for ether. However, more sophisticated
-applications~
-\cite{interledger,DBLP:journals/corr/DilleyPWPGF16,
-      lerner,drivechains,wood2016polkadot,buchman2016tendermint}
-could be enabled by a more efficient proof process, which would allow the
-blockchain of one cryptocurrency to embed a client of a separate cryptocurrency.
-This concept, initially popularized by a proposal by Back et al.
-~\cite{sidechains} can be used to avoid a difficult upgrade process: a new
-blockchain with additional features, such as experimental opcodes, can be backed
-by deposits in the original bitcoin currency, obviating the need to transfer
-capital to the new cryptocurrency. As one example of cross-chain interfacing, we
-describe an initial coin offering (ICO)~\cite{ico} which distributes tokens
-issued on one blockchain, but allows paying for them using coins in another
-blockchain.
+% The second objective has received  significant attention in the context of
+% ``cross-chain'' applications, i.e., logical transactions that span multiple
+% separate blockchains. Simple cross-chain transactions are feasible today: the
+% most well-known is the atomic exchange~\cite{tiernolan,herlihy2018atomic}, e.g.,
+% a trade of bitcoin for ether. However, more sophisticated
+% applications~
+% \cite{interledger,DBLP:journals/corr/DilleyPWPGF16,
+%       lerner,drivechains,wood2016polkadot,buchman2016tendermint}
+% could be enabled by a more efficient proof process, which would allow the
+% blockchain of one cryptocurrency to embed a client of a separate cryptocurrency.
+% This concept, initially popularized by a proposal by Back et al.
+% ~\cite{sidechains} can be used to avoid a difficult upgrade process: a new
+% blockchain with additional features, such as experimental opcodes, can be backed
+% by deposits in the original bitcoin currency, obviating the need to transfer
+% capital to the new cryptocurrency. As one example of cross-chain interfacing, we
+% describe an initial coin offering (ICO)~\cite{ico} which distributes tokens
+% issued on one blockchain, but allows paying for them using coins in another
+% blockchain.
 
 % These examples illustrate that our solution is a key component for two important
 % pillars needed for next-generation blockchains: \emph{interoperability} and
