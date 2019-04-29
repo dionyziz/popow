@@ -100,6 +100,8 @@ because the payment was never made.
     \label{fig.infix}
 \end{figure}
 
+\import{./}{algorithms/alg.nipopow-infix-prover.tex}
+
 \subsection{Construction}
 
 The construction of these proofs is shown in
@@ -117,8 +119,6 @@ is found by the algorithm \textsf{followDown}. If $E'$ is of level $\mu$, there
 can be no other $\mu$-superblock between $B$ and $E'$, otherwise it would have
 been included in $\pi$. Therefore, $B$ already contains a pointer to $E'$ in its
 interlink, completing the chain.
-
-\import{./}{algorithms/alg.nipopow-infix-prover.tex}
 
 The way to connect a superblock to a previous lower-level block is implemented
 in Algorithm~\ref{alg.nipopow-infix-follow}.  Block $B'$ cannot be of higher or

@@ -77,7 +77,7 @@ root of the transactions confirmed in this block; and
 \emph{interlink}~\cite{KLS}, a vector containing pointers to previous blocks,
 including the id of the previous block. The \emph{interlink} data structure
 contains pointers to more blocks than just the previous block. We will explain
-this further in Section~ \ref{sec.consensus}. Given two hash functions $H$ and
+this further in Section~\ref{sec:consensus}. Given two hash functions $H$ and
 $G$ modelled as random oracles, the id of a block is defined as $\textsf{id} =
 H(ctr, G(x, \textsf{interlink}))$. In bitcoin's case, both $H$ and $G$ would be
 SHA256.
@@ -95,7 +95,7 @@ correct response. Henceforth we will call clients \emph{verifiers} and nodes
 % message passing.
 
 The prover-verifier interaction is parameterized by a predicate (e.g. ``the
-transaction $t$ is committed in the blockchain'').
+transaction $tx$ is committed in the blockchain'').
 %
 The predicates of interest in our context are predicates on the active
 blockchain. Some of the predicates are more suitable for succinct proofs than
@@ -137,7 +137,6 @@ For chain addressing we use Python brackets $\chain[\cdot]$ as in
 indexed block in the chain. A negative index indicates a block from the end,
 e.g., $\chain[-1]$ is the tip of the blockchain. A range $\chain[i:j]$ is a
 subarray starting from $i$ (inclusive) to j (exclusive).
-
 Given chains $\chain_1, \chain_2$ and blocks $A, Z$ we concatenate them as
 $\chain_1 \chain_2$ or $\chain_1 A$. $\chain_2[0]$ must point to $\chain_1[-1]$
 and $A$ must point to $\chain_1[-1]$. We denote $\chain\{A:Z\}$ the subarray of
