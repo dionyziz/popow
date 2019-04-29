@@ -6,7 +6,7 @@ Section~\ref{sec:security}.
 
 Assume $t$ adversarial and $n$ total parties, each with $q$
 PoW random oracle queries per round. We will call a query to the
-RO $\mu$-\textit{successful} if the RO returns a value $h$
+RO $\mu$-\emph{successful} if the RO returns a value $h$
 such that $h \leq 2^{-\mu}T$.
 
 We define boolean random variables $X_r^\mu$, $Y_r^\mu$ and $Z_r^\mu$. Fix some
@@ -20,7 +20,7 @@ set $Z^\mu_{ijk} = 1$, otherwise $Z^\mu_{ijk} = 0$. Let $Z^\mu_r = \sum_{k=1}^t
 S} X_r$ and similarly define $Y^\mu(S), Z^\mu(S)$.
 
 \begin{definition}[Typical execution]
-    An execution of the protocol is $(\epsilon, \eta)$-\textit{typical} if:
+    An execution of the protocol is $(\epsilon, \eta)$-\emph{typical} if:
 
     \textnormal{\bf Block counts don't deviate.}
     For all $\mu \geq 0$ and any set $S$ of consecutive rounds
@@ -70,7 +70,7 @@ $\chain$ and let $b \in \pi$.
 
 Then $\mu'$ is defined as  $\mu' = \max\{\mu: |\pi\{b:\}\upchain^\mu| \geq
 \max(m + 1, (1 - \delta)2^{-\mu}|\pi\{b:\}\upchain^\mu\downchain|)\}$.
-We call $\mu'$ the \textit{adequate} level of proof $\pi$ with respect to
+We call $\mu'$ the \emph{adequate} level of proof $\pi$ with respect to
 block $b$ with security parameters $\delta$ and $m$.
 \end{definition}
 
