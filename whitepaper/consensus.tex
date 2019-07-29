@@ -3,8 +3,8 @@
 \subsection{The interlink pointers data structure}
 \label{sec:interlink}
 
-In order to construct our protocol, we rely on the same \emph{interlink data
-structure} used by PoPoW~\cite{KLS}. This is an additional hash-based data
+In order to construct our protocol, we rely on the \emph{interlink data
+structure}~\cite{KLS}. This is an additional hash-based data
 structure that is proposed to be included in the header of each block. The
 interlink data structure is a skip-list~\cite{skiplist} that makes it efficient
 for a verifier to process a sparse subset of the blockchain, rather than only
@@ -12,12 +12,7 @@ consecutive blocks.
 
 Valid blocks satisfy the proof-of-work condition: $id \leq T$, where $T$ is the
 mining target. Throughout this work, we make the simplifying assumption that $T$
-is constant\footnote{We discuss how this assumption can be relaxed in the
-\ifhasappendix
-Appendix.
-\else
-full version of this paper.
-\fi}. Some blocks will achieve a lower id. If $id \leq
+is constant. Some blocks will achieve a lower id. If $id \leq
 \frac{T}{2^\mu}$ we say that the block is of level $\mu$. All blocks are level
 $0$. Blocks with level $\mu$ are called $\mu$-\emph{superblocks}.
 $\mu$-superblocks for $\mu > 0$ are also $(\mu - 1)$-superblocks. The level of a
@@ -62,14 +57,14 @@ Algorithm~\ref{alg.nipopow-interlink} and is borrowed from~\cite{KLS}. The
 interlink data structure turns the blockchain into a
 skiplist-like~\cite{skiplist} data structure.
 
+\import{./}{algorithms/alg.nipopow-interlink.tex}
+
 The updateInterlink algorithm accepts a block $B'$, which already has an
 interlink data structure defined on it. The function evaluates the
 interlink data structure which needs to be included as part of the next block.
 It copies the existing interlink data structure and
 then modifies its entries from level $0$ to $\textsf{level}(B')$ to
 point to the block $B'$.
-
-\import{./}{algorithms/alg.nipopow-interlink.tex}
 
 \noindent\textbf{Traversing the blockchain. }
 As we have now extended blocks to contain multiple pointers to previous blocks,
