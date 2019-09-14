@@ -80,31 +80,34 @@ Finally, the adversary mines $k$ blocks on top of the double spending
 transaction within her private chain. After these $k$ blocks have been mined,
 she publishes her private chain in an attempt to overcome the honest chain.
 
-
-\begin{table}
-  \caption{
-    \label{table.size}
-    Size of NIPoPoWs applied to Bitcoin today
-    ($\approx$450k blocks) for various values of $m$,
-    setting $k = 6$.
-    %and with current values for transaction count, block count,
-    %coinbase size and hash output length.
-  }
-  \centering
-  \begin{tabular}{l|l|l|l}
-      {\bf m}  & {\bf NIPoPoW size} & {\bf Blocks} & {\bf
-      Hashes}\\
-      \hline
-      $6$   & $70$  kB & $108$ & $1440$  \\
-      $15$  & $146$ kB & $231$ & $2925$  \\
-      $30$  & $270$ kB & $426$ & $5400$  \\
-      $50$  & $412$ kB & $656$ & $8250$ \\
-      $100$ & $750$ kB & $1206$ & $15000$ \\
-      $127$ & $952$ kB & $1530$ & $19050$ \\
-  \end{tabular}
-\end{table}
-
-
+\begin{minipage}{\textwidth}
+    \begin{minipage}[t]{0.49\textwidth}
+      \includegraphics[width=\columnwidth,keepaspectratio]{figures/nipopow-attack-experiment-onecolumn.png}
+      \captionof{figure}{\label{fig.nipopow-attack-experiment}
+          Mining adversary success rate}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[b]{0.49\textwidth}
+      \begin{tabular}{l|l|l|l}
+          {\bf m}  & {\bf NIPoPoW size} & {\bf Blocks} & {\bf
+          Hashes}\\
+          \hline
+          $6$   & $70$  kB & $108$ & $1440$  \\
+          $15$  & $146$ kB & $231$ & $2925$  \\
+          $30$  & $270$ kB & $426$ & $5400$  \\
+          $50$  & $412$ kB & $656$ & $8250$ \\
+          $100$ & $750$ kB & $1206$ & $15000$ \\
+          $127$ & $952$ kB & $1530$ & $19050$ \\
+      \end{tabular}
+      \captionof{table}{
+        \label{table.size}
+        NIPoPoWs on Bitcoin
+        %and with current values for transaction count, block count,
+        %coinbase size and hash output length.
+      }
+    \end{minipage}
+\end{minipage}
+\vskip2pt
 
 We measure the probability of success of this attack. We experiment with various
 values of $m$ for $y = 100$, indicating $100$ blocks of secret parallel mining.
@@ -118,23 +121,7 @@ of the experiment for each value
 of $m$ from $1$ to $30$. We ran the simulation for values of computational power
 percentage $q = 0.1$, $q = 0.2$ and $q = 0.3$. The results are plotted in
 Figure~\ref{fig.nipopow-attack-experiment}.
-Based on these data, we conclude that $m = 5$ is sufficient to achieve a $0.001$
-probability of failure against an adversary with $10\%$ mining power. To secure
-against an adversary with more than $30\%$ mining power, a choice of $m = 15$ is
-needed.
-
-\begin{figure}
-    \caption{\label{fig.nipopow-attack-experiment}
-        Simulation results for a private mining attacker with $k$ according to
-        Nakamoto and parallel mining parameter $y = 100$. Probabilities in
-        logarithmic scale. The horizontal line indicates the threshold
-        probability of \cite{bitcoin}.
-    }
-    \centering
-    \iftwocolumn
-        \includegraphics[width=0.9 \columnwidth,keepaspectratio]{figures/nipopow-attack-experiment.png}
-    \else
-        \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/nipopow-attack-experiment-onecolumn.png}
-    \fi
-    \vspace{-1em}
-\end{figure}
+Here, $k$ is according to Nakamoto. Based on these data, we conclude that $m = 5$
+is sufficient to achieve a $0.001$ probability of failure against an adversary
+with $10\%$ mining power. To secure against an adversary with more than $30\%$
+mining power, a choice of $m = 15$ is needed.
