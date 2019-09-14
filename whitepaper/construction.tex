@@ -100,7 +100,7 @@ output if it had been evaluated on a chain with that suffix.
 \textbf{The concrete prover.}
 The NIPoPoW prover construction is shown in Algorithm~\ref{alg.nipopow-prover}.
 The honest prover is supplied with an honestly adopted chain $\chain$ and
-security parameters $m, k, \delta$ and returns proof $\pi\chi$, which is a
+security parameters $m, k$ and returns proof $\pi\chi$, which is a
 chain. The suffix $\chi$ is the last $k$ blocks of $\chain$. The prefix $\pi$ is
 constructed by selecting various blocks from $\chain[:-k]$ and adding them to
 $\pi$, which consists of a number of blocks for every level $\mu$ from the
