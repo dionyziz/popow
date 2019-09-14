@@ -1,4 +1,4 @@
-% LLNCS DOCUMENT CLASS -- version 2.18 (27-Sep-2013)
+% LLNCS DOCUMENT CLASS -- version 2.20 (10-Mar-2018)
 % Springer Verlag LaTeX2e support for Lecture Notes in Computer Science
 %
 %%
@@ -19,7 +19,7 @@
 %%   Right brace   \}     Tilde         \~}
 %%
 \NeedsTeXFormat{LaTeX2e}[1995/12/01]
-\ProvidesClass{llncs}[2013/09/27 v2.18
+\ProvidesClass{llncs}[2018/03/10 v2.20
 ^^J LaTeX document class for Lecture Notes in Computer Science]
 % Options
 \let\if@envcntreset\iffalse
@@ -875,8 +875,10 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
    \or \ddagger\ddagger \else\@ctrerr\fi}}
 
 \def\inst#1{\unskip$^{#1}$}
+\def\orcidID#1{\unskip$^{[#1]}$} % added MR 2018-03-10
 \def\fnmsep{\unskip$^,$}
 \def\email#1{{\tt#1}}
+
 \AtBeginDocument{\@ifundefined{url}{\def\url#1{#1}}{}%
 \@ifpackageloaded{babel}{%
 \@ifundefined{extrasenglish}{}{\addto\extrasenglish{\switcht@albion}}%
@@ -884,8 +886,12 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
 \@ifundefined{extrasgerman}{}{\addto\extrasgerman{\switcht@deutsch}}%
 \@ifundefined{extrasngerman}{}{\addto\extrasngerman{\switcht@deutsch}}%
 }{\switcht@@therlang}%
-\providecommand{\keywords}[1]{\par\addvspace\baselineskip
+\providecommand{\keywords}[1]{\def\and{{\textperiodcentered} }%
+\par\addvspace\baselineskip
 \noindent\keywordname\enspace\ignorespaces#1}%
+\@ifpackageloaded{hyperref}{%
+\def\doi#1{\href{https://doi.org/#1}{https://doi.org/#1}}}{
+\def\doi#1{https://doi.org/#1}}
 }
 \def\homedir{\~{ }}
 
@@ -946,6 +952,8 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
 %
     \if!\the\tocauthor!\relax
       {\def\and{\noexpand\protect\noexpand\and}%
+       \def\inst##1{}%    added MR 2017-09-20 to remove inst numbers from the TOC
+       \def\orcidID##1{}% added MR 2017-09-20 to remove ORCID ids from the TOC
       \protected@xdef\toc@uthor{\@author}}%
     \else
       \def\\{\noexpand\protect\noexpand\newline}%
@@ -961,7 +969,9 @@ to0pt{\kern0.55\wd0\vrule height0.45\ht0\hss}\box0}}}}
        \else
          \edef\@author{\the\authorrunning}%
        \fi
-       \global\setbox\authrun=\hbox{\small\unboldmath\@author\unskip}%
+       \global\setbox\authrun=\hbox{\def\inst##1{}%    added MR 2017-09-20 to remove inst numbers from the runninghead
+                                    \def\orcidID##1{}% added MR 2017-09-20 to remove ORCID ids from the runninghead
+                                    \small\unboldmath\@author\unskip}%
        \ifdim\wd\authrun>\instindent
           \typeout{Names of authors too long for running head. Please supply}%
           \typeout{a shorter form with \string\authorrunning\space prior to
