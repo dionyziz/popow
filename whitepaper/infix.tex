@@ -22,15 +22,14 @@ define the class of predicates that will be of interest.
 \label{def:infix}
 A chain predicate $Q_{d,k}$ is \textnormal{infix sensitive} if it can be
 written in the form
-
-$$
+$
 Q_{d,k}(\chain) =
 \begin{cases}
   \text{\emph{true}, if }
     \exists \chain' \subseteq \chain[:-k]: |\chain'| \leq d \land D(\chain')\\
   \text{\emph{false}, otherwise}
 \end{cases}
-$$
+$
 
 where $D$ is an arbitrary efficiently computable predicate such that, for any
 block sets $\chain_1 \subseteq \chain_2$ we have that
