@@ -15,16 +15,16 @@ is the easiest. Suppose this value is $T_0 = \frac{1}{2^\kappa}$ such that all
 attempted blocks are valid. We consider the case where the current difficulty is
 possible to adjust by factors of $2$; that is, the target of each epoch $e$ is
 quantized as $T_e = \frac{T_0}{2^{\mu^*}}$ for some non-negative integer
-$\mu^*$, the current \emph{mining level}. Under this light, changing the
+$\mu^*$, the current \emph{mining level}. In this context, changing the
 difficulty is equivalent to saying that the mining game will be played at some
 level $\mu^* \geq 0$ and every node considers only chains of that level,
-ignoring chains of inferior level. In this setting, NIPoPoWs can be proved as
-usual, except the used target for NIPoPoW generation and verification will be
-the maximum target $T_0$ instead of the current mining target $T_e$. The only
-difference is that the honest prover will only provide chains of level $\mu \geq
-\mu^*$, as inferior blocks will neither be mined nor successfully validated by
-honest participants. The size of variable difficulty NIPoPoWs is the same as in
-the constant difficulty case.
+ignoring chains of inferior level. As such, superblock NIPoPoWs can be
+constructed as usual, except the used target for NIPoPoW generation and
+verification will be the maximum target $T_0$ instead of the current mining
+target $T_e$. The only difference is that the honest prover will only provide
+chains of level $\mu \geq \mu^*$, as inferior blocks will neither be mined nor
+successfully validated by honest participants. The size of variable difficulty
+NIPoPoWs is the same as in the constant difficulty case.
 
 The security arguments follow through as before when the comparison of two
 proofs $\pi_\mathcal{A}, \pi_B$ happens at some level $\mu_\mathcal{A}, \mu_B
