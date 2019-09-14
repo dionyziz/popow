@@ -2,8 +2,8 @@
 \label{sec:applications}
 In this section we evaluate the cost of NIPoPoWs when used in realistic blockchain applications.
 First we simulated the resources savings resulting from the use of a NIPoPoW-based
-client compared to ordinary SPV. We model the arrival of payments in each cryptocoin as a Poisson process
-and assume that the market cap of a cryptocoin is a proxy for usage. Currently,
+client compared to ordinary SPV. We model the arrival of payments in each cryptocurrency as a Poisson process
+and assume that the market cap of a cryptocurrency is a proxy for usage. Currently,
 a total of 731 cryptocurrencies are listed on coin market
 directories\footnote{\url{https://coinmarketcap.com/}}. We narrow our focus to
 the 80 cryptocurrencies that have their own PoW blockchains with
@@ -99,7 +99,7 @@ waiting a short time period for a response, the client runs the
 transaction if the output is \emph{true}. Although initially such proofs must be
 relative to genesis, the client may store the most recently-known ($k$-stable)
 blockhash for each coin such that future payments can include NIPoPoW proofs
-relative to that. Thus for popular cryptocoins, the NIPoPoW-based client
+relative to that. Thus for popular cryptocurrencies, the NIPoPoW-based client
 downloads nearly every block header, like an ordinary SPV client; but for
 coins used infrequently, the NIPoPoW-based client can skip over most blocks.
 
