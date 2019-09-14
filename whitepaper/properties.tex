@@ -25,6 +25,17 @@ the adversary at round $r$ arrives at that same truth value $Q$.
   of our paper, accompanying the complete security proof.
 \end{remark}
 
+% \begin{remark}[Time of issuance]
+%   The above security definition strictly requires that all NIPoPoW proofs have
+%   all been generated at some round $r$. In a more realistic setting,
+%   NIPoPoW proofs could be generated for a period of time of a certain length
+%   $d$. Without loss of generality, it can be assumed that, in such a
+%   setting, the honest party $P$ generates the NIPoPoW proof at time $r$ while
+%   the adversary generates her proof at time $r + d$, gaining some
+%   advantage. The security definition can be altered to accommodate for such a
+%   setting.
+% \end{remark}
+
 \begin{definition}{(Succinctness)}
 A \emph{blockchain proof protocol} $(P, V)$ about a predicate $Q$ is
 \emph{succinct} if for all PPT provers $\mathcal{A}$, any proof $\pi$ produced
