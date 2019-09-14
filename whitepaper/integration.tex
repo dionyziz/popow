@@ -9,11 +9,11 @@ directories\footnote{\url{https://coinmarketcap.com/}}. We narrow our focus to
 the 80 cryptocurrencies that have their own PoW blockchains with
 a market cap of over USD \$100,000.
 
-In Table~\ref{tbl.currencies} we show aggregate statistics about these 80
+In Figure~\ref{fig.experiment} (left) we show aggregate statistics about these 80
 cryptocurrencies, grouped according to the their PoW puzzle. While the entire
 chain in Bitcoin only amounts to 40 MB, taken together, the 80 cryptocurrencies
 comprise 10 GB of proofs-of-work, and generate 10 MB more each day. In
-Table~\ref{tbl.experiment} we show the resulting bandwidth costs from simulating
+Figure~\ref{fig.experiment} (right) we show the resulting bandwidth costs from simulating
 a period of 60 days with $m=24, k=6$, with varying rates of payments received.
 %
 For the na\"ive SPV client, the total bandwidth cost is dominated by fetching
@@ -24,59 +24,51 @@ NIPoPoW-based client provides the most savings when the number of transactions
 per day is smallest, reducing the necessary bandwidth per day (excluding the
 initial sync up) by 90\%.
 
-\begin{table}
-  \caption{Cost of header chains for all active PoW-based cryptocoins
-           (collected from \url{coinwarz.com})}
-  \vspace{-1em}
-  \label{tbl.currencies}
-  \small
-  \centering
-  \begin{tabular}{l@{}|l|l|l@{}}
-    {\bf Hash} & {\bf Coins} & {\bf Size today} & {\bf Growth rate}  \\
-    \hline
-    Scrypt  & 44  & 4.3 GB  & 5.5 MB / day \  \\
-    SHA-256  & 15  & 1.4 GB  & 937.0 kB / day \  \\
-    X11  & 5  & 581.1 MB  & 556.3 kB / day \  \\
-    Quark  & 3  & 647.9 MB  & 518.4 kB / day \  \\
-    CryptoNight  & 2  & 199.0 MB  & 115.2 kB / day \  \\
-    EtHash  & 2  & 588.6 MB  & 921.6 kB / day \  \\
-    Groestl  & 2  & 300.3 MB  & 184.2 kB / day \  \\
-    NeoScrypt  & 2  & 310.6 MB  & 153.6 kB / day \  \\
-    Others  & 5  & 266.2 MB  & 311.1 kB / day \  \\
-    % "Others" above is the sum of these:
-    % Equihash  & 2  & 17.7 MB  & 92.2 kB / day \  \\
-    % Keccak  & 1  & 161.1 MB  & 115.2 kB / day \  \\
-    % X13  & 1  & 30.0 MB  & 57.6 kB / day \  \\
-    % Lyra2REv2  & 1  & 57.4 MB  & 46.1 kB / day \  \\
-    \hline
-    Total  & 80   &  8.5 GB  & 9.2 MB  / day  \\
-  \end{tabular}
-\vspace{-1em}
-\end{table}
+\begin{figure}[!htbp]
+  \begin{minipage}[t]{0.45\textwidth}
+      \begin{tabular}{l@{}|l|l|l@{}}
+        {\bf Hash} & {\bf Coins} & {\bf Size today} & {\bf Growth rate}  \\
+        \hline
+        Scrypt  & 44  & 4.3 GB  & 5.5 MB / day \  \\
+        SHA-256  & 15  & 1.4 GB  & 937.0 kB / day \  \\
+        X11  & 5  & 581.1 MB  & 556.3 kB / day \  \\
+        Quark  & 3  & 647.9 MB  & 518.4 kB / day \  \\
+        CryptoNight  & 2  & 199.0 MB  & 115.2 kB / day \  \\
+        EtHash  & 2  & 588.6 MB  & 921.6 kB / day \  \\
+        Groestl  & 2  & 300.3 MB  & 184.2 kB / day \  \\
+        NeoScrypt  & 2  & 310.6 MB  & 153.6 kB / day \  \\
+        Others  & 5  & 266.2 MB  & 311.1 kB / day \  \\
+        % "Others" above is the sum of these:
+        % Equihash  & 2  & 17.7 MB  & 92.2 kB / day \  \\
+        % Keccak  & 1  & 161.1 MB  & 115.2 kB / day \  \\
+        % X13  & 1  & 30.0 MB  & 57.6 kB / day \  \\
+        % Lyra2REv2  & 1  & 57.4 MB  & 46.1 kB / day \  \\
+        \hline
+        Total  & 80   &  8.5 GB  & 9.2 MB  / day  \\
+      \end{tabular}
+  \end{minipage}
+  \hskip 0.04\textwidth
+  \begin{minipage}[t]{0.3\textwidth}
+      \begin{tabular}
+        {
+          l@{\hspace{1pt}}|
+          l@{\hspace{1pt}}l@{\hspace{1pt}}|
+          l@{\hspace{1pt}}l@{\hspace{1pt}}|
+          l@{\hspace{1pt}}}
 
-\begin{table}
-  \caption{Simulated bandwidth of multi-blockchain clients after two months (Averaged over 10 trials each)}
-  \vspace{-1em}
-  \label{tbl.experiment}
-  \small
-  \centering
-  \begin{tabular}
-    {
-      l@{\hspace{1pt}}|
-      l@{\hspace{1pt}}l@{\hspace{1pt}}|
-      l@{\hspace{1pt}}l@{\hspace{1pt}}|
-      l@{\hspace{1pt}}}
-
-      \multicolumn{1}{@{}l|}{\bf tx/} & \multicolumn{2}{c|}{\bf Naive SPV} & \multicolumn{2}{c|}{\bf NIPoPoW} \\
-      {\textbf{day}} & {\bf Total} & {\bf (Daily)} & {\bf Total} & {\bf (Daily)} & {\bf Savings} \\
-    \hline
-    100   &  5.5 GB & (5.5 MB)   & 31.7 MB & (507 kB)   & 99\% (91\%) \\
-    500   &  5.5 GB & (5.7 MB)   & 68.2 MB & (1.1 MB)     & 99\% (81\%) \\
-    1000  &  5.5 GB & (6.0 MB)   & 99.1 MB & (1.6 MB)     & 98\% (73\%) \\
-    3000  &  5.6 GB & (7.0 MB)   & 192 MB& (3.1 MB)     & 97\% (56\%) \\
-    \end{tabular}
-  \vspace{-2em}
-  \end{table}
+          \multicolumn{1}{@{}l|}{\bf tx/} & \multicolumn{2}{c|}{\bf Naive SPV} & \multicolumn{2}{c|}{\bf NIPoPoW} \\
+          {\textbf{day}} & {\bf Total} & {\bf (Daily)} & {\bf Total} & {\bf (Daily)} & {\bf Savings} \\
+        \hline
+        100   &  5.5 GB & (5.5 MB)   & 31.7 MB & (507 kB)   & 99\% (91\%) \\
+        500   &  5.5 GB & (5.7 MB)   & 68.2 MB & (1.1 MB)     & 99\% (81\%) \\
+        1000  &  5.5 GB & (6.0 MB)   & 99.1 MB & (1.6 MB)     & 98\% (73\%) \\
+        3000  &  5.6 GB & (7.0 MB)   & 192 MB& (3.1 MB)     & 97\% (56\%) \\
+        \end{tabular}
+  \end{minipage}
+  \caption{Cost of header chains for active PoW cryptocoins (left)
+           and simulated bandwidth of multi-blockchain clients after two months
+           averaged over 10 trials each (right)\label{fig.experiment}}
+\end{figure}
 
 \noindent
 \textbf{Multi-blockchain wallets.}\label{sec:multichain}
