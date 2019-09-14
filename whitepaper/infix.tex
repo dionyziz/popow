@@ -85,20 +85,6 @@ because the payment was never made.
 % a \emph{stable} block in $\chain[:-k]$ to ensure that a malicious miner is not
 % able to tamper with it.
 
-\begin{figure}[h]
-    \caption{An infix proof descend. Only blue blocks are included in the proof.
-    Blue blocks of level $4$ are part of $\pi$, while the blue blocks of level
-    $1$ through $3$ are produced by followDown to get to the block of level $0$
-    which is part of $\chain'$.}
-    \centering
-    \iftwocolumn
-        \includegraphics[width=0.9\columnwidth,keepaspectratio]{figures/infix.pdf}
-    \else
-        \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/infix.pdf}
-    \fi
-    \label{fig.infix}
-\end{figure}
-
 \import{./}{algorithms/alg.nipopow-infix-prover.tex}
 
 \subsection{Construction}
@@ -129,7 +115,19 @@ and a lower level is tried, which will cause a smaller step within the skiplist.
 If a pointer was followed without surpassing $B$, the operation continues from
 the new block, until eventually $B$ is reached, which concludes the algorithm.
 
-\import{./}{algorithms/alg.nipopow-infix-follow.tex}
+\begin{figure}[h]
+    \caption{An infix proof descend. Only blue blocks are included in the proof.
+    Blue blocks of level $4$ are part of $\pi$, while the blue blocks of level
+    $1$ through $3$ are produced by followDown to get to the block of level $0$
+    which is part of $\chain'$.}
+    \centering
+    \iftwocolumn
+        \includegraphics[width=0.9\columnwidth,keepaspectratio]{figures/infix.pdf}
+    \else
+        \includegraphics[width=0.7\columnwidth,keepaspectratio]{figures/infix.pdf}
+    \fi
+    \label{fig.infix}
+\end{figure}
 
 An example of the output of \textsf{followDown} is shown in
 Figure~\ref{fig.infix}. This is a portion of the proof shown at the point where
@@ -137,9 +135,10 @@ the superblock levels are at level $4$. A descend to level $0$ was necessary so
 that a regular block would be included in the chain. The level $0$ block can
 jump immediately back up to level $4$ because it has a high-level pointer.
 
+\import{./}{algorithms/alg.nipopow-infix-follow.tex}
+
 The verification algorithm must then be modified as in
 Algorithm~\ref{alg.nipopow-verifier-infix}.
-
 The algorithm works by calling the suffix verifier. It also maintains a blockDAG
 collecting blocks from all proofs (it is a DAG because \emph{interlink} can be
 adversarially defined in adversarially mined blocks). This DAG is maintained in
