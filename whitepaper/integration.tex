@@ -72,14 +72,11 @@ initial sync up) by 90\%.
 
 \noindent
 \textbf{Multi-blockchain wallets.}\label{sec:multichain}
-An application of our technique is an efficient multi-cryptocoin client.
-Consider a merchant who wishes to accept payments in any cryptocoin, not just
-the popular ones. The na\"ive approach would be to install an SPV client for
-each known coin. This approach would entail downloading the header chain for
-each coin, and periodically syncing up by fetching any newly generated block
-headers. An alternative would be to use an online service supporting multiple
-currencies, but this introduces reliance on a third party (e.g. Jaxx and Coinomi
-rely on third party networks).
+An application of our technique is efficient multicurrency clients.
+Consider a merchant who accepts payments in any cryptocurrency. The
+na\"ive approach is to install an SPV client for each coin, downloading
+the header chain for each coin. An alternative is to use online custodian
+wallets, but this introduces a trusted third party.
 
 A NIPoPoW-based client would not download the entire header chain, but would
 instead only receive NIPoPoW proofs each time a payment is received. When a peer
