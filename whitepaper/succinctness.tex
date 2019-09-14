@@ -1,27 +1,11 @@
 \section{Succinctness}
 \label{sec:succinctness}
 
-We analyse the patched scheme we saw in
-Algorithm~\ref{alg.nipopow-prover-patched}. We will illustrate why our
+We analyse the scheme in
+Algorithm~\ref{alg.nipopow-infix-prover}. We will illustrate why our
 construction is succinct in the honest setting. For techniques to make the
-construction succinct in broader adversarial settings, consult the
-\ifhasappendix
-appendix.
-\else
-full version of this paper.
-\fi
-
-We first observe that full succinctness in the standard honest majority model is
-impossible to prove for our construction. To see why, recall that an adversary
-with sufficiently large mining power can significantly harm superquality as
-described in Section~\ref{subsec:superquality-attack}. By reducing superquality
-for a sufficiently low level $\mu$, the adversary can cause the honest prover to
-digress in their proofs from high-level superchains down to low-level
-superchains, causing a linear proof to be produced.
-
-For instance, if superquality is harmed at $\mu = 3$, the prover will
-need to digress down to level $\mu = 2$ and include the whole $2$-superchain,
-which, in expectation, will be of size $|\chain|/2$.
+construction succinct in broader adversarial settings (where an adversary can
+produce proofs), consult the full version of this paper.
 
 Having established security in the general case of the standard honest majority
 model, we now concentrate our succinctness claims to the particular
