@@ -22,19 +22,11 @@ synchronize recent blocks, the \emph{suffix proofs} protocol
 (Section~\ref{sec:suffix}). Next, we augment the suffix proofs protocol to a
 protocol which can synchronize any part of the blockchain that the client may be
 interested in, the \emph{infix proofs} protocol (Section~\ref{sec:infix}).
-Subsequently, we show that, while these two protocol renditions are intuitive,
-they are insecure, and illustrate an attack against them which we prove works
-with overwhelming probability (Section~\ref{sec:attack}). This attack motivates
-us to modify the protocol with an appropriate patch, which allows us to prove
-security formally in our main security theorem (Section~\ref{sec:security}). We
-then show that our final protocol really is succinct
-(Section~\ref{sec:succinctness}). Towards a real-world implementation, we
-propose concrete parameters for our protocol which are obtained by experimental
-simulations (Section~\ref{sec:parameters}) and conclude by describing
-applications beyond the individual superlight client
-(Section~\ref{sec:applications}). Finally, we discuss how our protocol can be
-retrofitted in a backwards-compatible manner into existing blockchains such as
-Bitcoin (Appendix~\ref{sec:forks}).
+We show that our protocol is secure in our main theorem
+(Section~\ref{sec:security}) and that it is also
+succinct (Appendix~\ref{sec:succinctness}). Finally, towards a real-world
+implementation, we propose concrete parameters for our protocol which are
+obtained by experimental simulations (Appendix~\ref{sec:parameters})
 
 %% must verify the entire chain of proofs-of-work, which grows
 %% linearly over time. On the contrary, clients based on NIPoPoWs require resources
@@ -110,9 +102,9 @@ cryptographic primitive called Non-Interactive Proofs of Proof-of-Work
 We present a formal model and a provably secure instantiation of NIPoPoWs. We
 introduce the first formal security definitions of NIPoPoW protocols and their
 security. Our proofs are in the Bitcoin backbone model~\cite{backbone}. Our
-construction is the first secure Proof of Proof-of-Work (regardless of
-interactivity), assuming honest majority. Furthermore, our solution is
-non-interactive making it the first protocol of this kind.
+construction is the first secure Proof of Proof-of-Work, assuming honest
+majority. Furthermore, our solution is non-interactive making it the first
+protocol of this kind.
 
 We encode events and other information that is useful to blockchain clients in
 the form of \emph{blockchain predicates}. We describe a large class of
@@ -122,11 +114,9 @@ transaction took place (for payment verification), that a smart contract method
 ran with certain parameters, or that a payment was made into an account.
 
 We prove the proofs are optimistically succinct meaning that they are
-logarithmic in size in honest conditions. We show that, in the optimistic model
+logarithmic in size in honest conditions. In the optimistic model
 of no adversarial mining power, succinctness can be achieved for even
-\emph{adversarially-generated} proofs. Our definition fills the gap in terms of
-security modeling and design that existed in previous proposals, e.g., the
-notion of cumulative ``Dynamic Member Multisignature'' ~\cite{sidechains}.
+\emph{adversarially-generated} proofs.
 
 We provide concrete parameterization and empirical analysis showing the savings
 of our approach versus existing clients. Using real data from the Bitcoin and
