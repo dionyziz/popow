@@ -18,54 +18,8 @@ computational power or network power.
   delivered in random (and not adversarial) order.
 \end{definition}
 
-In this setting, the superquality of the chain must be the same as a fully
-honestly-generated chain generated with no network adversary. Last, for now, we
-will not allow the adversary to produce any proofs; that is, all proofs consumed
-by the verifier are honestly-generated.
-% This succinctness assumption is akin
-% to~\cite{KLS}.
-
-\begin{restatable}[Number of levels]{theorem}{restateThmFewLevels}
-    \label{thm.few-levels}
-    In any execution, let $S$ denote the set of all blocks produced honestly or
-    adversarially. The number of superblock levels which have at least $m$
-    blocks are at most $\log(|S|)$, with overwhelming probability in $m$.
-\end{restatable}
-\ifonecolumn
-\import{./}{proofs/fewlevels.tex}
-\fi
-
-The above theorem establishes that the number of superchains is small. What
-remains to be shown is that few blocks will be included at each superchain
-level.
-
-\begin{restatable}[Large upchain expansion]{theorem}{restateThmLargeExpansion}
-    \label{thm.large-expansion}
-    Consider an optimistic execution and let $\chain$ be an honestly adopted
-    chain and let $\chain' = \chain\upchain^{\mu - 1}[i:i + 4m]$ for any $i$.
-    Then $|\chain'\upchain^\mu| \geq m$ with overwhelming probability in $m$.
-\end{restatable}
-\ifonecolumn
-\import{./}{proofs/largeexpansion.tex}
-\fi
-
-This probability bounds the probability of fewer than $m$ blocks occurring in
-the $\mu$ level restriction of $(\mu - 1)$-level superchains of more than $4m$
-blocks.
-
-\begin{restatable}[Small downchain support]{lemma}{restateThmSmallSupport}
-    \label{lem.small-support}
-    Consider an optimistic execution and let $\chain$ be an honestly adopted
-    chain and $\chain' = \chain\upchain^\mu[i:i + m]$. Then
-    $|\chain'\downchain\upchain^{\mu - 1}| \leq 4m$ with overwhelming
-    probability in $m$.
-\end{restatable}
-\ifonecolumn
-\import{./}{proofs/smallsupport.tex}
-\fi
-
-This last lemma establishes the fact that the support of blocks needed under
-the $m$-sized chain suffix to move from one level to the one below is small.
+Last, we will not allow the adversary to produce any proofs; that is, all proofs
+consumed by the verifier are honestly-generated.
 Based on this, we can establish our theorem on succinctness:
 
 \begin{restatable}[Optimistic succinctness]{theorem}{restateThmSuccinctness}
@@ -75,7 +29,7 @@ Based on this, we can establish our theorem on succinctness:
     \log(|\chain|)$, with overwhelming probability in $m$.
 \end{restatable}
 \ifonecolumn
-\import{./}{proofs/succinctness.tex}
+% \import{./}{proofs/succinctness.tex}
 \fi
 
 In the above theorem, note the linear dependency between the round $r$ during
