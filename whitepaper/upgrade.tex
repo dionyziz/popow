@@ -1,35 +1,33 @@
 \section{Gradual Deployment Paths}\label{sec:forks}
 
-Our construction requires an upgrade to the consensus layer. We envision that
-new cryptocurrencies will adopt our construction in order to support efficient
-light clients. However, existing cryptocurrencies could also benefit by adopting
-our construction as an upgrade. In this section we outline several possible
-upgrade paths. We also contribute a novel upgrade approach, a ``velvet fork,''
-which allows for gradual deployment without harming unupgraded miners.
+Existing cryptocurrencies can also benefit by adopting our construction as an
+upgrade. We outline several possible upgrade paths. We also contribute a novel
+upgrade approach, a ``velvet fork,'' which allows for gradual deployment without
+harming unupgraded miners.
 
-\subsection{Hard Forks and Soft Forks}
-The obvious way to upgrade a cryptocoin to support our protocol is a hard fork:
+\noindent
+\textbf{Hard Forks and Soft Forks.}
+The obvious way to upgrade to add support for our protocol is a hard fork:
 the block header is modified to include the interlink structure, and the
 validation rules modified to require that new blocks (after a ``flag day'')
 contain a correctly-formed interlink hash.
 
-The safety of a hard fork is debated~\cite{vitalikforks}, as they are not
-``forward compatible''. NIPoPoWs can also be implemented by a soft fork. A soft
-fork construction requires including the interlink not in the block header, but
-in the coinbase transaction. It is enough to only store a hash of the interlink
-structure. The only requirement for the NIPoPoWs to work is that the PoW commits
-to all the pointers within the interlink so that the adversary cannot cause a
-chain reorganization. If we take that route, then each NIPoPoW will be required
-to present not only the block header, but also a proof-of-inclusion path within
-the Merkle tree of transactions proving that the coinbase transaction is indeed
-part of the block. Once that is established, the coinbase data can be presented,
-and the verifier will thereby know that the hash of the interlink data structure
-is correct. Given that in the Bitcoin implementation there is a block size
-limit, observe that including such proofs-of-inclusion will only increase the
-NIPoPoW sizes by a constant factor per block, allowing for the communication
-complexity to remain polylogarithmic.
+NIPoPoWs can also be implemented by a soft fork. A soft fork construction
+requires including the interlink not in the block header, but in the coinbase
+transaction. It is enough to only store a hash of the interlink structure. The
+only requirement for the NIPoPoWs to work is that the PoW commits to all the
+pointers within the interlink so that the adversary cannot cause a chain
+reorganization. If we take that route, then each NIPoPoW will be required to
+present not only the block header, but also a proof-of-inclusion path within the
+Merkle tree of transactions proving that the coinbase transaction is indeed part
+of the block. Once that is established, the coinbase data can be presented, and
+the verifier will thereby know that the hash of the interlink data structure is
+correct. Including such proofs-of-inclusion will only increase the NIPoPoW sizes
+by a constant factor per block, allowing for the communication complexity to
+remain polylogarithmic.
 
-\subsection{Velvet Forks}
+\noindent
+\textbf{Velvet Forks.}
 We now describe a novel upgrade path that avoids the need for a fork at all. The
 key idea is that clients can make use of our scheme, even if only some blocks in
 the blockchain include the interlink structure. Given that intuitively the
@@ -38,9 +36,9 @@ technique a \emph{velvet fork}
 \ifanonymous
   .
 \else
-  \footnote{After the first manuscript of the present paper was published on the
-  \emph{ePrint} archive, velvet forks were subsequently explored in detail in
-  the excellent follow-up work by Zamyatin et. al.~\cite{velvet}}.
+  \footnote{After the manuscript of this paper appear on
+  \emph{ePrint}, velvet forks were explored in a follow-up
+  work\cite{velvet}}.
 \fi
 
 We require upgraded miners to include the interlink data structure in the form
@@ -75,78 +73,16 @@ use of that to construct winning proofs, as they are only able to present
 shorter chains in that case. The honest prover can simply ignore such pointers
 as if they were not included at all.
 
-The velvet prover works as usual, but additionally maintains a \emph{realLink}
-data structure, which stores the \emph{correct} interlink for each block.
-Whenever a new winning chain is received from the network, the prover checks it
-for blocks that it hasn't seen before. For those blocks, it maintains its own
-realLink data structure which it updates accordingly to make sure it is correct
-regardless of what the interlink data structure of the received block claims.
+The velvet prover works as usual, but additionally stores the \emph{correct}
+interlink for each block. The velvet $\chain\upchain$ operator is
+implemented identically as before, except that instead of following the
+interlink pointer blindly it now and creates a connection from $B$ back to the
+most recent preceding $\mu$-superblock, by following the interlink pointer if it
+is correct. Otherwise, it follows the previd link which is available in all
+blocks, and recursively tries to follow the interlink pointer again from there.
+The prover includes the auxiliary connecting nodes within the final proof. No
+changes in the verifier are needed.
 
-\import{./}{algorithms/alg.nipopow-velvet-upchain.tex}
-\import{./}{algorithms/alg.nipopow-velvet-follow.tex}
-
-The velvet $\chain\upchain$ operator shown in
-Algorithm~\ref{alg.nipopow-velvet-upchain} is implemented identically as
-before, except that instead of following the interlink pointer blindly it now
-calls the helper function \emph{followUp}, shown in
-Algorithm~\ref{alg.nipopow-velvet-follow}. It accepts block $B$ and level $\mu$
-and creates a connection from $B$ back to the most recent preceding
-$\mu$-superblock, by following the interlink pointer if it is correct.
-Otherwise, it follows the previd link which is available in all blocks, and
-tries to follow the interlink pointer again from there. Finally, the velvet
-prover shown in Algorithm~\ref{alg.nipopow-velvet-prover} simply applies the
-velvet $\chain\upchain$ operator and includes the auxiliary connecting nodes
-within the final proof. No changes in the verifier are needed; note that  in the
-case of infix proofs the $\mathrm{index}$ of the block is used by the verifier;
-if this information is not provided by the underlying blockchain headers, the
-index should be included in the interlink structure.
-
-\import{./}{algorithms/alg.nipopow-velvet-prover.tex}
-
-Velvet NIPoPoWs preserve security.
-% TODO: why?
-% TODO: infix for velvet forks are not trivial -- followDown must be redefined
-Additionally, if a constant minority of
-miners has upgraded their nodes, then succinctness is also preserved
-as there is only a constant factor penalty\ifndss
-.
-\else
- as proven in the following theorem.
-\begin{restatable}{theorem}{restateThmVelvetSuccinctness}
-    \label{thm.velvet-succinctness}
-    Velvet non-interactive proofs-of-proof-of-work on honest chains by honest
-    provers remain succinct as long as a constant percentage $g$ of miners has
-    upgraded, with overwhelming probability.
-\end{restatable}
-\import{./}{proofs/velvetsuccinctness.tex}
-\fi
-
-We would not have been able to pull off this upgrade without modifications to
-the consensus layer in the sense that the interlink data structure could not
-have been maintained somewhere independently of the blockchain: It is critical
-that the proof-of-work commits to the interlink data structure. Interestingly,
-the interlink data structure does not need to be part of coinbase and can be
-produced and included in regular transactions by users (such as OP\_RETURN
-transactions). Thus, the miners can be completely oblivious to it, while users
-and provers make use of the feature, making it a \emph{user-activated velvet
-fork}. Interested users regularly create transactions containing the most recent
-interlink pointers so that they are included in the next block. If the
-transaction makes it to the next block, it can be used by the prover who keeps
-track of these. Otherwise, if it becomes part of a subsequent block, in which
-case some of the pointers it contains are invalid, it can be ignored or only
-partially used.
-
-The necessary changes needed in the various construction algorithms in order to
-support a velvet fork are shown in
-Algorithm~\ref{alg.nipopow-velvet-upchain},
-Algorithm~\ref{alg.nipopow-velvet-follow}, and
-Algorithm~\ref{alg.nipopow-velvet-prover}.
-
-\ifndss\else
-\noindent\textbf{Supporting clients with different beliefs.}
-The interlink format does not depend on parameters $m, k$. Therefore, it is not
-necessary to agree on a particular value of these parameters. Instead, the
-choice of $m$ and $k$ can be a user-configurable parameter to clients.
-Clients would send a particular $m$ and $k$ as part of their requirement to
-the prover.
-\fi
+Velvet NIPoPoWs preserve security. Additionally, if a constant minority of
+miners has upgraded their nodes, then succinctness is also preserved as there is
+only a constant factor penalty.
