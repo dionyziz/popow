@@ -262,7 +262,7 @@ contract Crosschain {
   // shift bits to the most segnificant byte (256-8 = 248)
   // and cast it to a 8-bit uint
   function b32_to_uint8(bytes32 _b) private pure returns (uint8) {
-    return uint8(bytes1(_b << 248));
+    return uint8(byte(_b << 248));
   }
 
   function validate_interlink(bytes32[4][] memory headers,
@@ -272,11 +272,8 @@ contract Crosschain {
     uint ptr = 0; // Index of the current sibling
     for (uint i = 1; i < headers.length; i++) {
       // hold the 3rd and 4th least significant bytes
-      bytes32 branch_length_b32 = (headers[i][3] >> 8) & bytes32(uint(0xff));
-      uint8 branch_length = b32_to_uint8(branch_length_b32);
-
-      bytes32 merkle_index_b32  = (headers[i][3] >> 0) & bytes32(uint(0xff));
-      uint8 merkle_index = b32_to_uint8(merkle_index_b32);
+      uint8 branch_length = b32_to_uint8((headers[i][3] >> 8) & bytes32(uint(0xff)));
+      uint8 merkle_index  = b32_to_uint8((headers[i][3] >> 0) & bytes32(uint(0xff)));
 
       require(branch_length <= 5);
       require(merkle_index <= 32);
