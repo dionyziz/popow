@@ -30,7 +30,7 @@ contract Crosschain {
   }
 
   struct Event {
-    address author;
+    address payable author;
     uint expire;
     Nipopow proof;
   }
@@ -347,9 +347,8 @@ contract Crosschain {
       return false;
     }
     finalized_events[hashed_block] = true;
-    address payable author = address(uint160((events[hashed_block].author)));
     events[hashed_block].expire = 0;
-    author.transfer(z);
+    events[hashed_block].author.transfer(z);
 
     return true;
   }
