@@ -1,5 +1,5 @@
 \begin{proof}
-    From $|\chain'_\mathcal{A}| \geq k$ we know that $Z_S \geq k$. From the
+    From $|\chain'_\mathcal{A}| \geq k$ we know that $Z^\mu(S) \geq k$. From the
     definition of typicality, we have $|S| \geq (1 -
     \epsilon')2^{\mu_A}\frac{1}{pqt}|\chain'_\mathcal{A}|$.
     Applying the chain growth theorem \cite{backbone} we obtain that $|\chain_B^S|
@@ -14,3 +14,9 @@
     \epsilon')(1 - \epsilon)f}2^{\mu_B}|\chain_B^S\upchain^{\mu_B}|$.
     \Qed
 \end{proof}
+
+% TODO: The 1/3 doesn't follow by allowing \epsilon' to take any value.
+% The two chains (adversarial and honest) grow at their own pace and their
+% relative rates will be maintained -- hence their relative sizes will be
+% bounded by the ratio of adversarial / honest power.
+% An adversary assumption of 1/4 is required.
