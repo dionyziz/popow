@@ -8,15 +8,14 @@ with \emph{bounded delay}~\cite{PSS} is left for future work)
 and constant difficulty (we briefly discuss variable difficulty
 in Appendix~\ref{sec:variable}).
 
-\subsection{Backbone model}
-
+\noindent
+\textbf{Backbone model.}
 % AM:
 %We define our problem in the setting of a blockchain client which is completely
 %stateless beyond the knowledge of a common reference string, the genesis block.
 %Without loss of generality, this single reference block could be any stable
 %checkpoint block, either hard-coded in the client or obtained through a previous
 %interaction with the network.
-
 The entities on the blockchain network are of 3 kinds: (1) Miners, who try to
 mine new blocks on top of the longest known blockchain and broadcast them as
 soon as they are discovered. Miners commit new transactions they receive from clients. (2) Full nodes, who maintain the longest blockchain
@@ -71,7 +70,8 @@ $G$ modelled as random oracles, the id of a block is defined as $\textsf{id} =
 H(ctr, G(x, \textsf{interlink}))$. In bitcoin's case, both $H$ and $G$ would be
 SHA256.
 
-\subsection{The prover and verifier model}
+\noindent
+\textbf{The prover and verifier model.}
 In our protocol, the nodes include a \emph{proof} along with their responses to
 clients. We need to assume that clients are able to connect to at least one
 correctly functioning node (i.e., that they cannot be eclipsed from the
