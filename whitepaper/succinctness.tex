@@ -84,12 +84,7 @@ This last lemma establishes the fact that the support of blocks needed under
 the $m$-sized chain suffix to move from one level to the one below is small.
 Based on this, we can establish our theorem on succinctness:
 
-\begin{restatable}[Optimistic succinctness]{theorem}{restateThmSuccinctness}
-    \label{thm.succinctness}
-    In an optimistic execution, Non-Interactive Proofs of Proof-of-Work produced
-    by honest provers are succinct with the number of blocks bounded by $4m
-    \log(|\chain|)$, with overwhelming probability in $m$.
-\end{restatable}
+\restateThmSuccinctness
 \ifonecolumn
 \import{./}{proofs/succinctness.tex}
 \fi
