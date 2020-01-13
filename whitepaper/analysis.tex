@@ -1,49 +1,10 @@
-\section{Security}
+\section{Analysis}
 \label{sec:security}
 
-Based on the attack explored above, it is now easy to see that our construction
-can be patched in a straightforward manner to achieve security. In particular,
-since the manner in which the adversary was able to subvert the prover was by
-the violation of \emph{goodness}, we can mandate that the prover only tries to
-use succinct proofs to prove claims about chains that are
-\emph{good at every level}. In case goodness is violated, the prover simply
-falls back to providing the whole chain. This allows us to argue that the
-construction is secure by distinguishing two cases. In case goodness is
-violated, the honest prover will fall back to providing the whole chain, in
-which case security will be reduced to the security of the standard
-blockchain protocol choosing the longest $0$-chain. In case goodness is not
-violated, we will argue that the adversary is unable to win in these
-comparisons.
-
-The previous construction was designed to prevent Bahack-style
-attacks~\cite{bahack}, where the adversary constructs ``lucky'' high-difficulty
-superblocks without filling in the underlying proof-of-work in the lower levels.
-We now patch our protocol which, while retaining this high level approach, adds
-a defence against the double-spending attack of Section~\ref{sec:attack}. The
-attack is neutralized since our verifier is more permissive, allowing the prover
-to construct a proof that takes superquality ``goodness'' into account when
-comparing forks. The modified construction is shown in
-Algorithm~\ref{alg.nipopow-prover-patched}. The algorithm has been modified to
-check the current portion of the subchain $\alpha$ for \emph{goodness} prior to
-moving to the lower superchain level. If goodness is indeed maintained at the
-current level $\mu$, the prover only tries to cover the span of the last $m$
-blocks of level $\mu$ at level $\mu - 1$, as seen in
-Line~\ref{alg.nipopow-prover-patched.good}. Otherwise, if goodness is violated
-at the part of the subchain $\alpha$ at level $\mu$, then the prover completely
-ignores level $\mu$ and tries to use the lower level $\mu - 1$ to cover the
-whole span of $\alpha$.
-
-\import{./}{algorithms/alg.nipopow-prover-patched.tex}
-
-Only the concrete prover needs to be modified. The verifier and $\leq_m$
-operator remain as defined previously.
-
-To aid intuition, we give a sketch of the proof
-\ifhasappendix
-before giving the full technical proof.
-\else
-here.
-\fi
+We now give a sketch indicating why our construction is secure. The fully formal
+security proof, together with a detail in the construction which ensures
+statistical \emph{goodness} and is necessary for withstanding full $1/2$
+adversaries, appears in the appendix.
 
 \begin{restatable}[Security]{theorem}{restateThmSecurity}
     \label{thm.security}
@@ -98,3 +59,15 @@ in the Appendix.
 \else
 in the full version of this paper.
 \fi
+
+Lastly, the following theorem illustrates that our proofs are succinct.
+Intuitively, the number of levels exchanged is logarithmic in the length of the
+chain, and the number of blocks in each level is constant. The formal proofs
+are included in the Appendix.
+
+\begin{restatable}[Optimistic succinctness]{theorem}{restateThmSuccinctness}
+    \label{thm.succinctness}
+    In an optimistic execution, Non-Interactive Proofs of Proof-of-Work produced
+    by honest provers are succinct with the number of blocks bounded by $4m
+    \log(|\chain|)$, with overwhelming probability in $m$.
+\end{restatable}

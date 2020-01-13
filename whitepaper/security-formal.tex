@@ -1,9 +1,94 @@
 \section{Formal security treatment}
 \label{sec:security-full}
 
-Here, we give a formal treatment of the security proof which was sketched in
-Section~\ref{sec:security}.
+Based on the attack explored above, it is now easy to see that our construction
+can be patched in a straightforward manner to achieve security. In particular,
+since the manner in which the adversary was able to subvert the prover was by
+the violation of \emph{goodness}, we can mandate that the prover only tries to
+use succinct proofs to prove claims about chains that are
+\emph{good at every level}. In case goodness is violated, the prover simply
+falls back to providing the whole chain. This allows us to argue that the
+construction is secure by distinguishing two cases. In case goodness is
+violated, the honest prover will fall back to providing the whole chain, in
+which case security will be reduced to the security of the standard
+blockchain protocol choosing the longest $0$-chain. In case goodness is not
+violated, we will argue that the adversary is unable to win in these
+comparisons.
 
+The previous construction was designed to prevent Bahack-style
+attacks~\cite{bahack}, where the adversary constructs ``lucky'' high-difficulty
+superblocks without filling in the underlying proof-of-work in the lower levels.
+We now patch our protocol which, while retaining this high level approach, adds
+a defence against the double-spending attack of Section~\ref{sec:attack-full}. The
+attack is neutralized since our verifier is more permissive, allowing the prover
+to construct a proof that takes superquality ``goodness'' into account when
+comparing forks. The modified construction is shown in
+Algorithm~\ref{alg.nipopow-prover-patched}. The algorithm has been modified to
+check the current portion of the subchain $\alpha$ for \emph{goodness} prior to
+moving to the lower superchain level. If goodness is indeed maintained at the
+current level $\mu$, the prover only tries to cover the span of the last $m$
+blocks of level $\mu$ at level $\mu - 1$, as seen in
+Line~\ref{alg.nipopow-prover-patched.good}. Otherwise, if goodness is violated
+at the part of the subchain $\alpha$ at level $\mu$, then the prover completely
+ignores level $\mu$ and tries to use the lower level $\mu - 1$ to cover the
+whole span of $\alpha$.
+
+\import{./}{algorithms/alg.nipopow-prover-patched.tex}
+
+Only the concrete prover needs to be modified. The verifier and $\leq_m$
+operator remain as defined previously.
+
+To aid intuition, we give a sketch of the proof
+before giving the full technical proof.
+
+\begin{restatable}[Security]{theorem}{restateThmSecurity}
+    \label{thm.security}
+    Assuming honest majority, the Non-interactive Proofs of Proof-of-Work
+    construction for computable $k$-stable monotonic suffix-sensitive predicates
+    is secure with overwhelming probability in $\kappa$.
+\end{restatable}
+\begin{proof}[Sketch]
+Suppose an adversary produces a proof $\pi_\mathcal{A}$ and an honest
+party produces a proof $\pi_B$ such that the two proofs cause the predicate $Q$
+to evaluate to different values, while at the same time all honest parties have
+agreed that the correct value is the one obtained by $\pi_B$. Because of
+Bitcoin's security, $\mathcal{A}$ will be unable to make these claims for an
+actual underlying 0-level chain.
+
+We now argue that the operator $\leq_m$ will
+signal in favour of the honest parties.
+Suppose $b$ is the LCA block between $\pi_\mathcal{A}$ and $\pi_B$. If the chain
+forks at $b$, there can be no more adversarial blocks after $b$ than honest
+blocks after $b$, provided there are at least $k$ honest blocks (due to the
+Common Prefix property). We will now argue that, further, there can be no more
+disjoint $\mu_\mathcal{A}$-level superblocks than honest $\mu_B$-level
+superblocks after $b$.
+
+To see this, let $b$ be an honest block generated at some round $r_1$ and let
+the honest proof be generated at some round $r_3$. Then take the sequence
+of consecutive rounds $S = (r_1, \cdots, r_3)$. Because the verifier requires at
+least $m$ blocks from each of the provers, the adversary must have $m$
+$\mu_\mathcal{A}$-superblocks in $\pi_\mathcal{A}\{b:\}$ which are not in
+$\pi_B\{b:\}$. Therefore, using a negative binomial tail bound argument, we see
+that $|S|$ must be long; intuitively, it takes a long time to produce a lot of
+blocks $|\pi_\mathcal{A}\{b:\}|$. Given that $|S|$ is long and that the honest
+parties have more mining power, they must have been able to produce a longer
+$\pi_B\{b:\}$ argument (of course, this comparison will have the superchain
+lengths weighted by $2^{\mu_\mathcal{A}}, 2^{\mu_B}$ respectively). To prove
+this, we use a binomial tail bound argument; intuitively, given a long time
+$|S|$, a lot of $\mu_B$-superblocks $|\pi_B\{b:\}|$ will have been honestly
+produced.
+
+We therefore have a fixed value for the length of the adversarial argument, a
+negative binomial random variable for the number of rounds, and a binomial
+random variable for the length of the honest argument. By taking the
+expectations of the above random variables and applying a Chernoff bound, we see
+that the actual values will be close to their means with overwhelming
+probability, completing the proof.
+\Qed
+\end{proof}
+
+We now give a formal treatment of the security proof.
 Assume $t$ adversarial and $n$ total parties, each with $q$
 PoW random oracle queries per round. We will call a query to the
 RO $\mu$-\emph{successful} if the RO returns a value $h$
@@ -123,7 +208,7 @@ computational power, and hence satisfy a strong notion of security.
 \end{remark}
 
 \noindent\textbf{Remark.}
-Intuitively, the attack of Section~\ref{sec:attack} is neutralized, because
+Intuitively, the attack of Section~\ref{sec:attack-full} is neutralized, because
 our prover takes ``goodness'' of blockchains into account and the verifier
 does not compare proofs strictly at the same level.
 
