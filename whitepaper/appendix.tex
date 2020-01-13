@@ -2,6 +2,10 @@
 \section*{Appendix}
 
 Our Appendix is structured as follows.
+In Section~\ref{sec:infix} we discuss how to extend our scheme to prove facts
+buried deep within the blockchain. This ability can be easily added to our
+protocol, but is important in order to be able to show that a transaction took
+place in the past.
 Section~\ref{sec:app-quality} gives lemmas and proofs about the statistical
 properties of chains, which are useful for further results.
 In Section~\ref{sec:forks}, we illustrate
@@ -27,6 +31,7 @@ settings. We conclude with
 Section~\ref{sec:app-ico} which includes experimental data of our Solidity
 implementation for the ICO application.
 
+\import{./}{infix.tex}
 \import{./}{upgrade.tex}
 \import{./}{variable.tex}
 \import{./}{app-quality.tex}
