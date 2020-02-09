@@ -6,6 +6,12 @@ In Section~\ref{sec:infix} we discuss how to extend our scheme to prove facts
 buried deep within the blockchain. This ability can be easily added to our
 protocol, but is important in order to be able to show that a transaction took
 place in the past.
+In Section~\ref{sec:parameters} we measure the concrete probability of success
+of our scheme in order to provide concrete parameters for implementors.
+In Section~\ref{sec:applications} we give further applications of NIPoPoWs
+beyond the context of a simple client, in particular a \emph{multiblockchain
+wallet} and a \emph{cross-chain ICO}. We also implement our scheme and
+perform measurements to give concrete performance numbers.
 Section~\ref{sec:app-quality} gives lemmas and proofs about the statistical
 properties of chains, which are useful for further results.
 Section~\ref{sec:attack-full} contains
@@ -19,29 +25,18 @@ without requiring miner consensus. We term this technique a \emph{velvet fork}
 in contrast to the classical \emph{soft} and \emph{hard forks} which require
 approval by a majority of miners. This technique is a novel contribution and may
 be of independent interest for other blockchain protocols.
-Section~\ref{sec:variable} gives an intuition about creating a construction for
-variable difficulty NIPoPoWs by modifying the construction presented in this
-paper.
-Section~\ref{sec:app-quality} gives the lemmas and associated proofs showing how
-superchains are distributed. This provides the necessary tools to show that the
-construction is optimistically succinct.
-Section~\ref{sec:attack-full} contains
-the full formal proof that our attack against our strawman construction succeeds with overwhelming probability, given the correct
-strategy and protocol parameters. Section~\ref{sec:security-full} gives a formal
-proof of our security claims through a computational reduction. Section~
-\ref{sec:app-succinctness} includes the remaining proofs that were omitted from
-the body of the paper with the goal of proving optimistic succinctness, a
-central result of our paper. It also proves succinctness in more adversarial
-settings. We conclude with
-Section~\ref{sec:app-ico} which includes experimental data of our Solidity
-implementation for the ICO application.
+We conclude with Section~\ref{sec:variable} which gives an intuition about creating a
+construction for variable difficulty NIPoPoWs by modifying the construction
+presented in this paper.
 
 \import{./}{infix.tex}
-\import{./}{upgrade.tex}
-\import{./}{variable.tex}
+\import{./}{parameterization.tex}
+\import{./}{integration.tex}
 \import{./}{app-quality.tex}
 \import{./}{attack-formal.tex}
 \import{./}{security-formal.tex}
+\import{./}{upgrade.tex}
+\import{./}{variable.tex}
 \import{./}{app-succinctness.tex}
-\import{./}{app-ico.tex}
+% \import{./}{app-ico.tex}
 \import{./}{acknowledgements.tex}
