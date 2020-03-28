@@ -1,42 +1,42 @@
-\appendix
-\section*{Appendix}
+% \appendix
+% \section*{Appendix}
 
-Our Appendix is structured as follows.
-In Section~\ref{sec:infix} we discuss how to extend our scheme to prove facts
-buried deep within the blockchain. This ability can be easily added to our
-protocol, but is important in order to be able to show that a transaction took
-place in the past.
-In Section~\ref{sec:parameters} we measure the concrete probability of success
-of our scheme in order to provide concrete parameters for implementors.
-In Section~\ref{sec:applications} we give further applications of NIPoPoWs
-beyond the context of a simple client, in particular a \emph{multiblockchain
-wallet} and a \emph{cross-chain ICO}. We also implement our scheme and
-perform measurements to give concrete performance numbers.
-Section~\ref{sec:app-quality} gives lemmas and proofs about the statistical
-properties of chains, which are useful for further results.
-Section~\ref{sec:attack-full} contains
-an attack against these statistical properties, which mandates that a full construction needs to check for them. Section~\ref{sec:security-full} gives a formal
-proof of our security claims through a computational reduction.
-Section~
-\ref{sec:app-succinctness} includes the formal proof that our construction is succinct.
-In Section~\ref{sec:forks}, we illustrate
-gradual deployment paths. One of our techniques allows adoption of our scheme
-without requiring miner consensus. We term this technique a \emph{velvet fork}
-in contrast to the classical \emph{soft} and \emph{hard forks} which require
-approval by a majority of miners. This technique is a novel contribution and may
-be of independent interest for other blockchain protocols.
-We conclude with Section~\ref{sec:variable} which gives an intuition about creating a
-construction for variable difficulty NIPoPoWs by modifying the construction
-presented in this paper.
+% Our Appendix is structured as follows.
+% In Section~\ref{sec:infix} we discuss how to extend our scheme to prove facts
+% buried deep within the blockchain. This ability can be easily added to our
+% protocol, but is important in order to be able to show that a transaction took
+% place in the past.
+% In Section~\ref{sec:parameters} we measure the concrete probability of success
+% of our scheme in order to provide concrete parameters for implementors.
+% In Section~\ref{sec:applications} we give further applications of NIPoPoWs
+% beyond the context of a simple client, in particular a \emph{multiblockchain
+% wallet} and a \emph{cross-chain ICO}. We also implement our scheme and
+% perform measurements to give concrete performance numbers.
+% Section~\ref{sec:app-quality} gives lemmas and proofs about the statistical
+% properties of chains, which are useful for further results.
+% Section~\ref{sec:attack-full} contains
+% an attack against these statistical properties, which mandates that a full construction needs to check for them. Section~\ref{sec:security-full} gives a formal
+% proof of our security claims through a computational reduction.
+% Section~
+% \ref{sec:app-succinctness} includes the formal proof that our construction is succinct.
+% In Section~\ref{sec:forks}, we illustrate
+% gradual deployment paths. One of our techniques allows adoption of our scheme
+% without requiring miner consensus. We term this technique a \emph{velvet fork}
+% in contrast to the classical \emph{soft} and \emph{hard forks} which require
+% approval by a majority of miners. This technique is a novel contribution and may
+% be of independent interest for other blockchain protocols.
+% We conclude with Section~\ref{sec:variable} which gives an intuition about creating a
+% construction for variable difficulty NIPoPoWs by modifying the construction
+% presented in this paper.
 
 \import{./}{infix.tex}
-\import{./}{parameterization.tex}
-\import{./}{integration.tex}
-\import{./}{app-quality.tex}
-\import{./}{attack-formal.tex}
-\import{./}{security-formal.tex}
-\import{./}{upgrade.tex}
-\import{./}{variable.tex}
-\import{./}{app-succinctness.tex}
+% \import{./}{parameterization.tex}
+% \import{./}{integration.tex}
+% \import{./}{app-quality.tex}
+% \import{./}{attack-formal.tex}
+% \import{./}{security-formal.tex}
+% \import{./}{upgrade.tex}
+% \import{./}{variable.tex}
+% \import{./}{app-succinctness.tex}
 % \import{./}{app-ico.tex}
 \import{./}{acknowledgements.tex}
