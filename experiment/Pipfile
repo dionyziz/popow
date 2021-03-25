@@ -15,7 +15,7 @@ pysha3 = "==1.0.2"
 rlp = "==0.6.0"
 scrypt = "==0.8.6"
 py_ecc = "==1.4.2"
-PyYAML = "==3.12"
+PyYAML = "==5.4"
 "repoze.lru" = "==0.7"
 
 [requires]
